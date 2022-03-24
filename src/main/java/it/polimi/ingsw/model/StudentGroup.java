@@ -10,6 +10,12 @@ public class StudentGroup {
         this.students = new EnumMap<Colour,Integer>(Colour.class);
     }
 
+    public StudentGroup(int n){
+        this.students = new EnumMap<Colour, Integer>(Colour.class);
+        for(Colour c: Colour.values())
+            this.students.put(c,n);
+    }
+
     public int getQuantityColour(Colour colore){
         return this.students.get(colore);
     }
