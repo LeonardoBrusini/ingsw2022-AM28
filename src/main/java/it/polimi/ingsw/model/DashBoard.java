@@ -6,8 +6,8 @@ public class DashBoard {
     private int numTower;
 
     public DashBoard(int n){
-        this.hall = new StudentGroup();
-        this.entrance = new StudentGroup();
+        this.hall = new StudentGroup(0);
+        this.entrance = new StudentGroup(0);
         this.numTower = n;
     }
 

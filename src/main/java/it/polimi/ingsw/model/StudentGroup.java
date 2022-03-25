@@ -16,6 +16,13 @@ public class StudentGroup {
             this.students.put(c,n);
     }
 
+    public StudentGroup(StudentGroup r){
+        Colour[] e = Colour.values();
+        for(Colour c:e){
+            this.students.put(c,r.getQuantityColour(c));
+        }
+    }
+
     public int getQuantityColour(Colour colore){
         return this.students.get(colore);
     }
