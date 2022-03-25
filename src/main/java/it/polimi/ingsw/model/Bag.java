@@ -5,7 +5,7 @@ import java.util.Random;
 public class Bag {
     private StudentGroup bag;
     private Random generator = new Random();
-    private Colour[] e = Colour.values();;
+    private Colour[] e = Colour.values();
 
     //Colour.values()
 
