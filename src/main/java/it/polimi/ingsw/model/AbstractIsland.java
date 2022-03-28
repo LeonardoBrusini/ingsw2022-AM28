@@ -7,6 +7,7 @@ abstract class AbstractIsland {
     protected int numTower;
     protected int posIndex;
 
+    /*MANCA CALCOLO DELL'INFLUENZA DEL PLAYER */
 
     public void setTower(Tower tower) {
         if(this.numTower == 0 ){
