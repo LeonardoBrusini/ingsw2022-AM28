@@ -24,4 +24,8 @@ public class AssistantCard {
    public String getFileName(){
         return this.fileName;
    }
+
+   public void setPlayed(){
+        this.played = true;
+   }
 }
