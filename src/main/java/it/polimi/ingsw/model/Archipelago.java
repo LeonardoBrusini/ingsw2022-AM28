@@ -1,24 +1,22 @@
 package it.polimi.ingsw.model;
 
 public class Archipelago extends AbstractIsland{
-    public Archipelago(Island input, Island output){
-
+    /*public Archipelago(Island input, Island output){
+        super(input.getPosIndex());
         if(input.getTower().equals(output.getTower()) && (input.getPosIndex()==output.posIndex+1 || input.getPosIndex()+1==output.posIndex)){
+            if(input.getPosIndex()>output.getPosIndex()) {
+                setPosIndex(output.getPosIndex());
+            }
+
+
+
             this.tower = input.getTower();
             this.numTower = input.getNumTower() + output.getNumTower();
 
-            if(input.getPosIndex()<output.getPosIndex()) {
-                this.posIndex = input.getPosIndex();
-            }else{
-                this.posIndex = output.getPosIndex();
-            }
 
-            if(input.getPresenceMotherNature() == true || output.getPresenceMotherNature() == true)
-                this.presenceMotherNature = true;
-            else
-                this.presenceMotherNature = false;
+            this.presenceMotherNature = input.getPresenceMotherNature() || output.getPresenceMotherNature();
 
-            this.studentGroup = new StudentGroup(0);
+
             Colour[] e = Colour.values();
 
             for(Colour c : e){
@@ -29,24 +27,20 @@ public class Archipelago extends AbstractIsland{
 
         }
     }
-
-    public Archipelago(Island input, Archipelago output){
+    */
+    public Archipelago(AbstractIsland input, AbstractIsland output){
+        super(input.getPosIndex());
         if(input.getTower().equals(output.getTower()) && (input.getPosIndex()==output.posIndex+1 || input.getPosIndex()+1==output.posIndex)){
-            this.tower = input.getTower();
-            this.numTower = input.getNumTower() + output.getNumTower();
-
-            if(input.getPosIndex()<output.getPosIndex()) {
-                this.posIndex = input.getPosIndex();
-            }else{
-                this.posIndex = output.getPosIndex();
+            if(input.getPosIndex()>output.getPosIndex()) {
+                setPosIndex(output.getPosIndex());
             }
 
-            if(input.getPresenceMotherNature() == true || output.getPresenceMotherNature() == true)
-                this.presenceMotherNature = true;
-            else
-                this.presenceMotherNature = false;
 
-            this.studentGroup = new StudentGroup(0);
+            setTower(input.getTower());
+            this.numTower = input.getNumTower() + output.getNumTower();
+
+            this.presenceMotherNature = input.getPresenceMotherNature() || output.getPresenceMotherNature();
+
             Colour[] e = Colour.values();
 
             for(Colour c : e){
@@ -54,7 +48,6 @@ public class Archipelago extends AbstractIsland{
                 val= input.getStudentGroup().getQuantityColour(c) + output.getStudentGroup().getQuantityColour(c);
                 this.studentGroup.setNumStudents(val,c);
             }
-
         }
     }
 }

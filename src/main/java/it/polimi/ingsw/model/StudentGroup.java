@@ -8,6 +8,9 @@ public class StudentGroup {
 
     public StudentGroup(){
         this.students = new EnumMap<Colour,Integer>(Colour.class);
+        for(Colour c: Colour.values())
+            this.students.put(c,0);
+
     }
 
     public StudentGroup(int n){

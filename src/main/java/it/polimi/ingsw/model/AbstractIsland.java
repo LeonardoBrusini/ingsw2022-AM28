@@ -9,6 +9,12 @@ abstract class AbstractIsland {
 
     /*MANCA CALCOLO DELL'INFLUENZA DEL PLAYER */
 
+    public AbstractIsland(int pos){
+        this.studentGroup = new StudentGroup();
+        this.numTower = 0;
+        this.posIndex = pos;
+    }
+
     public void setTower(Tower tower) {
         if(this.numTower == 0 ){
             this.tower = tower;
