@@ -13,6 +13,7 @@ public class Bag {
         this.bag = new StudentGroup(26);
     }
 
+    /*
     public void inizializeIsland(){
         Colour c;
 
@@ -25,7 +26,7 @@ public class Bag {
                 //funzione per mettere sull'isola uno studente
             }
         //}
-    }
+    }*/
 
     public StudentGroup removeStudent(int num){
         StudentGroup ret = new StudentGroup();

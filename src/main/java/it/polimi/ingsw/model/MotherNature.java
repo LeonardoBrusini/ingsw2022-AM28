@@ -8,7 +8,7 @@ public class MotherNature {
 
     public MotherNature(){
         generator = new Random();
-        int island = generator.nextInt(13);
+        int island = generator.nextInt(12);
     }
     /*
     public int computeInfluence(){

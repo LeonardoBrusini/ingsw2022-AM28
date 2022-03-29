@@ -29,8 +29,10 @@ public class Archipelago extends AbstractIsland{
     }
     */
     public Archipelago(AbstractIsland input, AbstractIsland output){
-        super(input.getPosIndex());
+        super();
         if(input.getTower().equals(output.getTower()) && (input.getPosIndex()==output.posIndex+1 || input.getPosIndex()+1==output.posIndex)){
+            setPosIndex(input.getPosIndex());
+
             if(input.getPosIndex()>output.getPosIndex()) {
                 setPosIndex(output.getPosIndex());
             }

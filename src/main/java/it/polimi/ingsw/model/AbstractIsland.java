@@ -9,10 +9,9 @@ abstract class AbstractIsland {
 
     /*MANCA CALCOLO DELL'INFLUENZA DEL PLAYER */
 
-    public AbstractIsland(int pos){
+    public AbstractIsland(){
         this.studentGroup = new StudentGroup();
         this.numTower = 0;
-        this.posIndex = pos;
     }
 
     public void setTower(Tower tower) {
@@ -52,5 +51,14 @@ abstract class AbstractIsland {
 
     public int getPosIndex(){
         return this.posIndex;
+    }
+
+    public void setPresenceMotherNature(boolean pre){
+        this.presenceMotherNature = pre;
+    }
+
+    public void setStudentGroup(StudentGroup s){
+        for(Colour c: Colour.values())
+            this.studentGroup.setNumStudents(s.getQuantityColour(c),c);
     }
 }

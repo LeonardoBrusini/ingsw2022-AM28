@@ -41,4 +41,5 @@ public class StudentGroup {
     public void addStudent(Colour a){
         this.students.put(a,(this.students.get(a)+1));
     }
+
 }
