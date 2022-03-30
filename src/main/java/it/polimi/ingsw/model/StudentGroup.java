@@ -19,6 +19,17 @@ public class StudentGroup {
             this.students.put(c,n);
     }
 
+    public boolean empty(){
+        boolean res;
+        res = true;
+        Colour[] e = Colour.values();
+        for(int i = 0 ; i< e.length && res; i++){
+            if(this.students.get(e[i])!=0)
+                res = false;
+        }
+        return res;
+    }
+
     public StudentGroup(StudentGroup r){
         Colour[] e = Colour.values();
         for(Colour c:e){

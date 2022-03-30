@@ -4,8 +4,16 @@ public class Cloud {
     private StudentGroup cloud;
     private StudentGroup students;
 
+    public StudentGroup getCloud() {
+        return cloud;
+    }
+
     public Cloud(){
         this.cloud = new StudentGroup('0');
+    }
+
+    public boolean empty(){
+        return this.cloud.empty();
     }
 
     public void setGroup(StudentGroup group){

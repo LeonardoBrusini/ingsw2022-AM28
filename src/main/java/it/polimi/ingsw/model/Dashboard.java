@@ -1,16 +1,14 @@
 package it.polimi.ingsw.model;
 
-public class Dashboard {
+public class DashBoard {
     private StudentGroup hall;
     private StudentGroup entrance;
     private int numTower;
-    private ProfessorGroup professorgroup;
 
-    public Dashboard(int n){
+    public DashBoard(int n){
         this.hall = new StudentGroup(0);
         this.entrance = new StudentGroup(0);
         this.numTower = n;
-        this.professorgroup = new ProfessorGroup();
     }
 
     public void fillEntrance(StudentGroup studentGroup){
@@ -33,12 +31,11 @@ public class Dashboard {
         return this.hall.getQuantityColour(colour);
     }
 
-    public void buildTower(){
+    public void builtTower(){
         this.numTower--;
     }
 
     public void addTower(){
         this.numTower++;
     }
-
 }
