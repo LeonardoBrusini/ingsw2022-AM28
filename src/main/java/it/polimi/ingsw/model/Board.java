@@ -26,10 +26,8 @@ public class Board {
             islands.get(i).setPosIndex(i);
             if(i == motherNature.getIslandIndex() || (motherNature.getIslandIndex()+ 6 % 12)==i){
                 islands.get(i).setPresenceMotherNature(i == motherNature.getIslandIndex());
-                StudentGroup c = new StudentGroup(bag.removeStudent(1));
-                islands.get(i).setStudentGroup(c);
             }else{
-                StudentGroup c = new StudentGroup(bag.removeStudent(2));
+                StudentGroup c = new StudentGroup(bag.removeStudent(1));
                 islands.get(i).setStudentGroup(c);
             }
         }
