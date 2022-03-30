@@ -9,20 +9,20 @@ public class StudentGroup {
     public StudentGroup(){
         this.students = new EnumMap<Colour,Integer>(Colour.class);
         for(Colour c: Colour.values())
-            this.students.put(c,0);
-
+            students.put(c,0);
     }
 
     public StudentGroup(int n){
-        this.students = new EnumMap<Colour, Integer>(Colour.class);
+        students = new EnumMap<Colour, Integer>(Colour.class);
         for(Colour c: Colour.values())
-            this.students.put(c,n);
+            students.put(c,n);
     }
 
     public StudentGroup(StudentGroup r){
+        students = new EnumMap<Colour, Integer>(Colour.class);
         Colour[] e = Colour.values();
         for(Colour c:e){
-            this.students.put(c,r.getQuantityColour(c));
+            students.put(c,r.getQuantityColour(c));
         }
     }
 

@@ -6,10 +6,18 @@ import java.util.EnumMap;
 public class ProfessorGroup {
     private EnumMap<Colour, Tower> professors;
 
+    /**
+     * Constructor of a new object of class ProfessorGroup
+     */
     public ProfessorGroup(){
         this.professors = new EnumMap<Colour,Tower>(Colour.class);
     }
 
+    /**
+     *
+     * @param colour
+     * @return the tower of the player who currently owns the professor
+     */
     public Tower getTower(Colour colour){
         return this.professors.get(colour);
     }
@@ -26,9 +34,4 @@ public class ProfessorGroup {
 
         return ret;
     }
-
-
-
-
-
 }
