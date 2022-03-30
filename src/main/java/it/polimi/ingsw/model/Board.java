@@ -10,6 +10,7 @@ public class Board {
     private MotherNature motherNature;
     private Bag bag = new Bag();
 
+
     public Board(int numPlayers){
         this.coins = 20 - numPlayers;
         this.numPlayers = numPlayers;
