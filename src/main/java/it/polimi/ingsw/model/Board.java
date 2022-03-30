@@ -15,21 +15,22 @@ public class Board {
         this.numPlayers = numPlayers;
         int i;
         for(i = 0 ;i<numPlayers ; i++){
-            this.clouds.get(i).setGroup(this.bag.removeStudent(4));
+            this.clouds.add(new Cloud());
+            this.clouds.get(i).setGroup(bag.removeStudent(4));
         }
 
         this.motherNature = new MotherNature();
 
         for(i = 0; i < 12; i++){
-            this.islands.get(i) = new Island(i);
-            this.islands.get(i).setPosIndex(i);
+            islands.add(new Island(i));
+            islands.get(i).setPosIndex(i);
             if(i == motherNature.getIslandIndex() || (motherNature.getIslandIndex()+ 6 % 12)==i){
-                this.islands.get(i).setPresenceMotherNature(i == motherNature.getIslandIndex());
-                StudentGroup c = new StudentGroup(this.bag.removeStudent(1));
-                this.islands.get(i).setStudentGroup(c);
+                islands.get(i).setPresenceMotherNature(i == motherNature.getIslandIndex());
+                StudentGroup c = new StudentGroup(bag.removeStudent(1));
+                islands.get(i).setStudentGroup(c);
             }else{
-                StudentGroup c = new StudentGroup(this.bag.removeStudent(2));
-                this.islands.get(i).setStudentGroup(c);
+                StudentGroup c = new StudentGroup(bag.removeStudent(2));
+                islands.get(i).setStudentGroup(c);
             }
         }
     }

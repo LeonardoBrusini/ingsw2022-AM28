@@ -41,7 +41,7 @@ abstract class AbstractIsland {
         return this.tower;
     }
 
-    public Boolean getPresenceMotherNature(){
+    public boolean getPresenceMotherNature(){
         return this.presenceMotherNature;
     }
 

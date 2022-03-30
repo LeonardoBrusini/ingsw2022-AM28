@@ -15,6 +15,7 @@ public class MotherNature {
         Board d;
         d = Board.istance();
         d.getInfluence(island,giocatore);
+
     }*/
 
     public int getIslandIndex(){
