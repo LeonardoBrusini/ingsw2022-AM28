@@ -107,6 +107,5 @@ public class Board {
             if(i!=pos || i!=(pos+6)%12)
                 this.islands.get(i).setStudentGroup(bag.removeStudent(1));
         }
-
     }
 }
