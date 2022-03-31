@@ -5,12 +5,20 @@ public class Island {
     private StudentGroup students;
     private int islandIndex;
 
+    /**
+     * constructor
+     * @param index of the island on the board
+     */
     public Island(int index){
         tower = null;
         islandIndex = index;
         students = new StudentGroup();
     }
 
+    /**
+     * adds a student to the island
+     * @param c colour of the student we want to add
+     */
     public void addStudent(Colour c) {
         students.addStudent(c);
     }
@@ -19,6 +27,11 @@ public class Island {
         tower = t;
     }
 
+    /**
+     * the influence of a player is the number of studens on the island with the same colour as the professor the player owns, +1 is the player has his tower on the island
+     * @param p
+     * @return the influence of the player p
+     */
     public int playerInfluence(Player p) {
         int influence = 0;
         for(Colour c : Colour.values()) {

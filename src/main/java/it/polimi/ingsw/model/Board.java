@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Board {
     private int coins;
@@ -12,6 +11,9 @@ public class Board {
     private ProfessorGroup professorGroup;
     private static Board instance;
 
+    /**
+     * Board constructor. Initializes coins, clouds, motherNature, islands (via IslandManager), bag and professorGroup
+     */
     private Board(){
         coins = 20;
         for(int i = 0 ;i<ExpertGameManager.instance().getNumPlayers() ; i++){
@@ -23,12 +25,19 @@ public class Board {
         bag = new Bag();
     }
 
+    /**
+     * returns the singleton board object
+     * @return
+     */
     public static Board instance(){
         if(Board.instance==null)
             instance = new Board();
         return instance;
     }
 
+    /**
+     * fills the clouds with n students where n is the number of players + 1
+     */
     public void fillClouds(){
         for(int i = 0; i < clouds.size(); i++){
             ArrayList<Colour> studentList = bag.removeStudent(ExpertGameManager.instance().getNumPlayers()+1);
@@ -48,8 +57,13 @@ public class Board {
         return coins;
     }
 
+    /**
+     * removes the students from the clouds and returns them
+     * @param pos the index of the cloud we want to take the students from
+     * @return a StudentGroup of the students who were in the clouds
+     */
     public StudentGroup takeStudentsFromCloud(int pos){
-        return clouds.get(pos).clearStudent();
+        return clouds.get(pos).clearStudents();
     }
 
     public ProfessorGroup getProfessorGroup() {

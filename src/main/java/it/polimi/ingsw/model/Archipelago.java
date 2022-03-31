@@ -8,6 +8,10 @@ public class Archipelago {
     private int noEntryTiles;
     private int firstIslandIndex;
 
+    /**
+     * constructor. Initializes the list of island with a single island
+     * @param index the index of the first island
+     */
     public Archipelago(int index) {
         firstIslandIndex = index;
         islands = new ArrayList<>();
@@ -16,6 +20,11 @@ public class Archipelago {
         presenceMotherNature = false;
     }
 
+    /**
+     * sums the influence of the player p on every island in the archipelago
+     * @param p
+     * @return the total influence of the archipelago for the player p
+     */
     public int playerInfluence(Player p) {
         int influence = 0;
         for(Island i : islands) {
@@ -24,6 +33,10 @@ public class Archipelago {
         return influence;
     }
 
+    /**
+     * adds the island in the archipelago parameter to this achipelago
+     * @param a
+     */
     public void merge(Archipelago a) {
         for(Island i : a.islands) {
             islands.add(i);

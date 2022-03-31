@@ -13,7 +13,9 @@ public class Bag {
         students = new StudentGroup();
     }
 
-
+    /**
+     * puts a student each island (except for the one where mother nature is on and the opposite one), then puts 24 students each colour in the bag
+     */
     public void inizializeIslands(){
         for(Colour c : Colour.values()) { students.setNumStudents(2,c); }
         ArrayList<Colour> randomExtraction = removeStudent(10);
@@ -56,7 +58,7 @@ public class Bag {
 
     /**
      *
-     * @param group group of students added to the bag
+     * @param group group of students which is going to be added to the bag
      */
     public void addStudent(StudentGroup group){
         int val;
