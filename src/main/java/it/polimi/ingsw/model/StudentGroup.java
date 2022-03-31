@@ -1,56 +1,75 @@
 package it.polimi.ingsw.model;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
 
+/**
+ * StudentGroup is to store the number of students of each colour, it will be used in Bag, Cloud, Island and on CharacterCard
+ */
 public class StudentGroup {
     private EnumMap<Colour, Integer> students;
 
+    /**
+     * Constructor of a new StudentGroup without students
+     */
     public StudentGroup(){
         this.students = new EnumMap<Colour,Integer>(Colour.class);
         for(Colour c: Colour.values())
-            this.students.put(c,0);
-
+            students.put(c,0);
     }
 
+    /**
+     * Constructor of a new StudentGroup with n students each colour
+     * @param n number of students of a colour
+     */
     public StudentGroup(int n){
-        this.students = new EnumMap<Colour, Integer>(Colour.class);
+        students = new EnumMap<Colour, Integer>(Colour.class);
         for(Colour c: Colour.values())
-            this.students.put(c,n);
+            students.put(c,n);
     }
 
-    public boolean empty(){
-        boolean res;
-        res = true;
-        Colour[] e = Colour.values();
-        for(int i = 0 ; i< e.length && res; i++){
-            if(this.students.get(e[i])!=0)
-                res = false;
-        }
-        return res;
-    }
-
+    /**
+     * Constructor of a new StudentGroup with the same number of students as r
+     * @param r is an already defined StudentGroup object
+     */
     public StudentGroup(StudentGroup r){
-        Colour[] e = Colour.values();
-        for(Colour c:e){
-            this.students.put(c,r.getQuantityColour(c));
+        students = new EnumMap<Colour, Integer>(Colour.class);
+        for(Colour c: Colour.values()){
+            students.put(c,r.getQuantityColour(c));
         }
     }
 
-    public int getQuantityColour(Colour colore){
-        return this.students.get(colore);
+    /**
+     *
+     * @param colour
+     * @return the number of students of the parameter Colour
+     */
+    public int getQuantityColour(Colour colour){
+        return students.get(colour);
     }
 
-    public void setNumStudents(int val,Colour colore){
-        this.students.put(colore,val);
+    /**
+     * Sets the number of student of a specified colour (only if > 0)
+     * @param val number of students
+     * @param colour colour of the students
+     */
+    public void setNumStudents(int val,Colour colour){
+        if(val>=0) students.put(colour,val);
     }
 
-    public void removeStudent(Colour colore){
-        this.students.put(colore,(this.students.get(colore)-1));
+    /**
+     * remove a single student of a selected colour
+     * @param colour the colour of the student we want to remove
+     */
+    public void removeStudent(Colour colour){
+        if(students.get(colour)>0) students.put(colour,(students.get(colour)-1));
     }
 
-    public void addStudent(Colour a){
-        this.students.put(a,(this.students.get(a)+1));
+    /**
+     * adds a single student of a selected colour
+     * @param colour the colour of the student we want to add
+     */
+    public void addStudent(Colour colour){
+        students.put(colour,(students.get(colour)+1));
     }
 
 }
