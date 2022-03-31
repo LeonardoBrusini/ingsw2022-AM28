@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import com.sun.org.apache.xpath.internal.res.XPATHErrorResources_zh_CN;
-
 import java.util.ArrayList;
 
 public class Archipelago {
