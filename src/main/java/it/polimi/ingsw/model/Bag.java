@@ -85,12 +85,17 @@ public class Bag {
      * supprts the operation of extracting the students from the bag
      * @return the total number of students in the bag
      */
-    private int getNumOfStudents() {
+    public int getNumOfStudents() {
         int num=0;
         for(Colour c : Colour.values()) {
             num += students.getQuantityColour(c);
         }
         return num;
     }
+
+    public void setStudents(StudentGroup s){
+        this.students.setStudents(s);
+    }
+
 
 }

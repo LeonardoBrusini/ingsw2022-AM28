@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Board {
     private int coins;
@@ -86,5 +87,26 @@ public class Board {
 
     public void setProfessorGroup(ProfessorGroup p){
         this.professorGroup = p;
+    }
+
+    public void reset(){
+        bag.setStudents(new StudentGroup(26));
+        for(Cloud c: this.clouds)
+            c.setGroup(bag.removeStudent(4));
+
+        for(Colour c: Colour.values()){
+            this.professorGroup.setTower(c,null);
+        }
+
+        Random generator;
+        generator = new Random();
+        int pos = generator.nextInt(12);
+        this.motherNature.setIsland(pos);
+
+        for(int i = 0 ; i<12 ;i++){
+            if(i!=pos || i!=(pos+6)%12)
+                this.islands.get(i).setStudentGroup(bag.removeStudent(1));
+        }
+
     }
 }

@@ -84,4 +84,10 @@ public class StudentGroup {
         return res;
     }
 
+    public void setStudents(StudentGroup s){
+        for(Colour c: Colour.values()){
+            students.put(c,s.getQuantityColour(c));
+        }
+    }
+
 }
