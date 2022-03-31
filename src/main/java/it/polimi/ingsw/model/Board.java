@@ -9,6 +9,7 @@ public class Board {
     private ArrayList<AbstractIsland> islands = new ArrayList<>();
     private MotherNature motherNature;
     private Bag bag = new Bag();
+    private ProfessorGroup professorGroup = new ProfessorGroup();
 
     public Board(int numPlayers){
         this.coins = 20 - numPlayers;
