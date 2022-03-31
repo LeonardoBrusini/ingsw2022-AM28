@@ -37,7 +37,7 @@ public class Cloud {
 
     public void addGroup(StudentGroup s){
         for(Colour c: Colour.values()){
-            this.students.setNumStudents(students.getQuantityColour(c) + s.getQuantityColour(c),c);
+            students.setNumStudents(students.getQuantityColour(c) + s.getQuantityColour(c),c);
         }
     }
 

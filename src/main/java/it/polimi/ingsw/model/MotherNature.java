@@ -4,25 +4,21 @@ import java.util.Random;
 
 public class MotherNature {
     private int island;
-    private Random generator;
 
     public MotherNature(){
-        generator = new Random();
-        int island = generator.nextInt(12);
+        Random generator = new Random();
+        int island = generator.nextInt(12)+1;
     }
-    /*
-    public int computeInfluence(){
-        Board d;
-        d = Board.istance();
-        d.getInfluence(island,giocatore);
+
+    /*public int computeInfluence(){
 
     }*/
 
     public int getIslandIndex(){
-        return this.island;
+        return island;
     }
 
     public void setIsland(int pos){
-        this.island = pos;
+        island = pos;
     }
 }

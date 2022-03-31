@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -9,44 +10,40 @@ public class Bag {
     private StudentGroup students;
 
     public Bag(){
-        students= new StudentGroup();
+        students = new StudentGroup();
     }
 
 
-    /*public void inizializeIsland(){
-        Colour c;
-
-        for(int j;j<numofIslands;j++) {
-            for (int i = 0; i < 4; i++) {
-                do {
-                    c = this.e[this.generator.nextInt(this.e.length)];
-                } while (this.bag.getQuantityColour(c) == 0); //genera un colore casuale che però sia usabile e quindi contenuto nella bag
-                this.bag.setNumStudents(this.bag.getQuantityColour(c) - 1, c); // mette il numero di studenti del corrispettivo colore nella bag di uno in meno
-                //funzione per mettere sull'isola uno studente
+    public void inizializeIslands(){
+        for(Colour c : Colour.values()) { students.setNumStudents(2,c); }
+        ArrayList<Colour> randomExtraction = removeStudent(10);
+        int mnIndex = Board.instance().getMotherNature().getIslandIndex();
+        int oppositeOfMNIndex = mnIndex>6 ? mnIndex-6 : mnIndex+6;
+        int j=0;
+        for(int i=1;i<=12;i++) {
+            if(i!=mnIndex && i!=oppositeOfMNIndex) {
+                Board.instance().getIslandManager().getIsland(i).addStudent(randomExtraction.get(j++));
             }
         }
-    }*/
+        for(Colour c : Colour.values()) { students.setNumStudents(24,c); }
+    }
 
     /**
      *
      * @param num
-     * @return a StudentGroup object with "num" of random students removed from the bag
+     * @return a list of randomly selected students
      */
-    public StudentGroup removeStudent(int num){
+    public ArrayList<Colour> removeStudent(int num){
         if(getNumOfStudents()>=num) {
             Random generator = new Random();
-            StudentGroup ret = new StudentGroup();
+            ArrayList<Colour> ret = new ArrayList<>();
             Colour[] e = Colour.values();
             Colour c;
             int i = 0;
-
-            for(Colour col : e){
-                ret.setNumStudents(0,col);
-            }
             while (i<num) {
                 c = e[generator.nextInt(e.length)];
                 if(students.getQuantityColour(c)>0) {
-                    ret.addStudent(c);
+                    ret.add(c);
                     students.removeStudent(c);
                     i++;
                 }

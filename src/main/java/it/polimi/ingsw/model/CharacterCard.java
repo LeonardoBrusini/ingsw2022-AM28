@@ -4,6 +4,7 @@ public class CharacterCard {
     private String fileName;
     private int price;
     private boolean coinOnlt;
+    private int noEntryTiles;
     private StudentGroup selectedStudentsFrom;
     private StudentGroup selectedStudentsTo;
     private Island selectedIsland;

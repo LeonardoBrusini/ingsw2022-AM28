@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 
 /**
@@ -36,6 +37,16 @@ public class StudentGroup {
         for(Colour c: Colour.values()){
             students.put(c,r.getQuantityColour(c));
         }
+    }
+
+    /**
+     * Constructor of a new StudentGroup by a list of students (i.e. randomly extracted from the bag)
+     * @param list
+     */
+    public StudentGroup(ArrayList<Colour> list) {
+        students = new EnumMap<>(Colour.class);
+        for(Colour c: Colour.values()) students.put(c,0);
+        for(Colour c: list) addStudent(c);
     }
 
     /**
