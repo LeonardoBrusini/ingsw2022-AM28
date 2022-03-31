@@ -72,4 +72,16 @@ public class StudentGroup {
         students.put(colour,(students.get(colour)+1));
     }
 
+    public boolean empty(){
+        boolean res;
+        res = true;
+        Colour[] e = Colour.values();
+
+        for(int i = 0; i< e.length && res; i++)
+            if(students.get(e[i])!=0)
+                res = false;
+
+        return res;
+    }
+
 }
