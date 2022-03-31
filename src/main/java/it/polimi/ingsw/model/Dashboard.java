@@ -1,14 +1,17 @@
 package it.polimi.ingsw.model;
 
-public class DashBoard {
+public class Dashboard {
     private StudentGroup hall;
     private StudentGroup entrance;
     private int numTower;
+    private Tower tower;
 
-    public DashBoard(int n){
+
+    public Dashboard(int n,Tower t){
         this.hall = new StudentGroup(0);
         this.entrance = new StudentGroup(0);
         this.numTower = n;
+        this.tower = t;
     }
 
     public void fillEntrance(StudentGroup studentGroup){
@@ -18,9 +21,15 @@ public class DashBoard {
         }
     }
 
-    public void addToHall(Colour colour){
+    public void addToHall(Colour colour) {
         removeFromEntrance(colour);
         this.hall.addStudent(colour);
+        if (Board.instance().getProfessorGroup().getTower(colour) == null){
+            Board.instance().setProfessorGroup(colour, this.tower);
+        }
+        /*else{
+            ExpertGameManager.instance().checkProfessors();
+        }*/
     }
 
     public void removeFromEntrance(Colour colour){
@@ -31,11 +40,11 @@ public class DashBoard {
         return this.hall.getQuantityColour(colour);
     }
 
-    public void builtTower(){
-        this.numTower--;
-    }
-
     public void addTower(){
         this.numTower++;
+    }
+
+    public void buildTower() {
+        this.numTower--;
     }
 }

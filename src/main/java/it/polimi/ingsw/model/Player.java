@@ -12,7 +12,7 @@ public class Player {
 
     public Player(String n){
         this.nickname = n;
-        this.dashboard = new Dashboard(8);
+        this.dashboard = new Dashboard(8,this.hisTower);
     }
     public void fillDashboard(StudentGroup s){
         this.dashboard.fillEntrance(s);
@@ -24,6 +24,7 @@ public class Player {
     public void moveToHall(Colour c){
         this.dashboard.addToHall(c);
     }
+
     public Tower getTower(){
         this.dashboard.buildTower();
         return this.hisTower;

@@ -10,10 +10,14 @@ public class Board {
     private MotherNature motherNature;
     private Bag bag = new Bag();
     private ProfessorGroup professorGroup = new ProfessorGroup();
+    private static Board instance=null;
 
-    public Board(int numPlayers){
+    private Board(int numPlayers){
+
         this.coins = 20 - numPlayers;
         this.numPlayers = numPlayers;
+
+
         int i;
         for(i = 0 ;i<numPlayers ; i++){
             this.clouds.add(new Cloud());
@@ -33,6 +37,15 @@ public class Board {
             }
         }
 
+    }
+
+    public static Board instance(){
+        if(Board.instance==null)
+            instance = new Board(3);
+
+        //NB per ora ho messo numPlayer = 3 in attesa della creazione dell'expertgamemanager
+
+        return Board.instance;
     }
 
     public void fillClouds(){
@@ -63,9 +76,15 @@ public class Board {
         return this.clouds.get((pos%12)%(this.clouds.size())).getCloud();
     }
 
+    public ProfessorGroup getProfessorGroup() {
+        return professorGroup;
+    }
 
+    public void setProfessorGroup(Colour c, Tower t) {
+        this.professorGroup.setTower(c,t);
+    }
 
-
-
-
+    public void setProfessorGroup(ProfessorGroup p){
+        this.professorGroup = p;
+    }
 }
