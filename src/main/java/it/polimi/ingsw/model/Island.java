@@ -28,8 +28,8 @@ public class Island {
     }
 
     /**
-     * the influence of a player is the number of studens on the island with the same colour as the professor the player owns, +1 is the player has his tower on the island
-     * @param p
+     * the influence of a player is the number of students on the island with the same colour as the professor the player owns, +1 is the player has his tower on the island
+     * @param p the Player of witch the method will calculate the influence
      * @return the influence of the player p
      */
     public int playerInfluence(Player p) {

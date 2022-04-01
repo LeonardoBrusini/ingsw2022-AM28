@@ -17,7 +17,7 @@ public class Board {
     private Board(){
         coins = 20;
         for(int i = 0 ;i<ExpertGameManager.instance().getNumPlayers() ; i++){
-            clouds.add(new Cloud());
+            this.clouds.add(new Cloud());
         }
         motherNature = new MotherNature();
         islandManager = new IslandManager(motherNature.getIslandIndex());
@@ -27,7 +27,7 @@ public class Board {
 
     /**
      * returns the singleton board object
-     * @return
+     * @return the instance of the Board if it is exists, otherwise it calls the Board's constructor
      */
     public static Board instance(){
         if(Board.instance==null)
@@ -39,9 +39,9 @@ public class Board {
      * fills the clouds with n students where n is the number of players + 1
      */
     public void fillClouds(){
-        for(int i = 0; i < clouds.size(); i++){
-            ArrayList<Colour> studentList = bag.removeStudent(ExpertGameManager.instance().getNumPlayers()+1);
-            clouds.get(i).addGroup(new StudentGroup(studentList));
+        for(Cloud c : this.clouds){
+            StudentGroup studentList = bag.removeStudents(ExpertGameManager.instance().getNumPlayers()+1);
+            c.addGroup(new StudentGroup(studentList));
         }
     }
 
