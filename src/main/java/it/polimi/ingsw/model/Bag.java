@@ -19,6 +19,20 @@ public class Bag {
      * Fills the bag with all 26 students and puts a student each island (except for the one where mother nature is on and the opposite one)
      */
     public void inizializeIslands(){
+        for(Colour c : Colour.values()) { students.setNumStudents(2,c); }
+        int mnIndex = Board.instance().getMotherNature().getIslandIndex();
+        int oppositeOfMNIndex = mnIndex>6 ? mnIndex-6 : mnIndex+6;
+        ArrayList<Colour> extractedStudents = removeStudents(10);
+        int j = 0;
+        for(int i=1;i<=12;i++) {
+            if(i!=mnIndex && i!=oppositeOfMNIndex) {
+                Board.instance().getIslandManager().getIsland(i).addStudent(extractedStudents.get(j++));
+            }
+        }
+        for(Colour c : Colour.values()) { students.setNumStudents(24,c); }
+    }
+    //probably wrong
+    /*public void inizializeIslands(){
         for(Colour c : Colour.values()) { students.setNumStudents(26,c); }
         int mnIndex = Board.instance().getMotherNature().getIslandIndex();
         int oppositeOfMNIndex = mnIndex>6 ? mnIndex-6 : mnIndex+6;
@@ -29,26 +43,25 @@ public class Bag {
                 Board.instance().getIslandManager().getIsland(i).addStudent(c[generator.nextInt(c.length)]);
             }
         }
+    }*/
 
-    }
-    /*
     /**
      *
      * @param num the number of random students to remove
      * @return a list of randomly selected students
      */
-    /*public ArrayList<Colour> removeStudents(int num){
+    public ArrayList<Colour> removeStudents(int num){
         if(getNumOfStudents()>=num) {
             Random generator = new Random();
             ArrayList<Colour> ret = new ArrayList<>();
             Colour[] e = Colour.values();
             Colour c;
             int i = 0;
-            while (i<num && !this.students.empty()) {
+            while (i<num) {
                 c = e[generator.nextInt(e.length)];
-                if(this.students.getQuantityColour(c)>0) {
+                if(students.getQuantityColour(c)>0) {
                     ret.add(c);
-                    this.students.removeStudent(c);
+                    students.removeStudent(c);
                     i++;
                 }
             }
@@ -56,7 +69,7 @@ public class Bag {
         } else {
             return null;
         }
-    }*/
+    }
 
     /**
      *
@@ -98,35 +111,37 @@ public class Bag {
         students.setStudents(s);
     }
 
+    /*
     /**
      * Extracts the chosen number of students from the bag adding them in a StudentGroup
      * @param num It is the number of students to extract
      * @return the extracted students from the bag returning them in a StudentGroup
      */
+    /*
     public StudentGroup removeStudents(int num){
         StudentGroup ris = new StudentGroup();
         Random generator = new Random();
         Colour[] c = Colour.values();
         Colour extracted;
         if(getNumOfStudents()>=num){
-            for(int i = 0; i < num && !this.students.empty(); i++){
+            for(int i = 0; i < num && !students.empty(); i++){
                 extracted = c[generator.nextInt(c.length)];
-                if(this.students.getQuantityColour(extracted)>0){
+                if(students.getQuantityColour(extracted)>0){
                     ris.addStudent(extracted);
-                    this.students.removeStudent(extracted);
+                    students.removeStudent(extracted);
                 }
             }
             return ris;
         }
         return null;
-    }
+    }*/
 
     /**
      * Indicates if the bag is empty
      * @return a boolean value that indicates if the bag is empty
      */
     public boolean isEmpty(){
-        return this.students.empty();
+        return students.empty();
     }
 
 }

@@ -41,7 +41,7 @@ public class Board {
      */
     public void fillClouds(){
         for(Cloud c : this.clouds){
-            StudentGroup studentList = bag.removeStudents(ExpertGameManager.instance().getNumPlayers()+1);
+            StudentGroup studentList = new StudentGroup(bag.removeStudents(ExpertGameManager.instance().getNumPlayers()+1));
             c.addGroup(new StudentGroup(studentList));
         }
     }
@@ -87,21 +87,21 @@ public class Board {
     //is it better to reset the attributes or just creating new objects?
     public void reset(){
         bag.setStudents(new StudentGroup(26));
-        for(Cloud c: this.clouds) {
+        for(Cloud c: clouds) {
             c.clearStudents();
-            c.addGroup(this.bag.removeStudents(4));
+            c.addGroup(new StudentGroup(bag.removeStudents(4)));
         }
 
         for(Colour c: Colour.values()){
-            this.professorGroup.setTower(c,null);
+            professorGroup.setTower(c,null);
         }
         for(int i = 0; i <= 12; i++)
-            this.islandManager.getIsland(i).clearStudents();
-        this.bag.inizializeIslands();
+            islandManager.getIsland(i).clearStudents();
+        bag.inizializeIslands();
         Random generator;
         generator = new Random();
         int pos = generator.nextInt(12);
-        this.motherNature.setIsland(pos);
+        motherNature.setIsland(pos);
 
        /* for(int i = 0 ; i<12 ;i++){
             if(i!=pos || i!=(pos+6)%12)
