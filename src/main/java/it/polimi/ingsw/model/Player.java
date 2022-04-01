@@ -18,7 +18,7 @@ public class Player {
         this.dashboard.fillEntrance(s);
     }
 
-    public void moveToIsland(Colour c, int x){
+    public void moveToIsland(Colour c){
         this.dashboard.removeFromEntrance(c);
     }
     public void moveToHall(Colour c){

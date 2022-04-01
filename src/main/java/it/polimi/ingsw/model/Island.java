@@ -43,11 +43,23 @@ public class Island {
         return influence;
     }
 
+    /**
+     * Getter for the tower that controls the island
+     * @return the tower witch controls the island
+     */
     public Tower getTower() {
         return tower;
     }
 
+    /**
+     * Getter for the index of the island
+     * @return the number that identifies the island
+     */
     public int getIslandIndex() {
         return islandIndex;
+    }
+
+    public void clearStudents(){
+        this.students = new StudentGroup();
     }
 }

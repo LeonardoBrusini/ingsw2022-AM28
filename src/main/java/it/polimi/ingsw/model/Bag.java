@@ -74,13 +74,13 @@ public class Bag {
      * Removes the selected StudentGroup from the bag
      * @param group the group of students to remove from the bag
      */
-    public void removeStudent(StudentGroup group){
+    /*public void removeStudent(StudentGroup group){
         int val;
         for(Colour col: Colour.values()){
             val =- group.getQuantityColour(col)+students.getQuantityColour(col);
             students.setNumStudents(val,col);
         }
-    }
+    }*/
 
     /**
      * supports the operation of extracting the students from the bag

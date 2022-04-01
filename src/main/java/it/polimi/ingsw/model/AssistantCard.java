@@ -26,5 +26,6 @@ public class AssistantCard {
    }
 
     public void setPlayed() {
+        this.played = true;
     }
 }
