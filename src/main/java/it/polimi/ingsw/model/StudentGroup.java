@@ -83,18 +83,21 @@ public class StudentGroup {
         students.put(colour,(students.get(colour)+1));
     }
 
+    /**
+     * checks if the map is empty
+     * @return
+     */
     public boolean empty(){
-        boolean res;
-        res = true;
-        Colour[] e = Colour.values();
-
-        for(int i = 0; i< e.length && res; i++)
-            if(students.get(e[i])!=0)
-                res = false;
-
-        return res;
+        for(Colour c : Colour.values())
+            if(students.containsKey(c) && students.get(c)>0)
+                return false;
+        return true;
     }
 
+    /**
+     * copies the number of students in s on this group
+     * @param s
+     */
     public void setStudents(StudentGroup s){
         for(Colour c: Colour.values()){
             students.put(c,s.getQuantityColour(c));

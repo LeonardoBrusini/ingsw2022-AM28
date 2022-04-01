@@ -45,18 +45,6 @@ public class Board {
         }
     }
 
-    public MotherNature getMotherNature(){
-        return motherNature;
-    }
-
-    public Bag getBag() {
-        return bag;
-    }
-
-    public int getCoins() {
-        return coins;
-    }
-
     /**
      * removes the students from the clouds and returns them
      * @param pos the index of the cloud we want to take the students from
@@ -70,12 +58,29 @@ public class Board {
         return professorGroup;
     }
 
-    public void setProfessorGroup(Colour c, Tower t) {
+    /**
+     * assign a professor to a player (by the colour of his tower)
+     * @param c the colour of the professor
+     * @param t the tower of the player we want to assign the professor
+     */
+    public void assignProfessor(Colour c, Tower t) {
         professorGroup.setTower(c,t);
     }
 
     public IslandManager getIslandManager() {
         return islandManager;
+    }
+
+    public MotherNature getMotherNature(){
+        return motherNature;
+    }
+
+    public Bag getBag() {
+        return bag;
+    }
+
+    public int getCoins() {
+        return coins;
     }
 
     //is it better to reset the attributes or just creating new objects?

@@ -1,27 +1,26 @@
 package it.polimi.ingsw.model;
 
+/**
+ * a single student group which represents the student on the cloud, that players can take at the end of their turn
+ */
 public class Cloud {
     private StudentGroup students;
 
-    public StudentGroup getStudentsOnCloud() {
-        return students;
-    }
+    /**
+     * Constructor. initialize an empty student group
+     */
+    public Cloud(){ students = new StudentGroup(); }
 
-    public Cloud(){
-        students = new StudentGroup('0');
-    }
+    /**
+     *
+     * @return true if there are no students on the cloud, false otherwise
+     */
+    public boolean empty(){ return students.empty(); }
 
-    public boolean empty(){
-        return students.empty();
-    }
-
-    public void setStudents(StudentGroup group){
-        Colour[] e = Colour.values();
-        for(Colour c: e){
-            students.setNumStudents(group.getQuantityColour(c),c);
-        }
-    }
-
+    /**
+     * removes the students from the cloud
+     * @return the students who were on the cloud
+     */
     public StudentGroup clearStudents() {
         StudentGroup ret = new StudentGroup(students);
         Colour[] e = Colour.values();
@@ -31,10 +30,17 @@ public class Cloud {
         return ret;
     }
 
-
+    /**
+     * adds students on the cloud
+     * @param s
+     */
     public void addGroup(StudentGroup s){
         for(Colour c: Colour.values()){
             students.setNumStudents(students.getQuantityColour(c) + s.getQuantityColour(c),c);
         }
+    }
+
+    public StudentGroup getStudentsOnCloud() {
+        return students;
     }
 }

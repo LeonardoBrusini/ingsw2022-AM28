@@ -93,7 +93,7 @@ public class Bag {
     }
 
     public void setStudents(StudentGroup s){
-        this.students.setStudents(s);
+        students.setStudents(s);
     }
 
 

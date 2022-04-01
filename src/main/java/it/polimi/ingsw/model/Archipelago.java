@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 
+/**
+ * Archipelago is a list of islands
+ */
 public class Archipelago {
     private ArrayList<Island> islands;
     private boolean presenceMotherNature;
@@ -46,14 +49,26 @@ public class Archipelago {
         noEntryTiles += a.noEntryTiles;
     }
 
+    /**
+     *
+     * @return the index of the first island
+     */
     public int getFirstIslandIndex() {
         return firstIslandIndex;
     }
 
+    /**
+     *
+     * @return return the arraylist of the islands which make the archipelago
+     */
     public ArrayList<Island> getIslands() {
         return islands;
     }
 
+    /**
+     * sets if mother nature is on this island
+     * @param b
+     */
     public void setMotherNature(boolean b) {
         presenceMotherNature = b;
     }
