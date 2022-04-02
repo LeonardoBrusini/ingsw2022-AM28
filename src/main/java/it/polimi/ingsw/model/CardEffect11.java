@@ -1,15 +1,15 @@
 package it.polimi.ingsw.model;
 
-public class CardEffect1 implements EffectStrategy{
+public class CardEffect11 implements EffectStrategy{
     /**
-     * effect of the card 1: takes the selected student from the card and puts it on the selected island
-     * then gets a student from the bag and puts it on the card
+     * takes the selected student from the card and puts it on the hall, then extracts a random student from the bag and adds it on the card
      * @param c the card which is being activated
      */
     @Override
     public void resolveEffect(CharacterCard c) {
+        Dashboard d = c.getPlayerThisTurn().getDashboard();
         c.getStudentsOnCard().removeStudent(c.getSelectedColour());
-        c.getSelectedIsland().addStudent(c.getSelectedColour());
+        d.addToHall(c.getSelectedColour());
         c.getStudentsOnCard().addStudent(Board.instance().getBag().removeStudents(1).get(0));
     }
 }

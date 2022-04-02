@@ -84,6 +84,16 @@ public class StudentGroup {
     }
 
     /**
+     * adds the students in the parameter to the group
+     * @param s students to add
+     */
+    public void addStudents(StudentGroup s) {
+        for(Colour c : Colour.values()) {
+            students.put(c,students.get(c)+s.getQuantityColour(c));
+        }
+    }
+
+    /**
      * checks if the map is empty
      * @return
      */

@@ -11,8 +11,11 @@ public class CharacterCard {
     private Island selectedIsland;
     private boolean isActivated;
     private Colour selectedColour;
-    private Player palterThisTurn;
+    private Player playerThisTurn;
     private EffectStrategy effect;
+
+    //could be useful
+    //private boolean activable;
 
     /**
      * Card constructor.
@@ -125,12 +128,12 @@ public class CharacterCard {
         this.selectedColour = selectedColour;
     }
 
-    public Player getPalterThisTurn() {
-        return palterThisTurn;
+    public Player getPlayerThisTurn() {
+        return playerThisTurn;
     }
 
-    public void setPalterThisTurn(Player palterThisTurn) {
-        this.palterThisTurn = palterThisTurn;
+    public void setPlayerThisTurn(Player playerThisTurn) {
+        this.playerThisTurn = playerThisTurn;
     }
 
     public EffectStrategy getEffect() {

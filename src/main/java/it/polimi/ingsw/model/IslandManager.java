@@ -68,4 +68,12 @@ public class IslandManager {
         }
     }
 
+    public Archipelago getArchipelagoByIslandIndex(int islandIndex) {
+        for(Archipelago a : archipelagos) {
+            for(Island i : a.getIslands()) {
+                if(i.getIslandIndex()==islandIndex) return a;
+            }
+        }
+        return null;
+    }
 }

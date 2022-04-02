@@ -46,4 +46,8 @@ public class Player {
     public void playCard(int x){
         this.cards.get(x).setPlayed();
     }
+
+    public AssistantCard getLastPlayedCard() {
+        return lastPlayedCard;
+    }
 }

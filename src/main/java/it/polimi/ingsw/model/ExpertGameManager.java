@@ -54,4 +54,8 @@ public class ExpertGameManager {
         }
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
 }

@@ -124,4 +124,12 @@ public class Archipelago {
             }
         }
     }*/
+
+    public int getNoEntryTiles() {
+        return noEntryTiles;
+    }
+
+    public void setNoEntryTiles(int noEntryTiles) {
+        this.noEntryTiles = noEntryTiles;
+    }
 }

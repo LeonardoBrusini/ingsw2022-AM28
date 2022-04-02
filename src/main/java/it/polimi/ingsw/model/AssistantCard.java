@@ -7,25 +7,31 @@ public class AssistantCard {
     private boolean played;
 
     public AssistantCard(int mns,int tw,String name){
-        this.motherNatureShifts = mns;
-        this.turnWeight = tw;
-        this.fileName=name;
-        this.played = false;
+        motherNatureShifts = mns;
+        turnWeight = tw;
+        fileName = name;
+        played = false;
     }
 
     public int getMotherNatureShifts() {
-        return this.motherNatureShifts;
+        return motherNatureShifts;
     }
 
     public int getTurnWeight() {
-        return this.turnWeight;
+        return turnWeight;
     }
 
    public String getFileName(){
-        return this.fileName;
+        return fileName;
    }
 
     public void setPlayed() {
-        this.played = true;
+        played = true;
     }
+
+    public void setMotherNatureShifts(int motherNatureShifts) {
+        this.motherNatureShifts = motherNatureShifts;
+    }
+
+
 }

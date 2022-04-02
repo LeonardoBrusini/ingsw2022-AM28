@@ -16,10 +16,10 @@ public class Dashboard {
      */
 
     public Dashboard(int n,Tower t){
-        this.hall = new StudentGroup(0);
-        this.entrance = new StudentGroup(0);
-        this.numTower = n;
-        this.tower = t;
+        hall = new StudentGroup(0);
+        entrance = new StudentGroup(0);
+        numTower = n;
+        tower = t;
     }
 
     /**
@@ -29,7 +29,7 @@ public class Dashboard {
     public void fillEntrance(StudentGroup studentGroup){
         Colour[] e = Colour.values();
         for(Colour c: e){
-            this.entrance.setNumStudents(studentGroup.getQuantityColour(c),c);
+            entrance.setNumStudents(studentGroup.getQuantityColour(c),c);
         }
     }
 
@@ -39,13 +39,10 @@ public class Dashboard {
      */
     public void addToHall(Colour colour) {
         removeFromEntrance(colour);
-        this.hall.addStudent(colour);
-        if (Board.instance().getProfessorGroup().getTower(colour) == null){
-            Board.instance().getProfessorGroup().setTower(colour, this.tower);
-        }
-        /*else{
-            ExpertGameManager.instance().checkProfessors();
-        }*/
+        hall.addStudent(colour);
+        /*
+          ExpertGameManager.instance().checkProfessors();
+        */
     }
 
     /**
@@ -53,7 +50,7 @@ public class Dashboard {
      * @param colour It is the colour of the chosen student to remove
      */
     public void removeFromEntrance(Colour colour){
-        this.entrance.removeStudent(colour);
+        entrance.removeStudent(colour);
     }
 
     /**
@@ -62,20 +59,28 @@ public class Dashboard {
      * @return the number of students in the hall of the chosen colour
      */
     public int getNumStudentsHall(Colour colour){
-        return this.hall.getQuantityColour(colour);
+        return hall.getQuantityColour(colour);
     }
 
     /**
      * Increments the number of towers in the Dashboard
      */
     public void addTower(){
-        this.numTower++;
+        numTower++;
     }
 
     /**
      * Decrements the number of towers in the Dashboard
      */
     public void buildTower() {
-        this.numTower--;
+        numTower--;
+    }
+
+    public StudentGroup getEntrance() {
+        return entrance;
+    }
+
+    public StudentGroup getHall() {
+        return hall;
     }
 }
