@@ -62,4 +62,12 @@ public class Island {
     public void clearStudents(){
         this.students = new StudentGroup();
     }
+
+    public StudentGroup getStudents(){
+        return new StudentGroup(this.students);
+    }
+
+    public void setStudents(StudentGroup s){
+        this.students = new StudentGroup(s);
+    }
 }
