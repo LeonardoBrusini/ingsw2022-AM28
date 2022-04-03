@@ -71,6 +71,29 @@ public class Bag {
         }
     }
 
+    public StudentGroup removeStudentGroup(int n){
+        if(n<=this.totalStudents)
+            return students;
+        else{
+            StudentGroup ret = new StudentGroup();
+            for(int i = 0;i<n;i++){
+                int pos;
+                Colour c;
+                Colour[] e = Colour.values();
+                Random generator = new Random();
+                do{
+                    pos = generator.nextInt(e.length);
+                    c = e[pos];
+                }while(students.getQuantityColour(c) == 0);
+                students.removeStudent(c);
+                ret.addStudent(c);
+            }
+            return ret;
+        }
+
+
+    }
+
     /**
      *
      * @param group group of students which is going to be added to the bag
