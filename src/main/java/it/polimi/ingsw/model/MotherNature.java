@@ -10,9 +10,21 @@ public class MotherNature {
         int island = generator.nextInt(12)+1;
     }
 
-    /*public int computeInfluence(){
+    public int computeInfluence(Player player){
+        ProfessorGroup p = Board.instance().getProfessorGroup();
+        Tower t= player.getTower();
+        StudentGroup s;
+        Island i = Board.instance().getIslandManager().getIsland(this.island);
+        s = i.getStudents();
 
-    }*/
+        int res = 0;
+        for(Colour c: Colour.values()){
+            if(p.getTower(c).equals(t))
+                res+=s.getQuantityColour(c);
+        }
+
+        return res;
+    }
 
     public int getIslandIndex(){
         return island;
