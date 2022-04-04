@@ -84,10 +84,11 @@ public class Bag {
                 do{
                     pos = generator.nextInt(e.length);
                     c = e[pos];
-                }while(students.getQuantityColour(c) == 0);
-                students.removeStudent(c);
+                }while(this.students.getQuantityColour(c) == 0);
+                this.students.removeStudent(c);
                 ret.addStudent(c);
             }
+            totalStudents = totalStudents-n;
             return ret;
         }
 

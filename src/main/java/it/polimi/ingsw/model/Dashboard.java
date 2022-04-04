@@ -77,10 +77,14 @@ public class Dashboard {
     }
 
     public StudentGroup getEntrance() {
-        return entrance;
+        return new StudentGroup(entrance);
     }
 
     public StudentGroup getHall() {
-        return hall;
+        return new StudentGroup(hall);
+    }
+
+    public int getNumTower(){
+        return this.numTower;
     }
 }
