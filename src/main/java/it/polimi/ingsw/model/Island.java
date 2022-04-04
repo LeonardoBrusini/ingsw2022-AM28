@@ -23,10 +23,6 @@ public class Island {
         students.addStudent(c);
     }
 
-    public void setTower(Tower t) {
-        tower = t;
-    }
-
     /**
      * the influence of a player is the number of students on the island with the same colour as the professor the player owns, +1 is the player has his tower on the island
      * @param p the Player of witch the method will calculate the influence
@@ -43,23 +39,28 @@ public class Island {
         return influence;
     }
 
-    /**
-     * Getter for the tower that controls the island
-     * @return the tower witch controls the island
-     */
-    public Tower getTower() {
-        return tower;
+    public void clearStudents(){
+        students = new StudentGroup();
     }
 
-    /**
-     * Getter for the index of the island
-     * @return the number that identifies the island
-     */
+    //setter & getter for testing
+
+    public StudentGroup getStudents() {
+        return students;
+    }
+    public void setStudents(StudentGroup students) {
+        this.students = students;
+    }
     public int getIslandIndex() {
         return islandIndex;
     }
-
-    public void clearStudents(){
-        this.students = new StudentGroup();
+    public void setIslandIndex(int islandIndex) {
+        this.islandIndex = islandIndex;
+    }
+    public Tower getTower() {
+        return tower;
+    }
+    public void setTower(Tower tower) {
+        this.tower = tower;
     }
 }

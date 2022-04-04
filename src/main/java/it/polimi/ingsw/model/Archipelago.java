@@ -25,7 +25,7 @@ public class Archipelago {
 
     /**
      * sums the influence of the player p on every island in the archipelago
-     * @param p
+     * @param p the player selected
      * @return the total influence of the archipelago for the player p
      */
     public int playerInfluence(Player p) {
@@ -38,40 +38,45 @@ public class Archipelago {
 
     /**
      * adds the island in the archipelago parameter to this achipelago
-     * @param a
+     * @param a archipelago to merge
      */
-    public void merge(Archipelago a) {
-        for(Island i : a.islands) {
-            islands.add(i);
+    public Archipelago merge(Archipelago a) {
+        if(a.firstIslandIndex+a.islands.size()-12==firstIslandIndex || a.firstIslandIndex+a.islands.size()==firstIslandIndex) {
+            return a.merge(this);
         }
-        if(a.firstIslandIndex+a.islands.size()>12) firstIslandIndex = a.firstIslandIndex;
+        islands.addAll(a.islands);
         presenceMotherNature = presenceMotherNature || a.presenceMotherNature;
         noEntryTiles += a.noEntryTiles;
+        return this;
     }
 
-    /**
-     *
-     * @return the index of the first island
-     */
+    //getters & setters
+
     public int getFirstIslandIndex() {
         return firstIslandIndex;
     }
-
-    /**
-     *
-     * @return return the arraylist of the islands which make the archipelago
-     */
+    public void setFirstIslandIndex(int firstIslandIndex) {
+        this.firstIslandIndex = firstIslandIndex;
+    }
     public ArrayList<Island> getIslands() {
         return islands;
     }
-
-    /**
-     * sets if mother nature is on this island
-     * @param b
-     */
-    public void setMotherNature(boolean b) {
-        presenceMotherNature = b;
+    public void setIslands(ArrayList<Island> islands) {
+        this.islands = islands;
     }
+    public boolean isPresenceMotherNature() {
+        return presenceMotherNature;
+    }
+    public void setPresenceMotherNature(boolean presenceMotherNature) {
+        this.presenceMotherNature = presenceMotherNature;
+    }
+    public int getNoEntryTiles() {
+        return noEntryTiles;
+    }
+    public void setNoEntryTiles(int noEntryTiles) {
+        this.noEntryTiles = noEntryTiles;
+    }
+
 
     /*public Archipelago(Island input, Island output){
         super(input.getPosIndex());
@@ -125,11 +130,4 @@ public class Archipelago {
         }
     }*/
 
-    public int getNoEntryTiles() {
-        return noEntryTiles;
-    }
-
-    public void setNoEntryTiles(int noEntryTiles) {
-        this.noEntryTiles = noEntryTiles;
-    }
 }
