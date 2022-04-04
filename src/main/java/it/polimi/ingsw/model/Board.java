@@ -97,7 +97,7 @@ public class Board {
         }
         for(int i = 0; i <= 12; i++)
             islandManager.getIsland(i).clearStudents();
-        bag.inizializeIslands();
+        bag.initializeIslands();
         Random generator;
         generator = new Random();
         int pos = generator.nextInt(12);

@@ -84,9 +84,7 @@ public class CharacterCard {
         return selectedStudentsFrom;
     }
 
-    public void setSelectedStudentsFrom(StudentGroup selectedStudentsFrom) {
-        this.selectedStudentsFrom = selectedStudentsFrom;
-    }
+    public void setSelectedStudentsFrom(StudentGroup selectedStudentsFrom) { this.selectedStudentsFrom = selectedStudentsFrom; }
 
     public StudentGroup getSelectedStudentsTo() {
         return selectedStudentsTo;
@@ -142,5 +140,9 @@ public class CharacterCard {
 
     public void setEffect(EffectStrategy effect) {
         this.effect = effect;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }
