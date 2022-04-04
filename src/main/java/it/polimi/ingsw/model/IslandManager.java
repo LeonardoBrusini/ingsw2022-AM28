@@ -14,12 +14,12 @@ public class IslandManager {
         for(int i=1; i<=12; i++) {
             archipelagos.add(new Archipelago(i));
         }
-        archipelagos.get(mnIndex).setMotherNature(true);
+        archipelagos.get(mnIndex-1).setPresenceMotherNature(true);
     }
 
     /**
      *
-     * @param islandIndex
+     * @param islandIndex the index of the island to find
      * @return the island object with "islandIndex" index
      */
     public Island getIsland(int islandIndex) {
@@ -35,39 +35,52 @@ public class IslandManager {
      * checks if an archipelago is next to another one with same towers, if so, merges them
      * @param islandIndex has to be one of the firstIslandIndex of one of the archipelagos
      */
-    public void checkAggregation(int islandIndex) {
+    private void checkAggregation(int islandIndex) {
         int archipelagoIndex=0;
         for(int i=0;i<archipelagos.size(); i++) {
-            if(archipelagos.get(i).getFirstIslandIndex()==islandIndex) archipelagoIndex = i;
+            for (int j=0;j<archipelagos.get(i).getIslands().size();j++) {
+                if(archipelagos.get(i).getIslands().get(j).getIslandIndex()==islandIndex){
+                    archipelagoIndex = i;
+                    break;
+                }
+            }
         }
+
+        if(archipelagos.get(archipelagoIndex).getIslands().get(0).getTower()==null) return;
 
         //checking the next archipelago
         if(archipelagoIndex<archipelagos.size()-1) {
-            if(archipelagos.get(archipelagoIndex).getIslands().get(0).getTower().equals(archipelagos.get(archipelagoIndex+1).getIslands().get(0).getTower())) {
-                archipelagos.get(archipelagoIndex).merge(archipelagos.get(archipelagoIndex+1));
+            if(archipelagos.get(archipelagoIndex).getIslands().get(0).getTower()==archipelagos.get(archipelagoIndex+1).getIslands().get(0).getTower()) {
+                archipelagos.set(archipelagoIndex, archipelagos.get(archipelagoIndex).merge(archipelagos.get(archipelagoIndex+1)));
                 archipelagos.remove(archipelagoIndex+1);
             }
         } else {
-            if(archipelagos.get(archipelagoIndex).getIslands().get(0).getTower().equals(archipelagos.get(0).getIslands().get(0).getTower())) {
-                archipelagos.get(archipelagoIndex).merge(archipelagos.get(0));
+            if(archipelagos.get(archipelagoIndex).getIslands().get(0).getTower()==archipelagos.get(0).getIslands().get(0).getTower()) {
+                archipelagos.set(archipelagoIndex, archipelagos.get(archipelagoIndex).merge(archipelagos.get(0)));
                 archipelagos.remove(0);
+                archipelagoIndex--;
             }
         }
 
         //checking the one before
         if(archipelagoIndex>0) {
-            if(archipelagos.get(archipelagoIndex).getIslands().get(0).getTower().equals(archipelagos.get(archipelagoIndex-1).getIslands().get(0).getTower())) {
-                archipelagos.get(archipelagoIndex).merge(archipelagos.get(archipelagoIndex-1));
+            if(archipelagos.get(archipelagoIndex).getIslands().get(0).getTower()==archipelagos.get(archipelagoIndex-1).getIslands().get(0).getTower()) {
+                archipelagos.set(archipelagoIndex,archipelagos.get(archipelagoIndex).merge(archipelagos.get(archipelagoIndex-1)));
                 archipelagos.remove(archipelagoIndex-1);
             }
         } else {
-            if(archipelagos.get(archipelagoIndex).getIslands().get(0).getTower().equals(archipelagos.get(archipelagos.size()-1).getIslands().get(0).getTower())) {
-                archipelagos.get(archipelagoIndex).merge(archipelagos.get(archipelagos.size()-1));
+            if(archipelagos.get(archipelagoIndex).getIslands().get(0).getTower()==archipelagos.get(archipelagos.size()-1).getIslands().get(0).getTower()) {
+                archipelagos.set(archipelagoIndex, archipelagos.get(archipelagoIndex).merge(archipelagos.get(archipelagos.size()-1)));
                 archipelagos.remove(archipelagos.size()-1);
             }
         }
     }
 
+    /**
+     *
+     * @param islandIndex the index of the island we want to know on which archipelago it is
+     * @return the archipelago containing the selected island
+     */
     public Archipelago getArchipelagoByIslandIndex(int islandIndex) {
         for(Archipelago a : archipelagos) {
             for(Island i : a.getIslands()) {
@@ -75,5 +88,23 @@ public class IslandManager {
             }
         }
         return null;
+    }
+
+    /**
+     * puts the selected tower to the selected island and checks a possible aggregation of archipelagos
+     * @param tower colour of the tower
+     * @param islandIndex the index of the island we want to build the tower
+     */
+    public void setTowerOnIsland(Tower tower, int islandIndex) {
+        getIsland(islandIndex).setTower(tower);
+        checkAggregation(islandIndex);
+    }
+
+    //getters & setters for testing
+    public ArrayList<Archipelago> getArchipelagos() {
+        return archipelagos;
+    }
+    public void setArchipelagos(ArrayList<Archipelago> archipelagos) {
+        this.archipelagos = archipelagos;
     }
 }

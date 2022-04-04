@@ -8,16 +8,16 @@ import java.util.Random;
  */
 public class Bag {
     private StudentGroup students;
-    private int totalStudents;
 
     public Bag(){
         students = new StudentGroup();
     }
 
     /**
-     * Fills the bag with all 26 students and puts a student each island (except for the one where mother nature is on and the opposite one)
+     * Fills the bag with 2 students each colour students and puts a student each island (except for the one where mother nature is on and the opposite one)
+     * Then fills the bag with 24 students each colour
      */
-    public void inizializeIslands(){
+    public void initializeIslands(){
         for(Colour c : Colour.values()) { students.setNumStudents(2,c); }
         int mnIndex = Board.instance().getMotherNature().getIslandIndex();
         int oppositeOfMNIndex = mnIndex>6 ? mnIndex-6 : mnIndex+6;
@@ -31,7 +31,7 @@ public class Bag {
         for(Colour c : Colour.values()) { students.setNumStudents(24,c); }
     }
     //probably wrong
-    /*public void inizializeIslands(){
+    /*public void initializeIslands(){
         for(Colour c : Colour.values()) { students.setNumStudents(26,c); }
         int mnIndex = Board.instance().getMotherNature().getIslandIndex();
         int oppositeOfMNIndex = mnIndex>6 ? mnIndex-6 : mnIndex+6;
@@ -106,7 +106,7 @@ public class Bag {
         }
     }
 
-    /**
+   /* /**
      * Removes the selected StudentGroup from the bag
      * @param group the group of students to remove from the bag
      */
@@ -159,12 +159,9 @@ public class Bag {
         return null;
     }*/
 
-    /**
-     * Indicates if the bag is empty
-     * @return a boolean value that indicates if the bag is empty
-     */
     public boolean isEmpty(){
         return students.empty();
     }
 
+    public StudentGroup getStudents() { return students; }
 }

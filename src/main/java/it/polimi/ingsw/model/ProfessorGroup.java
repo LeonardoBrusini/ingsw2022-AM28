@@ -46,4 +46,12 @@ public class ProfessorGroup {
                 ret.add(c);
         return ret;
     }
+
+    //setter & getter methods, for testing
+    public EnumMap<Colour, Tower> getProfessors() {
+        return professors;
+    }
+    public void setProfessors(EnumMap<Colour, Tower> professors) {
+        this.professors = professors;
+    }
 }

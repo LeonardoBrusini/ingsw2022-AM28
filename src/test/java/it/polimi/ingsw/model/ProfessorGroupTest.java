@@ -15,30 +15,96 @@ class ProfessorGroupTest {
     @BeforeEach
     void initializeProfessors() {
         pg = new ProfessorGroup();
+        for (Colour c: Colour.values()) assertFalse(pg.getProfessors().containsKey(c));
     }
 
     @Test
     void getTower() {
-
+        for (Colour c: Colour.values()) {
+            pg.setTower(c,null);
+            assertEquals(pg.getTower(c),pg.getProfessors().get(c));
+            pg.setTower(c,Tower.WHITE);
+            assertEquals(pg.getTower(c),pg.getProfessors().get(c));
+            pg.setTower(c,Tower.BLACK);
+            assertEquals(pg.getTower(c),pg.getProfessors().get(c));
+            pg.setTower(c,Tower.GRAY);
+            assertEquals(pg.getTower(c),pg.getProfessors().get(c));
+        }
+        ProfessorGroup pg2 = new ProfessorGroup();
+        for (Colour c : Colour.values()) {
+            for (Colour c1 : Colour.values()) {
+                pg2.setTower(c1,pg.getProfessors().get(c1));
+                assertEquals(pg.getTower(c1),pg2.getTower(c1));
+            }
+            pg.setTower(c,null);
+            assertEquals(pg.getTower(c),pg.getProfessors().get(c));
+            for (Colour c1 : Colour.values()) {
+                if(c!=c1) assertEquals(pg2.getTower(c1),pg.getTower(c1));
+            }
+            pg.setTower(c,Tower.WHITE);
+            assertEquals(pg.getTower(c),pg.getProfessors().get(c));
+            for (Colour c1 : Colour.values()) {
+                if(c!=c1) assertEquals(pg2.getTower(c1),pg.getTower(c1));
+            }
+            pg.setTower(c,Tower.BLACK);
+            assertEquals(pg.getTower(c),pg.getProfessors().get(c));
+            for (Colour c1 : Colour.values()) {
+                if(c!=c1) assertEquals(pg2.getTower(c1),pg.getTower(c1));
+            }
+            pg.setTower(c,Tower.GRAY);
+            assertEquals(pg.getTower(c),pg.getProfessors().get(c));
+            for (Colour c1 : Colour.values()) {
+                if(c!=c1) assertEquals(pg2.getTower(c1),pg.getTower(c1));
+            }
+        }
     }
 
-    @RepeatedTest(value = 100)
+    @Test
     void setTower() {
-        Random r = new Random();
-        Colour c = Colour.values()[r.nextInt(Colour.values().length)];
-        Tower t = Tower.values()[r.nextInt(Tower.values().length)];
-        Tower t2 = Tower.values()[r.nextInt(Tower.values().length)];
-        pg.setTower(c,t);
-        assertEquals(t,pg.getTower(c));
-        pg.setTower(c,t2);
-        assertEquals(t2,pg.getTower(c));
+        for (Colour c: Colour.values()) {
+            pg.setTower(c,null);
+            assertNull(pg.getProfessors().get(c));
+            pg.setTower(c,Tower.WHITE);
+            assertEquals(Tower.WHITE,pg.getProfessors().get(c));
+            pg.setTower(c,Tower.BLACK);
+            assertEquals(Tower.BLACK,pg.getProfessors().get(c));
+            pg.setTower(c,Tower.GRAY);
+            assertEquals(Tower.GRAY,pg.getProfessors().get(c));
+        }
+        ProfessorGroup pg2 = new ProfessorGroup();
+        for (Colour c : Colour.values()) {
+            for (Colour c1 : Colour.values()) {
+                pg2.setTower(c1,pg.getProfessors().get(c1));
+                assertEquals(pg.getProfessors().get(c1),pg2.getProfessors().get(c1));
+            }
+            pg.setTower(c,null);
+            assertNull(pg.getProfessors().get(c));
+            for (Colour c1 : Colour.values()) {
+                if(c!=c1) assertEquals(pg2.getProfessors().get(c1),pg.getProfessors().get(c1));
+            }
+            pg.setTower(c,Tower.WHITE);
+            assertEquals(Tower.WHITE,pg.getProfessors().get(c));
+            for (Colour c1 : Colour.values()) {
+                if(c!=c1) assertEquals(pg2.getProfessors().get(c1),pg.getProfessors().get(c1));
+            }
+            pg.setTower(c,Tower.BLACK);
+            assertEquals(Tower.BLACK,pg.getProfessors().get(c));
+            for (Colour c1 : Colour.values()) {
+                if(c!=c1) assertEquals(pg2.getProfessors().get(c1),pg.getProfessors().get(c1));
+            }
+            pg.setTower(c,Tower.GRAY);
+            assertEquals(Tower.GRAY,pg.getProfessors().get(c));
+            for (Colour c1 : Colour.values()) {
+                if(c!=c1) assertEquals(pg2.getProfessors().get(c1),pg.getProfessors().get(c1));
+            }
+        }
     }
 
     @Test
     void getColours() {
         //pg vouto
         for(Tower t : Tower.values()) {
-            assertEquals(true,pg.getColours(t).isEmpty());
+            assertTrue(pg.getColours(t).isEmpty());
         }
 
         //pg semipieno
