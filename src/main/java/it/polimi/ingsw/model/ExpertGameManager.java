@@ -58,4 +58,22 @@ public class ExpertGameManager {
         return players;
     }
 
+    public void checkProfessors(){
+        for(Colour c:Colour.values()) {
+            int valmax = players.get(0).getDashboard().getNumStudentsHall(c);
+            int tmp;
+            int posmax=0;
+            for (int i = 1; i < players.size(); i++) {
+                tmp =players.get(i).getDashboard().getNumStudentsHall(c);
+                if(tmp>valmax)
+                    posmax=i;
+            }
+
+            Tower towermax = players.get(posmax).getTower();
+            Board.instance().assignProfessor(c,towermax);
+
+        }
+
+    }
+
 }
