@@ -96,7 +96,9 @@ public class IslandManager {
      * @param islandIndex the index of the island we want to build the tower
      */
     public void setTowerOnIsland(Tower tower, int islandIndex) {
-        getIsland(islandIndex).setTower(tower);
+        Island i = getIsland(islandIndex);
+
+        i.setTower(tower);
         checkAggregation(islandIndex);
     }
 
