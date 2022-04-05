@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class ExpertGameManager {
     private ArrayList<Player> players = new ArrayList<>();
     private int numPlayers;
-    private Board board;
+    //private Board board;
     private static ExpertGameManager instance;
 
 
     public ExpertGameManager() {
-
+        this.numPlayers = 0;
     }
 
     public static ExpertGameManager instance() {
@@ -22,7 +22,7 @@ public class ExpertGameManager {
 
     public void newGame(int numPlayers){
        this.numPlayers = numPlayers;
-       this.board.reset();
+       Board.instance().reset();
        // to be continued
     }
     public void addPlayer(String s){
@@ -42,15 +42,15 @@ public class ExpertGameManager {
     }
     public void moveStudentToIsland(int p, Colour c, int is){
         this.players.get(p).moveToIsland(c);
-        this.board.getIslandManager().getIsland(is).addStudent(c);
+        Board.instance().getIslandManager().getIsland(is).addStudent(c);
     }
 
     public void moveMotherNature(int moves){
-        int pos = moves + this.board.getMotherNature().getIslandIndex();
+        int pos = moves + Board.instance().getMotherNature().getIslandIndex();
         if(pos < 12) {
-            this.board.getMotherNature().setIsland(pos);
+            Board.instance().getMotherNature().setIsland(pos);
         }else{
-            this.board.getMotherNature().setIsland(pos%12);
+            Board.instance().getMotherNature().setIsland(pos%12);
         }
     }
 
@@ -68,10 +68,8 @@ public class ExpertGameManager {
                 if(tmp>valmax)
                     posmax=i;
             }
-
-            Tower towermax = players.get(posmax).getTower();
+            Tower towermax = this.players.get(posmax).getTower();
             Board.instance().assignProfessor(c,towermax);
-
         }
 
     }
