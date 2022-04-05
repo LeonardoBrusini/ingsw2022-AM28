@@ -8,6 +8,7 @@ import java.util.Random;
  */
 public class Bag {
     private StudentGroup students;
+    private int totalStudents = 130;
 
     public Bag(){
         students = new StudentGroup();

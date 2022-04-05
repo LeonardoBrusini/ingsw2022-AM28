@@ -45,12 +45,12 @@ public class Island {
 
     //setter & getter for testing
 
-    public StudentGroup getStudents() {
+    /*public StudentGroup getStudents() {
         return students;
     }
     public void setStudents(StudentGroup students) {
         this.students = students;
-    }
+    }*/
     public int getIslandIndex() {
         return islandIndex;
     }
