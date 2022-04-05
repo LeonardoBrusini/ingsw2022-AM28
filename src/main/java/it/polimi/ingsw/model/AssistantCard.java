@@ -33,5 +33,9 @@ public class AssistantCard {
         this.motherNatureShifts = motherNatureShifts;
     }
 
+    public boolean getPlayed(){
+        return this.played;
+    }
+
 
 }
