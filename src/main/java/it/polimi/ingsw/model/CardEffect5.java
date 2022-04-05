@@ -7,7 +7,7 @@ public class CardEffect5 implements EffectStrategy{
      */
     @Override
     public void resolveEffect(CharacterCard c) {
-        Archipelago a = Board.instance().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex());
+        Archipelago a = Board.instance().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()); //parametro in CharacterCard
         if(c.getNoEntryTiles()>0) {
             a.setNoEntryTiles(a.getNoEntryTiles()+1);
             c.setNoEntryTiles(c.getNoEntryTiles()-1);

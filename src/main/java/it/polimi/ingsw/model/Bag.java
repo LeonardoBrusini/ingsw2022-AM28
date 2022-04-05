@@ -20,7 +20,7 @@ public class Bag {
      */
     public void initializeIslands(){
         for(Colour c : Colour.values()) { students.setNumStudents(2,c); }
-        int mnIndex = Board.instance().getMotherNature().getIslandIndex();
+        int mnIndex = Board.instance().getMotherNature().getIslandIndex(); //diventa parametro
         int oppositeOfMNIndex = mnIndex>6 ? mnIndex-6 : mnIndex+6;
         ArrayList<Colour> extractedStudents = removeStudents(10);
         int j = 0;

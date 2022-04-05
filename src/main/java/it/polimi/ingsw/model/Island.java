@@ -31,7 +31,7 @@ public class Island {
     public int playerInfluence(Player p) {
         int influence = 0;
         for(Colour c : Colour.values()) {
-            if(Board.instance().getProfessorGroup().getTower(c).equals(p.getTower())) {
+            if(Board.instance().getProfessorGroup().getTower(c).equals(p.getTower())) { //diventa parametro
                 influence += students.getQuantityColour(c);
             }
         }
