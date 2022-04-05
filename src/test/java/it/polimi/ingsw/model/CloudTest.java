@@ -9,15 +9,15 @@ class CloudTest {
 
     @Test
     void empty() {
-        this.c = new Cloud();
-        assertEquals(true,c.empty());
-        this.c.addGroup(new StudentGroup(5));
-        assertEquals(false,c.empty());
+        c = new Cloud();
+        assertTrue(c.empty());
+        c.addGroup(new StudentGroup(5));
+        assertFalse(c.empty());
     }
 
     @Test
     void clearStudents() {
-        this.c = new Cloud();
+        c = new Cloud();
         c.addGroup(new StudentGroup(5));
         c.clearStudents();
         for(Colour colour : Colour.values()){

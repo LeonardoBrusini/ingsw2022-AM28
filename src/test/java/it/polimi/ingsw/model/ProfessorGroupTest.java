@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -102,12 +100,12 @@ class ProfessorGroupTest {
 
     @Test
     void getColours() {
-        //pg vouto
+        //pg empty
         for(Tower t : Tower.values()) {
             assertTrue(pg.getColours(t).isEmpty());
         }
 
-        //pg semipieno
+        //pg half-empty
         pg.setTower(Colour.YELLOW,Tower.BLACK);
         pg.setTower(Colour.GREEN,Tower.BLACK);
         ArrayList<Colour> listBlack = pg.getColours(Tower.BLACK);
@@ -119,7 +117,7 @@ class ProfessorGroupTest {
         assertEquals(Colour.YELLOW,listBlack.get(0));
         assertEquals(Colour.GREEN,listBlack.get(1));
 
-        //pg pieno
+        //pg full
         pg.setTower(Colour.YELLOW,Tower.BLACK);
         pg.setTower(Colour.GREEN,Tower.GRAY);
         pg.setTower(Colour.BLUE,Tower.WHITE);
