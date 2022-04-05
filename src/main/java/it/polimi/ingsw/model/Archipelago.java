@@ -25,14 +25,15 @@ public class Archipelago {
 
     /**
      * sums the influence of the player p on every island in the archipelago
-     * @param p the player selected
+     * @param t the tower selected
      * @return the total influence of the archipelago for the player p
      */
-    public int playerInfluence(Player p) {
+    public int playerInfluence(Tower t) {
         int influence = 0;
         for(Island i : islands) {
-            influence += i.playerInfluence(p);
+            influence += i.playerInfluence(t);
         }
+
         return influence;
     }
 

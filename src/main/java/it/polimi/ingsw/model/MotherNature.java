@@ -58,4 +58,16 @@ public class MotherNature {
     public void setIsland(int pos){
         island = pos;
     }
+
+    public Tower computeInfluence(){
+        Archipelago a = Board.instance().getIslandManager().getArchipelagoByIslandIndex(island);
+
+        Tower[] e = Tower.values();
+        Tower max = e[0];
+        for(int i = 1; i< e.length;i++){
+            if(a.playerInfluence(e[i]) > a.playerInfluence(max))
+                max = e[i];
+        }
+        return max;
+    }
 }
