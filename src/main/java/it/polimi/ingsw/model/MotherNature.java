@@ -11,15 +11,15 @@ public class MotherNature {
         island = generator.nextInt(12)+1;
     }
 
-
-
+   /* /**
+     * mother nature puts the tower on the island she's on if one of the Players has more students on it then others
 
     public void computeInfluence() {
-        Archipelago a = Board.instance().getIslandManager().getArchipelagoByIslandIndex(island); //diventa parametro
+        Archipelago a = Board.instance().getIslandManager().getArchipelagoByIslandIndex(island);
         int maxInfluence = -1;
         Player winningPlayer = null;
         int influence;
-        for(Player p : ExpertGameManager.instance().getPlayers()) { //diventa parametro
+        for(Player p : ExpertGameManager.instance().getPlayers()) {
             influence = a.playerInfluence(p);
             if(influence==maxInfluence) {
                 winningPlayer = null;
@@ -28,14 +28,14 @@ public class MotherNature {
                 winningPlayer = p;
             }
         }
-        if(winningPlayer!=null && winningPlayer.getTower()!=Board.instance().getIslandManager().getIsland(island).getTower()) { //diventa parametro
+        if(winningPlayer!=null && winningPlayer.getTower()!=Board.instance().getIslandManager().getIsland(island).getTower()) {
 
             winningPlayer.getDashboard().buildTower();
         }
-    }
+    }*/
 
-
-   /* public int computeInfluence(Player player){
+    /*
+    public int computeInfluence(Player player){
         ProfessorGroup p = Board.instance().getProfessorGroup();
         Tower t= player.getTower();
         StudentGroup s;

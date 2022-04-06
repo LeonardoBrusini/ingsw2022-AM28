@@ -12,17 +12,17 @@ public class Player {
 
     public Player(String n){
         this.nickname = n;
-        this.dashboard = new Dashboard(8,this.hisTower);
+        this.dashboard = new Dashboard(8,hisTower);
     }
     public void fillDashboard(StudentGroup s){
-        this.dashboard.fillEntrance(s);
+        dashboard.fillEntrance(s);
     }
 
     public void moveToIsland(Colour c){
-        this.dashboard.removeFromEntrance(c);
+        dashboard.removeFromEntrance(c);
     }
     public void moveToHall(Colour c){
-        this.dashboard.addToHall(c);
+        dashboard.addToHall(c);
     }
 
     public Tower getTower(){
@@ -35,16 +35,16 @@ public class Player {
     }
 
     public int getCoins(){
-        return this.coins;
+        return coins;
     }
     public void addCoin(){
-        this.coins++;
+        coins++;
     }
     public void spendCoins(int x){
-        this.coins = this.coins - x;
+        coins -= x;
     }
     public void playCard(int x){
-        this.cards.get(x).setPlayed();
+        cards.get(x).setPlayed();
     }
 
     public AssistantCard getLastPlayedCard() {

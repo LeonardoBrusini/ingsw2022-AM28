@@ -21,6 +21,7 @@ public class FactoryCharacterCards {
             }
             if(newCard) {
                 cards.add(getCardFromName(name));
+                i++;
             }
         }
         return cards;

@@ -22,7 +22,7 @@ public class ExpertGameManager {
 
     public void newGame(int numPlayers){
        this.numPlayers = numPlayers;
-       this.board.reset();
+       this.board.resetInstance();
        // to be continued
     }
     public void addPlayer(String s){

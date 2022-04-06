@@ -10,20 +10,23 @@ public class Board {
     private MotherNature motherNature;
     private Bag bag;
     private ProfessorGroup professorGroup;
+    private ArrayList<CharacterCard> characterCards;
     private static Board instance;
 
     /**
-     * Board constructor. Initializes coins, clouds, motherNature, islands (via IslandManager), bag and professorGroup
+     * Board constructor. Initialize coins, clouds, motherNature, islands (via IslandManager), bag and professorGroup
      */
     private Board(){
         coins = 20;
-        for(int i = 0 ;i<ExpertGameManager.instance().getNumPlayers() ; i++){
-            this.clouds.add(new Cloud());
-        }
+        clouds = new ArrayList<>();
+        /*for(int i = 0 ;i<ExpertGameManager.instance().getNumPlayers() ; i++){
+            clouds.add(new Cloud());
+        }*/
         motherNature = new MotherNature();
         islandManager = new IslandManager(motherNature.getIslandIndex());
         professorGroup = new ProfessorGroup();
         bag = new Bag();
+        bag.initializeIslands(motherNature.getIslandIndex(), islandManager);
     }
 
     /**
@@ -31,8 +34,11 @@ public class Board {
      * @return the instance of the Board if it is exists, otherwise it calls the Board's constructor
      */
     public static Board instance(){
-        if(Board.instance==null)
+        if(instance==null) {
             instance = new Board();
+            instance.setCharacterCards(FactoryCharacterCards.getCards());
+        }
+
         return instance;
     }
 
@@ -55,10 +61,6 @@ public class Board {
         return clouds.get(pos).clearStudents();
     }
 
-    public ProfessorGroup getProfessorGroup() {
-        return professorGroup;
-    }
-
     /**
      * assign a professor to a player (by the colour of his tower)
      * @param c the colour of the professor
@@ -68,25 +70,10 @@ public class Board {
         professorGroup.setTower(c,t);
     }
 
-    public IslandManager getIslandManager() {
-        return islandManager;
-    }
-
-    public MotherNature getMotherNature(){
-        return motherNature;
-    }
-
-    public Bag getBag() {
-        return bag;
-    }
-
-    public int getCoins() {
-        return coins;
-    }
-
     //is it better to reset the attributes or just creating new objects?
-    public void reset(){
-        bag.setStudents(new StudentGroup(26));
+    /*public void reset(){
+        bag = new Bag();
+
         for(Cloud c: clouds) {
             c.clearStudents();
             c.addGroup(new StudentGroup(bag.removeStudents(4)));
@@ -106,6 +93,67 @@ public class Board {
        /* for(int i = 0 ; i<12 ;i++){
             if(i!=pos || i!=(pos+6)%12)
                 this.islands.get(i).setStudentGroup(this.bag.removeStudents(1));
-        }*/
+        }
+    }*/
+    public void resetInstance() {
+        instance = new Board();
+        instance.setCharacterCards(FactoryCharacterCards.getCards());
+    }
+
+    //getters & setters for testing
+    public IslandManager getIslandManager() {
+        return islandManager;
+    }
+
+    public MotherNature getMotherNature(){
+        return motherNature;
+    }
+
+    public Bag getBag() {
+        return bag;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public ArrayList<Cloud> getClouds() {
+        return clouds;
+    }
+
+    public void setClouds(ArrayList<Cloud> clouds) {
+        this.clouds = clouds;
+    }
+
+    public void setIslandManager(IslandManager islandManager) {
+        this.islandManager = islandManager;
+    }
+
+    public void setMotherNature(MotherNature motherNature) {
+        this.motherNature = motherNature;
+    }
+
+    public void setBag(Bag bag) {
+        this.bag = bag;
+    }
+
+    public ProfessorGroup getProfessorGroup() {
+        return professorGroup;
+    }
+
+    public void setProfessorGroup(ProfessorGroup professorGroup) {
+        this.professorGroup = professorGroup;
+    }
+
+    public ArrayList<CharacterCard> getCharacterCards() {
+        return characterCards;
+    }
+
+    public void setCharacterCards(ArrayList<CharacterCard> characterCards) {
+        this.characterCards = characterCards;
     }
 }
