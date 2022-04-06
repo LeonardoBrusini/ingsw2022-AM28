@@ -12,7 +12,6 @@ public class ExpertGameManager {
 
     public ExpertGameManager() {
         this.numPlayers = 0;
-        this.board = new Board(this.numPlayers);
     }
 
     /*public static ExpertGameManager instance() {
@@ -24,7 +23,7 @@ public class ExpertGameManager {
 
     public void newGame(int numPlayers){
        this.numPlayers = numPlayers;
-       this.board.reset();
+       this.board = new Board(this.numPlayers);
        // to be continued
     }
     public void addPlayer(String s){
