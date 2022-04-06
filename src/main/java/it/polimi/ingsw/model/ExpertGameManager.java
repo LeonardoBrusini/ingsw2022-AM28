@@ -3,24 +3,24 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 
 public class ExpertGameManager {
-    private ArrayList<Player> players = new ArrayList<>();
+    private final ArrayList<Player> players = new ArrayList<>();
     private int numPlayers;
     //private Board board;
-    private static ExpertGameManager instance;
+    //private static ExpertGameManager instance;
     public Board board;
 
 
     public ExpertGameManager() {
         this.numPlayers = 0;
-        this.board = new Board();
+        this.board = new Board(this.numPlayers);
     }
 
-    public static ExpertGameManager instance() {
+    /*public static ExpertGameManager instance() {
         if(instance == null) {
             instance = new ExpertGameManager();
         }
         return instance;
-    }
+    }*/
 
     public void newGame(int numPlayers){
        this.numPlayers = numPlayers;

@@ -7,7 +7,7 @@ import java.util.Random;
  * represents a bag of students. Other board components who need students usually extract them randomly from the bag
  */
 public class Bag {
-    private StudentGroup students;
+    private final StudentGroup students;
     private int totalStudents = 130;
 
     public Bag(){

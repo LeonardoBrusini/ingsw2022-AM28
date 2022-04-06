@@ -14,9 +14,9 @@ public class Board {
     /**
      * Board constructor. Initializes coins, clouds, motherNature, islands (via IslandManager), bag and professorGroup
      */
-    public Board(){
+    public Board(int numPlayers){
         coins = 20;
-        for(int i = 0 ;i<ExpertGameManager.instance().getNumPlayers() ; i++){
+        for(int i = 0 ;i<numPlayers ; i++){
             this.clouds.add(new Cloud());
         }
         motherNature = new MotherNature();
@@ -40,9 +40,9 @@ public class Board {
     /**
      * fills the clouds with n students where n is the number of players + 1
      */
-    public void fillClouds(){
+    public void fillClouds(int numPlayers){
         for(Cloud c : this.clouds){
-            StudentGroup studentList = new StudentGroup(bag.removeStudents(ExpertGameManager.instance().getNumPlayers()+1));
+            StudentGroup studentList = new StudentGroup(bag.removeStudents(numPlayers+1));
             c.addGroup(new StudentGroup(studentList));
         }
     }

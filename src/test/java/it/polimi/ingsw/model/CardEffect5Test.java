@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CardEffect5Test {
 
     @Test
-    void resolveEffect(CharacterCard c) {
-        Archipelago a = Board.instance().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex());
+    void resolveEffect(CharacterCard c, Bag bag, MotherNature mn, IslandManager manager) {
+        Archipelago a = manager.getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex());
         int anet = a.getNoEntryTiles();
         int cnet = c.getNoEntryTiles();
         if(c.getNoEntryTiles()>0){
