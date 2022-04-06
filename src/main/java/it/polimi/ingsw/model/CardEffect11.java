@@ -6,10 +6,10 @@ public class CardEffect11 implements EffectStrategy{
      * @param c the card which is being activated
      */
     @Override
-    public void resolveEffect(CharacterCard c) {
+    public void resolveEffect(CharacterCard c, Bag bag, MotherNature mn, IslandManager manager) {
         Dashboard d = c.getPlayerThisTurn().getDashboard();
         c.getStudentsOnCard().removeStudent(c.getSelectedColour());
         d.addToHall(c.getSelectedColour());
-        c.getStudentsOnCard().addStudent(Board.instance().getBag().removeStudents(1).get(0));
+        c.getStudentsOnCard().addStudent(bag.removeStudents(1).get(0));
     }
 }

@@ -4,10 +4,10 @@ package it.polimi.ingsw.model;
  * Rappresents the Player's Dashboard
  */
 public class Dashboard {
-    private StudentGroup hall;
-    private StudentGroup entrance;
+    private final StudentGroup hall;
+    private final StudentGroup entrance;
     private int numTower;
-    private Tower tower;
+    private final Tower tower;
 
     /**
      * Constructor of a new object of class Dashboard

@@ -7,7 +7,7 @@ public class CardEffect12 implements EffectStrategy{
      */
     //NOT COMPLETED
     @Override
-    public void resolveEffect(CharacterCard c) {
+    public void resolveEffect(CharacterCard c, Bag bag, MotherNature mn, IslandManager manager) {
         //ExpertGameManager.instance().gerPlayers();
         //for all players
         //get the dashboard ad removes up to 3 students on the hall with colour c.getSelectedColour()

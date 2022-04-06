@@ -6,7 +6,7 @@ public class CardEffect4 implements EffectStrategy{
      * @param c the card which is being activated
      */
     @Override
-    public void resolveEffect(CharacterCard c) {
+    public void resolveEffect(CharacterCard c, Bag bag, MotherNature mn, IslandManager manager) {
         AssistantCard as = c.getPlayerThisTurn().getLastPlayedCard();
         as.setMotherNatureShifts(as.getMotherNatureShifts()+2);
     }

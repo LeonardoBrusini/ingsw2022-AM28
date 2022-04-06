@@ -10,12 +10,11 @@ public class Board {
     private MotherNature motherNature;
     private Bag bag;
     private ProfessorGroup professorGroup;
-    private static Board instance;
 
     /**
      * Board constructor. Initializes coins, clouds, motherNature, islands (via IslandManager), bag and professorGroup
      */
-    private Board(){
+    public Board(){
         coins = 20;
         for(int i = 0 ;i<ExpertGameManager.instance().getNumPlayers() ; i++){
             this.clouds.add(new Cloud());
@@ -26,15 +25,17 @@ public class Board {
         bag = new Bag();
     }
 
+    /*
     /**
      * returns the singleton board object
      * @return the instance of the Board if it is exists, otherwise it calls the Board's constructor
      */
+    /*
     public static Board instance(){
         if(Board.instance==null)
             instance = new Board();
         return instance;
-    }
+    }*/
 
     /**
      * fills the clouds with n students where n is the number of players + 1
@@ -97,7 +98,7 @@ public class Board {
         }
         for(int i = 0; i <= 12; i++)
             islandManager.getIsland(i).clearStudents();
-        bag.initializeIslands();
+        bag.initializeIslands(this.getMotherNature().getIslandIndex(),this.getIslandManager());
         Random generator;
         generator = new Random();
         int pos = generator.nextInt(12);

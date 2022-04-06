@@ -35,17 +35,17 @@ public class CharacterCard {
     /**
      * the ExpertGameManager must call it at the beginning of the game. EXPERT MODE ONLY
      */
-    public void initializeCards() {
+    public void initializeCards(Bag bag) {
         switch (fileName) {
             case "P01.jpg":
             case "P11.jpg":
-                studentsOnCard = new StudentGroup(Board.instance().getBag().removeStudents(4));
+                studentsOnCard = new StudentGroup(bag.removeStudents(4));
                 break;
             case "P05.jpg":
                 noEntryTiles = 4;
                 break;
             case "P07.jpg":
-                studentsOnCard = new StudentGroup(Board.instance().getBag().removeStudents(6));
+                studentsOnCard = new StudentGroup(bag.removeStudents(6));
                 break;
         }
     }

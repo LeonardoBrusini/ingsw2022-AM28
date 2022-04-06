@@ -4,7 +4,7 @@ package it.polimi.ingsw.model;
  * a single student group which represents the student on the cloud, that players can take at the end of their turn
  */
 public class Cloud {
-    private StudentGroup students;
+    private final StudentGroup students;
 
     /**
      * Constructor. initialize an empty student group

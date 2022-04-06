@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 
 public class Player {
-    private String nickname;
+    private final String nickname;
     private Tower hisTower;
     private int coins = 0;
     private ArrayList<AssistantCard> cards;

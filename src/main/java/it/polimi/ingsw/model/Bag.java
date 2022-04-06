@@ -18,15 +18,15 @@ public class Bag {
      * Fills the bag with 2 students each colour students and puts a student each island (except for the one where mother nature is on and the opposite one)
      * Then fills the bag with 24 students each colour
      */
-    public void initializeIslands(){
+    public void initializeIslands(int mnIndex, IslandManager manager){
         for(Colour c : Colour.values()) { students.setNumStudents(2,c); }
-        int mnIndex = Board.instance().getMotherNature().getIslandIndex(); //diventa parametro
+        //int mnIndex = Board.instance().getMotherNature().getIslandIndex(); //diventa parametro
         int oppositeOfMNIndex = mnIndex>6 ? mnIndex-6 : mnIndex+6;
         ArrayList<Colour> extractedStudents = removeStudents(10);
         int j = 0;
         for(int i=1;i<=12;i++) {
             if(i!=mnIndex && i!=oppositeOfMNIndex) {
-                Board.instance().getIslandManager().getIsland(i).addStudent(extractedStudents.get(j++));
+                manager.getIsland(i).addStudent(extractedStudents.get(j++));
             }
         }
         for(Colour c : Colour.values()) { students.setNumStudents(24,c); }

@@ -12,10 +12,10 @@ public class MotherNature {
     }
 
 
+/*
 
-
-    public void computeInfluence() {
-        Archipelago a = Board.instance().getIslandManager().getArchipelagoByIslandIndex(island); //diventa parametro
+    public void computeInfluence(IslandManager manager) {
+        Archipelago a = manager.getArchipelagoByIslandIndex(island); //diventa parametro
         int maxInfluence = -1;
         Player winningPlayer = null;
         int influence;
@@ -28,12 +28,12 @@ public class MotherNature {
                 winningPlayer = p;
             }
         }
-        if(winningPlayer!=null && winningPlayer.getTower()!=Board.instance().getIslandManager().getIsland(island).getTower()) { //diventa parametro
+        if(winningPlayer!=null && winningPlayer.getTower()!=manager.getIsland(island).getTower()) { //diventa parametro
 
             winningPlayer.getDashboard().buildTower();
         }
     }
-
+*/
 
    /* public int computeInfluence(Player player){
         ProfessorGroup p = Board.instance().getProfessorGroup();
@@ -59,13 +59,13 @@ public class MotherNature {
         island = pos;
     }
 
-    public Tower computeInfluence(){
-        Archipelago a = Board.instance().getIslandManager().getArchipelagoByIslandIndex(island);
+    public Tower computeInfluence(IslandManager manager, ProfessorGroup professors){
+        Archipelago a = manager.getArchipelagoByIslandIndex(island);
 
         Tower[] e = Tower.values();
         Tower max = e[0];
         for(int i = 1; i< e.length;i++){
-            if(a.playerInfluence(e[i]) > a.playerInfluence(max))
+            if(a.playerInfluence(e[i],professors) > a.playerInfluence(max,professors))
                 max = e[i];
         }
         return max;

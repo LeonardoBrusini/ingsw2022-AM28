@@ -7,7 +7,7 @@ public class CardEffect7 implements EffectStrategy{
      * @param c the card which is being activated
      */
     @Override
-    public void resolveEffect(CharacterCard c) {
+    public void resolveEffect(CharacterCard c, Bag bag, MotherNature mn, IslandManager manager) {
         Dashboard d = c.getPlayerThisTurn().getDashboard();
         for(Colour colour : Colour.values()) {
             int quantityColour = c.getSelectedStudentsFrom().getQuantityColour(colour);

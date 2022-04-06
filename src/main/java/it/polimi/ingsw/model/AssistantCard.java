@@ -2,8 +2,8 @@ package it.polimi.ingsw.model;
 
 public class AssistantCard {
     private int motherNatureShifts;
-    private int turnWeight;
-    private String fileName;
+    private final int turnWeight;
+    private final String fileName;
     private boolean played;
 
     public AssistantCard(int mns,int tw,String name){

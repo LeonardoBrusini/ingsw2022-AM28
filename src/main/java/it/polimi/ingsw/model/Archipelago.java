@@ -28,10 +28,10 @@ public class Archipelago {
      * @param t the tower selected
      * @return the total influence of the archipelago for the player p
      */
-    public int playerInfluence(Tower t) {
+    public int playerInfluence(Tower t, ProfessorGroup professors) {
         int influence = 0;
         for(Island i : islands) {
-            influence += i.playerInfluence(t);
+            influence += i.playerInfluence(t,professors);
         }
 
         return influence;

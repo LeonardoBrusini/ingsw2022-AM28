@@ -28,10 +28,10 @@ public class Island {
      * @param t the Tower of witch the method will calculate the influence
      * @return the influence of the player p
      */
-    public int playerInfluence(Tower t) {
+    public int playerInfluence(Tower t,ProfessorGroup professors) {
         int influence = 0;
         for(Colour c : Colour.values()) {
-            if(Board.instance().getProfessorGroup().getTower(c).equals(t)) {
+            if(professors.getTower(c).equals(t)) {
                 influence += students.getQuantityColour(c);
             }
         }
