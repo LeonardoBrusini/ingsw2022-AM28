@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.board;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.CharacterCard;
-
 import java.util.ArrayList;
 
 public class Board {

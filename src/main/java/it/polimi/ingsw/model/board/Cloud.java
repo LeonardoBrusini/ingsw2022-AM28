@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.Colour;
-import it.polimi.ingsw.model.StudentGroup;
+import it.polimi.ingsw.model.*;
 
 /**
  * a single student group which represents the student on the cloud, that players can take at the end of their turn
