@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.board.Bag;
+import it.polimi.ingsw.model.board.IslandManager;
+import it.polimi.ingsw.model.board.MotherNature;
 import it.polimi.ingsw.model.players.AssistantCard;
 
 public class CardEffect4 implements EffectStrategy{

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.board.Bag;
+import it.polimi.ingsw.model.board.IslandManager;
 import it.polimi.ingsw.model.board.MotherNature;
 
 public class CardEffect3 implements EffectStrategy{
@@ -14,7 +16,7 @@ public class CardEffect3 implements EffectStrategy{
         MotherNature mn = c.getBoard().getMotherNature(); //diventa parametro
         int motherNaturePosition = mn.getIslandIndex();
         mn.setIsland(c.getSelectedIsland().getIslandIndex());
-        c.getGameManager().checkInfluence();
+        c.getGameManager().checkInfluence(); //diventa parametro
         mn.setIsland(motherNaturePosition);
     }
 }

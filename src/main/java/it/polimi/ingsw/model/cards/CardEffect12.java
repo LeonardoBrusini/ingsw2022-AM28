@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.board.Bag;
+import it.polimi.ingsw.model.board.IslandManager;
+import it.polimi.ingsw.model.board.MotherNature;
+
 public class CardEffect12 implements EffectStrategy{
     /**
      * removes up to 3 students of the selected colour from every dashboards' hall

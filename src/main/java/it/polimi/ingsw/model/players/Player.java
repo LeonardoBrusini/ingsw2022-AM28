@@ -53,7 +53,7 @@ public class Player {
     }
     public void playCard(int x){
         //maybe we can add some controls
-        cards.get(x).setPlayed(true);
+        cards.get(x).setPlayed();
     }
     public AssistantCard getLastPlayedCard() {
         return lastPlayedCard;

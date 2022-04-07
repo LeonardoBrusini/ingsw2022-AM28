@@ -100,6 +100,7 @@ public class ExpertGameManager {
         }
         return null;
     }
+    //public void PlayCharacterCard(int)
 
     //getters & setters methods
     public void setPlayers(ArrayList<Player> players) {

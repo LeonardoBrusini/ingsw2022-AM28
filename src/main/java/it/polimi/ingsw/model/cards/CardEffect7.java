@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.model.board.Bag;
+import it.polimi.ingsw.model.board.IslandManager;
+import it.polimi.ingsw.model.board.MotherNature;
 import it.polimi.ingsw.model.players.Dashboard;
 
 public class CardEffect7 implements EffectStrategy{

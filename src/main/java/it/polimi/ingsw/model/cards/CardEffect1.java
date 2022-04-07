@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.board.Bag;
+import it.polimi.ingsw.model.board.IslandManager;
+import it.polimi.ingsw.model.board.MotherNature;
+
 public class CardEffect1 implements EffectStrategy{
     /**
      * effect of the card 1: takes the selected student from the card and puts it on the selected island
