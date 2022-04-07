@@ -10,6 +10,7 @@ public class CardEffect5 implements EffectStrategy{
      * puts one "no entry tile" on a selected archipelago
      * @param c the card which is being activated
      */
+
     @Override
     public void resolveEffect(CharacterCard c) {
         Archipelago a = c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()); //parametro in CharacterCard

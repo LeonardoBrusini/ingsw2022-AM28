@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.model.Tower;
 import it.polimi.ingsw.model.players.AssistantCard;
 import it.polimi.ingsw.model.players.Dashboard;
-
 import java.util.ArrayList;
 
 public class Player {

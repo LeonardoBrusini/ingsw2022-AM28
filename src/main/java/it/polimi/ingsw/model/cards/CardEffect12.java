@@ -9,6 +9,7 @@ public class CardEffect12 implements EffectStrategy{
      * removes up to 3 students of the selected colour from every dashboards' hall
      * @param c the card which is being activated
      */
+
     //NOT COMPLETED
     @Override
     public void resolveEffect(CharacterCard c) {

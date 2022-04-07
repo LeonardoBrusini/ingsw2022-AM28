@@ -12,6 +12,7 @@ public class CardEffect10 implements EffectStrategy{
      * then takes the selected students from the hall (stored in selectedStudentTo) and moves them from the hall to the entrance
      * @param c the card which is being activated
      */
+
     @Override
     //NOT COMPLETED
     public void resolveEffect(CharacterCard c) {

@@ -12,6 +12,7 @@ public class CardEffect7 implements EffectStrategy{
      * then takes the selected students from the entrance (stored in selectedStudentTo) and moves them from the entrance to the card
      * @param c the card which is being activated
      */
+
     @Override
     public void resolveEffect(CharacterCard c) {
         Dashboard d = c.getPlayerThisTurn().getDashboard();

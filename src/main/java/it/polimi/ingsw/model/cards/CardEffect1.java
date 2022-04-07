@@ -10,6 +10,7 @@ public class CardEffect1 implements EffectStrategy{
      * then gets a student from the bag and puts it on the card
      * @param c the card which is being activated
      */
+
     @Override
     public void resolveEffect(CharacterCard c) {
         c.getStudentsOnCard().removeStudent(c.getSelectedColour());

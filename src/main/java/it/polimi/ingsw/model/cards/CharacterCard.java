@@ -23,7 +23,7 @@ public class CharacterCard {
 
     private Board board; //card effect 3 can't work otherwise
     private ExpertGameManager gameManager;
-
+    
     /**
      * Card constructor.
      * @param s the name of the image of the card

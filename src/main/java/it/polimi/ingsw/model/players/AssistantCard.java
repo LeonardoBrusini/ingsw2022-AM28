@@ -32,6 +32,5 @@ public class AssistantCard {
     public void setMotherNatureShifts(int motherNatureShifts) {
         this.motherNatureShifts = motherNatureShifts;
     }
-
     public boolean getPlayed(){return played;}
 }
