@@ -26,7 +26,7 @@ public class MotherNature {
         Player winningPlayer = null;
         int influence;
         for(Player p: players) {
-            influence = a.playerInfluence(p, professors);
+            influence = a.playerInfluence(p.getTower(),professors);
             if(influence == maxInfluence) {
                 winningPlayer = null;
             } else if (influence>maxInfluence) {

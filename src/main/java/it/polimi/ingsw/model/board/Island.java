@@ -28,17 +28,17 @@ public class Island {
 
     /**
      * the influence of a player is the number of students on the island with the same colour as the professor the player owns, +1 is the player has his tower on the island
-     * @param p the Player of witch the method will calculate the influence
+     * @param t the tower of the Player of witch the method will calculate the influence
      * @return the influence of the player p
      */
-    public int playerInfluence(Player p, ProfessorGroup professors) {
+    public int playerInfluence(Tower t, ProfessorGroup professors) {
         int influence = 0;
         for(Colour c : Colour.values()) {
-            if(professors.getTower(c).equals(p.getTower())) {
+            if(professors.getTower(c).equals(t)) {
                 influence += students.getQuantityColour(c);
             }
         }
-        if(tower!=null && tower.equals(p.getTower())) influence += 1;
+        if(tower!=null && tower.equals(t)) influence += 1;
         return influence;
     }
 
