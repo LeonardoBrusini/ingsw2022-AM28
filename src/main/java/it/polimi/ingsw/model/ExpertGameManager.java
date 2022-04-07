@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 
+import it.polimi.ingsw.model.board.*;
+import it.polimi.ingsw.model.players.*;
+
 public class ExpertGameManager {
     private final ArrayList<Player> players = new ArrayList<>();
     private int numPlayers;

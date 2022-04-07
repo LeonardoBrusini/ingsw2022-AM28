@@ -11,7 +11,7 @@ public class CardEffect10 implements EffectStrategy{
      */
     @Override
     //NOT COMPLETED
-    public void resolveEffect(CharacterCard c, Bag bag, MotherNature mn, IslandManager manager) {
+    public void resolveEffect(CharacterCard c) {
         Dashboard d = c.getPlayerThisTurn().getDashboard();
         for(Colour colour : Colour.values()) {
             int quantityColour = c.getSelectedStudentsFrom().getQuantityColour(colour);
