@@ -54,7 +54,7 @@ public class ExpertGameManager {
      * this method must be activated when the player asks to move mother nature
      * after being moved, it checks the player with most influence on the archipelago mother nature is on and eventually changes the towers
      * and checks for aggregation.
-     * @param moves
+     * @param moves the number of archipelagos mother nature has to move forward
      */
     public void moveMotherNature(int moves){
         //mother nature moves
@@ -106,23 +106,18 @@ public class ExpertGameManager {
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
-
     public ArrayList<Integer> getPlayerOrder() {
         return playerOrder;
     }
-
     public void setPlayerOrder(ArrayList<Integer> playerOrder) {
         this.playerOrder = playerOrder;
     }
-
     public Board getBoard() {
         return board;
     }
-
     public void setBoard(Board board) {
         this.board = board;
     }
-
     public ArrayList<Player> getPlayers() {
         return players;
     }

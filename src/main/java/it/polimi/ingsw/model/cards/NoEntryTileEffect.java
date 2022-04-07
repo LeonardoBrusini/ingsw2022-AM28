@@ -1,11 +1,8 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.board.Archipelago;
-import it.polimi.ingsw.model.board.Bag;
-import it.polimi.ingsw.model.board.IslandManager;
-import it.polimi.ingsw.model.board.MotherNature;
 
-public class CardEffect5 implements EffectStrategy{
+public class NoEntryTileEffect implements EffectStrategy{
     /**
      * puts one "no entry tile" on a selected archipelago
      * @param c the card which is being activated

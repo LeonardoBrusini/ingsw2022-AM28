@@ -8,8 +8,7 @@ import it.polimi.ingsw.model.board.Island;
 import it.polimi.ingsw.model.players.Player;
 
 public class CharacterCard {
-    private String fileName;
-    private int price;
+    private CharacterCardsInfo cardInfo;
     private boolean coinOnIt;
     private int noEntryTiles;
     private StudentGroup selectedStudentsFrom;
@@ -19,21 +18,16 @@ public class CharacterCard {
     private boolean isActivated;
     private Colour selectedColour;
     private Player playerThisTurn;
-    private EffectStrategy effect;
 
     private Board board; //card effect 3 can't work otherwise
     private ExpertGameManager gameManager;
-    
+
     /**
-     * Card constructor.
-     * @param s the name of the image of the card
-     * @param e the effect strategy of the card
-     * @param p the cost of the card
+     *
+     * @param info basic information of the card: file name, price, effect
      */
-    public CharacterCard(String s,EffectStrategy e,int p){
-        effect = e;
-        fileName = s;
-        price = p;
+    public CharacterCard(CharacterCardsInfo info){
+        cardInfo = info;
         coinOnIt = false;
         noEntryTiles = 0;
         isActivated = false;
@@ -43,29 +37,26 @@ public class CharacterCard {
      * the ExpertGameManager must call it at the beginning of the game. EXPERT MODE ONLY
      */
     public void initializeCards(Bag b) {
-        switch (fileName) {
-            case "P01.jpg":
-            case "P11.jpg":
+        switch (cardInfo) {
+            case CARD1:
+            case CARD11:
                 studentsOnCard = new StudentGroup(b.removeStudents(4));
                 break;
-            case "P05.jpg":
+            case CARD5:
                 noEntryTiles = 4;
                 break;
-            case "P07.jpg":
+            case CARD7:
                 studentsOnCard = new StudentGroup(b.removeStudents(6));
                 break;
         }
     }
 
     //getter and setter methods
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public CharacterCardsInfo getCardInfo() {
+        return cardInfo;
     }
-    public int getPrice() {
-        return price;
-    }
-    public void setPrice(int price) {
-        this.price = price;
+    public void setCardInfo(CharacterCardsInfo cardInfo) {
+        this.cardInfo = cardInfo;
     }
     public boolean isCoinOnIt() {
         return coinOnIt;
@@ -118,15 +109,6 @@ public class CharacterCard {
     }
     public void setPlayerThisTurn(Player playerThisTurn) {
         this.playerThisTurn = playerThisTurn;
-    }
-    public EffectStrategy getEffect() {
-        return effect;
-    }
-    public void setEffect(EffectStrategy effect) {
-        this.effect = effect;
-    }
-    public String getFileName() {
-        return fileName;
     }
 
     public Board getBoard() {

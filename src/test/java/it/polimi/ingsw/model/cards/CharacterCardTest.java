@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.cards.CardEffect1;
-import it.polimi.ingsw.model.cards.CharacterCard;
 import org.junit.jupiter.api.Test;
 
 class CharacterCardTest {
-    CharacterCard c = new CharacterCard(new String(), new CardEffect1(), 1);
+    CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD1);
 
     @Test
     void initializeCards() {

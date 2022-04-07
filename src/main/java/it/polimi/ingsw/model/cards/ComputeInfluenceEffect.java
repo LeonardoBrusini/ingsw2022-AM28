@@ -1,10 +1,8 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.board.Bag;
-import it.polimi.ingsw.model.board.IslandManager;
 import it.polimi.ingsw.model.board.MotherNature;
 
-public class CardEffect3 implements EffectStrategy{
+public class ComputeInfluenceEffect implements EffectStrategy{
     /**
      * Moves mother nature on the selected island, computes the influence on the island
      * then puts mother nature back where it was

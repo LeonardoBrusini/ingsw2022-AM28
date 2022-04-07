@@ -1,16 +1,12 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.board.Bag;
-import it.polimi.ingsw.model.board.IslandManager;
-import it.polimi.ingsw.model.board.MotherNature;
 import it.polimi.ingsw.model.players.Dashboard;
 
-public class CardEffect11 implements EffectStrategy{
+public class StudentToHallEffect implements EffectStrategy{
     /**
      * takes the selected student from the card and puts it on the hall, then extracts a random student from the bag and adds it on the card
      * @param c the card which is being activated
      */
-
     @Override
     public void resolveEffect(CharacterCard c) {
         Dashboard d = c.getPlayerThisTurn().getDashboard();
