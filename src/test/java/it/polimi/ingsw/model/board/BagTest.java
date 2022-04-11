@@ -82,4 +82,25 @@ class BagTest {
         b.addStudent(sg);
         assertEquals(134,b.getNumOfStudents());
     }
+
+    @Test
+    void removeStudentGroup(){
+        StudentGroup st;
+        int tmp = 0;
+        b.setStudents(new StudentGroup(26));
+        st = b.removeStudentGroup(130);
+        for(Colour color: Colour.values()) {
+           tmp += st.getQuantityColour(color);
+        }
+        assertEquals(130, tmp);
+        assertEquals(0, b.getNumOfStudents());
+        b.setStudents(new StudentGroup(26));
+        st = b.removeStudentGroup(120);
+        tmp = 0;
+        for(Colour color: Colour.values()) {
+            tmp += st.getQuantityColour(color);
+        }
+        assertEquals(120, tmp);
+        assertEquals(10, b.getNumOfStudents());
+    }
 }

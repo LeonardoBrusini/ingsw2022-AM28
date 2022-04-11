@@ -61,11 +61,17 @@ public class Bag {
         }
     }
 
+    /**
+     * this method extracts students and it inserts them in a StudentGroup
+     * @param n the number of students to be extracted
+     * @return StudentGroup of extracted students
+     */
     public StudentGroup removeStudentGroup(int n){
-        if(n<=this.totalStudents)
-            return students;
-        else{
-            StudentGroup ret = new StudentGroup();
+        StudentGroup ret = new StudentGroup();
+        if(n>=getNumOfStudents()) {
+            ret = students;
+            students = new StudentGroup();
+        }else{
             for(int i = 0;i<n;i++){
                 int pos;
                 Colour c;
@@ -74,15 +80,13 @@ public class Bag {
                 do{
                     pos = generator.nextInt(e.length);
                     c = e[pos];
-                }while(this.students.getQuantityColour(c) == 0);
-                this.students.removeStudent(c);
+                }while(students.getQuantityColour(c) == 0);
+                students.removeStudent(c);
                 ret.addStudent(c);
             }
-            totalStudents = totalStudents-n;
-            return ret;
         }
-
-
+        //totalStudents = totalStudents-n;
+        return ret;
     }
 
     /**
