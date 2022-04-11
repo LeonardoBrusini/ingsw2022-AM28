@@ -27,7 +27,20 @@ public class ExpertGameManager {
      * @param s the nickname of the player
      */
     public void addPlayer(String s){
-        if(players.size()<3) players.add(new Player(s));
+        Tower tower = null;
+        int found = -1;
+        if(players.size()<3) {
+            while(found != 0){
+                found = 0;
+                for(Tower t: Tower.values())
+                    for(Player p: players){
+                        tower = t;
+                        if(p.getTower().equals(t))
+                            found++;
+                    }
+            }
+            players.add(new Player(s, tower));
+        }
     }
 
     /**

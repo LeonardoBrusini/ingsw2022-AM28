@@ -33,8 +33,21 @@ public class ExpertGameManager {
        // to be continued
     }
     public void addPlayer(String s){
-        if(players.size()<numPlayers)
-            this.players.add(new Player(s));
+        Tower tower = null;
+        int found = -1;
+        if(players.size()<numPlayers) {
+            while (found != 0) {
+                found = 0;
+                for (Tower t : Tower.values()) {
+                    for (Player p : players) {
+                        tower = t;
+                        if (p.getTower().equals(t))
+                            found++;
+                    }
+                }
+            }
+            this.players.add(new Player(s, tower));
+        }
     }
     public int getNumPlayers() {
         return players.size();

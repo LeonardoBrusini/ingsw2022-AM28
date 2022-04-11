@@ -15,10 +15,11 @@ public class Player {
     private AssistantCard lastPlayedCard;
     private Dashboard dashboard;
 
-    public Player(String n){
+    public Player(String n, Tower t){
         coins = 0;
         nickname = n;
         //ONLY IF 2 PLAYERS
+        hisTower = t;
         dashboard = new Dashboard(8,hisTower);
     }
 
