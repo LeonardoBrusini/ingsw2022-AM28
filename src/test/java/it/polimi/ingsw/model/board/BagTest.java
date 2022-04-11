@@ -42,7 +42,7 @@ class BagTest {
         for (Colour c: Colour.values()) assertEquals(26-b.getStudents().getQuantityColour(c),sg.getQuantityColour(c));
         b.addStudent(sg);
         extractedStudents = b.removeStudents(200);
-        assertEquals(null,extractedStudents);
+        assertNull(extractedStudents);
         for (Colour c: Colour.values()) assertEquals(26,b.getStudents().getQuantityColour(c));
     }
 
@@ -83,7 +83,7 @@ class BagTest {
         assertEquals(134,b.getNumOfStudents());
     }
 
-    @Test
+   @Test
     void removeStudentGroup(){
         StudentGroup st;
         int tmp = 0;
@@ -103,4 +103,11 @@ class BagTest {
         assertEquals(120, tmp);
         assertEquals(10, b.getNumOfStudents());
     }
+    @Test
+    void isEmpty(){
+        b.setStudents(new StudentGroup());
+        assertEquals(0, b.getNumOfStudents());
+        assertTrue(b.isEmpty());
+    }
+
 }

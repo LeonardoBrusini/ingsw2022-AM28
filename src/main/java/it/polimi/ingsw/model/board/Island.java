@@ -34,7 +34,7 @@ public class Island {
     public int playerInfluence(Tower t, ProfessorGroup professors) {
         int influence = 0;
         for(Colour c : Colour.values()) {
-            if(professors.getTower(c).equals(t)) {
+            if(professors.getTower(c) != null && professors.getTower(c).equals(t)) {
                 influence += students.getQuantityColour(c);
             }
         }
@@ -42,6 +42,9 @@ public class Island {
         return influence;
     }
 
+    /**
+     * turn to 0 the number of students on the Island
+     */
     public void clearStudents(){
         students = new StudentGroup();
     }
