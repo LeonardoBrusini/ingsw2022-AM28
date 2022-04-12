@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.CharacterCard;
 import it.polimi.ingsw.model.cards.FactoryCharacterCards;
+import it.polimi.ingsw.model.players.Player;
 
 import java.util.ArrayList;
 
@@ -63,15 +64,15 @@ public class Board {
 
     /**
      * moves MotherNature to the position given by ExpertGameManager
-     * @param pos position where to move MotherNature
+     * @param shifts position where to move MotherNature
      */
-    public void moveMotherNature(int pos){
-        //TO BE TESTED AND TO ADD UPPER METHOD IN EXPERTGAMEMANAGER
+    public void moveMotherNature(int shifts){
         Archipelago old = islandManager.getArchipelagoByIslandIndex(motherNature.getIslandIndex());
         old.setPresenceMotherNature(false);
-        motherNature.setIsland(pos);
-        Archipelago nw = islandManager.getArchipelagoByIslandIndex(pos);
+        motherNature.setIsland((motherNature.getIslandIndex()+shifts>12 ? (motherNature.getIslandIndex()+shifts)%12 : motherNature.getIslandIndex()+shifts));
+        Archipelago nw = islandManager.getArchipelagoByIslandIndex(motherNature.getIslandIndex());
         nw.setPresenceMotherNature(true);
+        //game manager must check the player with most influence and build tower if needed (in upper method)
     }
 
     //getters & setters for testing

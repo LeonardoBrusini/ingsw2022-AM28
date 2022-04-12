@@ -6,49 +6,38 @@ import it.polimi.ingsw.model.players.AssistantCard;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AssistantCardTest {
+    private AssistantCard card;
 
-    AssistantCard card;
 
-    @Test
-    void getMotherNatureShifts() {
-        this.card = new AssistantCard(4,10,"Carta");
-        assertEquals(4,this.card.getMotherNatureShifts());
-    }
 
     @Test
-    void getTurnWeight() {
-        this.card = new AssistantCard(4,10,"Carta");
-        assertEquals(10,this.card.getTurnWeight());
-    }
-
-    @Test
-    void getFileName() {
-        this.card = new AssistantCard(4,10,"Carta");
-        assertEquals("Carta",this.card.getFileName());
-    }
-
-    @Test
-    void getPlayed(){
-        this.card = new AssistantCard(4,10,"Carta");
-        assertFalse(this.card.getPlayed());
+    void isPlayed(){
+        this.card = new AssistantCard(AssistantCardInfo.CARD3);
+        assertFalse(this.card.isPlayed());
     }
 
     @Test
     void setPlayed() {
-        this.card = new AssistantCard(4,10,"Carta");
-        assertFalse(this.card.getPlayed());
-        this.card.setPlayed();
-        assertTrue(this.card.getPlayed());
-        this.card.setPlayed();
-        assertTrue(this.card.getPlayed());
+        card = new AssistantCard(AssistantCardInfo.CARD1);
+        assertFalse(card.isPlayed());
+        card.setPlayed(true);
+        assertTrue(card.isPlayed());
+        card.setPlayed(false);
+        assertFalse(card.isPlayed());
     }
 
     @Test
-    void setMotherNatureShifts() {
-        this.card = new AssistantCard(4,10,"Carta");
-        assertEquals(4,this.card.getMotherNatureShifts());
-        this.card.setMotherNatureShifts(7);
-        assertEquals(7,this.card.getMotherNatureShifts());
+    void getInfo() {
+        card = new AssistantCard(AssistantCardInfo.CARD1);
+        AssistantCardInfo info = card.getInfo();
+        assertEquals(AssistantCardInfo.CARD1,info);
+    }
 
+    @Test
+    void setInfo() {
+        card = new AssistantCard(AssistantCardInfo.CARD1);
+        assertEquals(AssistantCardInfo.CARD1,card.getInfo());
+        card.setInfo(AssistantCardInfo.CARD2);
+        assertEquals(AssistantCardInfo.CARD2,card.getInfo());
     }
 }

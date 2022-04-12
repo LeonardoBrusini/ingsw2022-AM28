@@ -3,6 +3,9 @@ package it.polimi.ingsw.model.players;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.model.Tower;
+import it.polimi.ingsw.model.board.Island;
+import it.polimi.ingsw.model.board.IslandManager;
+import it.polimi.ingsw.model.board.MotherNature;
 import it.polimi.ingsw.model.players.AssistantCard;
 import it.polimi.ingsw.model.players.Dashboard;
 import java.util.ArrayList;
@@ -18,9 +21,13 @@ public class Player {
     public Player(String n, Tower t){
         coins = 0;
         nickname = n;
-        //ONLY IF 2 PLAYERS
         hisTower = t;
-        dashboard = new Dashboard(8,hisTower);
+        dashboard = new Dashboard(hisTower);
+        lastPlayedCard = null;
+        cards = new ArrayList<>();
+        for (AssistantCardInfo i: AssistantCardInfo.values()){
+            cards.add(new AssistantCard(i));
+        }
     }
 
     /**
@@ -35,15 +42,16 @@ public class Player {
      * It removes from the Dashboard's entrance a student send to an Island
      * @param c the colour of the selected student
      */
-    public void moveToIsland(Colour c){
+    public void moveToIsland(Colour c, Island i)throws IllegalArgumentException{
         dashboard.removeFromEntrance(c);
+        i.addStudent(c);
     }
 
     /**
      * It moves a student from the Dashboard's Entrance to the Dashboard's Hall
      * @param c the colour of the selected student
      */
-    public void moveToHall(Colour c){
+    public void moveToHall(Colour c) throws IllegalArgumentException{
         dashboard.addToHall(c);
     }
 
@@ -52,8 +60,7 @@ public class Player {
      * @return the colour of the Player's Tower
      */
     public Tower getTower(){
-        this.dashboard.buildTower();
-        return this.hisTower;
+        return hisTower;
     }
 
     /**
@@ -78,7 +85,12 @@ public class Player {
      */
     public void playCard(int x){
         //maybe we can add some controls
-        cards.get(x).setPlayed();
+        cards.get(x).setPlayed(true);
+        lastPlayedCard = cards.get(x);
+    }
+
+    public void setNumTowers(int num) {
+        dashboard.setNumTowers(num);
     }
 
     //getters & setters
@@ -98,5 +110,4 @@ public class Player {
     public AssistantCard getAssistantCard(int x){
         return cards.get(x);
     }
-    public Tower whatTower(){return this.hisTower;}
 }

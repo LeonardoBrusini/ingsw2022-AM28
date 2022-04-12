@@ -34,8 +34,6 @@ class IslandManagerTest {
         assertEquals(12,im.getArchipelagos().size());
         im.setTowerOnIsland(Tower.BLACK,2);
         assertEquals(12,im.getArchipelagos().size());
-        im.setTowerOnIsland(null,3);
-        assertEquals(12,im.getArchipelagos().size());
         im.setTowerOnIsland(Tower.BLACK,4);
         assertEquals(12,im.getArchipelagos().size());
         im.setTowerOnIsland(Tower.WHITE,5);
@@ -47,8 +45,6 @@ class IslandManagerTest {
         im.setTowerOnIsland(Tower.BLACK,8);
         assertEquals(10,im.getArchipelagos().size());
         im.setTowerOnIsland(Tower.BLACK,9);
-        assertEquals(9,im.getArchipelagos().size());
-        im.setTowerOnIsland(null,10);
         assertEquals(9,im.getArchipelagos().size());
         im.setTowerOnIsland(Tower.WHITE,11);
         assertEquals(9,im.getArchipelagos().size());

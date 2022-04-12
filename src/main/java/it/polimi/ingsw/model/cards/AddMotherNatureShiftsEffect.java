@@ -10,6 +10,6 @@ public class AddMotherNatureShiftsEffect implements EffectStrategy{
     @Override
     public void resolveEffect(CharacterCard c) {
         AssistantCard as = c.getPlayerThisTurn().getLastPlayedCard();
-        as.setMotherNatureShifts(as.getMotherNatureShifts()+2);
+        as.getInfo().setMotherNatureShifts(as.getInfo().getMotherNatureShifts()+2);
     }
 }

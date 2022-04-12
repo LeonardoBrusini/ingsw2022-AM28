@@ -5,23 +5,22 @@ import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.model.Tower;
 
 /**
- * Rappresents the Player's Dashboard
+ * represents the Player's Dashboard
  */
 public class Dashboard {
     private final StudentGroup hall;
     private final StudentGroup entrance;
-    private int numTower;
+    private int numTowers;
     private final Tower tower;
 
     /**
      * Constructor of a new object of class Dashboard
-     * @param n initial number of towers allowed for single Player based on game mode choosen by the user
      * @param t colour of the tower that will identify the Player owner of the Dashboard during the match
      */
-    public Dashboard(int n,Tower t){
-        hall = new StudentGroup(0);
-        entrance = new StudentGroup(0);
-        numTower = n;
+    public Dashboard(Tower t){
+        hall = new StudentGroup();
+        entrance = new StudentGroup();
+        numTowers = 0;
         tower = t;
     }
 
@@ -32,7 +31,7 @@ public class Dashboard {
     public void fillEntrance(StudentGroup studentGroup){
         Colour[] e = Colour.values();
         for(Colour c: e){
-            entrance.setNumStudents(studentGroup.getQuantityColour(c),c);
+            entrance.setNumStudents(studentGroup.getQuantityColour(c)+entrance.getQuantityColour(c),c);
         }
     }
 
@@ -40,21 +39,18 @@ public class Dashboard {
      * Move a student of the chosen colour from the entrance to the Hall
      * @param colour It is the colour of the chosen student to move
      */
-    public void addToHall(Colour colour) {
-       if(!entrance.empty()) {
-            removeFromEntrance(colour);
-            hall.addStudent(colour);
-        }
-        /*
-          ExpertGameManager.instance().checkProfessors();
-        */
+    public void addToHall(Colour colour) throws IllegalArgumentException{
+        if(entrance.getQuantityColour(colour)<=0) throw new IllegalArgumentException();
+        entrance.removeStudent(colour);
+        hall.addStudent(colour);
     }
 
     /**
      * Removes the student of the chosen colour from the entrance
      * @param colour It is the colour of the chosen student to remove
      */
-    public void removeFromEntrance(Colour colour){
+    public void removeFromEntrance(Colour colour) throws IllegalArgumentException{
+        if(entrance.getQuantityColour(colour)<=0) throw new IllegalArgumentException();
         entrance.removeStudent(colour);
     }
 
@@ -71,14 +67,14 @@ public class Dashboard {
      * Increments the number of towers in the Dashboard
      */
     public void addTower(){
-        numTower++;
+        numTowers++;
     }
 
     /**
      * Decrements the number of towers in the Dashboard
      */
     public void buildTower() {
-        numTower--;
+        numTowers--;
     }
 
     public StudentGroup getEntrance() {
@@ -89,7 +85,15 @@ public class Dashboard {
         return new StudentGroup(hall);
     }
 
-    public int getNumTower(){
-        return this.numTower;
+    public int getNumTowers(){
+        return this.numTowers;
+    }
+
+    public void setNumTowers(int numTower) {
+        this.numTowers = numTower;
+    }
+
+    public Tower getTower() {
+        return tower;
     }
 }

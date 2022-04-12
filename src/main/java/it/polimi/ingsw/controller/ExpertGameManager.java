@@ -9,17 +9,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ExpertGameManager {
-    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Player> players;
     private ArrayList<Integer> playerOrder;
     private Board board;
 
     public ExpertGameManager() {
-
+        players = new ArrayList<>();
     }
 
 
     public void newGame(){
        board = new Board(players.size());
+       if(players.size()==2) {
+           for (Player p: players) {
+               p.getDashboard().setNumTowers(8);
+           }
+       } else if (players.size()==3) {
+           for (Player p: players) {
+               p.getDashboard().setNumTowers(6);
+           }
+       }
        // to be continued
     }
 
@@ -29,14 +38,7 @@ public class ExpertGameManager {
      */
     public void addPlayer(String s){
         if(players.size()<3) {
-            int i = 0;
-            for(Tower t: Tower.values()) {
-                if (i == players.size()) {
-                    players.add(new Player(s, t));
-                    break;
-                }
-                i++;
-            }
+            players.add(new Player(s, Tower.values()[players.size()]));
         }
     }
 
@@ -47,17 +49,56 @@ public class ExpertGameManager {
         return players.size();
     }
 
-
+    /**
+     * the selected player plays an assistant card
+     * @param p the player who wants to play a card
+     * @param c index of the card the player wants to play
+     */
     public void playAssistantCard(int p, int c){
         players.get(p).playCard(c);
+        //parameter controls, player who plays card must be the current one in TurnManager and must be in planning phase
     }
 
+    /**
+     * the selected player moves a student from the entrance to the hall, then checks for the professor
+     * @param p the player who wants to move a student
+     * @param c the colour of the student
+     */
     public void moveStudentsToHall(int p, Colour c){
         players.get(p).moveToHall(c);
+        //parameter controls, player who moves the student must be the current one in TurnManager, and must be in action phase
+        checkProfessors(c);
     }
+
+    /**
+     * checks which player gets the professor of colour c
+     * @param c the colour of the professor
+     */
+    private void checkProfessors(Colour c) {
+        int maxStudents = 0;
+        Player maxStudentsPlayer = null;
+        for(Player p: players) {
+            if(p.getDashboard().getHall().getQuantityColour(c)>maxStudents) {
+                maxStudents = p.getDashboard().getHall().getQuantityColour(c);
+                maxStudentsPlayer = p;
+            } else if (p.getDashboard().getHall().getQuantityColour(c) == maxStudents) {
+                maxStudentsPlayer = null;
+            }
+        }
+        if(maxStudentsPlayer!=null) {
+            board.assignProfessor(c,maxStudentsPlayer.getTower());
+        }
+    }
+
+    /**
+     * the selected player moves a student from the entrance to the selected island
+     * @param p the player who wants to move a student
+     * @param c the colour of the student
+     * @param is index of the island
+     */
     public void moveStudentToIsland(int p, Colour c, int is){
-        players.get(p).moveToIsland(c);
-        board.getIslandManager().getIsland(is).addStudent(c);
+        players.get(p).moveToIsland(c,board.getIslandManager().getIsland(is));
+        //parameter controls, player who moves the student must be the current one in TurnManager, and must be in action phase
     }
 
     /**
@@ -68,36 +109,39 @@ public class ExpertGameManager {
      */
     public void moveMotherNature(int moves){
         //mother nature moves
-        int pos = moves + board.getMotherNature().getIslandIndex();
-        if(pos > 12) {
-            board.getMotherNature().setIsland(pos%12);
-        }else{
-            board.getMotherNature().setIsland(pos);
-        }
+        board.moveMotherNature(moves);
         checkInfluence();
     }
 
+    /**
+     * checks the player with most influence on the archipelago and build towers on it if needed
+     */
     public void checkInfluence() {
         Player p = board.getMotherNature().playerWithMostInfluence(players,board.getIslandManager(),board.getProfessorGroup());
         if(p!=null) {
             for(Island i: board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex()).getIslands()) {
                 if(i.getTower()==null){
-                    //p.getDashboard().buildTower(); getTower already builds the Tower
-                    i.setTower(p.getTower());
-                } else if(i.getTower()!=p.whatTower()) {
+                    p.getDashboard().buildTower();
+                    board.getIslandManager().setTowerOnIsland(p.getTower(),i.getIslandIndex());
+                } else if(i.getTower()!=p.getTower()) {
                     Player opponent = findPlayerByTower(i.getTower());
                     opponent.getDashboard().addTower(); //may produce NullPointerException
-                    p.getTower();
-                    //p.getDashboard().buildTower();
-                    i.setTower(p.getTower());
-                } else {
-                    //player already has his towers on the archipelago
+                    p.getDashboard().buildTower();
+                    board.getIslandManager().setTowerOnIsland(p.getTower(),i.getIslandIndex());
                 }
             }
-        } else {
-            //nothing happens, to next player action turn
         }
-        //aggregation to do
+    }
+
+    /**
+     * takes the students from a cloud and puts them on the entrance of the player's dashboard
+     * @param cloudIndex index of the cloud the player selected
+     * @param playerIndex player who asked to take the students
+     */
+    public void takeStudentsFromCloud(int cloudIndex, int playerIndex) {
+        //must check if the player is the one of the current turn and if cloud index is correct
+        StudentGroup sg = board.getClouds().get(cloudIndex).clearStudents();
+        players.get(playerIndex).fillDashboard(sg);
     }
 
     /**

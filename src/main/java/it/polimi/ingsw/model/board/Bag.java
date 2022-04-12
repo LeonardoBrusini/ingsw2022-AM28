@@ -11,11 +11,9 @@ import java.util.Random;
  */
 public class Bag {
     private final StudentGroup students;
-    private int totalStudents;
 
     public Bag(){
         students = new StudentGroup();
-        totalStudents = 130;
     }
 
     /**
@@ -33,7 +31,6 @@ public class Bag {
             }
         }
         for(Colour c : Colour.values()) { students.setNumStudents(24,c); }
-        totalStudents = 120;
     }
 
     /**
@@ -42,7 +39,7 @@ public class Bag {
      * @return a list of randomly selected students
      */
     public ArrayList<Colour> removeStudents(int num) throws IllegalArgumentException{
-        if(totalStudents<num) throw new IllegalArgumentException();
+        if(getTotalStudents()<num) throw new IllegalArgumentException();
         Random generator = new Random();
         ArrayList<Colour> ret = new ArrayList<>();
         Colour[] e = Colour.values();
@@ -56,7 +53,6 @@ public class Bag {
                 i++;
             }
         }
-        totalStudents-=num;
         return ret;
     }
 
@@ -67,7 +63,7 @@ public class Bag {
      */
     public StudentGroup removeStudentGroup(int n) throws IllegalArgumentException{
         StudentGroup ret = new StudentGroup();
-        if(n>totalStudents) throw new IllegalArgumentException();
+        if(n>getTotalStudents()) throw new IllegalArgumentException();
         int i=0;
         Colour c;
         Colour[] e = Colour.values();
@@ -80,7 +76,6 @@ public class Bag {
                 i++;
             }
         }
-        totalStudents -= n;
         return ret;
     }
 
@@ -94,7 +89,6 @@ public class Bag {
         for(Colour col: Colour.values()){
             val = group.getQuantityColour(col)+students.getQuantityColour(col);
             students.setNumStudents(val,col);
-            totalStudents += group.getQuantityColour(col);
         }
     }
 
@@ -104,14 +98,10 @@ public class Bag {
      */
     public void setStudents(StudentGroup s){
         students.setStudents(s);
-        totalStudents = 0;
-        for (Colour c: Colour.values()) {
-            totalStudents+=students.getQuantityColour(c);
-        }
     }
 
     public int getTotalStudents() {
-        return totalStudents;
+        return students.getTotalStudents();
     }
 
     public boolean isEmpty(){

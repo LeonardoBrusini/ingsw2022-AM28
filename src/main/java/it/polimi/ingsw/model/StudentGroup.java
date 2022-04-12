@@ -104,6 +104,14 @@ public class StudentGroup {
         return true;
     }
 
+    public int getTotalStudents() {
+        int ret =0;
+        for (Colour c: Colour.values()) {
+            ret+=students.get(c);
+        }
+        return ret;
+    }
+
     /**
      * copies the number of students in s on this group
      * @param s
