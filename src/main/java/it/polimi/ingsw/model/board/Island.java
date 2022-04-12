@@ -22,7 +22,8 @@ public class Island {
      * adds a student to the island
      * @param c colour of the student we want to add
      */
-    public void addStudent(Colour c) {
+    public void addStudent(Colour c) throws IllegalArgumentException {
+        if(c==null) throw new IllegalArgumentException();
         students.addStudent(c);
     }
 
@@ -31,14 +32,15 @@ public class Island {
      * @param t the tower of the Player of witch the method will calculate the influence
      * @return the influence of the player p
      */
-    public int playerInfluence(Tower t, ProfessorGroup professors) {
+    public int playerInfluence(Tower t, ProfessorGroup professors) throws IllegalArgumentException{
+        if(t==null || professors==null) throw new IllegalArgumentException();
         int influence = 0;
         for(Colour c : Colour.values()) {
             if(professors.getTower(c) != null && professors.getTower(c).equals(t)) {
                 influence += students.getQuantityColour(c);
             }
         }
-        if(tower!=null && tower.equals(t)) influence += 1;
+        if(tower!=null && tower.equals(t)) influence++;
         return influence;
     }
 

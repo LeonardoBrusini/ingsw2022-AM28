@@ -36,7 +36,8 @@ public class Cloud {
      * adds students on the cloud
      * @param s
      */
-    public void addGroup(StudentGroup s){
+    public void addGroup(StudentGroup s) throws IllegalArgumentException{
+        if(s==null) throw new IllegalArgumentException();
         for(Colour c: Colour.values()){
             students.setNumStudents(students.getQuantityColour(c) + s.getQuantityColour(c),c);
         }

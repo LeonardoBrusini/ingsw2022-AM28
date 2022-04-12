@@ -26,7 +26,8 @@ public class IslandManager {
      * @param islandIndex the index of the island to find
      * @return the island object with "islandIndex" index
      */
-    public Island getIsland(int islandIndex) {
+    public Island getIsland(int islandIndex) throws IllegalArgumentException{
+        if(islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
         for(Archipelago a : archipelagos) {
             for(Island i : a.getIslands()) {
                 if(i.getIslandIndex()==islandIndex) return i;
@@ -39,7 +40,8 @@ public class IslandManager {
      * checks if an archipelago is next to another one with same towers, if so, merges them
      * @param islandIndex has to be one of the firstIslandIndex of one of the archipelagos
      */
-    private void checkAggregation(int islandIndex) {
+    private void checkAggregation(int islandIndex) throws IllegalArgumentException{
+        if(islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
         int archipelagoIndex=0;
         for(int i=0;i<archipelagos.size(); i++) {
             for (int j=0;j<archipelagos.get(i).getIslands().size();j++) {
@@ -85,7 +87,8 @@ public class IslandManager {
      * @param islandIndex the index of the island we want to know on which archipelago it is
      * @return the archipelago containing the selected island
      */
-    public Archipelago getArchipelagoByIslandIndex(int islandIndex) {
+    public Archipelago getArchipelagoByIslandIndex(int islandIndex) throws IllegalArgumentException{
+        if(islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
         for(Archipelago a : archipelagos) {
             for(Island i : a.getIslands()) {
                 if(i.getIslandIndex()==islandIndex) return a;
@@ -99,9 +102,9 @@ public class IslandManager {
      * @param tower colour of the tower
      * @param islandIndex the index of the island we want to build the tower
      */
-    public void setTowerOnIsland(Tower tower, int islandIndex) {
+    public void setTowerOnIsland(Tower tower, int islandIndex) throws IllegalArgumentException{
+        if(islandIndex<1 || islandIndex>12 || tower==null) throw new IllegalArgumentException();
         Island i = getIsland(islandIndex);
-
         i.setTower(tower);
         checkAggregation(islandIndex);
     }

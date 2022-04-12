@@ -17,7 +17,8 @@ public class Archipelago {
      * constructor. Initializes the list of island with a single island
      * @param index the index of the first island
      */
-    public Archipelago(int index) {
+    public Archipelago(int index) throws IllegalArgumentException{
+        if (index<1 || index>12) throw new IllegalArgumentException();
         firstIslandIndex = index;
         islands = new ArrayList<>();
         islands.add(new Island(index));
@@ -30,20 +31,21 @@ public class Archipelago {
      * @param t the tower selected
      * @return the total influence of the archipelago for the player p
      */
-    public int playerInfluence(Tower t, ProfessorGroup professors) {
+    public int playerInfluence(Tower t, ProfessorGroup professors) throws NullPointerException{
+        if(t == null || professors == null) throw new NullPointerException();
         int influence = 0;
         for(Island i : islands) {
             influence += i.playerInfluence(t,professors);
         }
-
         return influence;
     }
 
     /**
-     * adds the island in the archipelago parameter to this achipelago
+     * adds the island in the archipelago parameter to this archipelago
      * @param a archipelago to merge
      */
-    public Archipelago merge(Archipelago a) {
+    public Archipelago merge(Archipelago a) throws NullPointerException{
+        if(a == null) throw new NullPointerException();
         if(a.firstIslandIndex+a.islands.size()-12==firstIslandIndex || a.firstIslandIndex+a.islands.size()==firstIslandIndex) {
             return a.merge(this);
         }

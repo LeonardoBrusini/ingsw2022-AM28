@@ -18,7 +18,7 @@ public class Board {
     /**
      * Board constructor. Initialize coins, clouds, motherNature, islands (via IslandManager), bag and professorGroup
      */
-    public Board(int numPlayers){
+    public Board(int numPlayers) {
         coins = 20;
         clouds = new ArrayList<>();
         for(int i=0; i<numPlayers; i++){
@@ -46,7 +46,8 @@ public class Board {
      * @param pos the index of the cloud we want to take the students from
      * @return a StudentGroup of the students who were in the clouds
      */
-    public StudentGroup takeStudentsFromCloud(int pos){
+    public StudentGroup takeStudentsFromCloud(int pos) throws IllegalArgumentException{
+        if(pos<0 || pos>=clouds.size()) throw new IllegalArgumentException();
         return clouds.get(pos).clearStudents();
     }
 
@@ -55,35 +56,10 @@ public class Board {
      * @param c the colour of the professor
      * @param t the tower of the player we want to assign the professor
      */
-    public void assignProfessor(Colour c, Tower t) {
+    public void assignProfessor(Colour c, Tower t) throws IllegalArgumentException{
+        if(c==null || t==null) throw new IllegalArgumentException();
         professorGroup.setTower(c,t);
     }
-
-    //is it better to reset the attributes or just creating new objects?
-    /*public void reset(){
-        bag = new Bag();
-
-        for(Cloud c: clouds) {
-            c.clearStudents();
-            c.addGroup(new StudentGroup(bag.removeStudents(4)));
-        }
-
-        for(Colour c: Colour.values()){
-            professorGroup.setTower(c,null);
-        }
-        for(int i = 0; i <= 12; i++)
-            islandManager.getIsland(i).clearStudents();
-        bag.initializeIslands();
-        Random generator;
-        generator = new Random();
-        int pos = generator.nextInt(12);
-        motherNature.setIsland(pos);
-
-       /* for(int i = 0 ; i<12 ;i++){
-            if(i!=pos || i!=(pos+6)%12)
-                this.islands.get(i).setStudentGroup(this.bag.removeStudents(1));
-        }
-    }*/
 
 
     //getters & setters for testing

@@ -30,19 +30,22 @@ class BagTest {
         b.setStudents(new StudentGroup(26));
         ArrayList<Colour> extractedStudents = b.removeStudents(10);
         assertEquals(10,extractedStudents.size());
-        assertEquals(120,b.getNumOfStudents());
+        assertEquals(120,b.getTotalStudents());
         StudentGroup sg = new StudentGroup(extractedStudents);
         for (Colour c: Colour.values()) assertEquals(26-b.getStudents().getQuantityColour(c),sg.getQuantityColour(c));
         b.addStudent(sg);
         for(Colour c: Colour.values()) assertEquals(26,b.getStudents().getQuantityColour(c));
         extractedStudents = b.removeStudents(130);
         assertEquals(130,extractedStudents.size());
-        assertEquals(0,b.getNumOfStudents());
+        assertEquals(0,b.getTotalStudents());
         sg = new StudentGroup(extractedStudents);
         for (Colour c: Colour.values()) assertEquals(26-b.getStudents().getQuantityColour(c),sg.getQuantityColour(c));
         b.addStudent(sg);
-        extractedStudents = b.removeStudents(200);
-        assertNull(extractedStudents);
+        try {
+            extractedStudents = b.removeStudents(200);
+        } catch (IllegalArgumentException iae) {
+            assertEquals(130,b.getTotalStudents());
+        }
         for (Colour c: Colour.values()) assertEquals(26,b.getStudents().getQuantityColour(c));
     }
 
@@ -62,25 +65,24 @@ class BagTest {
         for (Colour c : Colour.values()) {
             assertEquals(26, b.getStudents().getQuantityColour(c));
         }
-
     }
 
     @Test
     void getNumOfStudents() {
-        assertEquals(0,b.getNumOfStudents());
+        assertEquals(0,b.getTotalStudents());
         b.addStudent(new StudentGroup(0));
-        assertEquals(0,b.getNumOfStudents());
+        assertEquals(0,b.getTotalStudents());
         b.addStudent(new StudentGroup(2));
-        assertEquals(10,b.getNumOfStudents());
+        assertEquals(10,b.getTotalStudents());
         b.addStudent(new StudentGroup(24));
-        assertEquals(130,b.getNumOfStudents());
+        assertEquals(130,b.getTotalStudents());
         StudentGroup sg = new StudentGroup();
         sg.addStudent(Colour.RED);
         sg.addStudent(Colour.RED);
         sg.addStudent(Colour.PINK);
         sg.addStudent(Colour.YELLOW);
         b.addStudent(sg);
-        assertEquals(134,b.getNumOfStudents());
+        assertEquals(134,b.getTotalStudents());
     }
 
    @Test
@@ -93,7 +95,7 @@ class BagTest {
            tmp += st.getQuantityColour(color);
         }
         assertEquals(130, tmp);
-        assertEquals(0, b.getNumOfStudents());
+        assertEquals(0, b.getTotalStudents());
         b.setStudents(new StudentGroup(26));
         st = b.removeStudentGroup(120);
         tmp = 0;
@@ -101,12 +103,12 @@ class BagTest {
             tmp += st.getQuantityColour(color);
         }
         assertEquals(120, tmp);
-        assertEquals(10, b.getNumOfStudents());
+        assertEquals(10, b.getTotalStudents());
     }
     @Test
     void isEmpty(){
         b.setStudents(new StudentGroup());
-        assertEquals(0, b.getNumOfStudents());
+        assertEquals(0, b.getTotalStudents());
         assertTrue(b.isEmpty());
     }
 

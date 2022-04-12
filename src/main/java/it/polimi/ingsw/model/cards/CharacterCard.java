@@ -44,9 +44,13 @@ public class CharacterCard {
                 break;
             case CARD5:
                 noEntryTiles = 4;
+                studentsOnCard = new StudentGroup();
                 break;
             case CARD7:
                 studentsOnCard = new StudentGroup(b.removeStudents(6));
+                break;
+            default:
+                studentsOnCard = new StudentGroup();
                 break;
         }
     }
