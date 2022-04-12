@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.cards.CharacterCard;
-import it.polimi.ingsw.model.cards.EffectStrategy;
 import org.junit.jupiter.api.Test;
 
-class CardEffect1Test {
+import static org.junit.jupiter.api.Assertions.*;
+
+class StudentToIslandEffectTest {
     private EffectStrategy card;
     @Test
     void resolveEffect() {

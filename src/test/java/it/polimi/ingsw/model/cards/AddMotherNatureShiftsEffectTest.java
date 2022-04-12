@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.cards.CharacterCard;
 import org.junit.jupiter.api.Test;
 
-class CardEffect4Test {
+import static org.junit.jupiter.api.Assertions.*;
 
+class AddMotherNatureShiftsEffectTest {
     @Test
     void resolveEffect() {
         /*AssistantCard as = c.getPlayerThisTurn().getLastPlayedCard();
@@ -12,4 +12,5 @@ class CardEffect4Test {
         //resolveEffect(c);
         assertEquals(w + 2, as.getMotherNatureShifts());*/
     }
+
 }

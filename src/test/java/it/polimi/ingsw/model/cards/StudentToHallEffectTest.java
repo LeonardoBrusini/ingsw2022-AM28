@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CardEffect12Test {
-
+class StudentToHallEffectTest {
     @Test
     void resolveEffect() {
     }

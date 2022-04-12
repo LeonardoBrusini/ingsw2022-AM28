@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.cards.CharacterCard;
 import org.junit.jupiter.api.Test;
 
-class CardEffect5Test {
+import static org.junit.jupiter.api.Assertions.*;
 
+class NoEntryTileEffectTest {
     @Test
     void resolveEffect() {
         /*Archipelago a = Board.instance().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex());
