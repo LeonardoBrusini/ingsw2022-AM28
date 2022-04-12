@@ -1,33 +1,38 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.model.StudentGroup;
+import it.polimi.ingsw.model.Tower;
+import it.polimi.ingsw.model.board.Bag;
+import it.polimi.ingsw.model.board.Board;
+import it.polimi.ingsw.model.board.Island;
+import it.polimi.ingsw.model.board.IslandManager;
+import it.polimi.ingsw.model.players.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentToIslandEffectTest {
-    private EffectStrategy card;
+    private CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD1);
+
+    @BeforeEach
+    void inizialise(){
+        IslandManager im = new IslandManager(2);
+        c.setStudentsOnCard(new StudentGroup(10));
+        c.setSelectedIsland(im.getIsland(3));
+        c.setBoard(new Board(2));
+        c.setSelectedColour(Colour.YELLOW);
+        c.setPlayerThisTurn(new Player("g1", Tower.WHITE));
+    }
     @Test
     void resolveEffect() {
-     /* this.card = new CardEffect1();
-      StudentGroup students = new StudentGroup(3);
-      assertEquals("CardEffect1",c.getFileName());
-      assertEquals(card,c.getEffect());
-      assertEquals(1, c.getPrice());
-      c.setStudentsOnCard(students);
-      Island i = new Island(4);
-      i.setStudents(new StudentGroup(4));
-      c.setSelectedIsland(i);
-        int counter = 0;
+        int before = c.getPlayerThisTurn().getCoins();
+        c.getCardInfo().getEffect().resolveEffect(c);
+        assertEquals(1, c.getSelectedIsland().getStudents().getQuantityColour(Colour.YELLOW));
         for(Colour colour: Colour.values()){
-            counter += students.getQuantityColour(colour);
+            assertFalse(c.getStudentsOnCard().getQuantityColour(colour)<9);
+            assertFalse(c.getStudentsOnCard().getQuantityColour(colour)>11);
         }
-      for(Colour color: Colour.values()){
-          int countIsland = i.getStudents().getQuantityColour(color);
-          int countCard = students.getQuantityColour(color);
-          c.setSelectedColour(color);
-          //resolveEffect(c);
-          assertEquals(countIsland + countCard,i.getStudents().getQuantityColour(color));
-          assertEquals(countCard, counter);
-      }*/
     }
 }
