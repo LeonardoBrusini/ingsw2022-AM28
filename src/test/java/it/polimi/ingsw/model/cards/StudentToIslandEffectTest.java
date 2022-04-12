@@ -17,6 +17,9 @@ class StudentToIslandEffectTest {
     private CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD1);
 
     @BeforeEach
+    /**
+     * It inizialise with the need object the test environment
+     */
     void inizialise(){
         IslandManager im = new IslandManager(2);
         c.setStudentsOnCard(new StudentGroup(10));

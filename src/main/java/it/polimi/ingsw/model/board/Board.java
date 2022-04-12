@@ -61,6 +61,18 @@ public class Board {
         professorGroup.setTower(c,t);
     }
 
+    /**
+     * moves MotherNature to the position given by ExpertGameManager
+     * @param pos position where to move MotherNature
+     */
+    public void moveMotherNature(int pos){
+        //TO BE TESTED AND TO ADD UPPER METHOD IN EXPERTGAMEMANAGER
+        Archipelago old = islandManager.getArchipelagoByIslandIndex(motherNature.getIslandIndex());
+        old.setPresenceMotherNature(false);
+        motherNature.setIsland(pos);
+        Archipelago nw = islandManager.getArchipelagoByIslandIndex(pos);
+        nw.setPresenceMotherNature(true);
+    }
 
     //getters & setters for testing
     public IslandManager getIslandManager() {

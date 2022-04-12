@@ -98,4 +98,5 @@ public class Player {
     public AssistantCard getAssistantCard(int x){
         return cards.get(x);
     }
+    public Tower whatTower(){return this.hisTower;}
 }

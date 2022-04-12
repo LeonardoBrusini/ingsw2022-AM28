@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.board.Island;
 import it.polimi.ingsw.model.players.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ExpertGameManager {
     private ArrayList<Player> players = new ArrayList<>();
@@ -27,19 +28,15 @@ public class ExpertGameManager {
      * @param s the nickname of the player
      */
     public void addPlayer(String s){
-        Tower tower = null;
-        int found = -1;
         if(players.size()<3) {
-            while(found != 0){
-                found = 0;
-                for(Tower t: Tower.values())
-                    for(Player p: players){
-                        tower = t;
-                        if(p.getTower().equals(t))
-                            found++;
-                    }
+            int i = 0;
+            for(Tower t: Tower.values()) {
+                if (i == players.size()) {
+                    players.add(new Player(s, t));
+                    break;
+                }
+                i++;
             }
-            players.add(new Player(s, tower));
         }
     }
 
@@ -85,12 +82,13 @@ public class ExpertGameManager {
         if(p!=null) {
             for(Island i: board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex()).getIslands()) {
                 if(i.getTower()==null){
-                    p.getDashboard().buildTower();
+                    //p.getDashboard().buildTower(); getTower already builds the Tower
                     i.setTower(p.getTower());
-                } else if(i.getTower()!=p.getTower()) {
+                } else if(i.getTower()!=p.whatTower()) {
                     Player opponent = findPlayerByTower(i.getTower());
-                    opponent.getDashboard().addTower();
-                    p.getDashboard().buildTower();
+                    opponent.getDashboard().addTower(); //may produce NullPointerException
+                    p.getTower();
+                    //p.getDashboard().buildTower();
                     i.setTower(p.getTower());
                 } else {
                     //player already has his towers on the archipelago

@@ -12,10 +12,17 @@ public class ComputeInfluenceEffect implements EffectStrategy{
     //NOW IT SHOULD WORK BUT NOT IN A GOOD WAY
     @Override
     public void resolveEffect(CharacterCard c) {
+        MotherNature mn = c.getBoard().getMotherNature();
+        int islandbefore = mn.getIslandIndex();
+        c.getBoard().moveMotherNature(c.getSelectedIsland().getIslandIndex());
+        c.getGameManager().checkInfluence();
+        c.getBoard().moveMotherNature(islandbefore);
+    }
+   /* public void resolveEffect(CharacterCard c) {
         MotherNature mn = c.getBoard().getMotherNature(); //diventa parametro
         int motherNaturePosition = mn.getIslandIndex();
         mn.setIsland(c.getSelectedIsland().getIslandIndex());
         c.getGameManager().checkInfluence(); //diventa parametro
         mn.setIsland(motherNaturePosition);
-    }
+    }*/
 }

@@ -15,6 +15,7 @@ public class Bag {
 
     public Bag(){
         students = new StudentGroup();
+        totalStudents = 130;
     }
 
     /**
