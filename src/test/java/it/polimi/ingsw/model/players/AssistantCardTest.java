@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.players;
 
 import org.junit.jupiter.api.Test;
 import it.polimi.ingsw.model.players.AssistantCard;
@@ -30,17 +30,17 @@ class AssistantCardTest {
     @Test
     void getPlayed(){
         this.card = new AssistantCard(4,10,"Carta");
-        assertEquals(false,this.card.getPlayed());
+        assertFalse(this.card.getPlayed());
     }
 
     @Test
     void setPlayed() {
         this.card = new AssistantCard(4,10,"Carta");
-        assertEquals(false,this.card.getPlayed());
+        assertFalse(this.card.getPlayed());
         this.card.setPlayed();
-        assertEquals(true,this.card.getPlayed());
+        assertTrue(this.card.getPlayed());
         this.card.setPlayed();
-        assertEquals(true,this.card.getPlayed());
+        assertTrue(this.card.getPlayed());
     }
 
     @Test

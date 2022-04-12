@@ -41,8 +41,10 @@ public class Dashboard {
      * @param colour It is the colour of the chosen student to move
      */
     public void addToHall(Colour colour) {
-        removeFromEntrance(colour);
-        hall.addStudent(colour);
+       if(!entrance.empty()) {
+            removeFromEntrance(colour);
+            hall.addStudent(colour);
+        }
         /*
           ExpertGameManager.instance().checkProfessors();
         */

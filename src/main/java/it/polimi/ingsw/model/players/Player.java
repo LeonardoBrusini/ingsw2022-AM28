@@ -23,39 +23,79 @@ public class Player {
         dashboard = new Dashboard(8,hisTower);
     }
 
+    /**
+     * it inserts the StudentGroup given by @param in the dashboard's entrance
+     * @param s StudentGroup to add in the dashboard's entrance
+     */
     public void fillDashboard(StudentGroup s){
         dashboard.fillEntrance(s);
     }
+
+    /**
+     * It removes from the Dashboard's entrance a student send to an Island
+     * @param c the colour of the selected student
+     */
     public void moveToIsland(Colour c){
         dashboard.removeFromEntrance(c);
     }
+
+    /**
+     * It moves a student from the Dashboard's Entrance to the Dashboard's Hall
+     * @param c the colour of the selected student
+     */
     public void moveToHall(Colour c){
         dashboard.addToHall(c);
     }
 
-    //??
+    /**
+     * It builds a tower removing it from the Dashoboard
+     * @return the colour of the Player's Tower
+     */
     public Tower getTower(){
         this.dashboard.buildTower();
         return this.hisTower;
     }
 
+    /**
+     * It adds a coin between the ones available to the Player
+     */
+    public void addCoin(){
+        coins++;
+    }
+
+    /**
+     * It removes a coin from the ones available to the Player
+     * @param x the number of coins chosen to be spent
+     */
+    public void spendCoins(int x){
+        if(coins>0)
+            coins -= x;
+    }
+
+    /**
+     * It changes the status of the choosen card to "played", so it can't be reused again
+     * @param x the played card's index
+     */
+    public void playCard(int x){
+        //maybe we can add some controls
+        cards.get(x).setPlayed();
+    }
+
+    //getters & setters
+    public AssistantCard getLastPlayedCard() {
+        return lastPlayedCard;
+    }
     public Dashboard getDashboard() {
         return dashboard;
     }
     public int getCoins(){
         return coins;
     }
-    public void addCoin(){
-        coins++;
+    public String getNickname() {
+        return nickname;
     }
-    public void spendCoins(int x){
-        coins -= x;
-    }
-    public void playCard(int x){
-        //maybe we can add some controls
-        cards.get(x).setPlayed();
-    }
-    public AssistantCard getLastPlayedCard() {
-        return lastPlayedCard;
+    //getter & setter fot tests
+    public AssistantCard getAssistantCard(int x){
+        return cards.get(x);
     }
 }
