@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;

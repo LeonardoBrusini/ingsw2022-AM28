@@ -1,15 +1,5 @@
 package it.polimi.ingsw.model.players;
 
-import it.polimi.ingsw.model.Colour;
-import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.Tower;
-import it.polimi.ingsw.model.board.Bag;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class PlayerTest {
    /* @Test
     void Player(){

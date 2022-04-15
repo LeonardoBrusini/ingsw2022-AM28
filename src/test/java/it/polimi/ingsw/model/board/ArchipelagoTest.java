@@ -1,10 +1,8 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.ProfessorGroup;
-import it.polimi.ingsw.model.Tower;
-import it.polimi.ingsw.model.board.Archipelago;
-import it.polimi.ingsw.model.board.Island;
+import it.polimi.ingsw.enumerations.Tower;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

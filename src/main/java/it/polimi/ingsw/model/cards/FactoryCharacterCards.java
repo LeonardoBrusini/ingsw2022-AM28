@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.model.board.Bag;
 
 import java.util.ArrayList;
@@ -8,8 +9,8 @@ import java.util.Random;
 public class FactoryCharacterCards {
     public static ArrayList<CharacterCard> getCards(Bag b){
         ArrayList<CharacterCard> cards = new ArrayList<>();
-        CharacterCardsInfo[] cardsInfo = CharacterCardsInfo.values();
-        CharacterCardsInfo cardInfo;
+        CharacterCardInfo[] cardsInfo = CharacterCardInfo.values();
+        CharacterCardInfo cardInfo;
         Random r = new Random();
         int i=0;
         boolean newCard;

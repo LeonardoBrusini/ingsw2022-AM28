@@ -1,15 +1,18 @@
 package it.polimi.ingsw.model.players;
 
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.controller.EndOfGameChecker;
+import it.polimi.ingsw.enumerations.AssistantCardInfo;
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.exceptions.AlreadyPlayedException;
+import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.Tower;
+import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.board.Island;
-import it.polimi.ingsw.model.board.IslandManager;
-import it.polimi.ingsw.model.board.MotherNature;
-import it.polimi.ingsw.model.players.AssistantCard;
-import it.polimi.ingsw.model.players.Dashboard;
 import java.util.ArrayList;
 
+/**
+ * Represents a player server-side
+ */
 public class Player {
     private final String nickname;
     private Tower hisTower;
@@ -18,6 +21,11 @@ public class Player {
     private AssistantCard lastPlayedCard;
     private Dashboard dashboard;
 
+    /**
+     * Player constructor, builds dashboard and 10 assistant cards
+     * @param n nickname of the player
+     * @param t tower colour of the player
+     */
     public Player(String n, Tower t){
         coins = 0;
         nickname = n;
@@ -42,7 +50,7 @@ public class Player {
      * It removes from the Dashboard's entrance a student send to an Island
      * @param c the colour of the selected student
      */
-    public void moveToIsland(Colour c, Island i)throws IllegalArgumentException{
+    public void moveToIsland(Colour c, Island i)throws NoStudentsException {
         dashboard.removeFromEntrance(c);
         i.addStudent(c);
     }
@@ -56,7 +64,7 @@ public class Player {
     }
 
     /**
-     * It builds a tower removing it from the Dashoboard
+     * It builds a tower removing it from the Dashboard
      * @return the colour of the Player's Tower
      */
     public Tower getTower(){
@@ -80,13 +88,17 @@ public class Player {
     }
 
     /**
-     * It changes the status of the choosen card to "played", so it can't be reused again
+     * It changes the status of the chosen card to "played", so it can't be reused again
      * @param x the played card's index
      */
-    public void playCard(int x){
-        //maybe we can add some controls
+    public void playCard(int x) {
+        if(cards.get(x).isPlayed()) throw new AlreadyPlayedException();
         cards.get(x).setPlayed(true);
         lastPlayedCard = cards.get(x);
+        for (AssistantCard c: cards) {
+            if(!c.isPlayed()) return;
+        }
+        EndOfGameChecker.instance().setLastTurn(true);
     }
 
     public void setNumTowers(int num) {

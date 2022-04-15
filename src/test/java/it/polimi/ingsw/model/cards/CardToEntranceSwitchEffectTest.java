@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.Tower;
-import it.polimi.ingsw.model.board.Bag;
+import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.players.Dashboard;
 import it.polimi.ingsw.model.players.Player;
@@ -20,7 +20,7 @@ class CardToEntranceSwitchEffectTest {
      */
     @Test
     void resolveEffect() {
-        CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD7);
+        CharacterCard c = new CharacterCard(CharacterCardInfo.CARD7);
         Board b = new Board(2);
         c.initializeCards(b.getBag());
         Player p = new Player("g1", Tower.WHITE);

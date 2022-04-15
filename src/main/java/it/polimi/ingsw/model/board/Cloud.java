@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.*;
 
 /**
@@ -34,7 +35,7 @@ public class Cloud {
 
     /**
      * adds students on the cloud
-     * @param s
+     * @param s StudentGroup of the students to add
      */
     public void addGroup(StudentGroup s) throws IllegalArgumentException{
         if(s==null) throw new IllegalArgumentException();

@@ -1,16 +1,5 @@
 package it.polimi.ingsw.model.players;
 
-import it.polimi.ingsw.model.Colour;
-import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.Tower;
-import it.polimi.ingsw.model.board.Bag;
-import it.polimi.ingsw.model.players.Dashboard;
-import org.junit.jupiter.api.Test;
-
-import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class DashboardTest {
     /*private Dashboard d;
     private Bag b;

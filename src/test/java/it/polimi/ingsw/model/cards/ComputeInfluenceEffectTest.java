@@ -1,22 +1,9 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.controller.ExpertGameManager;
-import it.polimi.ingsw.model.Colour;
-import it.polimi.ingsw.model.ProfessorGroup;
-import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.Tower;
-import it.polimi.ingsw.model.board.Board;
-import it.polimi.ingsw.model.board.IslandManager;
-import it.polimi.ingsw.model.players.Player;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.EnumMap;
-
-import static org.junit.jupiter.api.Assertions.*;
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
 
 class ComputeInfluenceEffectTest {
-    private CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD3);
+    private CharacterCard c = new CharacterCard(CharacterCardInfo.CARD3);
 
     /**
      * It inizialise with the need object the test environment
@@ -26,9 +13,9 @@ class ComputeInfluenceEffectTest {
         ExpertGameManager gm = new ExpertGameManager();
         c.setGameManager(gm);
         gm.newGame();
-        c.setSelectedIsland(gm.getBoard().getIslandManager().getIsland(7));
+        c.setSelectedIsland(gm.getBoard().getIslandManager().getIslandByIndex(7));
         c.setBoard(gm.getBoard());
-        gm.getBoard().getIslandManager().getIsland(gm.getBoard().getMotherNature().getIslandIndex()).setStudents(new StudentGroup(2));
+        gm.getBoard().getIslandManager().getIslandByIndex(gm.getBoard().getMotherNature().getIslandIndex()).setStudents(new StudentGroup(2));
         c.getGameManager().addPlayer("g1");
         c.getGameManager().addPlayer("g2");
         c.setPlayerThisTurn(c.getGameManager().getPlayers().get(0));

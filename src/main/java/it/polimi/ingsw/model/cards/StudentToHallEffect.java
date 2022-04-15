@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.model.players.Dashboard;
 

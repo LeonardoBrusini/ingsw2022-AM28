@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.players;
 
+import it.polimi.ingsw.enumerations.AssistantCardInfo;
+
 public class AssistantCard {
     private AssistantCardInfo info;
     private boolean played;

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.players.Player;
 
 public class Island {
     private Tower tower;

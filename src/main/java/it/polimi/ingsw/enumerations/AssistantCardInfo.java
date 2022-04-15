@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.players;
+package it.polimi.ingsw.enumerations;
 
 import it.polimi.ingsw.model.cards.EffectStrategy;
 

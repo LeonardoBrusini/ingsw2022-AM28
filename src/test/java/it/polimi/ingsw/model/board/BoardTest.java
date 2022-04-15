@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.ProfessorGroup;
 import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.Tower;
-import it.polimi.ingsw.model.board.Board;
+import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.cards.CharacterCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

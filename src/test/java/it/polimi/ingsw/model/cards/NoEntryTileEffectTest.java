@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.model.board.Archipelago;
 import it.polimi.ingsw.model.board.Board;
-import it.polimi.ingsw.model.board.Island;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class NoEntryTileEffectTest {
     @Test
     void resolveEffect() {
-        CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD5);
+        CharacterCard c = new CharacterCard(CharacterCardInfo.CARD5);
         c.setBoard(new Board(2));
-        c.setSelectedIsland(c.getBoard().getIslandManager().getIsland(3));
+        c.setSelectedIsland(c.getBoard().getIslandManager().getIslandByIndex(3));
         Archipelago a = c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex());
 
         c.setNoEntryTiles(1);

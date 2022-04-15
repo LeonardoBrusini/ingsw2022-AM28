@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.enumerations;
 
-public enum CharacterCardsInfo {
+import it.polimi.ingsw.model.cards.*;
+
+public enum CharacterCardInfo {
     CARD1("P01.jpg",1,new StudentToIslandEffect()),
     CARD2("P02.jpg",2,new DefaultCardEffect()),
     CARD3("P03.jpg",3,new ComputeInfluenceEffect()),
@@ -18,7 +20,7 @@ public enum CharacterCardsInfo {
     private final int price;
     private final EffectStrategy effect;
 
-    CharacterCardsInfo(String fileName, int price, EffectStrategy effect) {
+    CharacterCardInfo(String fileName, int price, EffectStrategy effect) {
         this.fileName = fileName;
         this.price = price;
         this.effect = effect;

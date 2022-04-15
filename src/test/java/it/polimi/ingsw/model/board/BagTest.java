@@ -1,8 +1,7 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.board.Bag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,8 +40,14 @@ class BagTest {
         sg = new StudentGroup(extractedStudents);
         for (Colour c: Colour.values()) assertEquals(26-b.getStudents().getQuantityColour(c),sg.getQuantityColour(c));
         b.addStudent(sg);
+        extractedStudents = b.removeStudents(200);
+        sg = new StudentGroup(extractedStudents);
+        assertEquals(130,extractedStudents.size());
+        assertEquals(0,b.getTotalStudents());
+        for (Colour c: Colour.values()) assertEquals(26-b.getStudents().getQuantityColour(c),sg.getQuantityColour(c));
+        b.setStudents(sg);
         try {
-            extractedStudents = b.removeStudents(200);
+            b.removeStudents(-10);
         } catch (IllegalArgumentException iae) {
             assertEquals(130,b.getTotalStudents());
         }

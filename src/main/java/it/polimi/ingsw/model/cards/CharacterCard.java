@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.controller.ExpertGameManager;
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.board.Bag;
 import it.polimi.ingsw.model.board.Board;
@@ -8,7 +10,7 @@ import it.polimi.ingsw.model.board.Island;
 import it.polimi.ingsw.model.players.Player;
 
 public class CharacterCard {
-    private CharacterCardsInfo cardInfo;
+    private CharacterCardInfo cardInfo;
     private boolean coinOnIt;
     private int noEntryTiles;
     private StudentGroup selectedStudentsFrom;
@@ -26,7 +28,7 @@ public class CharacterCard {
      *
      * @param info basic information of the card: file name, price, effect
      */
-    public CharacterCard(CharacterCardsInfo info){
+    public CharacterCard(CharacterCardInfo info){
         cardInfo = info;
         coinOnIt = false;
         noEntryTiles = 0;
@@ -38,28 +40,21 @@ public class CharacterCard {
      */
     public void initializeCards(Bag b) {
         switch (cardInfo) {
-            case CARD1:
-            case CARD11:
-                studentsOnCard = new StudentGroup(b.removeStudents(4));
-                break;
-            case CARD5:
+            case CARD1, CARD11 -> studentsOnCard = new StudentGroup(b.removeStudents(4));
+            case CARD5 -> {
                 noEntryTiles = 4;
                 studentsOnCard = new StudentGroup();
-                break;
-            case CARD7:
-                studentsOnCard = new StudentGroup(b.removeStudents(6));
-                break;
-            default:
-                studentsOnCard = new StudentGroup();
-                break;
+            }
+            case CARD7 -> studentsOnCard = new StudentGroup(b.removeStudents(6));
+            default -> studentsOnCard = new StudentGroup();
         }
     }
 
     //getter and setter methods
-    public CharacterCardsInfo getCardInfo() {
+    public CharacterCardInfo getCardInfo() {
         return cardInfo;
     }
-    public void setCardInfo(CharacterCardsInfo cardInfo) {
+    public void setCardInfo(CharacterCardInfo cardInfo) {
         this.cardInfo = cardInfo;
     }
     public boolean isCoinOnIt() {

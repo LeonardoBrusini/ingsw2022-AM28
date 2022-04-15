@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import org.junit.jupiter.api.Test;
 
 class CharacterCardTest {
-    CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD1);
+    CharacterCard c = new CharacterCard(CharacterCardInfo.CARD1);
 
     @Test
     void initializeCards() {

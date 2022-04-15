@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.CharacterCard;
 import it.polimi.ingsw.model.cards.FactoryCharacterCards;
-import it.polimi.ingsw.model.players.Player;
 
 import java.util.ArrayList;
 

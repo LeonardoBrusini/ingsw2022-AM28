@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.controller.EndOfGameChecker;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.StudentGroup;
 
 import java.util.ArrayList;
@@ -27,25 +28,25 @@ public class Bag {
         int j = 0;
         for(int i=1;i<=12;i++) {
             if(i!=mnIndex && i!=oppositeOfMNIndex) {
-                im.getIsland(i).addStudent(extractedStudents.get(j++));
+                im.getIslandByIndex(i).addStudent(extractedStudents.get(j++));
             }
         }
         for(Colour c : Colour.values()) { students.setNumStudents(24,c); }
     }
 
     /**
-     *
-     * @param num the number of random students to remove
+     * removes the selected number of students from the bag, or until it gets empty
+     * @param num the number of random students to remove (if <0 throws IllegalArgumentException)
      * @return a list of randomly selected students
      */
     public ArrayList<Colour> removeStudents(int num) throws IllegalArgumentException{
-        if(getTotalStudents()<num) throw new IllegalArgumentException();
+        if(num<0) throw new IllegalArgumentException();
         Random generator = new Random();
         ArrayList<Colour> ret = new ArrayList<>();
         Colour[] e = Colour.values();
         Colour c;
         int i = 0;
-        while (i<num) {
+        while (i<num && getTotalStudents()>0) {
             c = e[generator.nextInt(e.length)];
             if(students.getQuantityColour(c)>0) {
                 ret.add(c);
@@ -53,6 +54,7 @@ public class Bag {
                 i++;
             }
         }
+        if(getTotalStudents()==0) EndOfGameChecker.instance().setLastTurn(true);
         return ret;
     }
 
@@ -63,12 +65,12 @@ public class Bag {
      */
     public StudentGroup removeStudentGroup(int n) throws IllegalArgumentException{
         StudentGroup ret = new StudentGroup();
-        if(n>getTotalStudents()) throw new IllegalArgumentException();
+        if(n<0) throw new IllegalArgumentException();
         int i=0;
         Colour c;
         Colour[] e = Colour.values();
         Random generator = new Random();
-        while (i<n) {
+        while (i<n && getTotalStudents()>0) {
             c = e[generator.nextInt(e.length)];
             if(students.getQuantityColour(c)>0) {
                 ret.addStudent(c);
@@ -76,6 +78,7 @@ public class Bag {
                 i++;
             }
         }
+        if(getTotalStudents()==0) EndOfGameChecker.instance().setLastTurn(true);
         return ret;
     }
 

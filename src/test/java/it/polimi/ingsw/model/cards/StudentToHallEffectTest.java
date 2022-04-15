@@ -1,9 +1,13 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.controller.ExpertGameManager;
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.StudentGroup;
+import it.polimi.ingsw.model.players.Player;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,8 +18,10 @@ class StudentToHallEffectTest {
      * It verifies the corrected call for IllegalArgumentExcpetion
      */
     void resolveEffect() {
-        CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD11);
+        CharacterCard c = new CharacterCard(CharacterCardInfo.CARD11);
         ExpertGameManager gm = new ExpertGameManager();
+        gm.addPlayer("player1");
+        gm.addPlayer("player2");
         gm.newGame();
         gm.addPlayer("g1");
         c.setBoard(gm.getBoard());

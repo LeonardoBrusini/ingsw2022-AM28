@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.Tower;
-import it.polimi.ingsw.model.board.Archipelago;
-import it.polimi.ingsw.model.board.Island;
+import it.polimi.ingsw.enumerations.Tower;
 
 import java.util.ArrayList;
 
@@ -26,7 +24,7 @@ public class IslandManager {
      * @param islandIndex the index of the island to find
      * @return the island object with "islandIndex" index
      */
-    public Island getIsland(int islandIndex) throws IllegalArgumentException{
+    public Island getIslandByIndex(int islandIndex) throws IllegalArgumentException{
         if(islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
         for(Archipelago a : archipelagos) {
             for(Island i : a.getIslands()) {
@@ -104,7 +102,7 @@ public class IslandManager {
      */
     public void setTowerOnIsland(Tower tower, int islandIndex) throws IllegalArgumentException{
         if(islandIndex<1 || islandIndex>12 || tower==null) throw new IllegalArgumentException();
-        Island i = getIsland(islandIndex);
+        Island i = getIslandByIndex(islandIndex);
         i.setTower(tower);
         checkAggregation(islandIndex);
     }

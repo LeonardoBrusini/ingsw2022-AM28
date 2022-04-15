@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.players;
 
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.Tower;
+import it.polimi.ingsw.enumerations.Tower;
 
 /**
  * represents the Player's Dashboard
@@ -42,14 +43,15 @@ public class Dashboard {
         if(entrance.getQuantityColour(colour)<=0) throw new IllegalArgumentException();
         entrance.removeStudent(colour);
         hall.addStudent(colour);
+        //must check for coins
     }
 
     /**
      * Removes the student of the chosen colour from the entrance
      * @param colour It is the colour of the chosen student to remove
      */
-    public void removeFromEntrance(Colour colour) throws IllegalArgumentException{
-        if(entrance.getQuantityColour(colour)<=0) throw new IllegalArgumentException();
+    public void removeFromEntrance(Colour colour) throws NoStudentsException {
+        if(entrance.getQuantityColour(colour)<=0) throw new NoStudentsException();
         entrance.removeStudent(colour);
     }
 

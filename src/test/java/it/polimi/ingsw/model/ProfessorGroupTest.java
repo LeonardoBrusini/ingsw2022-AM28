@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.enumerations.Tower;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +23,7 @@ class ProfessorGroupTest {
         for (Colour c: Colour.values()) {
             pg.setTower(c,null);
             assertEquals(pg.getTower(c),pg.getProfessors().get(c));
-            pg.setTower(c,Tower.WHITE);
+            pg.setTower(c, Tower.WHITE);
             assertEquals(pg.getTower(c),pg.getProfessors().get(c));
             pg.setTower(c,Tower.BLACK);
             assertEquals(pg.getTower(c),pg.getProfessors().get(c));

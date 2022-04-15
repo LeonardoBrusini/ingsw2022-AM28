@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.controller.ExpertGameManager;
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.players.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,10 +16,12 @@ class EntranceToHallSwitchEffectTest {
      */
     @Test
     void resolveEffect() {
-        CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD10);
+        CharacterCard c = new CharacterCard(CharacterCardInfo.CARD10);
         ArrayList<Integer> expectedEntrance = new ArrayList<>();
         ArrayList<Integer> exptectedHall = new ArrayList<>();
         ExpertGameManager gm = new ExpertGameManager();
+        gm.addPlayer("player1");
+        gm.addPlayer("player2");
         gm.newGame();
         c.setGameManager(gm);
         gm.addPlayer("g1");

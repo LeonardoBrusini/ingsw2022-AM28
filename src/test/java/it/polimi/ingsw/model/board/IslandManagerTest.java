@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.Tower;
-import it.polimi.ingsw.model.board.Island;
-import it.polimi.ingsw.model.board.IslandManager;
+import it.polimi.ingsw.enumerations.Tower;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +22,7 @@ class IslandManagerTest {
     @Test
     void getIsland() {
         //how to test??
-        Island i = im.getIsland(4);
+        Island i = im.getIslandByIndex(4);
         assertEquals(4,i.getIslandIndex());
     }
 

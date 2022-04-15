@@ -22,7 +22,7 @@ class AddMotherNatureShiftsEffectTest {
         gm.newGame();
         gm.addPlayer("g1");
         gm.addPlayer("g1");
-        CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD4);
+        CharacterCard c = new CharacterCard(CharacterCardInfo.CARD4);
         c.setPlayerThisTurn(gm.getPlayers().get(0));
         for(int i = 0; i < 10; i++){
             c.getPlayerThisTurn().playCard(i);

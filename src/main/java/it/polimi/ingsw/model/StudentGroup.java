@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.enumerations.Colour;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 
@@ -13,7 +15,7 @@ public class StudentGroup {
      * Constructor of a new StudentGroup without students
      */
     public StudentGroup(){
-        this.students = new EnumMap<Colour,Integer>(Colour.class);
+        this.students = new EnumMap<>(Colour.class);
         for(Colour c: Colour.values())
             students.put(c,0);
     }
@@ -23,7 +25,7 @@ public class StudentGroup {
      * @param n number of students of a colour
      */
     public StudentGroup(int n){
-        students = new EnumMap<Colour, Integer>(Colour.class);
+        students = new EnumMap<>(Colour.class);
         for(Colour c: Colour.values())
             students.put(c,n);
     }
@@ -33,7 +35,7 @@ public class StudentGroup {
      * @param r is an already defined StudentGroup object
      */
     public StudentGroup(StudentGroup r){
-        students = new EnumMap<Colour, Integer>(Colour.class);
+        students = new EnumMap<>(Colour.class);
         for(Colour c: Colour.values()){
             students.put(c,r.getQuantityColour(c));
         }
@@ -41,7 +43,7 @@ public class StudentGroup {
 
     /**
      * Constructor of a new StudentGroup by a list of students (i.e. randomly extracted from the bag)
-     * @param list
+     * @param list list of colours (student extracted in order)
      */
     public StudentGroup(ArrayList<Colour> list) {
         students = new EnumMap<>(Colour.class);
@@ -51,7 +53,7 @@ public class StudentGroup {
 
     /**
      *
-     * @param colour
+     * @param colour colour of the students
      * @return the number of students of the parameter Colour
      */
     public int getQuantityColour(Colour colour){
@@ -95,7 +97,7 @@ public class StudentGroup {
 
     /**
      * checks if the map is empty
-     * @return
+     * @return true if empty group, false otherwise
      */
     public boolean empty(){
         for(Colour c : Colour.values())
@@ -114,7 +116,7 @@ public class StudentGroup {
 
     /**
      * copies the number of students in s on this group
-     * @param s
+     * @param s students to copy
      */
     public void setStudents(StudentGroup s){
         for(Colour c: Colour.values()){

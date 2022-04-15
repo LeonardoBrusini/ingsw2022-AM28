@@ -1,22 +1,35 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.enumerations.Tower;
+import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.board.Island;
+import it.polimi.ingsw.exceptions.AlreadyPlayedException;
+import it.polimi.ingsw.enumerations.AssistantCardInfo;
 import it.polimi.ingsw.model.players.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ExpertGameManager {
     private ArrayList<Player> players;
-    private ArrayList<Integer> playerOrder;
     private Board board;
+    private TurnManager turnManager;
 
     public ExpertGameManager() {
         players = new ArrayList<>();
     }
 
+    /**
+     * adds a new player if the lobby is not full (no more than 3 players)
+     * @param s the nickname of the player
+     */
+    public void addPlayer(String s){
+        if(players.size()<3) {
+            players.add(new Player(s, Tower.values()[players.size()]));
+        }
+    }
 
     public void newGame(){
        board = new Board(players.size());
@@ -29,18 +42,10 @@ public class ExpertGameManager {
                p.getDashboard().setNumTowers(6);
            }
        }
+       turnManager = new TurnManager(players.size());
        // to be continued
     }
 
-    /**
-     * adds a new player if the lobby is not full (no more than 3 players)
-     * @param s the nickname of the player
-     */
-    public void addPlayer(String s){
-        if(players.size()<3) {
-            players.add(new Player(s, Tower.values()[players.size()]));
-        }
-    }
 
     /**
      * returns the number of player of the lobby
@@ -55,7 +60,14 @@ public class ExpertGameManager {
      * @param c index of the card the player wants to play
      */
     public void playAssistantCard(int p, int c){
-        players.get(p).playCard(c);
+        if(p<0 || p>=players.size() || c<0 || c>=AssistantCardInfo.values().length) return;
+        if(turnManager.getPhase()!=Phase.PLANNING || turnManager.getCurrentPlayer()!=p) return; //not the correct phase
+        try {
+            players.get(p).playCard(c);
+        } catch (AlreadyPlayedException e) {
+            //what happens?
+        }
+        turnManager.nextPhase(players);
         //parameter controls, player who plays card must be the current one in TurnManager and must be in planning phase
     }
 
@@ -65,9 +77,15 @@ public class ExpertGameManager {
      * @param c the colour of the student
      */
     public void moveStudentsToHall(int p, Colour c){
-        players.get(p).moveToHall(c);
-        //parameter controls, player who moves the student must be the current one in TurnManager, and must be in action phase
+        if (p<0 || p>=players.size() || c==null) return;
+        if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || !turnManager.isMoveStudentsPhase()) return;
+        try {
+            players.get(p).moveToHall(c);
+        } catch (IllegalArgumentException e) {
+            //what happens?
+        }
         checkProfessors(c);
+        turnManager.nextPhase(players);
     }
 
     /**
@@ -88,6 +106,7 @@ public class ExpertGameManager {
         if(maxStudentsPlayer!=null) {
             board.assignProfessor(c,maxStudentsPlayer.getTower());
         }
+        //must check if CharacterCard 2 is activated, modify behaviour if so
     }
 
     /**
@@ -97,8 +116,14 @@ public class ExpertGameManager {
      * @param is index of the island
      */
     public void moveStudentToIsland(int p, Colour c, int is){
-        players.get(p).moveToIsland(c,board.getIslandManager().getIsland(is));
-        //parameter controls, player who moves the student must be the current one in TurnManager, and must be in action phase
+        if(p<0 || p>=players.size() || c==null || is<1 || is>12) return;
+        if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || !turnManager.isMoveStudentsPhase()) return;
+        try{
+            players.get(p).moveToIsland(c,board.getIslandManager().getIslandByIndex(is));
+        } catch (NoStudentsException e) {
+            //what happens?
+        }
+        turnManager.nextPhase(players);
     }
 
     /**
@@ -108,9 +133,11 @@ public class ExpertGameManager {
      * @param moves the number of archipelagos mother nature has to move forward
      */
     public void moveMotherNature(int moves){
-        //mother nature moves
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) return;
+        if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) return;
         board.moveMotherNature(moves);
-        checkInfluence();
+        checkInfluence(); //check if this method works properly
+        turnManager.nextPhase(players);
     }
 
     /**
@@ -139,7 +166,8 @@ public class ExpertGameManager {
      * @param playerIndex player who asked to take the students
      */
     public void takeStudentsFromCloud(int cloudIndex, int playerIndex) {
-        //must check if the player is the one of the current turn and if cloud index is correct
+        if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) return;
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) return;
         StudentGroup sg = board.getClouds().get(cloudIndex).clearStudents();
         players.get(playerIndex).fillDashboard(sg);
     }
@@ -155,17 +183,12 @@ public class ExpertGameManager {
         }
         return null;
     }
+
     //public void PlayCharacterCard(int)
 
     //getters & setters methods
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
-    }
-    public ArrayList<Integer> getPlayerOrder() {
-        return playerOrder;
-    }
-    public void setPlayerOrder(ArrayList<Integer> playerOrder) {
-        this.playerOrder = playerOrder;
     }
     public Board getBoard() {
         return board;

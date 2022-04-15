@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.enumerations.Colour;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;

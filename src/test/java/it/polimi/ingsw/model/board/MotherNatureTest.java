@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.ProfessorGroup;
 import it.polimi.ingsw.model.StudentGroup;
-import it.polimi.ingsw.model.Tower;
-import it.polimi.ingsw.model.board.MotherNature;
+import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.players.Player;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +41,7 @@ class MotherNatureTest {
         ArrayList<Player> players = new ArrayList<>();
         StudentGroup st = new StudentGroup(2);
         st.addStudent(Colour.BLUE);
-        im.getIsland(3).setStudents(st);
+        im.getIslandByIndex(3).setStudents(st);
         EnumMap<Colour, Tower> en = new EnumMap<>(Colour.class);
         ProfessorGroup pg = new ProfessorGroup();
         Player p1 = new Player("g1", Tower.BLACK);

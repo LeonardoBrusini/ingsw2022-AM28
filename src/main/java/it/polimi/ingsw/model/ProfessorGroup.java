@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.enumerations.Tower;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 
@@ -13,12 +16,12 @@ public class ProfessorGroup {
      * Constructor of a new object of class ProfessorGroup
      */
     public ProfessorGroup(){
-        professors = new EnumMap<Colour,Tower>(Colour.class);
+        professors = new EnumMap<>(Colour.class);
     }
 
     /**
      *
-     * @param colour
+     * @param colour colour of the professor
      * @return the tower of the player who currently owns the professor, null if no player owns it
      */
     public Tower getTower(Colour colour){

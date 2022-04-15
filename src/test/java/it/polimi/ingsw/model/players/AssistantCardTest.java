@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.players;
 
+import it.polimi.ingsw.enumerations.AssistantCardInfo;
 import org.junit.jupiter.api.Test;
-import it.polimi.ingsw.model.players.AssistantCard;
 
 import static org.junit.jupiter.api.Assertions.*;
 
