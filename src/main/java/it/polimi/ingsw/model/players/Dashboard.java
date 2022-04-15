@@ -77,6 +77,7 @@ public class Dashboard {
         numTowers--;
     }
 
+    //getter & setter for testing
     public StudentGroup getEntrance() {
         return new StudentGroup(entrance);
     }
@@ -96,4 +97,5 @@ public class Dashboard {
     public Tower getTower() {
         return tower;
     }
+
 }

@@ -5,24 +5,30 @@ import it.polimi.ingsw.model.players.Dashboard;
 
 public class CardToEntranceSwitchEffect implements EffectStrategy{
     /**
-     * takes the selected students from the card (stored in selectedStudentsFrom) and moves them from the card to the dashboard entrance
-     * then takes the selected students from the entrance (stored in selectedStudentTo) and moves them from the entrance to the card
+     * takes the selected students (max 3) from the card (stored in selectedStudentsFrom) and moves them from the card to the dashboard entrance
+     * then takes the selected students (max 3) from the entrance (stored in selectedStudentTo) and moves them from the entrance to the card
      * @param c the card which is being activated
      */
     @Override
-    public void resolveEffect(CharacterCard c) {
+    public void resolveEffect(CharacterCard c) throws IllegalArgumentException {
         Dashboard d = c.getPlayerThisTurn().getDashboard();
+        if(c.getSelectedStudentsTo().getTotalStudents() > 3 || c.getSelectedStudentsFrom().getTotalStudents() > 3)
+            throw new IllegalArgumentException();
         for(Colour colour : Colour.values()) {
             int quantityColour = c.getSelectedStudentsFrom().getQuantityColour(colour);
+            if(c.getStudentsOnCard().getQuantityColour(colour) < quantityColour)
+                throw new IllegalArgumentException();
             for(int i=0; i<quantityColour; i++) {
                 c.getStudentsOnCard().removeStudent(colour);
             }
-            d.getEntrance().addStudents(c.getSelectedStudentsFrom());
             quantityColour = c.getSelectedStudentsTo().getQuantityColour(colour);
+            if(d.getEntrance().getQuantityColour(colour) < quantityColour)
+                throw new IllegalArgumentException();
             for(int i=0; i<quantityColour; i++) {
-                d.getEntrance().removeStudent(colour);
+                d.removeFromEntrance(colour);
             }
-            c.getStudentsOnCard().addStudents(c.getSelectedStudentsTo());
         }
+        d.fillEntrance(c.getSelectedStudentsFrom());
+        c.getStudentsOnCard().addStudents(c.getSelectedStudentsTo());
     }
 }
