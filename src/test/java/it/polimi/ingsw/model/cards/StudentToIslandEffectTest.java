@@ -29,6 +29,9 @@ class StudentToIslandEffectTest {
         c.setPlayerThisTurn(new Player("g1", Tower.WHITE));
     }
     @Test
+    /**
+     * It verfies the correct execution of the card's effect
+     */
     void resolveEffect() {
         int before = c.getPlayerThisTurn().getCoins();
         c.getCardInfo().getEffect().resolveEffect(c);
