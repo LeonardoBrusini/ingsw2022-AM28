@@ -6,7 +6,9 @@ import it.polimi.ingsw.model.board.Island;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * It verifies the correct number of NoEntryTiles both in the card and on the island
+ */
 class NoEntryTileEffectTest {
     @Test
     void resolveEffect() {

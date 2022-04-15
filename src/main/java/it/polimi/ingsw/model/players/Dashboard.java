@@ -29,8 +29,7 @@ public class Dashboard {
      * @param studentGroup it is the StudentGroup with the students to add to the entrance
      */
     public void fillEntrance(StudentGroup studentGroup){
-        Colour[] e = Colour.values();
-        for(Colour c: e){
+        for(Colour c: Colour.values()){
             entrance.setNumStudents(studentGroup.getQuantityColour(c)+entrance.getQuantityColour(c),c);
         }
     }
@@ -54,6 +53,14 @@ public class Dashboard {
         entrance.removeStudent(colour);
     }
 
+    /**
+     * Removes the student of the chosen colour from the hall
+     * @param colour It is the colour of the chosen student to remove
+     */
+    public void removeFromHall(Colour colour) throws IllegalArgumentException{
+        if(hall.getQuantityColour(colour)<=0) throw new IllegalArgumentException();
+        hall.removeStudent(colour);
+    }
     /**
      * Getter of the students of the chosen colour remaining in the hall
      * @param colour the method will count the number of students of this colour in the hall
@@ -96,6 +103,11 @@ public class Dashboard {
 
     public Tower getTower() {
         return tower;
+    }
+
+    public void fillHall(StudentGroup studentGroup){
+        for(Colour colour: Colour.values())
+            hall.setNumStudents(hall.getQuantityColour(colour) + studentGroup.getQuantityColour(colour), colour);
     }
 
 }

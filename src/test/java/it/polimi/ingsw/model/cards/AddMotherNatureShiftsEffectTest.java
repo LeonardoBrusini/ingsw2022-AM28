@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AddMotherNatureShiftsEffectTest {
+    /*
+    /**
+     * It tests the correct execution of the card's effect
+     */
     /*@Test
     void resolveEffect() {
         ExpertGameManager gm = new ExpertGameManager();

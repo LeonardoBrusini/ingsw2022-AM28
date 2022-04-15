@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardToEntranceSwitchEffectTest {
+    /**
+     * It verifies the correct throw of Excpetions and the correct number of students
+     * at the end of computation in each area
+     */
     @Test
     void resolveEffect() {
         CharacterCard c = new CharacterCard(CharacterCardsInfo.CARD7);
@@ -33,25 +37,32 @@ class CardToEntranceSwitchEffectTest {
         //c.getCardInfo().getEffect().resolveEffect(c);
         //The function returns IllegalArgumentException
 
+        ArrayList<Integer> expectedCard = new ArrayList<>();
+        ArrayList<Integer> expectedDashboard = new ArrayList<>();
         Player p1 = new Player("g1", Tower.WHITE);
         c.setPlayerThisTurn(p1);
         Dashboard d1 = c.getPlayerThisTurn().getDashboard();
         StudentGroup studentOnCard1 = new StudentGroup(6);
         c.setStudentsOnCard(studentOnCard1);
-        ArrayList<Colour> extactedColours = b.getBag().removeStudents(3);
-        StudentGroup studentsTo1 = new StudentGroup(extactedColours);
+        ArrayList<Colour> extactedColours1 = b.getBag().removeStudents(3);
+        ArrayList<Colour> extactedColours2 = b.getBag().removeStudents(3);
+        StudentGroup studentsTo1 = new StudentGroup(extactedColours1);
         StudentGroup sp1 = new StudentGroup(6);
-        StudentGroup studentsFrom1 = new StudentGroup(extactedColours);
+        StudentGroup studentsFrom1 = new StudentGroup(extactedColours2);
         d1.fillEntrance(sp1);
         c.setSelectedStudentsTo(studentsTo1);
         c.setSelectedStudentsFrom(studentsFrom1);
-        c.getCardInfo().getEffect().resolveEffect(c);
         for(Colour cc: Colour.values()){
-            int resDashboard = sp.getQuantityColour(cc) - c.getSelectedStudentsTo().getQuantityColour(cc) + c.getSelectedStudentsFrom().getQuantityColour(cc);
-            int resCard = c.getStudentsOnCard().getQuantityColour(cc) + c.getSelectedStudentsTo().getQuantityColour(cc) - c.getSelectedStudentsFrom().getQuantityColour(cc);
+            expectedCard.add(c.getStudentsOnCard().getQuantityColour(cc) + c.getSelectedStudentsTo().getQuantityColour(cc) - c.getSelectedStudentsFrom().getQuantityColour(cc));
+            expectedDashboard.add(sp.getQuantityColour(cc) - c.getSelectedStudentsTo().getQuantityColour(cc) + c.getSelectedStudentsFrom().getQuantityColour(cc));
+        }
+        c.getCardInfo().getEffect().resolveEffect(c);
+        int i = 0;
+        for(Colour cc: Colour.values()){
             //assertEquals(7, resCard);
-            assertEquals(resDashboard, d1.getEntrance().getQuantityColour(cc));
-            assertEquals(resCard , c.getStudentsOnCard().getQuantityColour(cc)); // I couldn't figure out why in the test resCard adds 1. The method tests returns the right value
+            assertEquals(expectedDashboard.get(i), d1.getEntrance().getQuantityColour(cc));
+            assertEquals(expectedCard.get(i), c.getStudentsOnCard().getQuantityColour(cc));
+            i++;
         }
 
         Player p2 = new Player("g1", Tower.WHITE);
