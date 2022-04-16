@@ -31,6 +31,9 @@ public class ExpertGameManager {
         }
     }
 
+    /**
+     * initializes the board, which objects on it have attributes which are initialized based on the number of players
+     */
     public void newGame(){
        board = new Board(players.size());
        if(players.size()==2) {
@@ -67,8 +70,7 @@ public class ExpertGameManager {
         } catch (AlreadyPlayedException e) {
             //what happens?
         }
-        turnManager.nextPhase(players);
-        //parameter controls, player who plays card must be the current one in TurnManager and must be in planning phase
+        turnManager.nextPhase(board,players);
     }
 
     /**
@@ -78,14 +80,14 @@ public class ExpertGameManager {
      */
     public void moveStudentsToHall(int p, Colour c){
         if (p<0 || p>=players.size() || c==null) return;
-        if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || !turnManager.isMoveStudentsPhase()) return;
+        if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || turnManager.isMoveStudentsPhase()) return;
         try {
             players.get(p).moveToHall(c);
         } catch (IllegalArgumentException e) {
             //what happens?
         }
         checkProfessors(c);
-        turnManager.nextPhase(players);
+        turnManager.nextPhase(board,players);
     }
 
     /**
@@ -117,13 +119,13 @@ public class ExpertGameManager {
      */
     public void moveStudentToIsland(int p, Colour c, int is){
         if(p<0 || p>=players.size() || c==null || is<1 || is>12) return;
-        if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || !turnManager.isMoveStudentsPhase()) return;
+        if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || turnManager.isMoveStudentsPhase()) return;
         try{
             players.get(p).moveToIsland(c,board.getIslandManager().getIslandByIndex(is));
         } catch (NoStudentsException e) {
             //what happens?
         }
-        turnManager.nextPhase(players);
+        turnManager.nextPhase(board,players);
     }
 
     /**
@@ -137,13 +139,15 @@ public class ExpertGameManager {
         if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) return;
         board.moveMotherNature(moves);
         checkInfluence(); //check if this method works properly
-        turnManager.nextPhase(players);
+        turnManager.nextPhase(board,players);
+        manageEndOfGame();
     }
 
     /**
      * checks the player with most influence on the archipelago and build towers on it if needed
      */
     public void checkInfluence() {
+        //modify behaviour if noEntryTiles is on the archipelago, nothing happens and the noEntryTile goes back to CARD5
         Player p = board.getMotherNature().playerWithMostInfluence(players,board.getIslandManager(),board.getProfessorGroup());
         if(p!=null) {
             for(Island i: board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex()).getIslands()) {
@@ -170,6 +174,8 @@ public class ExpertGameManager {
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) return;
         StudentGroup sg = board.getClouds().get(cloudIndex).clearStudents();
         players.get(playerIndex).fillDashboard(sg);
+        turnManager.nextPhase(board,players);
+        manageEndOfGame();
     }
 
     /**
@@ -185,6 +191,18 @@ public class ExpertGameManager {
     }
 
     //public void PlayCharacterCard(int)
+
+    private void manageEndOfGame() {
+        int winnerIndex;
+        if(EndOfGameChecker.instance().isEndOfGame()) {
+            winnerIndex = EndOfGameChecker.instance().getWinner();
+            if(winnerIndex==-1) {
+                //manage draw
+            } else {
+                //manage winner
+            }
+        }
+    }
 
     //getters & setters methods
     public void setPlayers(ArrayList<Player> players) {

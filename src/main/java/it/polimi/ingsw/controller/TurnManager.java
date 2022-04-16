@@ -1,9 +1,9 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.players.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class TurnManager {
@@ -38,7 +38,7 @@ public class TurnManager {
      * Sets the next phase of the game, so that the game manager checks if a command is activated on the correct phase of the game
      * @param players the list of players
      */
-    public void nextPhase(ArrayList<Player> players) {
+    public void nextPhase(Board b, ArrayList<Player> players) {
         if (phase==Phase.PLANNING) {
             if(currentPlayer==players.size()-1) {
                 toActionPhase(players);
@@ -56,8 +56,10 @@ public class TurnManager {
             } else if(motherNaturePhase) {
                 cloudSelectionPhase = true;
                 motherNaturePhase = false;
+                EndOfGameChecker.instance().updateEOG(b,players);
             } else {
                 if(currentPlayer==players.size()-1) {
+                    EndOfGameChecker.instance().updateEOGLastTurn(b,players);
                     toPlanningPhase(players);
                 } else {
                     currentPlayer++;
@@ -69,6 +71,10 @@ public class TurnManager {
         }
     }
 
+    /**
+     * sets the order of players to the planning phase
+     * @param players list of players
+     */
     private void toPlanningPhase(ArrayList<Player> players) {
         planningOrder = new ArrayList<>();
         phase = Phase.PLANNING;
@@ -82,8 +88,8 @@ public class TurnManager {
     }
 
     /**
-     * sets the order of players to the actionPhase
-     * @param players
+     * sets the order of players to the action phase
+     * @param players list of players
      */
     private void toActionPhase(ArrayList<Player> players) {
         actionOrder = new ArrayList<>();

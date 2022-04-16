@@ -41,23 +41,6 @@ class BoardTest {
     }
 
     @Test
-    void takeStudentsFromCloud() {
-        b.fillClouds();
-        StudentGroup sg0 = new StudentGroup(b.getClouds().get(0).getStudentsOnCloud());
-        StudentGroup sg1 = new StudentGroup(b.getClouds().get(1).getStudentsOnCloud());
-        StudentGroup sg2 = new StudentGroup(b.getClouds().get(2).getStudentsOnCloud());
-        StudentGroup takenFromCloud0 = b.takeStudentsFromCloud(0);
-        StudentGroup takenFromCloud1 = b.takeStudentsFromCloud(1);
-        StudentGroup takenFromCloud2 = b.takeStudentsFromCloud(2);
-        for (Colour c: Colour.values()) {
-            assertEquals(sg0.getQuantityColour(c),takenFromCloud0.getQuantityColour(c));
-            assertEquals(sg1.getQuantityColour(c),takenFromCloud1.getQuantityColour(c));
-            assertEquals(sg2.getQuantityColour(c),takenFromCloud2.getQuantityColour(c));
-        }
-    }
-
-
-    @Test
     void assignProfessor() {
         b.assignProfessor(Colour.BLUE, Tower.BLACK);
         assertEquals(Tower.BLACK,b.getProfessorGroup().getTower(Colour.BLUE));

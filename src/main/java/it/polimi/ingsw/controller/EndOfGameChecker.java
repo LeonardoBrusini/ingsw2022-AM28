@@ -1,71 +1,133 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.enumerations.Tower;
+import it.polimi.ingsw.model.ProfessorGroup;
 import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.players.Player;
 
 import java.util.ArrayList;
 
+/**
+ * Observer class to check when the game ends
+ */
 public class EndOfGameChecker {
     private boolean lastTurn;
-    private Player winner;
+    private int winner;
     private boolean endOfGame;
     private static EndOfGameChecker instance;
 
+    /**
+     * EndOfGameChecker private constructor, for the singleton
+     */
     private EndOfGameChecker() {
         lastTurn=false;
-        winner=null;
+        winner=-1;
         endOfGame=false;
     }
 
+    /**
+     * if there's no instance, creates it
+     * @return the instance of the singleton
+     */
     public static EndOfGameChecker instance() {
         if(instance==null) instance = new EndOfGameChecker();
         return instance;
     }
 
-    public boolean updateEOG(Board b, ArrayList<Player> players) {
-        if(lastTurn) {
-            endOfGame = true;
-            return endOfGame;
+    /**
+     * checks the conditions for the end of the game
+     * @param b board, where it can get information about archipelagos & professors
+     * @param players where it searches if a player built all of his towers
+     */
+    public void updateEOG(Board b, ArrayList<Player> players) {
+        for(int i=0; i<players.size(); i++) {
+            if(players.get(i).getDashboard().getNumTowers()==0) {
+                endOfGame=true;
+                winner = i;
+                return;
+            }
         }
         if (b.getIslandManager().getArchipelagos().size()<=3){
             endOfGame = true;
-            return true;
+            checkWinner(players, b.getProfessorGroup());
         }
-        for(Player p: players) {
-            if(p.getDashboard().getNumTowers()==0) {
-                endOfGame=true;
-                return endOfGame;
+    }
+
+    /**
+     * if this was the last turn, ends the game (empty bag, player with no assistant card left)
+     * @param b board
+     * @param players list of players
+     */
+    public void updateEOGLastTurn(Board b, ArrayList<Player> players) {
+        if(lastTurn) {
+            endOfGame = true;
+            checkWinner(players, b.getProfessorGroup());
+        }
+    }
+
+    /**
+     * if the game ends, checkWinner() sets the index of the player who won, -1 if there's no winner
+     * @param players list of players
+     * @param professors professor, needed if two or more players built the same number of towers
+     */
+    private void checkWinner(ArrayList<Player> players, ProfessorGroup professors) {
+        int minTowers = 10;
+        int winnerIndex = -1;
+        //finds the player who built most towers
+        for(int i=0;i<players.size();i++) {
+            if(players.get(i).getDashboard().getNumTowers()<minTowers) {
+                minTowers = players.get(i).getDashboard().getNumTowers();
+                winnerIndex = i;
+            } else if(players.get(i).getDashboard().getNumTowers()==minTowers) {
+                winnerIndex = -1;
             }
         }
-        return false;
+
+        //if found, sets winner, else, checks for the one with most professors
+        if(winnerIndex>-1) {
+            winner = winnerIndex;
+        } else {
+            Tower maxProfessorsTower = null;
+            int maxProfessors = -1;
+            int numProfessors;
+            for (Tower t: Tower.values()) {
+                numProfessors = 0;
+                for (Colour c: Colour.values()) {
+                    if(professors.getTower(c)==t) {
+                        numProfessors++;
+                    }
+                }
+                if(numProfessors>maxProfessors) {
+                    maxProfessors = numProfessors;
+                    maxProfessorsTower = t;
+                } else if(numProfessors==maxProfessors) {
+                    maxProfessorsTower = null;
+                }
+            }
+            //if found, sets the winner, else, nobody won
+            if (maxProfessorsTower!=null) {
+                for (int i=0;i< players.size();i++) {
+                    if(players.get(i).getTower()==maxProfessorsTower) {
+                        winner = i;
+                        return;
+                    }
+                }
+            }
+        }
     }
 
-    public void updateLastTurn() {
-
-    }
-
-    //getters & setters
+    //getters
     public boolean isLastTurn() {
         return lastTurn;
     }
-
     public void setLastTurn(boolean lastTurn) {
         this.lastTurn = lastTurn;
     }
-
-    public Player getWinner() {
+    public int getWinner() {
         return winner;
     }
-
-    public void setWinner(Player winner) {
-        this.winner = winner;
-    }
-
     public boolean isEndOfGame() {
         return endOfGame;
-    }
-
-    public void setEndOfGame(boolean endOfGame) {
-        this.endOfGame = endOfGame;
     }
 }

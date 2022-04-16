@@ -44,16 +44,6 @@ public class Board {
     }
 
     /**
-     * removes the students from the clouds and returns them
-     * @param pos the index of the cloud we want to take the students from
-     * @return a StudentGroup of the students who were in the clouds
-     */
-    public StudentGroup takeStudentsFromCloud(int pos) throws IllegalArgumentException{
-        if(pos<0 || pos>=clouds.size()) throw new IllegalArgumentException();
-        return clouds.get(pos).clearStudents();
-    }
-
-    /**
      * assign a professor to a player (by the colour of his tower)
      * @param c the colour of the professor
      * @param t the tower of the player we want to assign the professor

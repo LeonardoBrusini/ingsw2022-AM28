@@ -37,11 +37,14 @@ public class Island {
         if(t==null || professors==null) throw new IllegalArgumentException();
         int influence = 0;
         for(Colour c : Colour.values()) {
+            //doesn't update influence to students selected on CARD9
             if(professors.getTower(c) != null && professors.getTower(c).equals(t)) {
                 influence += students.getQuantityColour(c);
             }
         }
+        //this condition must be false if CARD6 IS ACTIVATED
         if(tower!=null && tower.equals(t)) influence++;
+        //2 additional points if this player activated CARD8
         return influence;
     }
 
