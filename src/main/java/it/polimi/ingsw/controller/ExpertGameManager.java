@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.exceptions.NoStudentsException;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.board.Island;
 import it.polimi.ingsw.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.enumerations.AssistantCardInfo;
+import it.polimi.ingsw.model.cards.CharacterCard;
 import it.polimi.ingsw.model.players.Player;
 
 import java.util.ArrayList;
@@ -216,6 +218,61 @@ public class ExpertGameManager {
     }
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public void playCharacterCard(int index, int posCharacterCard){
+        Player p = this.players.get(index);
+
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        p.spendCoins(e[posCharacterCard].getPrice());
+
+        board.playCharacterCard(posCharacterCard);
+
+    }
+
+    public void playCharacterCard(int index, int posCharacterCard, Colour colour){
+        Player p = this.players.get(index);
+
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        p.spendCoins(e[posCharacterCard].getPrice());
+
+        board.playCharacterCard(posCharacterCard,colour);
+    }
+
+
+    public void playCharacterCard(int index, int posCharacterCard, Colour colour, int  noEntryTiles){
+        Player p = this.players.get(index);
+
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        p.spendCoins(e[posCharacterCard].getPrice());
+
+        board.playCharacterCard(posCharacterCard,colour,noEntryTiles);
+    }
+
+    public void playCharacterCard(int index, int posCharacterCard,  int  noEntryTiles){
+        Player p = this.players.get(index);
+
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        p.spendCoins(e[posCharacterCard].getPrice());
+
+        board.playCharacterCard(posCharacterCard,noEntryTiles);
+    }
+
+
+
+
+    public void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo){
+        Player p = this.players.get(index);
+
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        p.spendCoins(e[posCharacterCard].getPrice());
+
+        board.playCharacterCard(posCharacterCard,studentGroupFrom ,studentGroupTo);
     }
 
 }

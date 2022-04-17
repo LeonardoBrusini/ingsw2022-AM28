@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.*;
@@ -109,4 +110,47 @@ public class Board {
     public void setCharacterCards(ArrayList<CharacterCard> characterCards) {
         this.characterCards = characterCards;
     }
+
+
+    public void playCharacterCard(int posCharacterCard){
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
+    }
+
+    public void playCharacterCard( int posCharacterCard, Colour colour){
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        characterCards.get(posCharacterCard).setSelectedColour(colour);
+
+        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
+    }
+
+    public void playCharacterCard(int posCharacterCard, Colour colour, int noEntryTiles){
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        characterCards.get(posCharacterCard).setSelectedColour(colour);
+        characterCards.get(posCharacterCard).setNoEntryTiles(noEntryTiles);
+
+        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
+    }
+
+    public void playCharacterCard(int posCharacterCard, int noEntryTiles){
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        characterCards.get(posCharacterCard).setNoEntryTiles(noEntryTiles);
+
+        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
+    }
+
+    public void playCharacterCard(int posCharacterCard, StudentGroup studentGroupFrom , StudentGroup studentGroupTo){
+        CharacterCardInfo[] e = CharacterCardInfo.values();
+
+        characterCards.get(posCharacterCard).setSelectedStudentsFrom(studentGroupFrom);
+        characterCards.get(posCharacterCard).setSelectedStudentsFrom(studentGroupTo);
+
+        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
+
+    }
+
 }
