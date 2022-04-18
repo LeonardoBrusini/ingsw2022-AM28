@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.*;
@@ -22,7 +21,7 @@ public class Board {
      * Board constructor. Initialize coins, clouds, motherNature, islands (via IslandManager), bag and professorGroup
      */
     public Board(int numPlayers) {
-        coins = 20;
+        coins = 20-numPlayers;
         clouds = new ArrayList<>();
         for(int i=0; i<numPlayers; i++){
             clouds.add(new Cloud());

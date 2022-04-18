@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.players;
 
 import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.exceptions.FullHallException;
 import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.enumerations.Tower;
@@ -13,6 +14,7 @@ public class Dashboard {
     private final StudentGroup entrance;
     private int numTowers;
     private final Tower tower;
+
 
     /**
      * Constructor of a new object of class Dashboard
@@ -39,11 +41,9 @@ public class Dashboard {
      * Move a student of the chosen colour from the entrance to the Hall
      * @param colour It is the colour of the chosen student to move
      */
-    public void addToHall(Colour colour) throws IllegalArgumentException{
-        if(entrance.getQuantityColour(colour)<=0) throw new IllegalArgumentException();
-        entrance.removeStudent(colour);
+    public void addToHall(Colour colour) throws IllegalArgumentException, FullHallException {
+        if(hall.getQuantityColour(colour)>=10) throw new FullHallException();
         hall.addStudent(colour);
-        //must check for coins
     }
 
     /**
@@ -63,6 +63,7 @@ public class Dashboard {
         if(hall.getQuantityColour(colour)<=0) throw new IllegalArgumentException();
         hall.removeStudent(colour);
     }
+
     /**
      * Getter of the students of the chosen colour remaining in the hall
      * @param colour the method will count the number of students of this colour in the hall
@@ -88,11 +89,11 @@ public class Dashboard {
 
     //getter & setter for testing
     public StudentGroup getEntrance() {
-        return new StudentGroup(entrance);
+        return entrance;
     }
 
     public StudentGroup getHall() {
-        return new StudentGroup(hall);
+        return hall;
     }
 
     public int getNumTowers(){

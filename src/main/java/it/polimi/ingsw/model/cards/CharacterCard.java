@@ -20,7 +20,6 @@ public class CharacterCard {
     private boolean isActivated;
     private Colour selectedColour;
     private Player playerThisTurn;
-    private boolean alreadyPlayed;
 
     private Board board; //card effect 3 can't work otherwise
     private ExpertGameManager gameManager;
@@ -34,7 +33,6 @@ public class CharacterCard {
         coinOnIt = false;
         noEntryTiles = 0;
         isActivated = false;
-        alreadyPlayed = false;
     }
 
     /**
@@ -53,8 +51,8 @@ public class CharacterCard {
     }
 
     public int getPrice() {
-        int price =  cardInfo.getPrice() + (alreadyPlayed ? 1 : 0);
-        alreadyPlayed = true;
+        int price = cardInfo.getPrice() + (coinOnIt ? 1 : 0);
+        coinOnIt = true;
         return price;
     }
 

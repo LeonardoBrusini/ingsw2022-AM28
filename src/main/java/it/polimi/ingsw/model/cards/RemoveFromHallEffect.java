@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.players.Player;
+
 public class RemoveFromHallEffect implements EffectStrategy{
     /**
      * removes up to 3 students of the selected colour from every dashboards' hall
@@ -9,8 +11,10 @@ public class RemoveFromHallEffect implements EffectStrategy{
     //NOT COMPLETED
     @Override
     public void resolveEffect(CharacterCard c) {
-        //ExpertGameManager.instance().gerPlayers();
-        //for all players
-        //get the dashboard ad removes up to 3 students on the hall with colour c.getSelectedColour()
+        for(Player p : c.getGameManager().getPlayers()){
+            for (int i=0; i<3 && p.getDashboard().getHall().getQuantityColour(c.getSelectedColour())>0 ;i++) {
+                p.getDashboard().removeFromHall(c.getSelectedColour());
+            }
+        }
     }
 }

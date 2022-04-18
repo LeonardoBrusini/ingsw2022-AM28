@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.EndOfGameChecker;
 import it.polimi.ingsw.enumerations.AssistantCardInfo;
 import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.exceptions.AlreadyPlayedException;
+import it.polimi.ingsw.exceptions.FullHallException;
 import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.enumerations.Tower;
@@ -20,6 +21,7 @@ public class Player {
     private ArrayList<AssistantCard> cards;
     private AssistantCard lastPlayedCard;
     private Dashboard dashboard;
+    private boolean[][] coinPositions;
 
     /**
      * Player constructor, builds dashboard and 10 assistant cards
@@ -27,7 +29,7 @@ public class Player {
      * @param t tower colour of the player
      */
     public Player(String n, Tower t){
-        coins = 0;
+        coins = 1;
         nickname = n;
         hisTower = t;
         dashboard = new Dashboard(hisTower);
@@ -36,6 +38,7 @@ public class Player {
         for (AssistantCardInfo i: AssistantCardInfo.values()){
             cards.add(new AssistantCard(i));
         }
+        coinPositions = new boolean[Colour.values().length][3];
     }
 
     /**
@@ -59,8 +62,24 @@ public class Player {
      * It moves a student from the Dashboard's Entrance to the Dashboard's Hall
      * @param c the colour of the selected student
      */
-    public void moveToHall(Colour c) throws IllegalArgumentException{
+    public void moveToHall(Colour c) throws IllegalArgumentException, FullHallException {
+        dashboard.removeFromEntrance(c);
         dashboard.addToHall(c);
+        checkCoins(c);
+    }
+
+    /**
+     * every 3rd student of the selected colour added to to the hall, gives the player a coin
+     * @param c colour of the students
+     */
+    private void checkCoins(Colour c) {
+        int lastCoinIndex = dashboard.getHall().getQuantityColour(c)/3;
+        if (lastCoinIndex>0) {
+            if(!coinPositions[c.ordinal()][lastCoinIndex-1]) {
+                coinPositions[c.ordinal()][lastCoinIndex-1] = true;
+                addCoin();
+            }
+        }
     }
 
     /**
@@ -121,5 +140,22 @@ public class Player {
     //getter & setter fot tests
     public AssistantCard getAssistantCard(int x){
         return cards.get(x);
+    }
+
+    public void fillHall(StudentGroup selectedStudentsFrom) throws FullHallException{
+        for (Colour c: Colour.values()) {
+            for(int i=0; i<selectedStudentsFrom.getQuantityColour(c); i++) {
+                try {
+                    addToHall(c);
+                } catch (FullHallException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void addToHall(Colour selectedColour) throws FullHallException{
+        dashboard.addToHall(selectedColour);
+        checkCoins(selectedColour);
     }
 }

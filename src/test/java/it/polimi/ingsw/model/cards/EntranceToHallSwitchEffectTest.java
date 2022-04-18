@@ -24,8 +24,6 @@ class EntranceToHallSwitchEffectTest {
         gm.addPlayer("player2");
         gm.newGame();
         c.setGameManager(gm);
-        gm.addPlayer("g1");
-        gm.addPlayer("g2");
         c.setPlayerThisTurn(gm.getPlayers().get(0));
         c.setBoard(gm.getBoard());
         ArrayList<Colour> extractedColors1 = c.getBoard().getBag().removeStudents(2);
@@ -33,17 +31,15 @@ class EntranceToHallSwitchEffectTest {
         c.setSelectedStudentsFrom(new StudentGroup(extractedColors1));
         c.setSelectedStudentsTo(new StudentGroup(extractedColors2));
         gm.getPlayers().get(0).getDashboard().fillEntrance(new StudentGroup(10));
-        gm.getPlayers().get(0).getDashboard().fillHall(new StudentGroup(11));
+        gm.getPlayers().get(0).getDashboard().fillHall(new StudentGroup(9));
         for(Colour colour: Colour.values()){
-            expectedEntrance.add(c.getPlayerThisTurn().getDashboard().getEntrance().getQuantityColour(colour) - c.getSelectedStudentsFrom().getQuantityColour(colour) + c.getSelectedStudentsTo().getQuantityColour(colour));
-            exptectedHall.add(c.getPlayerThisTurn().getDashboard().getHall().getQuantityColour(colour) - c.getSelectedStudentsTo().getQuantityColour(colour) + c.getSelectedStudentsFrom().getQuantityColour(colour));
+            expectedEntrance.add(colour.ordinal(), c.getPlayerThisTurn().getDashboard().getEntrance().getQuantityColour(colour) - c.getSelectedStudentsFrom().getQuantityColour(colour) + c.getSelectedStudentsTo().getQuantityColour(colour));
+            exptectedHall.add(colour.ordinal(), c.getPlayerThisTurn().getDashboard().getHall().getQuantityColour(colour) - c.getSelectedStudentsTo().getQuantityColour(colour) + c.getSelectedStudentsFrom().getQuantityColour(colour));
         }
         c.getCardInfo().getEffect().resolveEffect(c);
-        int i = 0;
         for(Colour colour: Colour.values()){
-            assertEquals(expectedEntrance.get(i), c.getPlayerThisTurn().getDashboard().getEntrance().getQuantityColour(colour));
-            assertEquals(exptectedHall.get(i),c.getPlayerThisTurn().getDashboard().getHall().getQuantityColour(colour));
-            i++;
+            assertEquals(expectedEntrance.get(colour.ordinal()), c.getPlayerThisTurn().getDashboard().getEntrance().getQuantityColour(colour));
+            assertEquals(exptectedHall.get(colour.ordinal()),c.getPlayerThisTurn().getDashboard().getHall().getQuantityColour(colour));
         }
 
         ArrayList<Colour> extractedColors11 = c.getBoard().getBag().removeStudents(4);

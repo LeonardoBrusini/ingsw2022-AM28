@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.enumerations.Tower;
+import it.polimi.ingsw.exceptions.FullHallException;
 import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.board.Archipelago;
@@ -86,7 +87,7 @@ public class ExpertGameManager {
         if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || turnManager.isMoveStudentsPhase()) return;
         try {
             players.get(p).moveToHall(c);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | FullHallException e) {
             //what happens?
         }
         checkProfessors(c);
@@ -97,7 +98,7 @@ public class ExpertGameManager {
      * checks which player gets the professor of colour c (modifies behaviour if CARD2 is activated)
      * @param c the colour of the professor
      */
-    private void checkProfessors(Colour c) {
+    public void checkProfessors(Colour c) {
         int maxStudents = 0;
         Player maxStudentsPlayer = null;
         for(Player p: players) {
@@ -160,7 +161,6 @@ public class ExpertGameManager {
      * checks the player with most influence on the archipelago and build towers on it if needed
      */
     public void checkInfluence() {
-        //modify behaviour if noEntryTiles is on the archipelago, nothing happens and the noEntryTile goes back to CARD5
         CharacterCard card = null;
         Archipelago a = board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex());
         if(a.getNoEntryTiles()>0) {
@@ -252,6 +252,8 @@ public class ExpertGameManager {
             p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard);
             card.setPlayerThisTurn(p);
+            card.setGameManager(this);
+            card.setBoard(board);
             card.getCardInfo().getEffect().resolveEffect(card);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
@@ -275,6 +277,8 @@ public class ExpertGameManager {
             p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard, colour);
             card.setPlayerThisTurn(p);
+            card.setGameManager(this);
+            card.setBoard(board);
             card.setSelectedColour(colour);
             card.getCardInfo().getEffect().resolveEffect(card);
         } catch (IllegalArgumentException exception) {
@@ -299,6 +303,8 @@ public class ExpertGameManager {
             p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard,colour,islandIndex);
             card.setPlayerThisTurn(p);
+            card.setBoard(board);
+            card.setGameManager(this);
             card.setSelectedColour(colour);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
@@ -318,10 +324,14 @@ public class ExpertGameManager {
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
         Player p = players.get(index);
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
+        if(card.getCardInfo()==CharacterCardInfo.CARD5 && card.getNoEntryTiles()==0) return;
+
         try {
             p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard,islandIndex);
+            card.setGameManager(this);
             card.setPlayerThisTurn(p);
+            card.setBoard(board);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
         } catch (IllegalArgumentException exception) {
@@ -344,7 +354,9 @@ public class ExpertGameManager {
         try {
             p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard,studentGroupFrom,studentGroupTo);
+            card.setGameManager(this);
             card.setPlayerThisTurn(p);
+            card.setBoard(board);
             card.setSelectedStudentsFrom(studentGroupFrom);
             card.setSelectedStudentsTo(studentGroupTo);
             card.getCardInfo().getEffect().resolveEffect(card);

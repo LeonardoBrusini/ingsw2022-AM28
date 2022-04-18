@@ -18,11 +18,4 @@ public class ComputeInfluenceEffect implements EffectStrategy{
         c.getGameManager().checkInfluence();
         c.getBoard().moveMotherNature(islandbefore);
     }
-   /* public void resolveEffect(CharacterCard c) {
-        MotherNature mn = c.getBoard().getMotherNature(); //diventa parametro
-        int motherNaturePosition = mn.getIslandIndex();
-        mn.setIsland(c.getSelectedIsland().getIslandIndex());
-        c.getGameManager().checkInfluence(); //diventa parametro
-        mn.setIsland(motherNaturePosition);
-    }*/
 }

@@ -14,6 +14,8 @@ public class CardToEntranceSwitchEffect implements EffectStrategy{
         Dashboard d = c.getPlayerThisTurn().getDashboard();
         if(c.getSelectedStudentsTo().getTotalStudents() > 3 || c.getSelectedStudentsFrom().getTotalStudents() > 3)
             throw new IllegalArgumentException();
+
+        //this exceptions can break the game; can be that some students get removed from the card or entrance before throwing the exception
         for(Colour colour : Colour.values()) {
             int quantityColour = c.getSelectedStudentsFrom().getQuantityColour(colour);
             if(c.getStudentsOnCard().getQuantityColour(colour) < quantityColour)
@@ -28,6 +30,7 @@ public class CardToEntranceSwitchEffect implements EffectStrategy{
                 d.removeFromEntrance(colour);
             }
         }
+
         d.fillEntrance(c.getSelectedStudentsFrom());
         c.getStudentsOnCard().addStudents(c.getSelectedStudentsTo());
     }
