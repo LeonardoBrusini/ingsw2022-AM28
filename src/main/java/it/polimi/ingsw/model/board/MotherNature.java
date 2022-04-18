@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.model.cards.CharacterCard;
 import it.polimi.ingsw.model.players.Player;
 import it.polimi.ingsw.model.ProfessorGroup;
 
@@ -20,14 +21,14 @@ public class MotherNature {
      * @param im the island manager
      * @return the player with more influence, if two or more has the same max influence then null
      */
-    public Player playerWithMostInfluence(ArrayList<Player> players, IslandManager im, ProfessorGroup professors) throws IllegalArgumentException{
+    public Player playerWithMostInfluence(ArrayList<Player> players, IslandManager im, ProfessorGroup professors, ArrayList<CharacterCard> cards) throws IllegalArgumentException{
         if(players==null || im==null || professors==null) throw new IllegalArgumentException();
         Archipelago a = im.getArchipelagoByIslandIndex(island);
         int maxInfluence = -1;
         Player winningPlayer = null;
         int influence;
         for(Player p: players) {
-            influence = a.playerInfluence(p.getTower(),professors);
+            influence = a.playerInfluence(p.getTower(),professors, cards);
             if(influence == maxInfluence) {
                 winningPlayer = null;
             } else if (influence>maxInfluence) {

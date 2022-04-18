@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.ProfessorGroup;
 import it.polimi.ingsw.enumerations.Tower;
+import it.polimi.ingsw.model.cards.CharacterCard;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArchipelagoTest {
+    private final ArrayList<CharacterCard> cards = new ArrayList<>();
+
     @Test
     void constructor() {
         ArrayList<Archipelago> a = new ArrayList<>();
@@ -28,7 +31,7 @@ class ArchipelagoTest {
     void playerInfluence() {
         Archipelago a = new Archipelago(3);
         ProfessorGroup p = new ProfessorGroup();
-        assertEquals(0, a.playerInfluence(Tower.BLACK,p));
+        assertEquals(0, a.playerInfluence(Tower.BLACK,p, cards));
         p.setTower(Colour.YELLOW, Tower.BLACK);
         p.setTower(Colour.RED,Tower.WHITE);
         p.setTower(Colour.BLUE,Tower.GRAY);
@@ -39,15 +42,15 @@ class ArchipelagoTest {
         a.getIslands().get(0).getStudents().setNumStudents(3,Colour.BLUE);
         a.getIslands().get(0).getStudents().setNumStudents(4,Colour.RED);
         a.getIslands().get(0).getStudents().setNumStudents(5,Colour.PINK);
-        assertEquals(19, a.playerInfluence(Tower.BLACK,p));
+        assertEquals(19, a.playerInfluence(Tower.BLACK,p,cards));
         a.getIslands().get(0).setTower(Tower.WHITE);
-        assertEquals(19, a.playerInfluence(Tower.BLACK,p));
+        assertEquals(19, a.playerInfluence(Tower.BLACK,p,cards));
         a.getIslands().get(0).setTower(Tower.BLACK);
-        assertEquals(20, a.playerInfluence(Tower.BLACK,p));
+        assertEquals(20, a.playerInfluence(Tower.BLACK,p,cards));
 
         a.getIslands().add(new Island(4));
         a.getIslands().add(new Island(5));
-        assertEquals(20, a.playerInfluence(Tower.BLACK,p));
+        assertEquals(20, a.playerInfluence(Tower.BLACK,p,cards));
         a.getIslands().get(1).getStudents().setNumStudents(0,Colour.GREEN);
         a.getIslands().get(1).getStudents().setNumStudents(0,Colour.YELLOW);
         a.getIslands().get(1).getStudents().setNumStudents(3,Colour.BLUE);
@@ -60,7 +63,7 @@ class ArchipelagoTest {
         a.getIslands().get(2).getStudents().setNumStudents(50,Colour.PINK);
         a.getIslands().get(1).setTower(Tower.BLACK);
         a.getIslands().get(2).setTower(Tower.BLACK);
-        assertEquals(24, a.playerInfluence(Tower.BLACK,p));
+        assertEquals(24, a.playerInfluence(Tower.BLACK,p,cards));
 
     }
 

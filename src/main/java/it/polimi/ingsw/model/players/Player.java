@@ -82,9 +82,9 @@ public class Player {
      * It removes a coin from the ones available to the Player
      * @param x the number of coins chosen to be spent
      */
-    public void spendCoins(int x){
-        if(coins>0)
-            coins -= x;
+    public void spendCoins(int x) throws IllegalArgumentException{
+        if(coins<x) throw new IllegalArgumentException();
+        coins -= x;
     }
 
     /**

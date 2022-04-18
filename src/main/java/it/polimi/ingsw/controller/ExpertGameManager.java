@@ -5,6 +5,7 @@ import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.board.Archipelago;
 import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.board.Island;
 import it.polimi.ingsw.exceptions.AlreadyPlayedException;
@@ -93,7 +94,7 @@ public class ExpertGameManager {
     }
 
     /**
-     * checks which player gets the professor of colour c
+     * checks which player gets the professor of colour c (modifies behaviour if CARD2 is activated)
      * @param c the colour of the professor
      */
     private void checkProfessors(Colour c) {
@@ -104,13 +105,23 @@ public class ExpertGameManager {
                 maxStudents = p.getDashboard().getHall().getQuantityColour(c);
                 maxStudentsPlayer = p;
             } else if (p.getDashboard().getHall().getQuantityColour(c) == maxStudents) {
-                maxStudentsPlayer = null;
+                //look for CARD2
+                CharacterCard card2 = null;
+                for(CharacterCard card : board.getCharacterCards()) {
+                    if(card.getCardInfo()==CharacterCardInfo.CARD2) {
+                        card2 = card;
+                    }
+                }
+                if(card2!=null && card2.isActivated()) {
+                    if(p == card2.getPlayerThisTurn()) maxStudentsPlayer = p;
+                } else  {
+                    maxStudentsPlayer = null;
+                }
             }
         }
         if(maxStudentsPlayer!=null) {
             board.assignProfessor(c,maxStudentsPlayer.getTower());
         }
-        //must check if CharacterCard 2 is activated, modify behaviour if so
     }
 
     /**
@@ -150,9 +161,17 @@ public class ExpertGameManager {
      */
     public void checkInfluence() {
         //modify behaviour if noEntryTiles is on the archipelago, nothing happens and the noEntryTile goes back to CARD5
-        Player p = board.getMotherNature().playerWithMostInfluence(players,board.getIslandManager(),board.getProfessorGroup());
+        CharacterCard card = null;
+        Archipelago a = board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex());
+        if(a.getNoEntryTiles()>0) {
+            for (CharacterCard c: board.getCharacterCards()) {
+                if (c.getCardInfo() == CharacterCardInfo.CARD5) c.setNoEntryTiles(c.getNoEntryTiles()+1);
+            }
+            a.setNoEntryTiles(a.getNoEntryTiles()-1);
+        }
+        Player p = board.getMotherNature().playerWithMostInfluence(players,board.getIslandManager(),board.getProfessorGroup(),board.getCharacterCards());
         if(p!=null) {
-            for(Island i: board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex()).getIslands()) {
+            for(Island i: a.getIslands()) {
                 if(i.getTower()==null){
                     p.getDashboard().buildTower();
                     board.getIslandManager().setTowerOnIsland(p.getTower(),i.getIslandIndex());
@@ -192,8 +211,6 @@ public class ExpertGameManager {
         return null;
     }
 
-    //public void PlayCharacterCard(int)
-
     private void manageEndOfGame() {
         int winnerIndex;
         if(EndOfGameChecker.instance().isEndOfGame()) {
@@ -220,59 +237,119 @@ public class ExpertGameManager {
         return players;
     }
 
+    /**
+     * method used to play one of the following cards: CARD2, CARD4, CARD6, CARD8
+     * @param index player index
+     * @param posCharacterCard character card index
+     */
     public void playCharacterCard(int index, int posCharacterCard){
-        Player p = this.players.get(index);
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3) return;
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
 
-        CharacterCardInfo[] e = CharacterCardInfo.values();
-
-        p.spendCoins(e[posCharacterCard].getPrice());
-
-        board.playCharacterCard(posCharacterCard);
-
+        Player p = players.get(index);
+        CharacterCard card = board.getCharacterCards().get(posCharacterCard);
+        try {
+            p.spendCoins(card.getPrice());
+            //board.playCharacterCard(posCharacterCard);
+            card.setPlayerThisTurn(p);
+            card.getCardInfo().getEffect().resolveEffect(card);
+        } catch (IllegalArgumentException exception) {
+            //error, player does not have enough coins
+        }
     }
 
+    /**
+     * method used to play one of the following cards: CARD9, CARD11, CARD12
+     * @param index player index
+     * @param posCharacterCard character card index
+     * @param colour colour of the student
+     */
     public void playCharacterCard(int index, int posCharacterCard, Colour colour){
-        Player p = this.players.get(index);
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null) return;
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
 
-        CharacterCardInfo[] e = CharacterCardInfo.values();
+        Player p = players.get(index);
+        CharacterCard card = board.getCharacterCards().get(posCharacterCard);
 
-        p.spendCoins(e[posCharacterCard].getPrice());
-
-        board.playCharacterCard(posCharacterCard,colour);
+        try {
+            p.spendCoins(card.getPrice());
+            //board.playCharacterCard(posCharacterCard, colour);
+            card.setPlayerThisTurn(p);
+            card.setSelectedColour(colour);
+            card.getCardInfo().getEffect().resolveEffect(card);
+        } catch (IllegalArgumentException exception) {
+            //error, player does not have enough coins
+        }
     }
 
+    /**
+     * method used to play one of the following cards: CARD1
+     * @param index player index
+     * @param posCharacterCard character card index
+     * @param colour colour of the student
+     * @param islandIndex index of the island
+     */
+    public void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex){
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null || islandIndex<1 || islandIndex>12) return;
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
+        Player p = players.get(index);
+        CharacterCard card = board.getCharacterCards().get(posCharacterCard);
 
-    public void playCharacterCard(int index, int posCharacterCard, Colour colour, int  noEntryTiles){
-        Player p = this.players.get(index);
-
-        CharacterCardInfo[] e = CharacterCardInfo.values();
-
-        p.spendCoins(e[posCharacterCard].getPrice());
-
-        board.playCharacterCard(posCharacterCard,colour,noEntryTiles);
+        try {
+            p.spendCoins(card.getPrice());
+            //board.playCharacterCard(posCharacterCard,colour,islandIndex);
+            card.setPlayerThisTurn(p);
+            card.setSelectedColour(colour);
+            card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
+            card.getCardInfo().getEffect().resolveEffect(card);
+        } catch (IllegalArgumentException exception) {
+            //error, player does not have enough coins
+        }
     }
 
-    public void playCharacterCard(int index, int posCharacterCard,  int  noEntryTiles){
-        Player p = this.players.get(index);
-
-        CharacterCardInfo[] e = CharacterCardInfo.values();
-
-        p.spendCoins(e[posCharacterCard].getPrice());
-
-        board.playCharacterCard(posCharacterCard,noEntryTiles);
+    /**
+     * method used to play one of the following cards: CARD3, CARD5
+     * @param index player index
+     * @param posCharacterCard character card index
+     * @param islandIndex index of the island
+     */
+    public void playCharacterCard(int index, int posCharacterCard,  int  islandIndex){
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || islandIndex<1 || islandIndex>12) return;
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
+        Player p = players.get(index);
+        CharacterCard card = board.getCharacterCards().get(posCharacterCard);
+        try {
+            p.spendCoins(card.getPrice());
+            //board.playCharacterCard(posCharacterCard,islandIndex);
+            card.setPlayerThisTurn(p);
+            card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
+            card.getCardInfo().getEffect().resolveEffect(card);
+        } catch (IllegalArgumentException exception) {
+            //error, player does not have enough coins
+        }
     }
 
-
-
-
+    /**
+     * method used to play one of the following cards: CARD7, CARD10
+     * @param index player index
+     * @param posCharacterCard character card index
+     * @param studentGroupFrom first group of students
+     * @param studentGroupTo second group of students
+     */
     public void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo){
-        Player p = this.players.get(index);
-
-        CharacterCardInfo[] e = CharacterCardInfo.values();
-
-        p.spendCoins(e[posCharacterCard].getPrice());
-
-        board.playCharacterCard(posCharacterCard,studentGroupFrom ,studentGroupTo);
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || studentGroupFrom==null || studentGroupTo==null || studentGroupFrom.getTotalStudents()!=studentGroupTo.getTotalStudents()) return;
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
+        Player p = players.get(index);
+        CharacterCard card = board.getCharacterCards().get(posCharacterCard);
+        try {
+            p.spendCoins(card.getPrice());
+            //board.playCharacterCard(posCharacterCard,studentGroupFrom,studentGroupTo);
+            card.setPlayerThisTurn(p);
+            card.setSelectedStudentsFrom(studentGroupFrom);
+            card.setSelectedStudentsTo(studentGroupTo);
+            card.getCardInfo().getEffect().resolveEffect(card);
+        } catch (IllegalArgumentException exception) {
+            //error, player does not have enough coins
+        }
     }
-
 }

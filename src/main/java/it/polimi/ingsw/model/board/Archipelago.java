@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.board;
 
 import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.CharacterCard;
 
 import java.util.ArrayList;
 
@@ -32,11 +33,11 @@ public class Archipelago {
      * @param t the tower selected
      * @return the total influence of the archipelago for the player p
      */
-    public int playerInfluence(Tower t, ProfessorGroup professors) throws NullPointerException{
+    public int playerInfluence(Tower t, ProfessorGroup professors, ArrayList<CharacterCard> cards) throws NullPointerException{
         if(t == null || professors == null) throw new NullPointerException();
         int influence = 0;
         for(Island i : islands) {
-            influence += i.playerInfluence(t,professors);
+            influence += i.playerInfluence(t,professors,cards);
         }
         return influence;
     }

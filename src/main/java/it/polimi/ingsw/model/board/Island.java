@@ -1,8 +1,12 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.CharacterCard;
+
+import java.util.ArrayList;
 
 public class Island {
     private Tower tower;
@@ -33,18 +37,33 @@ public class Island {
      * @param t the tower of the Player of witch the method will calculate the influence
      * @return the influence of the player p
      */
-    public int playerInfluence(Tower t, ProfessorGroup professors) throws IllegalArgumentException{
+    public int playerInfluence(Tower t, ProfessorGroup professors, ArrayList<CharacterCard> cards) throws IllegalArgumentException{
         if(t==null || professors==null) throw new IllegalArgumentException();
+        CharacterCard card = null;
+
         int influence = 0;
         for(Colour c : Colour.values()) {
             //doesn't update influence to students selected on CARD9
-            if(professors.getTower(c) != null && professors.getTower(c).equals(t)) {
+            for(CharacterCard ca : cards) {
+                if(ca.getCardInfo()==CharacterCardInfo.CARD9) card = ca;
+            }
+
+            if(professors.getTower(c) != null && professors.getTower(c).equals(t) && (card==null || !card.isActivated() || card.getSelectedColour()!=c)) {
                 influence += students.getQuantityColour(c);
             }
         }
         //this condition must be false if CARD6 IS ACTIVATED
-        if(tower!=null && tower.equals(t)) influence++;
+        card = null;
+        for(CharacterCard ca : cards) {
+            if(ca.getCardInfo()==CharacterCardInfo.CARD6) card = ca;
+        }
+        if(tower!=null && tower.equals(t) && (card==null || !card.isActivated())) influence++;
         //2 additional points if this player activated CARD8
+        card = null;
+        for(CharacterCard ca : cards) {
+            if(ca.getCardInfo()==CharacterCardInfo.CARD8) card = ca;
+        }
+        if(card!=null && card.isActivated()) return influence+2;
         return influence;
     }
 

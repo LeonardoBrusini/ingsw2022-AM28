@@ -112,9 +112,8 @@ public class Board {
     }
 
 
-    public void playCharacterCard(int posCharacterCard){
+    /*public void playCharacterCard(int posCharacterCard){
         CharacterCardInfo[] e = CharacterCardInfo.values();
-
         e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
     }
 
@@ -151,6 +150,6 @@ public class Board {
 
         e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
 
-    }
+    }*/
 
 }

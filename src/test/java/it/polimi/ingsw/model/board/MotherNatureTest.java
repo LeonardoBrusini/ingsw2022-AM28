@@ -4,6 +4,7 @@ import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.ProfessorGroup;
 import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.enumerations.Tower;
+import it.polimi.ingsw.model.cards.CharacterCard;
 import it.polimi.ingsw.model.players.Player;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MotherNatureTest {
     private MotherNature m;
-
+    private final ArrayList<CharacterCard> cards = new ArrayList<>();
     @Test
     void getIslandIndex() {
         m = new MotherNature();
@@ -48,22 +49,22 @@ class MotherNatureTest {
         Player p2 = new Player("g2", Tower.WHITE);
         players.add(p1);
         players.add(p2);
-        assertNull(mn.playerWithMostInfluence(players,im,pg));
+        assertNull(mn.playerWithMostInfluence(players,im,pg,cards));
 
         en.put(Colour.RED, Tower.BLACK);
         en.put(Colour.BLUE, Tower.BLACK);
         en.put(Colour.YELLOW, Tower.WHITE);
         pg.setProfessors(en);
-        assertEquals(p1, mn.playerWithMostInfluence(players, im, pg));
+        assertEquals(p1, mn.playerWithMostInfluence(players, im, pg,cards));
 
         im.getArchipelagos().get(2).merge(im.getArchipelagoByIslandIndex(3));
-        assertEquals(players.get(0), mn.playerWithMostInfluence(players, im, pg));
+        assertEquals(players.get(0), mn.playerWithMostInfluence(players, im, pg,cards));
 
         Player p3 = new Player("g3", Tower.GRAY);
         players.add(p3);
         en.put(Colour.BLUE, Tower.GRAY);
         pg.setProfessors(en);
-        assertEquals(p3, mn.playerWithMostInfluence(players, im, pg));
+        assertEquals(p3, mn.playerWithMostInfluence(players, im, pg,cards));
 
     }
 }
