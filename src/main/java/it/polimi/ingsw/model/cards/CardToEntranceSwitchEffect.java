@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.players.Dashboard;
 
 public class CardToEntranceSwitchEffect implements EffectStrategy{
@@ -27,7 +28,11 @@ public class CardToEntranceSwitchEffect implements EffectStrategy{
             if(d.getEntrance().getQuantityColour(colour) < quantityColour)
                 throw new IllegalArgumentException();
             for(int i=0; i<quantityColour; i++) {
-                d.removeFromEntrance(colour);
+                try {
+                    d.removeFromEntrance(colour);
+                } catch (NoStudentsException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 

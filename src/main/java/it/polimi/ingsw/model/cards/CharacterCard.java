@@ -10,7 +10,7 @@ import it.polimi.ingsw.model.board.Island;
 import it.polimi.ingsw.model.players.Player;
 
 public class CharacterCard {
-    private CharacterCardInfo cardInfo;
+    private final CharacterCardInfo cardInfo;
     private boolean coinOnIt;
     private int noEntryTiles;
     private StudentGroup selectedStudentsFrom;
@@ -26,7 +26,7 @@ public class CharacterCard {
 
     /**
      *
-     * @param info basic information of the card: file name, price, effect
+     * @param info basic information of the card: file name, price
      */
     public CharacterCard(CharacterCardInfo info){
         cardInfo = info;
@@ -60,14 +60,8 @@ public class CharacterCard {
     public CharacterCardInfo getCardInfo() {
         return cardInfo;
     }
-    public void setCardInfo(CharacterCardInfo cardInfo) {
-        this.cardInfo = cardInfo;
-    }
     public boolean isCoinOnIt() {
         return coinOnIt;
-    }
-    public void setCoinOnIt(boolean coinOnIt) {
-        this.coinOnIt = coinOnIt;
     }
     public int getNoEntryTiles() {
         return noEntryTiles;
@@ -116,6 +110,7 @@ public class CharacterCard {
         this.playerThisTurn = playerThisTurn;
     }
 
+    //not sure about this
     public Board getBoard() {
         return board;
     }

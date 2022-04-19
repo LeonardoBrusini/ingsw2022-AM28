@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultCardEffectTest {
-    private CharacterCard c = new CharacterCard(CharacterCardInfo.CARD2);
+    private final CharacterCard c = new CharacterCard(CharacterCardInfo.CARD2);
 
     /**
      * It tests the correct execution of the card's effect

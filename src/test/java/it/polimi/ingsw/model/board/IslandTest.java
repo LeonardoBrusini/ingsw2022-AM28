@@ -1,10 +1,12 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.model.ProfessorGroup;
 import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.cards.CharacterCard;
+import it.polimi.ingsw.model.players.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -114,6 +116,135 @@ class IslandTest {
         en.put(Colour.BLUE, Tower.GRAY);
         pg.setProfessors(en);
         assertEquals(6, i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(4, i.playerInfluence(Tower.GRAY, pg, cards));
+        assertEquals(1, i.playerInfluence(Tower.WHITE, pg, cards));
+    }
+
+    @Test
+    public void playerInfluenceCARD6() {
+        cards.add(new CharacterCard(CharacterCardInfo.CARD6));
+        cards.get(0).getCardInfo().getEffect().resolveEffect(cards.get(0));
+        i = new Island(3);
+        Bag bag = new Bag();
+        i.setStudents(new StudentGroup(2));
+        ProfessorGroup pg = new ProfessorGroup();
+        EnumMap<Colour, Tower> en = new EnumMap<>(Colour.class);
+        pg.setProfessors(en);
+        assertEquals(0,i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(0,i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.GRAY, pg, cards));
+        en.put(Colour.YELLOW, Tower.BLACK);
+        pg.setProfessors(en);
+        assertEquals(2,i.playerInfluence(Tower.BLACK, pg, cards));
+        i.setTower(Tower.BLACK);
+        assertEquals(2,i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(0,i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.GRAY, pg, cards));
+        i.setTower(Tower.WHITE);
+        assertEquals(2, i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.GRAY, pg, cards));
+        en.put(Colour.YELLOW, Tower.BLACK);
+        en.put(Colour.GREEN, Tower.WHITE);
+        en.put(Colour.RED, Tower.GRAY);
+        pg.setProfessors(en);
+        assertEquals(2, i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(2, i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(2, i.playerInfluence(Tower.GRAY, pg, cards));
+        en.put(Colour.YELLOW, Tower.BLACK);
+        en.put(Colour.GREEN, Tower.BLACK);
+        en.put(Colour.RED, Tower.BLACK);
+        en.put(Colour.PINK, Tower.GRAY);
+        en.put(Colour.BLUE, Tower.GRAY);
+        pg.setProfessors(en);
+        assertEquals(6, i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(4, i.playerInfluence(Tower.GRAY, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.WHITE, pg, cards));
+    }
+
+    @Test
+    public void playerInfluenceCARD9() {
+        cards.add(new CharacterCard(CharacterCardInfo.CARD9));
+        cards.get(0).setSelectedColour(Colour.YELLOW);
+        cards.get(0).getCardInfo().getEffect().resolveEffect(cards.get(0));
+        i = new Island(3);
+        Bag bag = new Bag();
+        i.setStudents(new StudentGroup(2));
+        ProfessorGroup pg = new ProfessorGroup();
+        EnumMap<Colour, Tower> en = new EnumMap<>(Colour.class);
+        pg.setProfessors(en);
+        assertEquals(0,i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(0,i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.GRAY, pg, cards));
+        en.put(Colour.YELLOW, Tower.BLACK);
+        pg.setProfessors(en);
+        assertEquals(0,i.playerInfluence(Tower.BLACK, pg, cards));
+        i.setTower(Tower.BLACK);
+        assertEquals(1,i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(0,i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.GRAY, pg, cards));
+        i.setTower(Tower.WHITE);
+        assertEquals(0, i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(1, i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.GRAY, pg, cards));
+        en.put(Colour.YELLOW, Tower.BLACK);
+        en.put(Colour.GREEN, Tower.WHITE);
+        en.put(Colour.RED, Tower.GRAY);
+        pg.setProfessors(en);
+        assertEquals(0, i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(3, i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(2, i.playerInfluence(Tower.GRAY, pg, cards));
+        en.put(Colour.YELLOW, Tower.BLACK);
+        en.put(Colour.GREEN, Tower.BLACK);
+        en.put(Colour.RED, Tower.BLACK);
+        en.put(Colour.PINK, Tower.GRAY);
+        en.put(Colour.BLUE, Tower.GRAY);
+        pg.setProfessors(en);
+        assertEquals(4, i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(4, i.playerInfluence(Tower.GRAY, pg, cards));
+        assertEquals(1, i.playerInfluence(Tower.WHITE, pg, cards));
+    }
+
+    @Test
+    public void playerInfluenceCARD8() {
+        cards.add(new CharacterCard(CharacterCardInfo.CARD8));
+        Player p = new Player("p1", Tower.BLACK);
+        cards.get(0).setPlayerThisTurn(p);
+        cards.get(0).getCardInfo().getEffect().resolveEffect(cards.get(0));
+        i = new Island(3);
+        Bag bag = new Bag();
+        i.setStudents(new StudentGroup(2));
+        ProfessorGroup pg = new ProfessorGroup();
+        EnumMap<Colour, Tower> en = new EnumMap<>(Colour.class);
+        pg.setProfessors(en);
+        assertEquals(2,i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(0,i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.GRAY, pg, cards));
+        en.put(Colour.YELLOW, Tower.BLACK);
+        pg.setProfessors(en);
+        assertEquals(4,i.playerInfluence(Tower.BLACK, pg, cards));
+        i.setTower(Tower.BLACK);
+        assertEquals(5,i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(0,i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.GRAY, pg, cards));
+        i.setTower(Tower.WHITE);
+        assertEquals(4, i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(1, i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(0, i.playerInfluence(Tower.GRAY, pg, cards));
+        en.put(Colour.YELLOW, Tower.BLACK);
+        en.put(Colour.GREEN, Tower.WHITE);
+        en.put(Colour.RED, Tower.GRAY);
+        pg.setProfessors(en);
+        assertEquals(4, i.playerInfluence(Tower.BLACK, pg, cards));
+        assertEquals(3, i.playerInfluence(Tower.WHITE, pg, cards));
+        assertEquals(2, i.playerInfluence(Tower.GRAY, pg, cards));
+        en.put(Colour.YELLOW, Tower.BLACK);
+        en.put(Colour.GREEN, Tower.BLACK);
+        en.put(Colour.RED, Tower.BLACK);
+        en.put(Colour.PINK, Tower.GRAY);
+        en.put(Colour.BLUE, Tower.GRAY);
+        pg.setProfessors(en);
+        assertEquals(8, i.playerInfluence(Tower.BLACK, pg, cards));
         assertEquals(4, i.playerInfluence(Tower.GRAY, pg, cards));
         assertEquals(1, i.playerInfluence(Tower.WHITE, pg, cards));
     }

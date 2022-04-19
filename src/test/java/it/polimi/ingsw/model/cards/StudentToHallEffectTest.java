@@ -15,7 +15,7 @@ class StudentToHallEffectTest {
     @Test
     /**
      * It verifies the corrected number of students on the card and in the hall
-     * It verifies the corrected call for IllegalArgumentExcpetion
+     * It verifies the corrected call for IllegalArgumentException
      */
     void resolveEffect() {
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD11);

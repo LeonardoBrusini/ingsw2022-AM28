@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.enumerations.Colour;
 import it.polimi.ingsw.exceptions.FullHallException;
+import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.players.Dashboard;
 
 public class EntranceToHallSwitchEffect implements EffectStrategy{
@@ -23,7 +24,11 @@ public class EntranceToHallSwitchEffect implements EffectStrategy{
             if(d.getEntrance().getQuantityColour(colour) < quantityColour)
                 throw new IllegalArgumentException();
             for(int i=0; i<quantityColour; i++) {
-                d.removeFromEntrance(colour);
+                try {
+                    d.removeFromEntrance(colour);
+                } catch (NoStudentsException e) {
+                    throw new RuntimeException(e);
+                }
             }
             quantityColour = c.getSelectedStudentsTo().getQuantityColour(colour);
             if(d.getHall().getQuantityColour(colour) < quantityColour)

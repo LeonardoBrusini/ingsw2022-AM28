@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Island {
     private Tower tower;
     private StudentGroup students;
-    private int islandIndex;
+    private final int islandIndex;
 
     /**
      * constructor
@@ -42,12 +42,11 @@ public class Island {
         CharacterCard card = null;
 
         int influence = 0;
+        for(CharacterCard ca : cards) {
+            if(ca.getCardInfo()==CharacterCardInfo.CARD9) card = ca;
+        }
         for(Colour c : Colour.values()) {
             //doesn't update influence to students selected on CARD9
-            for(CharacterCard ca : cards) {
-                if(ca.getCardInfo()==CharacterCardInfo.CARD9) card = ca;
-            }
-
             if(professors.getTower(c) != null && professors.getTower(c).equals(t) && (card==null || !card.isActivated() || card.getSelectedColour()!=c)) {
                 influence += students.getQuantityColour(c);
             }
@@ -55,7 +54,7 @@ public class Island {
         //this condition must be false if CARD6 IS ACTIVATED
         card = null;
         for(CharacterCard ca : cards) {
-            if(ca.getCardInfo()==CharacterCardInfo.CARD6) card = ca;
+            if(ca.getCardInfo()==CharacterCardInfo.CARD6)  card = ca;
         }
         if(tower!=null && tower.equals(t) && (card==null || !card.isActivated())) influence++;
         //2 additional points if this player activated CARD8
@@ -63,7 +62,7 @@ public class Island {
         for(CharacterCard ca : cards) {
             if(ca.getCardInfo()==CharacterCardInfo.CARD8) card = ca;
         }
-        if(card!=null && card.isActivated()) return influence+2;
+        if(card!=null && card.isActivated() && card.getPlayerThisTurn().getTower()==t) return influence+2;
         return influence;
     }
 
@@ -83,9 +82,6 @@ public class Island {
     }
     public int getIslandIndex() {
         return islandIndex;
-    }
-    public void setIslandIndex(int islandIndex) {
-        this.islandIndex = islandIndex;
     }
     public Tower getTower() {
         return tower;

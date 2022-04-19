@@ -9,6 +9,8 @@ import it.polimi.ingsw.exceptions.NoStudentsException;
 import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.enumerations.Tower;
 import it.polimi.ingsw.model.board.Island;
+
+import java.lang.module.FindException;
 import java.util.ArrayList;
 
 /**
@@ -16,12 +18,12 @@ import java.util.ArrayList;
  */
 public class Player {
     private final String nickname;
-    private Tower hisTower;
+    private final Tower hisTower;
     private int coins;
-    private ArrayList<AssistantCard> cards;
+    private final ArrayList<AssistantCard> cards;
     private AssistantCard lastPlayedCard;
-    private Dashboard dashboard;
-    private boolean[][] coinPositions;
+    private final Dashboard dashboard;
+    private final boolean[][] coinPositions;
 
     /**
      * Player constructor, builds dashboard and 10 assistant cards
@@ -45,7 +47,7 @@ public class Player {
      * it inserts the StudentGroup given by @param in the dashboard's entrance
      * @param s StudentGroup to add in the dashboard's entrance
      */
-    public void fillDashboard(StudentGroup s){
+    public void fillDashboardEntrance(StudentGroup s){
         dashboard.fillEntrance(s);
     }
 
@@ -62,7 +64,7 @@ public class Player {
      * It moves a student from the Dashboard's Entrance to the Dashboard's Hall
      * @param c the colour of the selected student
      */
-    public void moveToHall(Colour c) throws IllegalArgumentException, FullHallException {
+    public void moveToHall(Colour c) throws NoStudentsException, FullHallException {
         dashboard.removeFromEntrance(c);
         dashboard.addToHall(c);
         checkCoins(c);
@@ -82,18 +84,14 @@ public class Player {
         }
     }
 
-    /**
-     * It builds a tower removing it from the Dashboard
-     * @return the colour of the Player's Tower
-     */
     public Tower getTower(){
         return hisTower;
     }
 
     /**
-     * It adds a coin between the ones available to the Player
+     * It adds a coin to the ones available to the Player
      */
-    public void addCoin(){
+    private void addCoin(){
         coins++;
     }
 
@@ -110,7 +108,7 @@ public class Player {
      * It changes the status of the chosen card to "played", so it can't be reused again
      * @param x the played card's index
      */
-    public void playCard(int x) {
+    public void playCard(int x) throws AlreadyPlayedException{
         if(cards.get(x).isPlayed()) throw new AlreadyPlayedException();
         cards.get(x).setPlayed(true);
         lastPlayedCard = cards.get(x);
@@ -143,6 +141,10 @@ public class Player {
     }
 
     public void fillHall(StudentGroup selectedStudentsFrom) throws FullHallException{
+        for (Colour c: Colour.values()) {
+            if(dashboard.getHall().getQuantityColour(c)+selectedStudentsFrom.getQuantityColour(c)>10) throw new FullHallException();
+        }
+
         for (Colour c: Colour.values()) {
             for(int i=0; i<selectedStudentsFrom.getQuantityColour(c); i++) {
                 try {

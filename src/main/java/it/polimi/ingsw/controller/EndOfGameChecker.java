@@ -117,6 +117,10 @@ public class EndOfGameChecker {
         }
     }
 
+    public static void resetInstance() {
+        instance = null;
+    }
+
     //getters
     public boolean isLastTurn() {
         return lastTurn;

@@ -41,7 +41,7 @@ public class Dashboard {
      * Move a student of the chosen colour from the entrance to the Hall
      * @param colour It is the colour of the chosen student to move
      */
-    public void addToHall(Colour colour) throws IllegalArgumentException, FullHallException {
+    public void addToHall(Colour colour) throws FullHallException {
         if(hall.getQuantityColour(colour)>=10) throw new FullHallException();
         hall.addStudent(colour);
     }

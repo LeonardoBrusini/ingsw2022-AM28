@@ -1,8 +1,17 @@
 package it.polimi.ingsw.model.players;
 
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.enumerations.Tower;
+import it.polimi.ingsw.exceptions.FullHallException;
+import it.polimi.ingsw.exceptions.NoStudentsException;
+import it.polimi.ingsw.model.StudentGroup;
+import it.polimi.ingsw.model.board.Bag;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class DashboardTest {
-    /*private Dashboard d;
-    private Bag b;
+    private Dashboard d;
 
     @Test
     void fillEntrance() {
@@ -11,54 +20,57 @@ class DashboardTest {
         for(Colour c : Colour.values())
             assertEquals(0,s.getQuantityColour(c));
 
-        b = new Bag();
+        Bag b = new Bag();
         StudentGroup s1 = new StudentGroup(b.removeStudentGroup(7));
-        /*d.fillEntrance(s1);
+        d.fillEntrance(s1);
 
         for(Colour c : Colour.values())
             assertEquals(d.getEntrance().getQuantityColour(c),s1.getQuantityColour(c));
-        */
-
-    /*}
+    }
 
     @Test
     void addToHall() {
         d = new Dashboard(Tower.BLACK);
-        Random r = new Random();
-        StudentGroup s = d.getEntrance();
+        StudentGroup s = d.getHall();
         for(Colour c : Colour.values()) {
             assertEquals(0, s.getQuantityColour(c));
         }
 
-        StudentGroup s1 = new StudentGroup(7);
-        d.fillEntrance(s1);
-
-        Colour[] e = Colour.values();
-        int pos;
-
-        for(int i = 0 ; i<5; i++){
-            pos = r.nextInt(e.length);
-            d.addToHall(e[pos]);
+        for(Colour c: Colour.values()) {
+            d.getHall().setStudents(new StudentGroup());
+            for(int i=1;i<=11; i++) {
+                try {
+                    d.addToHall(c);
+                    assertEquals(i,d.getHall().getQuantityColour(c));
+                    assertEquals(i,d.getHall().getTotalStudents());
+                } catch (FullHallException e) {
+                    assertEquals(10,d.getHall().getQuantityColour(c));
+                    assertEquals(10,d.getHall().getTotalStudents());
+                }
+            }
         }
-
-        for(Colour c: e){
-            assertEquals(7-d.getEntrance().getQuantityColour(c),d.getHall().getQuantityColour(c));
-        }
-
     }
 
     @Test
     void removeFromEntrance() {
         d = new Dashboard(Tower.BLACK);
-        StudentGroup s = new StudentGroup(3);
-        d.fillEntrance(s);
-        assertEquals(3,d.getEntrance().getQuantityColour(Colour.YELLOW));
-        assertEquals(0,d.getHall().getQuantityColour(Colour.YELLOW));
-
-        d.removeFromEntrance(Colour.YELLOW);
-        assertEquals(2,d.getEntrance().getQuantityColour(Colour.YELLOW));
-        assertEquals(0,d.getHall().getQuantityColour(Colour.YELLOW));
-
+        int numStudents = 5;
+        for (Colour c: Colour.values()) {
+            d.getHall().setStudents(new StudentGroup());
+            for (int i=0;i<numStudents;i++) {
+                d.getEntrance().addStudent(c);
+            }
+            for (int i=numStudents;i>=0;i--) {
+                try {
+                    d.removeFromEntrance(c);
+                    assertEquals(i-1,d.getEntrance().getQuantityColour(c));
+                    assertEquals(i-1,d.getEntrance().getTotalStudents());
+                } catch (NoStudentsException e) {
+                    assertEquals(0,d.getEntrance().getQuantityColour(c));
+                    assertEquals(0,d.getEntrance().getTotalStudents());
+                }
+            }
+        }
     }
 
     @Test
@@ -73,6 +85,7 @@ class DashboardTest {
     @Test
     void addTower() {
         d = new Dashboard(Tower.BLACK);
+        d.setNumTowers(8);
         d.addTower();
         int num = d.getNumTowers();
         assertEquals(9,num);
@@ -81,6 +94,7 @@ class DashboardTest {
     @Test
     void buildTower() {
         d = new Dashboard(Tower.BLACK);
+        d.setNumTowers(8);
         d.buildTower();
         int num = d.getNumTowers();
         assertEquals(7,num);
@@ -106,5 +120,13 @@ class DashboardTest {
         for(Colour c: Colour.values()) {
             assertEquals(0,d.getHall().getQuantityColour(c));
         }
-    }*/
+    }
+
+    @Test
+    void getTower() {
+        d = new Dashboard(Tower.BLACK);
+        assertEquals(Tower.BLACK, d.getTower());
+        d = new Dashboard(Tower.WHITE);
+        assertEquals(Tower.WHITE, d.getTower());
+    }
 }

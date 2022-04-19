@@ -87,7 +87,7 @@ public class ExpertGameManager {
         if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || turnManager.isMoveStudentsPhase()) return;
         try {
             players.get(p).moveToHall(c);
-        } catch (IllegalArgumentException | FullHallException e) {
+        } catch (NoStudentsException | FullHallException e) {
             //what happens?
         }
         checkProfessors(c);
@@ -194,7 +194,7 @@ public class ExpertGameManager {
         if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) return;
         StudentGroup sg = board.getClouds().get(cloudIndex).clearStudents();
-        players.get(playerIndex).fillDashboard(sg);
+        players.get(playerIndex).fillDashboardEntrance(sg);
         turnManager.nextPhase(board,players);
         manageEndOfGame();
     }

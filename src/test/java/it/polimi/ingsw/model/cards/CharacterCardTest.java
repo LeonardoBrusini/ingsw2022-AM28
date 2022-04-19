@@ -1,31 +1,62 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.enumerations.CharacterCardInfo;
+import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.model.StudentGroup;
+import it.polimi.ingsw.model.board.Bag;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 class CharacterCardTest {
-    CharacterCard c = new CharacterCard(CharacterCardInfo.CARD1);
+    ArrayList<CharacterCard> cards;
+
+    @BeforeEach
+    void constructor() {
+        cards=new ArrayList<>();
+        for (CharacterCardInfo info: CharacterCardInfo.values()) {
+            cards.add(new CharacterCard(info));
+        }
+    }
 
     @Test
     void initializeCards() {
-        //initializeCards(int mn);
-       /* switch(c.getFileName()) {
-            case "P01.jpg":
-            case "P11.jpg":
-                int counter = 0;
-                for(Colour cc: Colour.values()){
-                    counter += c.getStudentsOnCard().getQuantityColour(cc);
+        Bag b = new Bag();
+        b.setStudents(new StudentGroup(24));
+        for(CharacterCard c: cards) {
+            c.initializeCards(b);
+            switch (c.getCardInfo()) {
+                case CARD1, CARD11 -> {
+                    int counter = 0;
+                    for (Colour cc : Colour.values()) {
+                        counter += c.getStudentsOnCard().getQuantityColour(cc);
+                    }
+                    assertEquals(4, counter);
                 }
-                assertEquals(4, counter);
-            case "P05.jpg":
-                assertEquals(4, c.getNoEntryTiles());
-            case "P07.jpg":
-                int count = 0;
-                for(Colour cc: Colour.values()){
-                    count += c.getStudentsOnCard().getQuantityColour(cc);
+                case CARD5 -> assertEquals(4, c.getNoEntryTiles());
+                case CARD7 -> {
+                    int count = 0;
+                    for (Colour cc : Colour.values()) {
+                        count += c.getStudentsOnCard().getQuantityColour(cc);
+                    }
+                    assertEquals(6, count);
                 }
-                assertEquals(6, count);
-        }*/
+            }
+        }
+    }
+
+    @Test
+    void getPrice() {
+        for (CharacterCard c: cards) {
+            assertFalse(c.isCoinOnIt());
+            assertEquals(c.getCardInfo().getPrice(),c.getPrice());
+            assertTrue(c.isCoinOnIt());
+            assertEquals(c.getCardInfo().getPrice()+1,c.getPrice());
+            assertTrue(c.isCoinOnIt());
+        }
     }
 
 }

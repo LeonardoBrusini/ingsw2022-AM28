@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentToIslandEffectTest {
-    private CharacterCard c = new CharacterCard(CharacterCardInfo.CARD1);
+    private final CharacterCard c = new CharacterCard(CharacterCardInfo.CARD1);
 
     @BeforeEach
     /**
-     * It inizialise with the need object the test environment
+     * It initialises with the need object the test environment
      */
-    void inizialise(){
+    void initialise(){
         IslandManager im = new IslandManager(2);
         c.setStudentsOnCard(new StudentGroup(10));
         c.setSelectedIsland(im.getIslandByIndex(3));
@@ -29,10 +29,9 @@ class StudentToIslandEffectTest {
     }
     @Test
     /**
-     * It verfies the correct execution of the card's effect
+     * It verifies the correct execution of the card's effect
      */
     void resolveEffect() {
-        int before = c.getPlayerThisTurn().getCoins();
         c.getCardInfo().getEffect().resolveEffect(c);
         assertEquals(1, c.getSelectedIsland().getStudents().getQuantityColour(Colour.YELLOW));
         for(Colour colour: Colour.values()){

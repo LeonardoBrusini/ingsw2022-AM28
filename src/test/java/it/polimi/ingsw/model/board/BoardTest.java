@@ -56,6 +56,33 @@ class BoardTest {
     }
 
     @Test
+    void moveMotherNature() {
+        b.getMotherNature().setIsland(1);
+        b.moveMotherNature(5);
+        assertEquals(6,b.getMotherNature().getIslandIndex());
+        assertFalse(b.getIslandManager().getArchipelagoByIslandIndex(1).isPresenceMotherNature());
+        assertTrue(b.getIslandManager().getArchipelagoByIslandIndex(6).isPresenceMotherNature());
+
+        b.getMotherNature().setIsland(7);
+        b.moveMotherNature(5);
+        assertEquals(12,b.getMotherNature().getIslandIndex());
+        assertFalse(b.getIslandManager().getArchipelagoByIslandIndex(7).isPresenceMotherNature());
+        assertTrue(b.getIslandManager().getArchipelagoByIslandIndex(12).isPresenceMotherNature());
+
+        b.getMotherNature().setIsland(8);
+        b.moveMotherNature(5);
+        assertEquals(1,b.getMotherNature().getIslandIndex());
+        assertFalse(b.getIslandManager().getArchipelagoByIslandIndex(8).isPresenceMotherNature());
+        assertTrue(b.getIslandManager().getArchipelagoByIslandIndex(1).isPresenceMotherNature());
+
+        b.getMotherNature().setIsland(12);
+        b.moveMotherNature(1);
+        assertEquals(1,b.getMotherNature().getIslandIndex());
+        assertFalse(b.getIslandManager().getArchipelagoByIslandIndex(12).isPresenceMotherNature());
+        assertTrue(b.getIslandManager().getArchipelagoByIslandIndex(1).isPresenceMotherNature());
+    }
+
+    @Test
     void getterAndSetterTest() {
         Bag bag = new Bag();
         b.setBag(bag);
