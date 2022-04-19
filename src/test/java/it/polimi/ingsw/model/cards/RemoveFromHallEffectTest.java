@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RemoveFromHallEffectTest {
-    @Test
+    
     /**
-     * It verifies that each Hall has the correct number of students after the card's effect excetution
+     * It verifies that each Hall has the correct number of students after the card's effect execution
      */
+    @Test
     void resolveEffect() {
-        // NOT COMPLETED
         ExpertGameManager gm = new ExpertGameManager();
         ArrayList<Integer> before = new ArrayList<>();
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD12);
@@ -28,6 +28,7 @@ class RemoveFromHallEffectTest {
             gm.getPlayers().get(i).getDashboard().fillHall(new StudentGroup(gm.getBoard().getBag().removeStudents(3)));
             before.add(gm.getPlayers().get(i).getDashboard().getHall().getQuantityColour(c.getSelectedColour()));
         }
+        c.setGameManager(gm);
         c.getCardInfo().getEffect().resolveEffect(c);
         for(int i = 0; i < gm.getPlayers().size(); i++){
             // I can't figure out why sometimes the first sentence it is false
