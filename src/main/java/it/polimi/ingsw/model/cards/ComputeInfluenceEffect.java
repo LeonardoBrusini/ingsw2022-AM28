@@ -14,8 +14,12 @@ public class ComputeInfluenceEffect implements EffectStrategy{
     public void resolveEffect(CharacterCard c) {
         MotherNature mn = c.getBoard().getMotherNature();
         int islandbefore = mn.getIslandIndex();
-        c.getBoard().moveMotherNature(c.getSelectedIsland().getIslandIndex());
+        c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()).setPresenceMotherNature(true);
+        c.getBoard().getIslandManager().getArchipelagoByIslandIndex(islandbefore).setPresenceMotherNature(false);
+        c.getBoard().getMotherNature().setIsland(c.getSelectedIsland().getIslandIndex());
         c.getGameManager().checkInfluence();
-        c.getBoard().moveMotherNature(islandbefore);
+        c.getBoard().getMotherNature().setIsland(islandbefore);
+        c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()).setPresenceMotherNature(false);
+        c.getBoard().getIslandManager().getArchipelagoByIslandIndex(islandbefore).setPresenceMotherNature(true);
     }
 }
