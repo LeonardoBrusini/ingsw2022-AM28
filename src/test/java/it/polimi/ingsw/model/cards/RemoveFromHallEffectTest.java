@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RemoveFromHallEffectTest {
-    
+
     /**
      * It verifies that each Hall has the correct number of students after the card's effect execution
      */
