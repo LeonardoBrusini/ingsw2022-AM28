@@ -32,7 +32,9 @@ class RemoveFromHallEffectTest {
         c.getCardInfo().getEffect().resolveEffect(c);
         for(int i = 0; i < gm.getPlayers().size(); i++){
             // I can't figure out why sometimes the first sentence it is false
-            //assertNotEquals(before.get(i),gm.getPlayers().get(i).getDashboard().getHall().getQuantityColour(c.getSelectedColour()));
+            if(before.get(i) != 0) {
+                assertNotEquals(before.get(i), gm.getPlayers().get(i).getDashboard().getHall().getQuantityColour(c.getSelectedColour()));
+            }
             assertNotEquals(-1,  gm.getPlayers().get(i).getDashboard().getHall().getQuantityColour(c.getSelectedColour()));
             assertFalse(before.get(i) < gm.getPlayers().get(i).getDashboard().getHall().getQuantityColour(c.getSelectedColour()));
         }
