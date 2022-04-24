@@ -9,13 +9,18 @@ class AssistantCardTest {
     private AssistantCard card;
 
 
-
+    /**
+     * The tests checks if is returned the right value about the Played Card
+     */
     @Test
     void isPlayed(){
         this.card = new AssistantCard(AssistantCardInfo.CARD3);
         assertFalse(this.card.isPlayed());
     }
 
+    /**
+     * It tests the methods sets the card as Played
+     */
     @Test
     void setPlayed() {
         card = new AssistantCard(AssistantCardInfo.CARD1);
@@ -26,6 +31,9 @@ class AssistantCardTest {
         assertFalse(card.isPlayed());
     }
 
+    /**
+     * It checks if the card's metadata are returned properly
+     */
     @Test
     void getInfo() {
         card = new AssistantCard(AssistantCardInfo.CARD1);
@@ -33,6 +41,9 @@ class AssistantCardTest {
         assertEquals(AssistantCardInfo.CARD1,info);
     }
 
+    /**
+     * It verifies if the card's metadata are set properly
+     */
     @Test
     void setInfo() {
         card = new AssistantCard(AssistantCardInfo.CARD1);

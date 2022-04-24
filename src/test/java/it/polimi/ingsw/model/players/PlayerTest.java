@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+
+    /**
+     * It tests the Player's constructor
+     */
     @Test
     void Player() {
         for (Tower t : Tower.values()) {
@@ -27,6 +31,9 @@ class PlayerTest {
         assertEquals("g2", p1.getNickname());
     }
 
+    /**
+     * It verifies that the Player's Dashboard is filled properly with the given StudentGroup
+     */
     @Test
     void fillDashboardEntrance() {
         Player p = new Player("g1", Tower.WHITE);
@@ -51,6 +58,9 @@ class PlayerTest {
             assertEquals(2 + st2.getQuantityColour(c) + st3.getQuantityColour(c), p.getDashboard().getEntrance().getQuantityColour(c));
     }
 
+    /**
+     * To tests if the method removes from the Dashboard's entrance a student adding it to an Island
+     */
     @Test
     void moveToIsland() {
 
@@ -85,6 +95,9 @@ class PlayerTest {
         }
     }
 
+    /**
+     * It checks if it moves properly a student from the Dashboard's Entrance to the Dashboard's Hall
+     */
     @Test
     void moveToHall() {
         Player p = new Player("g2", Tower.GRAY);
@@ -135,6 +148,9 @@ class PlayerTest {
         }
     }
 
+    /**
+     * To test Tower's getter and setters
+     */
     @Test
     void TowerGettersAndSetters() {
         for (Tower tower : Tower.values()) {
@@ -145,6 +161,9 @@ class PlayerTest {
         }
     }
 
+    /**
+     * To check if coins are spent according to the game's rules
+     */
     @Test
     void spendCoins() {
         Player p = new Player("g6", Tower.GRAY);
@@ -158,7 +177,9 @@ class PlayerTest {
         }
     }
 
-
+    /**
+     * To check if cards are played according to the game's rules
+     */
     @Test
     void playCard() {
         EndOfGameChecker.resetInstance();
@@ -180,6 +201,9 @@ class PlayerTest {
         }
     }
 
+    /**
+     * It tests if the method fills the hall with the given StudentGroup
+     */
     @Test
     void fillHall() {
         StudentGroup sg = new StudentGroup(3);

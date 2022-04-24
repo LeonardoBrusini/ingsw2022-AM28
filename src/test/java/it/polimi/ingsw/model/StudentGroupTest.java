@@ -13,6 +13,9 @@ class StudentGroupTest {
     private StudentGroup sg2;
     private StudentGroup sg3;
 
+    /**
+     * To do before each test
+     */
     @BeforeEach
     void initializeTest() {
         sg = new StudentGroup();
@@ -29,6 +32,9 @@ class StudentGroupTest {
         sg3 = new StudentGroup(colourList);
     }
 
+    /**
+     * It verifies if the method returns the right number of students of the given colour
+     */
     @Test
     void getQuantityColour() {
         for(Colour c : Colour.values()) {
@@ -38,6 +44,9 @@ class StudentGroupTest {
         }
     }
 
+    /**
+     * To test if is sets the number of student of a specified colour (only if > 0)
+     */
     @Test
     void setNumStudents() {
         for (Colour c : Colour.values()) {
@@ -62,6 +71,9 @@ class StudentGroupTest {
         }
     }
 
+    /**
+     * It controls if it is remove a single student of a selected colour, due to the call of the method
+     */
     @Test
     void removeStudent() {
         StudentGroup sg1before;
@@ -88,6 +100,9 @@ class StudentGroupTest {
         }
     }
 
+    /**
+     * It controls if the right number of students is set on the StudentGroup
+     */
     @Test
     void addStudent() {
         StudentGroup sgBefore;
@@ -116,6 +131,9 @@ class StudentGroupTest {
         }
     }
 
+    /**
+     * It checks if the StudentGroup is signaled as empty when it really is
+     */
     @Test
     void empty() {
         assertTrue(sg.empty());
@@ -123,7 +141,10 @@ class StudentGroupTest {
         sg.addStudent(Colour.GREEN);
         assertFalse(sg.empty());
     }
-    
+
+    /**
+     * It tests if the given StudentGroup is set correctly
+     */
     @Test
     void setStudents() {
         sg.setStudents(sg3);

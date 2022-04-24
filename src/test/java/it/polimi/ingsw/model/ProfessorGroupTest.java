@@ -12,12 +12,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProfessorGroupTest {
     private ProfessorGroup pg;
 
+    /**
+     * To do before each test
+     */
     @BeforeEach
     void initializeProfessors() {
         pg = new ProfessorGroup();
         for (Colour c: Colour.values()) assertFalse(pg.getProfessors().containsKey(c));
     }
 
+    /**
+     *To test if the method returns the correct Tower of the Player related with the Professor of the given colour
+     */
     @Test
     void getTower() {
         for (Colour c: Colour.values()) {
@@ -59,6 +65,9 @@ class ProfessorGroupTest {
         }
     }
 
+    /**
+     * To test if the method sets the correct Tower of the Player related with the Professor of the given colour
+     */
     @Test
     void setTower() {
         for (Colour c: Colour.values()) {
@@ -100,6 +109,9 @@ class ProfessorGroupTest {
         }
     }
 
+    /**
+     * It tests with the method returns the right Colours linked to given Tower
+     */
     @Test
     void getColours() {
         //pg empty

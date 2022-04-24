@@ -140,6 +140,11 @@ public class Player {
         return cards.get(x);
     }
 
+    /**
+     * The method fills the hall with the given StudentGroup
+     * @param selectedStudentsFrom StudentGroup to add to the Hall
+     * @throws FullHallException if the Hall is already full
+     */
     public void fillHall(StudentGroup selectedStudentsFrom) throws FullHallException{
         for (Colour c: Colour.values()) {
             if(dashboard.getHall().getQuantityColour(c)+selectedStudentsFrom.getQuantityColour(c)>10) throw new FullHallException();

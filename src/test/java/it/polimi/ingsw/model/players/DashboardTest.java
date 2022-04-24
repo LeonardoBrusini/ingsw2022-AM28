@@ -13,6 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DashboardTest {
     private Dashboard d;
 
+    /**
+     * It checks if the Dashboard's Entrance is filled properly by a given StudentGroup
+     */
     @Test
     void fillEntrance() {
         d = new Dashboard(Tower.BLACK);
@@ -28,6 +31,9 @@ class DashboardTest {
             assertEquals(d.getEntrance().getQuantityColour(c),s1.getQuantityColour(c));
     }
 
+    /**
+     * It verifies if in the Dashboard's Hall is correctly added the given student
+     */
     @Test
     void addToHall() {
         d = new Dashboard(Tower.BLACK);
@@ -51,6 +57,9 @@ class DashboardTest {
         }
     }
 
+    /**
+     * It checks if the given student is removed properly by the Dashboard's Entrance
+     */
     @Test
     void removeFromEntrance() {
         d = new Dashboard(Tower.BLACK);
@@ -73,6 +82,9 @@ class DashboardTest {
         }
     }
 
+    /**
+     * It returns the total number of students in the Hall of a selected Colour
+     */
     @Test
     void getNumStudentsHall() {
         d = new Dashboard(Tower.BLACK);
@@ -82,6 +94,9 @@ class DashboardTest {
 
     }
 
+    /**
+     * It checks if the methods adds the right number of Tower's in the Dashboard
+     */
     @Test
     void addTower() {
         d = new Dashboard(Tower.BLACK);
@@ -91,6 +106,9 @@ class DashboardTest {
         assertEquals(9,num);
     }
 
+    /**
+     *  It checks if the methods removes the right number of Tower's in the Dashboard
+     */
     @Test
     void buildTower() {
         d = new Dashboard(Tower.BLACK);
@@ -100,6 +118,9 @@ class DashboardTest {
         assertEquals(7,num);
     }
 
+    /**
+     * To test if is returned the Entrance's pointer
+     */
     @Test
     void getEntrance() {
         d = new Dashboard(Tower.BLACK);
@@ -113,7 +134,9 @@ class DashboardTest {
             assertEquals(7,d.getEntrance().getQuantityColour(c));
         }
     }
-
+    /**
+     * To test if is returned the Hall's pointer
+     */
     @Test
     void getHall() {
         d = new Dashboard(Tower.BLACK);
@@ -122,6 +145,9 @@ class DashboardTest {
         }
     }
 
+    /**
+     * To tests if is returned the right Tower's colour assigned to the Dashboard
+     */
     @Test
     void getTower() {
         d = new Dashboard(Tower.BLACK);

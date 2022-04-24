@@ -38,7 +38,7 @@ public class ProfessorGroup {
     }
 
     /**
-     *
+     * It returns the list of Professor's colour associated with the Tower
      * @param t the tower of the player we want to get the professors
      * @return a list with all the professors assigned to the player
      */
