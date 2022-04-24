@@ -10,6 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FactoryCharacterCardsTest {
 
+    /**
+     * It tests if the method extracts and builds the CharacterCards according to the game's rules
+     */
     @Test
     void getCards() {
         Bag b = new Bag();

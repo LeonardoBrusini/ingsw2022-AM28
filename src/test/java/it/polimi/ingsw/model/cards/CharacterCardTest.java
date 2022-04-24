@@ -14,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class CharacterCardTest {
     ArrayList<CharacterCard> cards;
 
+    /**
+     * To do before each test
+     */
     @BeforeEach
     void constructor() {
         cards=new ArrayList<>();
@@ -22,6 +25,9 @@ class CharacterCardTest {
         }
     }
 
+    /**
+     * It tests if the cards are initialized properly
+     */
     @Test
     void initializeCards() {
         Bag b = new Bag();
@@ -48,6 +54,9 @@ class CharacterCardTest {
         }
     }
 
+    /**
+     * It tests if is returned the real card's price
+     */
     @Test
     void getPrice() {
         for (CharacterCard c: cards) {

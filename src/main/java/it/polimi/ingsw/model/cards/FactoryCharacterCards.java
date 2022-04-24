@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class FactoryCharacterCards {
+    /**
+     * The method constructs Random CharacterCards
+     * @param b referiment to the Bag used in the computation
+     * @return build CharacterCards
+     */
     public static ArrayList<CharacterCard> getCards(Bag b){
         ArrayList<CharacterCard> cards = new ArrayList<>();
         CharacterCardInfo[] cardsInfo = CharacterCardInfo.values();
