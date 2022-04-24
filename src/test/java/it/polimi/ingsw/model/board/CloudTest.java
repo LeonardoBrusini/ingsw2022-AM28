@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class CloudTest {
     Cloud c ;
 
+    /**
+     * To test if the cloud is empty
+     */
     @Test
     void empty() {
         c = new Cloud();
@@ -17,6 +20,9 @@ class CloudTest {
         assertFalse(c.empty());
     }
 
+    /**
+     * It verifies that students are correctly removed from the Cloud
+     */
     @Test
     void clearStudents() {
         c = new Cloud();
@@ -28,6 +34,9 @@ class CloudTest {
 
     }
 
+    /**
+     * To test if StudentsGroup are correctly added to the clouds, according to the game's rules
+     */
     @Test
     void addGroup() {
         c = new Cloud();
@@ -42,6 +51,9 @@ class CloudTest {
         }
     }
 
+    /**
+     * It verifies that the method returns the right number of students on the cloud, without adding or removing them
+     */
     @Test
     void getStudentsOnCloud() {
         c = new Cloud();

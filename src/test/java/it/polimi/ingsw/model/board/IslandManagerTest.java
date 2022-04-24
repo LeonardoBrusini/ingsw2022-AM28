@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class IslandManagerTest {
     private IslandManager im;
 
+    /**
+     * To do before each test
+     */
     @BeforeEach
     void initialize() {
         im = new IslandManager(4);
@@ -19,6 +22,9 @@ class IslandManagerTest {
         assertTrue(im.getArchipelagos().get(3).isPresenceMotherNature());
     }
 
+    /**
+     * To test if is properly returned the correct Island by the IslandManager
+     */
     @Test
     void getIsland() {
         //how to test??
@@ -26,6 +32,9 @@ class IslandManagerTest {
         assertEquals(4,i.getIslandIndex());
     }
 
+    /**
+     * It verifies if the method assign and build a Player's Tower on the Island according to the game's rules
+     */
     @Test
     void setTowerOnIsland() {
         im.setTowerOnIsland(Tower.WHITE,1);
@@ -122,6 +131,9 @@ class IslandManagerTest {
         assertEquals(Tower.WHITE,im.getArchipelagos().get(4).getIslands().get(0).getTower());
     }
 
+    /**
+     * It tests if is returned the Archipelago witch contains the island of the given index
+     */
     @Test
     void getArchipelagoByIslandIndex() {
         for (int i = 0;i<12; i++) {

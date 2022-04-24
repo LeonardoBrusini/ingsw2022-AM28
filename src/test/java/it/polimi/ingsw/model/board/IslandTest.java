@@ -19,6 +19,9 @@ class IslandTest {
     private Island i;
     private final ArrayList<CharacterCard> cards = new ArrayList<>();
 
+    /**
+     * It tests that a student is correctly added to the island
+     */
     @Test
     void addStudent() {
         i = new Island(3);
@@ -35,6 +38,9 @@ class IslandTest {
         }
     }
 
+    /**
+     * It tests if the method sets the given Tower on the Island
+     */
     @Test
     void setTower() {
         i = new Island(3);
@@ -45,6 +51,9 @@ class IslandTest {
         }
     }
 
+    /**
+     * To test if is returned the right Player's Tower set on the Island
+     */
     @Test
     void getTower() {
         i = new Island(3);
@@ -53,13 +62,18 @@ class IslandTest {
         assertEquals(d,i.getTower());
     }
 
-
+    /**
+     * It verifies if is returned the correct index of the Island
+     */
     @Test
     void getIslandIndex() {
         i = new Island(3);
         assertEquals(3,i.getIslandIndex());
     }
 
+    /**
+     * It verifies that the method erases all the students on the Island
+     */
     @Test
     void clearStudents() {
         i = new Island(3);
@@ -80,6 +94,10 @@ class IslandTest {
             assertEquals(0,i.getStudents().getQuantityColour(c));
 
     }
+
+    /**
+     * The test checks if is returned the right influence associated with the given Player
+     */
     @Test
     void playerInfluence(){
         i = new Island(3);
@@ -120,6 +138,9 @@ class IslandTest {
         assertEquals(1, i.playerInfluence(Tower.WHITE, pg, cards));
     }
 
+    /**
+     * The test checks if is returned the right influence associated with the given Player, according to the special conditions set by CharacterCard CARD6
+     */
     @Test
     public void playerInfluenceCARD6() {
         cards.add(new CharacterCard(CharacterCardInfo.CARD6));
@@ -162,6 +183,9 @@ class IslandTest {
         assertEquals(0, i.playerInfluence(Tower.WHITE, pg, cards));
     }
 
+    /**
+     * The test checks if is returned the right influence associated with the given Player, according to the special conditions set by CharacterCard CARD6
+     */
     @Test
     public void playerInfluenceCARD9() {
         cards.add(new CharacterCard(CharacterCardInfo.CARD9));
@@ -205,6 +229,9 @@ class IslandTest {
         assertEquals(1, i.playerInfluence(Tower.WHITE, pg, cards));
     }
 
+    /**
+     * The test checks if is returned the right influence associated with the given Player, according to the special conditions set by CharacterCard CARD8
+     */
     @Test
     public void playerInfluenceCARD8() {
         cards.add(new CharacterCard(CharacterCardInfo.CARD8));

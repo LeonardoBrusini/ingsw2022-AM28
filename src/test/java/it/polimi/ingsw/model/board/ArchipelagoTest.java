@@ -13,6 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArchipelagoTest {
     private final ArrayList<CharacterCard> cards = new ArrayList<>();
 
+    /**
+     * To test the construction of all the archipelagos with right parameters
+     */
     @Test
     void constructor() {
         ArrayList<Archipelago> a = new ArrayList<>();
@@ -26,6 +29,9 @@ class ArchipelagoTest {
         }
     }
 
+    /**
+     * It verifies, using different configurations, the right computation of the given player's influence
+     */
     //must be tested after board
     @Test
     void playerInfluence() {
@@ -67,7 +73,9 @@ class ArchipelagoTest {
 
     }
 
-
+    /**
+     * It verifies, using different configuration, that the method merges more archipelagos properly
+     */
     @Test
     void merge() {
         ArrayList<Island> islandList = new ArrayList<>();

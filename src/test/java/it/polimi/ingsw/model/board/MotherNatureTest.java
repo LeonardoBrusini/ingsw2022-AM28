@@ -16,6 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class MotherNatureTest {
     private MotherNature m;
     private final ArrayList<CharacterCard> cards = new ArrayList<>();
+
+    /**
+     * The test checks that the methods returns the index of the Island on witch Mother Nature effectively is
+     */
     @Test
     void getIslandIndex() {
         m = new MotherNature();
@@ -25,6 +29,9 @@ class MotherNatureTest {
         assertEquals(res, con);
     }
 
+    /**
+     * It verifies that the methods sets the right Island's index on witch Mother Nature effectively is
+     */
     @Test
     void setIsland() {
         m = new MotherNature();
@@ -34,6 +41,9 @@ class MotherNatureTest {
 
     }
 
+    /**
+     *It tests if the methods returns the Player with more influence on the Island on witch Mother Nature is
+     */
     @Test
     void playerWithMostInfluence() {
         MotherNature mn = new MotherNature();

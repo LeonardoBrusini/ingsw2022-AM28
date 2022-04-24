@@ -15,11 +15,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
     private Board b;
 
+    /**
+     * To do before each test
+     */
     @BeforeEach
     void initialize() {
         b = new Board(3);
     }
 
+    /**
+     * To test that, thanks to the method, the clouds are correctly filled with students when required
+     */
     @Test
     void fillClouds() {
         b.fillClouds();
@@ -40,6 +46,9 @@ class BoardTest {
         }
     }
 
+    /**
+     * To test the right assignment of a Professor to the tower of the Player with the right influence to have the right on the Professor
+     */
     @Test
     void assignProfessor() {
         b.assignProfessor(Colour.BLUE, Tower.BLACK);
@@ -55,6 +64,9 @@ class BoardTest {
         assertEquals(Tower.BLACK,b.getProfessorGroup().getTower(Colour.YELLOW));
     }
 
+    /**
+     * It verifies that Mother Nature is moved properly according to the game's rules
+     */
     @Test
     void moveMotherNature() {
         b.getMotherNature().setIsland(1);
@@ -82,6 +94,9 @@ class BoardTest {
         assertTrue(b.getIslandManager().getArchipelagoByIslandIndex(1).isPresenceMotherNature());
     }
 
+    /**
+     * To test generic getter and setter methods in Board
+     */
     @Test
     void getterAndSetterTest() {
         Bag bag = new Bag();

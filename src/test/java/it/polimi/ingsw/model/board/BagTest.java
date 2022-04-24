@@ -12,18 +12,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class BagTest {
     private Bag b;
 
+    /**
+     * To do before the test of all methods
+     */
     @BeforeEach
     void initialize() {
         b = new Bag();
         for(Colour c: Colour.values()) assertEquals(0,b.getStudents().getQuantityColour(c));
     }
 
+    /**
+     * It verifies that it puts the right number of students on the islands
+     */
     //must be tested after board
     @Test
     void initializeIslands() {
 
     }
 
+    /**
+     * To test that the methods removes correctly the students from the bag
+     */
     @Test
     void removeStudents() {
         b.setStudents(new StudentGroup(26));
@@ -54,6 +63,9 @@ class BagTest {
         for (Colour c: Colour.values()) assertEquals(26,b.getStudents().getQuantityColour(c));
     }
 
+    /**
+     * To test that the selected students are correctly added to the bag
+     */
     @Test
     void addStudent() {
         StudentGroup sg = new StudentGroup(2);
@@ -72,6 +84,9 @@ class BagTest {
         }
     }
 
+    /**
+     * To test the correct return of the total number of students in the bag
+     */
     @Test
     void getNumOfStudents() {
         assertEquals(0,b.getTotalStudents());
@@ -90,7 +105,10 @@ class BagTest {
         assertEquals(134,b.getTotalStudents());
     }
 
-   @Test
+    /**
+     * To test that the methods removes correctly the students from the bag, returning a StudentGroup object
+     */
+    @Test
     void removeStudentGroup(){
         StudentGroup st;
         int tmp = 0;
@@ -110,6 +128,10 @@ class BagTest {
         assertEquals(120, tmp);
         assertEquals(10, b.getTotalStudents());
     }
+
+    /**
+     * To test that the information given by the method about the emptiness of the bag is correct
+     */
     @Test
     void isEmpty(){
         b.setStudents(new StudentGroup());
