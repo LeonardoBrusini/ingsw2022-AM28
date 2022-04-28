@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.controller.ExpertGameManager;
 import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.exceptions.FullHallException;
 import it.polimi.ingsw.model.StudentGroup;
 import org.junit.jupiter.api.Test;
 
@@ -24,9 +25,13 @@ class RemoveFromHallEffectTest {
         gm.addPlayer("g1");
         gm.newGame();
         c.setSelectedColour(Colour.YELLOW);
-        for(int i = 0; i < gm.getPlayers().size(); i++) {
-            gm.getPlayers().get(i).getDashboard().fillHall(new StudentGroup(gm.getBoard().getBag().removeStudents(3)));
-            before.add(gm.getPlayers().get(i).getDashboard().getHall().getQuantityColour(c.getSelectedColour()));
+        try {
+            for (int i = 0; i < gm.getPlayers().size(); i++) {
+                gm.getPlayers().get(i).getDashboard().fillHall(new StudentGroup(gm.getBoard().getBag().removeStudents(3)));
+                before.add(gm.getPlayers().get(i).getDashboard().getHall().getQuantityColour(c.getSelectedColour()));
+            }
+        } catch (FullHallException e) {
+            e.printStackTrace();
         }
         c.setGameManager(gm);
         c.getCardInfo().getEffect().resolveEffect(c);

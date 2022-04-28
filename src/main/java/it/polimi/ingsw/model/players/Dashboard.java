@@ -108,7 +108,10 @@ public class Dashboard {
         return tower;
     }
 
-    public void fillHall(StudentGroup studentGroup){
+    public void fillHall(StudentGroup studentGroup) throws FullHallException{
+        for(Colour colour: Colour.values())
+            if(hall.getQuantityColour(colour)+studentGroup.getQuantityColour(colour) >= 10)
+                throw new FullHallException();
         for(Colour colour: Colour.values())
             hall.setNumStudents(hall.getQuantityColour(colour) + studentGroup.getQuantityColour(colour), colour);
     }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.controller.ExpertGameManager;
 import it.polimi.ingsw.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.enumerations.Colour;
+import it.polimi.ingsw.exceptions.FullHallException;
 import it.polimi.ingsw.model.StudentGroup;
 import it.polimi.ingsw.model.players.Player;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,12 @@ class StudentToHallEffectTest {
         c.setSelectedColour(Colour.YELLOW);
         c.setStudentsOnCard(new StudentGroup(4));
         c.setPlayerThisTurn(gm.getPlayers().get(0));
-        c.getPlayerThisTurn().getDashboard().fillHall(new StudentGroup(3));
+
+        try {
+            c.getPlayerThisTurn().getDashboard().fillHall(new StudentGroup(3));
+        } catch (FullHallException e) {
+            e.printStackTrace();
+        }
         int beforeHall = c.getPlayerThisTurn().getDashboard().getHall().getTotalStudents();
         int beforeCard = c.getStudentsOnCard().getTotalStudents();
         c.getCardInfo().getEffect().resolveEffect(c);
@@ -41,7 +47,11 @@ class StudentToHallEffectTest {
         c.setSelectedColour(Colour.YELLOW);
         c.setStudentsOnCard(new StudentGroup());
         c.setPlayerThisTurn(gm.getPlayers().get(1));
-        c.getPlayerThisTurn().getDashboard().fillHall(new StudentGroup(3));
+        try {
+            c.getPlayerThisTurn().getDashboard().fillHall(new StudentGroup(3));
+        } catch (FullHallException e){
+            e.printStackTrace();
+        }
         int beforeHall1 = c.getPlayerThisTurn().getDashboard().getHall().getTotalStudents();
         int beforeCard1 = c.getStudentsOnCard().getTotalStudents();
         //c.getCardInfo().getEffect().resolveEffect(c);
