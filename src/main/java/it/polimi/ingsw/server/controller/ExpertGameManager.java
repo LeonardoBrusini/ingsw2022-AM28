@@ -20,9 +20,13 @@ public class ExpertGameManager {
     private ArrayList<Player> players;
     private Board board;
     private TurnManager turnManager;
+    private boolean gameStarted;
+    private boolean expertMode;
+    private int numPlayers;
 
     public ExpertGameManager() {
         players = new ArrayList<>();
+        gameStarted = false;
     }
 
     /**
@@ -38,7 +42,10 @@ public class ExpertGameManager {
     /**
      * initializes the board, which objects on it have attributes which are initialized based on the number of players
      */
-    public void newGame(){
+    public void newGame(boolean expertMode, int numPlayers){
+       this.expertMode = expertMode;
+       this.numPlayers = numPlayers;
+       if(numPlayers==2 && players.size()==3) players.remove(2);
        board = new Board(players.size());
        if(players.size()==2) {
            for (Player p: players) {
@@ -50,6 +57,7 @@ public class ExpertGameManager {
            }
        }
        turnManager = new TurnManager(players.size());
+       gameStarted = true;
        // to be continued
     }
 
@@ -364,4 +372,9 @@ public class ExpertGameManager {
             //error, player does not have enough coins
         }
     }
+
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
 }

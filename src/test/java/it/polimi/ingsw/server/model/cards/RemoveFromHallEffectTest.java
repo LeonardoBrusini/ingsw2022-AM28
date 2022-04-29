@@ -24,7 +24,8 @@ class RemoveFromHallEffectTest {
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD12);
         c.setGameManager(gm);
         gm.addPlayer("g1");
-        gm.newGame();
+        gm.addPlayer("g2");
+        gm.newGame(true, 2);
         c.setSelectedColour(Colour.YELLOW);
         try {
             for (int i = 0; i < gm.getPlayers().size(); i++) {

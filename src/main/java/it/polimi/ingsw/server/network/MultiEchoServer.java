@@ -9,13 +9,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MultiEchoServer {
-    private int port;
+    ConnectionsSender connections;
+    private final int port;
 
     public MultiEchoServer(int port) {
         this.port = port;
+        connections = new ConnectionsSender();
     }
+
     public void startServer() {
-        ConnectionManager cm = new ConnectionManager();
+        ExpertGameManager gameManager = new ExpertGameManager();
         ExecutorService executor = Executors.newCachedThreadPool();
         ServerSocket serverSocket;
         try {
@@ -28,13 +31,16 @@ public class MultiEchoServer {
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                executor.submit(new EchoServerClientHandler(socket,cm));
+                EchoServerClientHandler e = new EchoServerClientHandler(socket,gameManager, connections.getNewID(), connections);
+                connections.addClient(e);
+                executor.submit(e);
             } catch(IOException e) {
                 break; // Entrerei qui se serverSocket venisse chiuso
             }
         }
         executor.shutdown();
     }
+
     public static void main(String[] args) {
         MultiEchoServer echoServer = new MultiEchoServer(1234);
         echoServer.startServer();

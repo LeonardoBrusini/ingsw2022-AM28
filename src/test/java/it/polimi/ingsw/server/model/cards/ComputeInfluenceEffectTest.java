@@ -14,7 +14,7 @@ import java.util.EnumMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ComputeInfluenceEffectTest {
-    private CharacterCard c = new CharacterCard(CharacterCardInfo.CARD3);
+    private final CharacterCard c = new CharacterCard(CharacterCardInfo.CARD3);
 
     /**
      * It inizialise with the need object the test environment
@@ -25,7 +25,7 @@ class ComputeInfluenceEffectTest {
         c.setGameManager(gm);
         c.getGameManager().addPlayer("g1");
         c.getGameManager().addPlayer("g2");
-        gm.newGame();
+        gm.newGame(true, 2);
         c.setSelectedIsland(gm.getBoard().getIslandManager().getIslandByIndex(7));
         c.setBoard(gm.getBoard());
         gm.getBoard().getIslandManager().getIslandByIndex(gm.getBoard().getMotherNature().getIslandIndex()).setStudents(new StudentGroup(2));

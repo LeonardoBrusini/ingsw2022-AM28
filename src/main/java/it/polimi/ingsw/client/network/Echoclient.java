@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Echoclient {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         String hostName = "127.0.0.1";
         int portNumber = 1234;
         try (
@@ -23,6 +23,7 @@ public class Echoclient {
                                 new InputStreamReader(System.in))
         ) {
             String userInput;
+            System.out.println(in.readLine());
             while ((userInput = stdIn.readLine()) != null) {
                 out.println(userInput);
                 System.out.println("echo: " + in.readLine());

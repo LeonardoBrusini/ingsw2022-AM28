@@ -19,7 +19,7 @@ class StudentToHallEffectTest {
         ExpertGameManager gm = new ExpertGameManager();
         gm.addPlayer("player1");
         gm.addPlayer("player2");
-        gm.newGame();
+        gm.newGame(true,2);
         gm.addPlayer("g1");
         c.setBoard(gm.getBoard());
         c.setGameManager(gm);
