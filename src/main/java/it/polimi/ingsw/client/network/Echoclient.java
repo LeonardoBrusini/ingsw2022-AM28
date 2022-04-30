@@ -23,7 +23,6 @@ public class Echoclient {
                                 new InputStreamReader(System.in))
         ) {
             String userInput;
-            System.out.println(in.readLine());
             while ((userInput = stdIn.readLine()) != null) {
                 out.println(userInput);
                 System.out.println("echo: " + in.readLine());
