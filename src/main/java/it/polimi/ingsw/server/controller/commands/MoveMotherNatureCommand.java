@@ -2,6 +2,8 @@ package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.Command;
+import it.polimi.ingsw.network.CurrentStatus;
+import it.polimi.ingsw.network.GameStatus;
 import it.polimi.ingsw.network.StatusCode;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
@@ -34,9 +36,9 @@ public class MoveMotherNatureCommand implements CommandStrategy{
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager) {
         Gson g = new Gson();
-        String status;
-        status = "{ \"motherNatureIndex\" : "+gameManager.getBoard().getMotherNature().getIslandIndex()+"\"}";
-        return g.toJson(status);
+        GameStatus gs = new GameStatus();
+        CurrentStatus cs = new CurrentStatus();
+        gs.setMotherNatureIndex(gameManager.getBoard().getMotherNature().getIslandIndex());
+        return g.toJson(gs, CurrentStatus.class);
     }
-    //oggetto di tipo Current Status e aggiorni i campi giusti, fai il parsing dell'oggetto
 }

@@ -9,4 +9,24 @@ public class GameStatus {
     CloudStatus[] clouds;
     CharacterCardStatus[] characterCards;
     PlayerStatus[] players;
+
+    public void setMotherNatureIndex(Integer motherNatureIndex) {
+        this.motherNatureIndex = motherNatureIndex;
+    }
+
+    public void setArchipelagos(ArchipelagoStatus[] archipelagos) {
+        this.archipelagos = archipelagos;
+    }
+
+    public void setClouds(CloudStatus[] clouds) {
+        this.clouds = clouds;
+    }
+
+    public void setCharacterCards(CharacterCardStatus[] characterCards) {
+        this.characterCards = characterCards;
+    }
+
+    public void setPlayers(PlayerStatus[] players) {
+        this.players = players;
+    }
 }

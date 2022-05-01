@@ -4,7 +4,7 @@ public enum StatusCode {
     ALREADYLOGGED(101,"Already logged with this name."),
     FULL_LOBBY(102,"Server has already reached the maximum number of players."),
     GAMESTARTED(103,"Game has already started."),
-    KICKEDOUT(104, "Host chose to play a game of 2 players, you were the third."),
+    KICKEDOUT(209, "Host chose to play a game of 2 players, you were the third."),
     ALREADYPLAYEDAC(202,"You already played this card! Choose another one."),
     ALREADYPLAYEDCC(203,"You already playerd a character card! Wait until next turn"),
     NOTENOUGHCOINS(204, "You don't have enough coins to play this card."),
