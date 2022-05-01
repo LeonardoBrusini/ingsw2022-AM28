@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.exceptions.*;
 import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.board.Archipelago;
 import it.polimi.ingsw.server.model.board.Board;
+import it.polimi.ingsw.server.model.board.Cloud;
 import it.polimi.ingsw.server.model.board.Island;
 import it.polimi.ingsw.server.enumerations.AssistantCardInfo;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
@@ -201,7 +202,17 @@ public class ExpertGameManager {
     public void takeStudentsFromCloud(int cloudIndex, int playerIndex) {
         if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) return;
-        StudentGroup sg = board.getClouds().get(cloudIndex).clearStudents();
+        ArrayList<Cloud> clouds = board.getClouds();
+        StudentGroup sg = clouds.get(cloudIndex).clearStudents();
+        if(sg.empty()) {
+            boolean error=false;
+            for(int i=0; i<clouds.size();i++) {
+                if(!clouds.get(i).empty()) {
+                    //ERROR
+                    return;
+                }
+            }
+        }
         players.get(playerIndex).fillDashboardEntrance(sg);
         turnManager.nextPhase(board,players);
         manageEndOfGame();
@@ -255,6 +266,8 @@ public class ExpertGameManager {
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
 
         Player p = players.get(index);
+        if(p.isCcActivatedThisTurn()) return;
+
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
             p.spendCoins(card.getPrice());
@@ -263,6 +276,7 @@ public class ExpertGameManager {
             card.setGameManager(this);
             card.setBoard(board);
             card.getCardInfo().getEffect().resolveEffect(card);
+            p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
@@ -277,10 +291,10 @@ public class ExpertGameManager {
     public void playCharacterCard(int index, int posCharacterCard, Colour colour){
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
-
         Player p = players.get(index);
-        CharacterCard card = board.getCharacterCards().get(posCharacterCard);
+        if(p.isCcActivatedThisTurn()) return;
 
+        CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
             p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard, colour);
@@ -289,6 +303,7 @@ public class ExpertGameManager {
             card.setBoard(board);
             card.setSelectedColour(colour);
             card.getCardInfo().getEffect().resolveEffect(card);
+            p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
@@ -305,6 +320,7 @@ public class ExpertGameManager {
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null || islandIndex<1 || islandIndex>12) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
         Player p = players.get(index);
+        if(p.isCcActivatedThisTurn()) return;
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
 
         try {
@@ -316,6 +332,7 @@ public class ExpertGameManager {
             card.setSelectedColour(colour);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
+            p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
@@ -331,6 +348,7 @@ public class ExpertGameManager {
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || islandIndex<1 || islandIndex>12) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
         Player p = players.get(index);
+        if(p.isCcActivatedThisTurn()) return;
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         if(card.getCardInfo()==CharacterCardInfo.CARD5 && card.getNoEntryTiles()==0) return;
 
@@ -342,6 +360,7 @@ public class ExpertGameManager {
             card.setBoard(board);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
+            p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
@@ -358,6 +377,7 @@ public class ExpertGameManager {
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || studentGroupFrom==null || studentGroupTo==null || studentGroupFrom.getTotalStudents()!=studentGroupTo.getTotalStudents()) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
         Player p = players.get(index);
+        if(p.isCcActivatedThisTurn()) return;
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
             p.spendCoins(card.getPrice());
@@ -368,6 +388,7 @@ public class ExpertGameManager {
             card.setSelectedStudentsFrom(studentGroupFrom);
             card.setSelectedStudentsTo(studentGroupTo);
             card.getCardInfo().getEffect().resolveEffect(card);
+            p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
