@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MultiEchoServer {
-    ConnectionsSender connections;
+    private final ConnectionsSender connections;
     private final int port;
 
     public MultiEchoServer(int port) {
@@ -28,6 +28,18 @@ public class MultiEchoServer {
             return;
         }
         System.out.println("Server ready");
+        new Thread(() -> {
+            try {
+                while (true) {
+                    connections.setAllDisconnected();
+                    connections.sendToAll("ping");
+                    Thread.sleep(5000);
+                    connections.eraseDisconnected();
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
         while (true) {
             try {
                 Socket socket = serverSocket.accept();

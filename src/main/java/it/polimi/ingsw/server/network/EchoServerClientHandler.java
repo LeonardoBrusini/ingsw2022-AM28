@@ -29,15 +29,18 @@ public class EchoServerClientHandler implements Runnable {
     }
 
     public void run() {
-        try {
+       // try {
             // Leggo e scrivo nella connessione finche' non ricevo "quit"
             String line, outputString;
             while (true) {
                 line = in.nextLine();
-                outputString = connectionManager.manageMessage(line, playerID);
-                if (line.equals("quit")) {
-                    break;
+                if (line.equals("pong")) {
+                    System.out.println("pong recieved");
+                    sender.setStillConnected(playerID,true);
+                    System.out.println("player still connected");
                 } else {
+                    outputString = connectionManager.manageMessage(line, playerID);
+                    System.out.println("command recieved");
                     if(connectionManager.isToAllResponse()) {
                         sender.sendToAll(outputString);
                     } else {
@@ -46,12 +49,12 @@ public class EchoServerClientHandler implements Runnable {
                 }
             }
             // Chiudo gli stream e il socket
-            in.close();
-            out.close();
-            socket.close();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+            //in.close();
+            //out.close();
+            //socket.close();
+       // } catch (IOException e) {
+        //    System.err.println(e.getMessage());
+       // }
     }
 
     public PrintWriter getOut() {

@@ -23,6 +23,7 @@ public class Player {
     private AssistantCard lastPlayedCard;
     private final Dashboard dashboard;
     private final boolean[][] coinPositions;
+    private boolean ccActivatedThisTurn;
 
     /**
      * Player constructor, builds dashboard and 10 assistant cards
@@ -35,6 +36,7 @@ public class Player {
         hisTower = t;
         dashboard = new Dashboard(hisTower);
         lastPlayedCard = null;
+        ccActivatedThisTurn = false;
         cards = new ArrayList<>();
         for (AssistantCardInfo i: AssistantCardInfo.values()){
             cards.add(new AssistantCard(i));
@@ -163,5 +165,13 @@ public class Player {
     public void addToHall(Colour selectedColour) throws FullHallException{
         dashboard.addToHall(selectedColour);
         checkCoins(selectedColour);
+    }
+
+    public boolean isCcActivatedThisTurn() {
+        return ccActivatedThisTurn;
+    }
+
+    public void setCcActivatedThisTurn(boolean ccActivatedThisTurn) {
+        this.ccActivatedThisTurn = ccActivatedThisTurn;
     }
 }

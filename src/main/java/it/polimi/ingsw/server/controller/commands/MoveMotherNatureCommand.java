@@ -1,9 +1,7 @@
 package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.network.Command;
-import it.polimi.ingsw.network.GameStatus;
 import it.polimi.ingsw.network.StatusCode;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 

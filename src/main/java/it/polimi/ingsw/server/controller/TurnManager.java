@@ -85,6 +85,9 @@ public class TurnManager {
             else playerIndex++;
             planningOrder.add(playerIndex);
         }
+        for (Player p: players) {
+            p.setCcActivatedThisTurn(false);
+        }
     }
 
     /**
