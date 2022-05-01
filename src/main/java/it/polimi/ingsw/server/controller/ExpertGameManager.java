@@ -156,8 +156,9 @@ public class ExpertGameManager {
      * and checks for aggregation.
      * @param moves the number of archipelagos mother nature has to move forward
      */
-    public void moveMotherNature(int moves){
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) return;
+    public void moveMotherNature(int moves) throws IllegalArgumentException{
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) throw new IllegalArgumentException();
+        /*if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) return;*/
         if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) return;
         board.moveMotherNature(moves);
         checkInfluence(); //check if this method works properly
