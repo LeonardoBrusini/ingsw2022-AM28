@@ -3,14 +3,11 @@ package it.polimi.ingsw.server.controller;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
-import it.polimi.ingsw.server.exceptions.FullHallException;
-import it.polimi.ingsw.server.exceptions.NoStudentsException;
+import it.polimi.ingsw.server.exceptions.*;
 import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.board.Archipelago;
 import it.polimi.ingsw.server.model.board.Board;
-import it.polimi.ingsw.server.model.board.Cloud;
 import it.polimi.ingsw.server.model.board.Island;
-import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.enumerations.AssistantCardInfo;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
 import it.polimi.ingsw.server.model.players.Player;
@@ -34,7 +31,7 @@ public class ExpertGameManager {
      * adds a new player if the lobby is not full (no more than 3 players)
      * @param s the nickname of the player
      */
-    public synchronized void addPlayer(String s){
+    public void addPlayer(String s){
         if(players.size()<3) {
             players.add(new Player(s, Tower.values()[players.size()]));
         }
@@ -43,7 +40,7 @@ public class ExpertGameManager {
     /**
      * initializes the board, which objects on it have attributes which are initialized based on the number of players
      */
-    public synchronized void newGame(boolean expertMode, int numPlayers){
+    public void newGame(boolean expertMode, int numPlayers){
        this.expertMode = expertMode;
        this.numPlayers = numPlayers;
        if(numPlayers==2 && players.size()==3) players.remove(2);
@@ -75,7 +72,7 @@ public class ExpertGameManager {
      * @param p the player who wants to play a card
      * @param c index of the card the player wants to play
      */
-    public synchronized void playAssistantCard(int p, int c){
+    public void playAssistantCard(int p, int c){
         if(p<0 || p>=players.size() || c<0 || c>=AssistantCardInfo.values().length) return;
         if(turnManager.getPhase()!=Phase.PLANNING || turnManager.getCurrentPlayer()!=p) return; //not the correct phase
         try {
@@ -85,20 +82,21 @@ public class ExpertGameManager {
         }
         turnManager.nextPhase(board,players);
     }
-
     /**
      * the selected player moves a student from the entrance to the hall, then checks for the professor
      * @param p the player who wants to move a student
      * @param c the colour of the student
      */
-    public synchronized void moveStudentsToHall(int p, Colour c){
-        if (p<0 || p>=players.size() || c==null) return;
-        if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || turnManager.isMoveStudentsPhase()) return;
-        try {
-            players.get(p).moveToHall(c);
-        } catch (NoStudentsException | FullHallException e) {
-            //what happens?
-        }
+    public void moveStudentsToHall(int p, Colour c) throws FullHallException, NoStudentsException, WrongPhaseException, WrongTurnException{
+        if (p<0 || p>=players.size() || c==null) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.ACTION || turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
+        players.get(p).moveToHall(c);
+   /* try {
+        players.get(p).moveToHall(c);
+    } catch (NoStudentsException | FullHallException e) {
+        //what happens?
+    }*/
         checkProfessors(c);
         turnManager.nextPhase(board,players);
     }
@@ -107,7 +105,7 @@ public class ExpertGameManager {
      * checks which player gets the professor of colour c (modifies behaviour if CARD2 is activated)
      * @param c the colour of the professor
      */
-    public synchronized void checkProfessors(Colour c) {
+    public void checkProfessors(Colour c) {
         int maxStudents = 0;
         Player maxStudentsPlayer = null;
         for(Player p: players) {
@@ -140,7 +138,7 @@ public class ExpertGameManager {
      * @param c the colour of the student
      * @param is index of the island
      */
-    public synchronized void moveStudentToIsland(int p, Colour c, int is){
+    public void moveStudentToIsland(int p, Colour c, int is){
         if(p<0 || p>=players.size() || c==null || is<1 || is>12) return;
         if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || turnManager.isMoveStudentsPhase()) return;
         try{
@@ -157,8 +155,9 @@ public class ExpertGameManager {
      * and checks for aggregation.
      * @param moves the number of archipelagos mother nature has to move forward
      */
-    public synchronized void moveMotherNature(int moves){
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) return;
+    public void moveMotherNature(int moves) throws WrongPhaseException{
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) throw new WrongPhaseException();
+        /*if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) return;*/
         if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) return;
         board.moveMotherNature(moves);
         checkInfluence(); //check if this method works properly
@@ -169,7 +168,7 @@ public class ExpertGameManager {
     /**
      * checks the player with most influence on the archipelago and build towers on it if needed
      */
-    public synchronized void checkInfluence() {
+    public void checkInfluence() {
         CharacterCard card = null;
         Archipelago a = board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex());
         if(a.getNoEntryTiles()>0) {
@@ -199,19 +198,10 @@ public class ExpertGameManager {
      * @param cloudIndex index of the cloud the player selected
      * @param playerIndex player who asked to take the students
      */
-    public synchronized void takeStudentsFromCloud(int cloudIndex, int playerIndex) {
+    public void takeStudentsFromCloud(int cloudIndex, int playerIndex) {
         if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) return;
-        ArrayList<Cloud> clouds = board.getClouds();
         StudentGroup sg = board.getClouds().get(cloudIndex).clearStudents();
-        if(sg.empty()) {
-            for(int i=0;i<clouds.size();i++) {
-                if(i!=cloudIndex && !clouds.get(i).empty()) {
-                    //ERROR
-                    return;
-                }
-            }
-        }
         players.get(playerIndex).fillDashboardEntrance(sg);
         turnManager.nextPhase(board,players);
         manageEndOfGame();
@@ -222,14 +212,14 @@ public class ExpertGameManager {
      * @param t the colour of the tower
      * @return the player who has that tower colour
      */
-    private synchronized Player findPlayerByTower(Tower t) {
+    private Player findPlayerByTower(Tower t) {
         for (Player p: players){
             if(p.getTower()==t) return p;
         }
         return null;
     }
 
-    private synchronized void manageEndOfGame() {
+    private void manageEndOfGame() {
         int winnerIndex;
         if(EndOfGameChecker.instance().isEndOfGame()) {
             winnerIndex = EndOfGameChecker.instance().getWinner();
@@ -242,13 +232,13 @@ public class ExpertGameManager {
     }
 
     //getters & setters methods
-    public synchronized void setPlayers(ArrayList<Player> players) {
+    public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
-    public synchronized Board getBoard() {
+    public Board getBoard() {
         return board;
     }
-    public synchronized void setBoard(Board board) {
+    public void setBoard(Board board) {
         this.board = board;
     }
     public ArrayList<Player> getPlayers() {
@@ -260,12 +250,11 @@ public class ExpertGameManager {
      * @param index player index
      * @param posCharacterCard character card index
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard){
+    public void playCharacterCard(int index, int posCharacterCard){
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
-        Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
 
+        Player p = players.get(index);
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
             p.spendCoins(card.getPrice());
@@ -274,7 +263,6 @@ public class ExpertGameManager {
             card.setGameManager(this);
             card.setBoard(board);
             card.getCardInfo().getEffect().resolveEffect(card);
-            players.get(index).setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
@@ -286,13 +274,13 @@ public class ExpertGameManager {
      * @param posCharacterCard character card index
      * @param colour colour of the student
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour){
+    public void playCharacterCard(int index, int posCharacterCard, Colour colour){
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
-        Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
 
+        Player p = players.get(index);
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
+
         try {
             p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard, colour);
@@ -301,7 +289,6 @@ public class ExpertGameManager {
             card.setBoard(board);
             card.setSelectedColour(colour);
             card.getCardInfo().getEffect().resolveEffect(card);
-            players.get(index).setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
@@ -314,13 +301,12 @@ public class ExpertGameManager {
      * @param colour colour of the student
      * @param islandIndex index of the island
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex){
+    public void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex){
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null || islandIndex<1 || islandIndex>12) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
         Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
-
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
+
         try {
             p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard,colour,islandIndex);
@@ -330,7 +316,6 @@ public class ExpertGameManager {
             card.setSelectedColour(colour);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
-            players.get(index).setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
@@ -342,14 +327,13 @@ public class ExpertGameManager {
      * @param posCharacterCard character card index
      * @param islandIndex index of the island
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard,  int  islandIndex){
+    public void playCharacterCard(int index, int posCharacterCard,  int  islandIndex){
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || islandIndex<1 || islandIndex>12) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
         Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
-
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         if(card.getCardInfo()==CharacterCardInfo.CARD5 && card.getNoEntryTiles()==0) return;
+
         try {
             p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard,islandIndex);
@@ -358,7 +342,6 @@ public class ExpertGameManager {
             card.setBoard(board);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
-            players.get(index).setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
@@ -371,11 +354,10 @@ public class ExpertGameManager {
      * @param studentGroupFrom first group of students
      * @param studentGroupTo second group of students
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo){
+    public void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo){
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || studentGroupFrom==null || studentGroupTo==null || studentGroupFrom.getTotalStudents()!=studentGroupTo.getTotalStudents()) return;
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
         Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
             p.spendCoins(card.getPrice());
@@ -386,7 +368,6 @@ public class ExpertGameManager {
             card.setSelectedStudentsFrom(studentGroupFrom);
             card.setSelectedStudentsTo(studentGroupTo);
             card.getCardInfo().getEffect().resolveEffect(card);
-            players.get(index).setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.Command;
 import it.polimi.ingsw.network.StatusCode;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 
 /**
  * The class that resolves the command to move MotherNature
@@ -19,7 +20,7 @@ public class MoveMotherNatureCommand implements CommandStrategy{
     public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
         try {
             gameManager.moveMotherNature(command.getMotherNatureShifts());
-        }catch (IllegalArgumentException e){
+        }catch (WrongPhaseException e){
             return StatusCode.WRONGPHASE;
         }
         return null;
@@ -37,4 +38,5 @@ public class MoveMotherNatureCommand implements CommandStrategy{
         status = "{ \"motherNatureIndex\" : "+gameManager.getBoard().getMotherNature().getIslandIndex()+"\"}";
         return g.toJson(status);
     }
+    //oggetto di tipo Current Status e aggiorni i campi giusti, fai il parsing dell'oggetto
 }

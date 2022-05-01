@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Echoclient {
+public class EchoClient {
     public static void main(String[] args){
         String hostName = "127.0.0.1";
         int portNumber = 1234;
@@ -22,10 +22,20 @@ public class Echoclient {
                         new BufferedReader(
                                 new InputStreamReader(System.in))
         ) {
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        String line = in.readLine();
+                        if(line.equals("ping")) out.println("pong");
+                        else System.out.println(line);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }).start();
             String userInput;
             while ((userInput = stdIn.readLine()) != null) {
                 out.println(userInput);
-                System.out.println("echo: " + in.readLine());
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
