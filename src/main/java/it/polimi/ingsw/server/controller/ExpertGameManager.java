@@ -158,10 +158,9 @@ public class ExpertGameManager {
      * and checks for aggregation.
      * @param moves the number of archipelagos mother nature has to move forward
      */
-    public void moveMotherNature(int moves) throws WrongPhaseException{
+    public void moveMotherNature(int moves) throws WrongPhaseException, IllegalArgumentException{
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) throw new WrongPhaseException();
-        /*if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) return;*/
-        if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) return;
+        if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) throw new IllegalArgumentException();
         board.moveMotherNature(moves);
         checkInfluence(); //check if this method works properly
         turnManager.nextPhase(board,players);
@@ -201,9 +200,10 @@ public class ExpertGameManager {
      * @param cloudIndex index of the cloud the player selected
      * @param playerIndex player who asked to take the students
      */
-    public void takeStudentsFromCloud(int cloudIndex, int playerIndex) {
-        if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) return;
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) return;
+    public void takeStudentsFromCloud(int cloudIndex, int playerIndex) throws WrongPhaseException, IllegalArgumentException, WrongTurnException{
+        if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=playerIndex) throw new WrongTurnException();
         ArrayList<Cloud> clouds = board.getClouds();
         StudentGroup sg = clouds.get(cloudIndex).clearStudents();
         if(sg.empty()) {

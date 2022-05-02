@@ -9,7 +9,7 @@ import it.polimi.ingsw.server.model.players.AssistantCard;
 import it.polimi.ingsw.server.model.players.Player;
 
 /**
- * The class that resolves the command to move students to a specific Island
+ * The class that resolves the command to play a specific AssistantCard
  */
 public class PlayAssistantCardCommand implements CommandStrategy{
     /**

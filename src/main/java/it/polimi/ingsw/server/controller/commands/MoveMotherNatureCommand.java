@@ -24,6 +24,8 @@ public class MoveMotherNatureCommand implements CommandStrategy{
             gameManager.moveMotherNature(command.getMotherNatureShifts());
         }catch (WrongPhaseException e){
             return StatusCode.WRONGPHASE;
+        }catch(IllegalArgumentException f){
+            return StatusCode.ILLEGALARGUMENT;
         }
         return null;
     }
