@@ -2,11 +2,10 @@ package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.server.controller.EndOfGameChecker;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
-import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
-import it.polimi.ingsw.server.model.board.Cloud;
 
 /**
  * The class that resolves the command to take students from a cloud
@@ -41,34 +40,23 @@ public class TakeFromCloudCommand implements CommandStrategy{
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
         Gson g = new Gson();
-        CloudStatus[] clouds = new CloudStatus[gameManager.getBoard().getClouds().size()];
-        GameStatus gs = new GameStatus();
-        CurrentStatus cs = new CurrentStatus();
-
-        for(int i = 0; i < clouds.length; i++) {
-            clouds[i].setIndex(i);
-            for (Colour c : Colour.values())
-                clouds[i].setStudents(c.ordinal(), gameManager.getBoard().getClouds().get(command.getIndex()).getStudentsOnCloud().getQuantityColour(c));
-        }
-        gs.setClouds(clouds);
-        cs.setGame(gs);
-        return g.toJson(cs, CurrentStatus.class);
-    }
-
-    /*public String getUpdatedStatus(ExpertGameManager gameManager) {
-        Gson g = new Gson();
-        CloudStatus[] clouds = new CloudStatus[gameManager.getBoard().getClouds().size()];
-        GameStatus gs = new GameStatus();
-        CurrentStatus cs = new CurrentStatus();
-        int i = 0;
-        for(Cloud c: gameManager.getBoard().getClouds()){
-            clouds[i].setIndex(i);
-            for(Colour colour: Colour.values()){
-                clouds[i].setStudents(colour.ordinal(), c.getStudentsOnCloud().getQuantityColour(colour));
+        if(EndOfGameChecker.instance().isEndOfGame()) {
+            //not implemented yet
+            return null;
+        } else {
+            //CloudStatus[] clouds = new CloudStatus[gameManager.getBoard().getClouds().size()];
+            GameStatus gs = new GameStatus();
+            CurrentStatus cs = new CurrentStatus();
+            cs.setTurn(gameManager.getTurnManager().getTurnStatus());
+            /*for(int i = 0; i < clouds.length; i++) {
+                clouds[i].setIndex(i);
+                for (Colour c : Colour.values())
+                    clouds[i].setStudents(c.ordinal(), gameManager.getBoard().getClouds().get(command.getIndex()).getStudentsOnCloud().getQuantityColour(c));
             }
+            */
+            gs.setClouds(gameManager.getBoard().getCloudsStatus());
+            cs.setGame(gs);
+            return g.toJson(cs, CurrentStatus.class);
         }
-        gs.setClouds(clouds);
-        cs.setGame(gs);
-        return g.toJson(cs, CurrentStatus.class);
-    }*/
+    }
 }

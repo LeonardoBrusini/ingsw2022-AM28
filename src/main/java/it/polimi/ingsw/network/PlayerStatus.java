@@ -4,13 +4,23 @@ package it.polimi.ingsw.network;
  * It represents the current status of a Player during the match
  */
 public class PlayerStatus {
-    int index;
-    int lastAssistantCardPlayed;
-    int coins;
-    int numTowers;
-    int [] studentsOnHall;
-    int[] studentsOnEntrance;
-    boolean[] AssistantCard;
+    private int index;
+    private int lastAssistantCardPlayed;
+    private int coins;
+    private int numTowers;
+    private int [] studentsOnHall;
+    private int[] studentsOnEntrance;
+    private boolean[] AssistantCard;
+    private String towerColour;
+
+    /**
+     * To set the tower's colour
+     * @param towerColour (WHITE, BLACK, GREY)
+     */
+    public void setTowerColour(String towerColour) {
+        this.towerColour = towerColour;
+    }
+
     public void setIndex(int index) {
         this.index = index;
     }
@@ -93,7 +103,7 @@ public class PlayerStatus {
     /**
      * The method initializes the AssistantCard
      */
-    public void inizializeAssistantCard(){
+    public void initializeAssistantCard(){
         for(boolean b:AssistantCard)
             b=true;
     }

@@ -22,7 +22,6 @@ public class ExpertGameManager {
     private TurnManager turnManager;
     private boolean gameStarted;
     private boolean expertMode;
-    private int numPlayers;
 
     public ExpertGameManager() {
         players = new ArrayList<>();
@@ -43,7 +42,6 @@ public class ExpertGameManager {
      */
     public void newGame(boolean expertMode, int numPlayers){
        this.expertMode = expertMode;
-       this.numPlayers = numPlayers;
        if(numPlayers==2 && players.size()==3) players.remove(2);
        board = new Board(players.size());
        if(players.size()==2) {
@@ -60,13 +58,6 @@ public class ExpertGameManager {
        // to be continued
     }
 
-
-    /**
-     * returns the number of player of the lobby
-     */
-    public int getNumPlayers() {
-        return players.size();
-    }
 
     /**
      * the selected player plays an assistant card
@@ -171,7 +162,6 @@ public class ExpertGameManager {
      * checks the player with most influence on the archipelago and build towers on it if needed
      */
     public void checkInfluence() {
-        CharacterCard card = null;
         Archipelago a = board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex());
         if(a.getNoEntryTiles()>0) {
             for (CharacterCard c: board.getCharacterCards()) {
@@ -396,45 +386,43 @@ public class ExpertGameManager {
         }
     }
 
-    public CurrentStatus getFirstCurrentStatus() {
-        System.out.println("first current status");
+    public CurrentStatus getFullCurrentStatus() {
         CurrentStatus status = new CurrentStatus();
         status.setStatus(0);
+        if(expertMode) status.setGameMode("expert");
+        else status.setGameMode("simple");
         status.setTurn(turnManager.getTurnStatus());
         GameStatus gs = new GameStatus();
         gs.setMotherNatureIndex(board.getMotherNature().getIslandIndex());
-        gs.setArchipelagos(board.getIslandManager().getFirstArchipelagosStatus());
+        gs.setArchipelagos(board.getIslandManager().getFullArchipelagosStatus());
         gs.setClouds(board.getCloudsStatus());
         PlayerStatus[] ps = new PlayerStatus[players.size()];
-        System.out.println("first");
         for(int i=0;i<players.size();i++) {
-            System.out.println("p1");
             ps[i] = new PlayerStatus();
-            ps[i].setCoins(players.get(i).getCoins());
             ps[i].setIndex(i);
-            System.out.println("p2");
+            if(expertMode) {
+                ps[i].setCoins(players.get(i).getCoins());
+            }
+            ps[i].setTowerColour(players.get(i).getTower().toString());
             ps[i].setNumTowers(players.get(i).getDashboard().getNumTowers());
-            System.out.println("p3");
             ps[i].setStudentsOnEntrance(players.get(i).getDashboard().getEntrance().getStatus());
-            System.out.println("p5");
             ps[i].setStudentsOnHall(players.get(i).getDashboard().getHall().getStatus());
-            System.out.println("p6");
             //assistant cards left to do!
         }
         gs.setPlayers(ps);
-        System.out.println("current");
-        CharacterCardStatus[] ccs = new CharacterCardStatus[board.getCharacterCards().size()];
-        for(int i=0;i<board.getCharacterCards().size();i++) {
-            ccs[i] = new CharacterCardStatus();
-            ccs[i].setIndex(i);
-            ccs[i].setFileName(board.getCharacterCards().get(i).getCardInfo().getFileName());
-            ccs[i].setNoEntryTiles(board.getCharacterCards().get(i).getNoEntryTiles());
-            ccs[i].setCoinOnIt(board.getCharacterCards().get(i).isCoinOnIt());
-            ccs[i].setStudents(board.getCharacterCards().get(i).getStudentsOnCard().getStatus());
+        if(expertMode) {
+            CharacterCardStatus[] ccs = new CharacterCardStatus[board.getCharacterCards().size()];
+            for(int i=0;i<board.getCharacterCards().size();i++) {
+                ccs[i] = new CharacterCardStatus();
+                ccs[i].setIndex(i);
+                ccs[i].setFileName(board.getCharacterCards().get(i).getCardInfo().getFileName());
+                ccs[i].setNoEntryTiles(board.getCharacterCards().get(i).getNoEntryTiles());
+                ccs[i].setCoinOnIt(board.getCharacterCards().get(i).isCoinOnIt());
+                ccs[i].setStudents(board.getCharacterCards().get(i).getStudentsOnCard().getStatus());
+            }
+            gs.setCharacterCards(ccs);
         }
-        gs.setCharacterCards(ccs);
         status.setGame(gs);
-        System.out.println("status");
         return status;
     }
 
@@ -442,4 +430,7 @@ public class ExpertGameManager {
         return gameStarted;
     }
 
+    public TurnManager getTurnManager() {
+        return turnManager;
+    }
 }

@@ -14,7 +14,7 @@ class AddMotherNatureShiftsEffectTest {
      */
     @Test
     void resolveEffect() {
-        Player p = new Player("p1", Tower.BLACK);
+        Player p = new Player(Tower.BLACK);
         p.playCard(9);
         int shiftsBefore = p.getLastPlayedCard().getInfo().getMotherNatureShifts();
         c.setPlayerThisTurn(p);

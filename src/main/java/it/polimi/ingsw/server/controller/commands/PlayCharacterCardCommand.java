@@ -1,8 +1,12 @@
 package it.polimi.ingsw.server.controller.commands;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.network.Command;
 import it.polimi.ingsw.network.StatusCode;
+import it.polimi.ingsw.server.controller.EndOfGameChecker;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.enumerations.Colour;
+import it.polimi.ingsw.server.model.StudentGroup;
 
 /**
  * The class that resolves the command to play the chosen CharacterCard
@@ -16,7 +20,26 @@ public class PlayCharacterCardCommand implements CommandStrategy{
      */
     @Override
     public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
-        //not implemented yet
+        try {
+            int pIndex = command.getPlayerIndex();
+            int cIndex = command.getIndex();
+            if(command.getPStudentsFrom()!=null) {
+                StudentGroup sf = new StudentGroup(command.getPStudentsFrom());
+                StudentGroup st = new StudentGroup(command.getPStudentsTo());
+                gameManager.playCharacterCard(pIndex,cIndex,sf,st);
+            } else if(command.getPIndex()!=0 && command.getPColour()!=null) {
+                gameManager.playCharacterCard(pIndex,cIndex, Colour.valueOf(command.getPColour()),command.getPIndex());
+            } else if(command.getPIndex()!=0) {
+                gameManager.playCharacterCard(pIndex,cIndex,command.getPIndex());
+            } else if(command.getPColour()!=null) {
+                gameManager.playCharacterCard(pIndex,cIndex,Colour.valueOf(command.getPColour()));
+            } else {
+                gameManager.playCharacterCard(pIndex,cIndex);
+            }
+        } catch (IllegalArgumentException e) {
+            return StatusCode.ILLEGALARGUMENT;
+        }
+        //other ERRORS
         return null;
     }
 
@@ -27,8 +50,12 @@ public class PlayCharacterCardCommand implements CommandStrategy{
      */
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command) {
-        //not implemented yet
-        return null;
+        if(EndOfGameChecker.instance().isEndOfGame()){
+            //not implemented yet
+            return null;
+        } else {
+            return new Gson().toJson(gameManager.getFullCurrentStatus());
+        }
     }
 }
 

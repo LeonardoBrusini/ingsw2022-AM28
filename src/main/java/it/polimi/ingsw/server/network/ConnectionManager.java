@@ -36,9 +36,12 @@ public class ConnectionManager {
             Command c = parser.fromJson(message,Command.class);
             CommandList command = CommandList.valueOf(c.getCmd());
             StatusCode sc = command.getCmd().resolveCommand(gameManager,c);
-            if(sc == null) return command.getCmd().getUpdatedStatus(gameManager,c);
+            if(sc == null) {
+                toAllResponse = true;
+                return command.getCmd().getUpdatedStatus(gameManager,c);
+            }
             else return sc.toJson();
-        } catch (JsonSyntaxException e) {
+        } catch (JsonSyntaxException | IllegalArgumentException e) {
             return StatusCode.ILLEGALARGUMENT.toJson();
         }
     }
@@ -51,16 +54,13 @@ public class ConnectionManager {
                 for (EchoServerClientHandler e: sender.getClients()){
                     ConnectionManager c = e.getConnectionManager();
                     if (c!=this && c.getUsername()!=null && c.getUsername().equals(username)) {
-                        System.out.println("a");
                         return StatusCode.ALREADYLOGGED.toJson();
                     }
                 }
-
                 if(sender.getNumConnections()>players.size()) {
                     gameManager.addPlayer();
                 }
                 needUsername = false;
-                System.out.println("b");
                 return generateCorrectAddPlayerResponse(playerID);
             } else {
                 return StatusCode.FULL_LOBBY.toJson();
@@ -76,7 +76,7 @@ public class ConnectionManager {
                 gameManager.newGame(expert,tmp.getNumPlayers());
                 sender.setNickNames(gameManager);
                 toAllResponse = true;
-                return parser.toJson(gameManager.getFirstCurrentStatus());
+                return parser.toJson(gameManager.getFullCurrentStatus());
             } catch (JsonSyntaxException e) {
                 return StatusCode.ILLEGALARGUMENT.toJson();
             }
@@ -90,10 +90,6 @@ public class ConnectionManager {
             response.setFirst(true);
         }
         return parser.toJson(response);
-    }
-
-    public ExpertGameManager getExpertGameManager(){
-        return gameManager;
     }
 
     public boolean isToAllResponse() {

@@ -5,8 +5,6 @@ import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
-import it.polimi.ingsw.server.model.players.AssistantCard;
-import it.polimi.ingsw.server.model.players.Player;
 
 /**
  * The class that resolves the command to play a specific AssistantCard
@@ -55,25 +53,4 @@ public class PlayAssistantCardCommand implements CommandStrategy{
         cs.setGame(gs);
         return g.toJson(cs, CurrentStatus.class);
     }
-
-    /*public String getUpdatedStatus(ExpertGameManager gameManager) {
-        Gson g = new Gson();
-        CurrentStatus cs = new CurrentStatus();
-        GameStatus gs = new GameStatus();
-        PlayerStatus[] ps = new PlayerStatus[gameManager.getNumPlayers()];
-
-        int i = 0;
-        for(Player p: gameManager.getPlayers()){
-            boolean[] asc = new boolean[10];
-            for(int j = 0; j < 10; j++)
-                asc[j] = p.getAssistantCard(j).isPlayed();
-
-            ps[i].setAssistantCard(asc);
-            ps[i].setIndex(i);
-            ps[i].setLastAssistantCardPlayed(p.getLastPlayedCard().getInfo().ordinal());
-        }
-        gs.setPlayers(ps);
-        cs.setGame(gs);
-        return g.toJson(cs, CurrentStatus.class);
-    }*/
 }

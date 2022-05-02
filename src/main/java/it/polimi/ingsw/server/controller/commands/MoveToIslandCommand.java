@@ -43,45 +43,18 @@ public class MoveToIslandCommand implements CommandStrategy{
      * @return Json message
      */
     @Override
-
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
         Gson g = new Gson();
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
         ArchipelagoStatus[] ac = new ArchipelagoStatus[1];
         IslandStatus[] is = new IslandStatus[1];
-
-        is[1].setIslandIndex(command.getIndex());
-        for(Colour c: Colour.values())
-            is[1].setStudentsOfAColour(c.ordinal(), gameManager.getBoard().getIslandManager().getIslandByIndex(command.getIndex()).getStudents().getQuantityColour(c));
-        ac[1].setIslands(is);
+        ac[0].setIndex(gameManager.getBoard().getIslandManager().getArchipelagoIndexByIslandIndex(command.getIndex()));
+        is[0].setIslandIndex(command.getIndex());
+        is[0].setStudents(gameManager.getBoard().getIslandManager().getIslandByIndex(command.getIndex()).getStudents().getStatus());
+        ac[0].setIslands(is);
         gs.setArchipelagos(ac);
         cs.setGame(gs);
         return g.toJson(cs, CurrentStatus.class);
     }
-    /* public String getUpdatedStatus(ExpertGameManager gameManager) {
-        Gson g = new Gson();
-        CurrentStatus cs = new CurrentStatus();
-        GameStatus gs = new GameStatus();
-        ArchipelagoStatus[] ac = new ArchipelagoStatus[gameManager.getBoard().getIslandManager().getNumArchipelagos()];
-        int z = 0;
-        for(Archipelago a: gameManager.getBoard().getIslandManager().getArchipelagos()) {
-            ArrayList<Island> islands = a.getIslands();
-            IslandStatus[] is = new IslandStatus[islands.size()];
-            for (int i = 0; i < islands.size(); i++) {
-                is[i].setIslandIndex(i);
-                int j = 0;
-                StudentGroup students = gameManager.getBoard().getIslandManager().getIslandByIndex(i).getStudents();
-                for (Colour c : Colour.values()) {
-                    is[i].setStudentsOfAColour(j, students.getQuantityColour(c));
-                    j++;
-                }
-            }
-            ac[z].setIslands(is);
-            z++;
-        }
-        gs.setArchipelagos(ac);
-        cs.setGame(gs);
-        return g.toJson(cs, CurrentStatus.class);
-    }*/
 }
