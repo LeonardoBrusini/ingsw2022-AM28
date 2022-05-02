@@ -42,10 +42,27 @@ public class MoveToHallCommand implements CommandStrategy{
     /**
      * It creates the message with changes operated by the resolution of the command
      * @param gameManager gameManager reference
+     * @param command the command reference
      * @return Json message
      */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager) {
+
+    public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
+        Gson g = new Gson();
+        GameStatus gs = new GameStatus();
+        CurrentStatus cs = new CurrentStatus();
+        PlayerStatus[] ps = new PlayerStatus[1];
+
+        ps[0].setIndex(command.getPlayerIndex());
+        for(Colour c: Colour.values()){
+            ps[1].setStudentsOnHallOfAColour(c.ordinal(), gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getHall().getQuantityColour(c));
+        }
+        gs.setPlayers(ps);
+        cs.setGame(gs);
+        return g.toJson(cs, CurrentStatus.class);
+    }
+
+    /* public String getUpdatedStatus(ExpertGameManager gameManager) {
         Gson g = new Gson();
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();
@@ -67,5 +84,6 @@ public class MoveToHallCommand implements CommandStrategy{
         gs.setPlayers(ps);
         cs.setGame(gs);
         return g.toJson(cs, CurrentStatus.class);
-    }
+    }*/
 }
+

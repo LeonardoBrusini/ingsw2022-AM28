@@ -36,7 +36,7 @@ public class ConnectionManager {
             Command c = parser.fromJson(message,Command.class);
             CommandList command = CommandList.valueOf(c.getCmd());
             StatusCode sc = command.getCmd().resolveCommand(gameManager,c);
-            if(sc == null) return command.getCmd().getUpdatedStatus(gameManager);
+            if(sc == null) return command.getCmd().getUpdatedStatus(gameManager,c);
             else return sc.toJson();
         } catch (JsonSyntaxException e) {
             return StatusCode.ILLEGALARGUMENT.toJson();

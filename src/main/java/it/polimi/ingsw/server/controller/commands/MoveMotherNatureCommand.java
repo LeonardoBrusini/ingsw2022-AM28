@@ -24,6 +24,8 @@ public class MoveMotherNatureCommand implements CommandStrategy{
             gameManager.moveMotherNature(command.getMotherNatureShifts());
         }catch (WrongPhaseException e){
             return StatusCode.WRONGPHASE;
+        }catch(IllegalArgumentException f){
+            return StatusCode.ILLEGALARGUMENT;
         }
         return null;
     }
@@ -31,10 +33,11 @@ public class MoveMotherNatureCommand implements CommandStrategy{
     /**
      * It creates the message with changes operated by the resolution of the command
      * @param gameManager gameManager reference
+     * @param command the command reference
      * @return Json message
      */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager) {
+    public String getUpdatedStatus(ExpertGameManager gameManager, Command command) {
         Gson g = new Gson();
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();
