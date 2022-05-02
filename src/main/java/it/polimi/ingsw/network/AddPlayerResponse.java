@@ -2,7 +2,7 @@ package it.polimi.ingsw.network;
 
 public class AddPlayerResponse {
     private int status;
-    private Integer userID;
+    private boolean first;
     private String errorMessage;
 
     public int getStatus() {
@@ -13,12 +13,12 @@ public class AddPlayerResponse {
         this.status = status;
     }
 
-    public Integer getUserID() {
-        return userID;
+    public boolean isFirst() {
+        return first;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setFirst(boolean first) {
+        this.first = first;
     }
 
     public String getErrorMessage() {

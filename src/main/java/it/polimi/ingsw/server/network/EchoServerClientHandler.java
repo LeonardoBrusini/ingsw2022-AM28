@@ -9,13 +9,13 @@ import java.util.Scanner;
 
 public class EchoServerClientHandler implements Runnable {
     private final Socket socket;
-    private final int playerID;
-    private final ConnectionsSender sender;
+    private int playerID;
+    private final ConnectionList sender;
     private final Scanner in;
     private final PrintWriter out;
     private final ConnectionManager connectionManager;
 
-    public EchoServerClientHandler(Socket socket, ExpertGameManager gameManager, int playerID, ConnectionsSender sender) {
+    public EchoServerClientHandler(Socket socket, ExpertGameManager gameManager, int playerID, ConnectionList sender) {
         this.socket = socket;
         this.connectionManager = new ConnectionManager(gameManager);
         this.playerID = playerID;
@@ -33,14 +33,12 @@ public class EchoServerClientHandler implements Runnable {
             // Leggo e scrivo nella connessione finche' non ricevo "quit"
             String line, outputString;
             while (true) {
+                if(socket.isClosed()) break;
                 line = in.nextLine();
                 if (line.equals("pong")) {
-                    System.out.println("pong recieved");
                     sender.setStillConnected(playerID,true);
-                    System.out.println("player still connected");
                 } else {
-                    outputString = connectionManager.manageMessage(line, playerID);
-                    System.out.println("command recieved");
+                    outputString = connectionManager.manageMessage(line, playerID, sender);
                     if(connectionManager.isToAllResponse()) {
                         sender.sendToAll(outputString);
                     } else {
@@ -57,7 +55,19 @@ public class EchoServerClientHandler implements Runnable {
        // }
     }
 
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
+    }
+
     public PrintWriter getOut() {
         return out;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public ConnectionManager getConnectionManager() {
+        return connectionManager;
     }
 }

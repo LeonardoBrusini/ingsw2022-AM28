@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Represents a player server-side
  */
 public class Player {
-    private final String nickname;
+    private String nickname;
     private final Tower hisTower;
     private int coins;
     private final ArrayList<AssistantCard> cards;
@@ -27,12 +27,10 @@ public class Player {
 
     /**
      * Player constructor, builds dashboard and 10 assistant cards
-     * @param n nickname of the player
      * @param t tower colour of the player
      */
-    public Player(String n, Tower t){
+    public Player(Tower t){
         coins = 1;
-        nickname = n;
         hisTower = t;
         dashboard = new Dashboard(hisTower);
         lastPlayedCard = null;
@@ -173,5 +171,9 @@ public class Player {
 
     public void setCcActivatedThisTurn(boolean ccActivatedThisTurn) {
         this.ccActivatedThisTurn = ccActivatedThisTurn;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

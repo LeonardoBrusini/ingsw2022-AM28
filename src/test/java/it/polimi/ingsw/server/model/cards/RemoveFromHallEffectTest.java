@@ -23,8 +23,8 @@ class RemoveFromHallEffectTest {
         ArrayList<Integer> before = new ArrayList<>();
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD12);
         c.setGameManager(gm);
-        gm.addPlayer("g1");
-        gm.addPlayer("g2");
+        gm.addPlayer();
+        gm.addPlayer();
         gm.newGame(true, 2);
         c.setSelectedColour(Colour.YELLOW);
         try {

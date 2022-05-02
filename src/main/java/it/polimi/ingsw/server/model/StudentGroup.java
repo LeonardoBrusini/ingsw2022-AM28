@@ -9,7 +9,7 @@ import java.util.EnumMap;
  * StudentGroup is to store the number of students of each colour, it will be used in Bag, Cloud, Island and on CharacterCard
  */
 public class StudentGroup {
-    private EnumMap<Colour, Integer> students;
+    private final EnumMap<Colour, Integer> students;
 
     /**
      * Constructor of a new StudentGroup without students
@@ -124,4 +124,15 @@ public class StudentGroup {
         }
     }
 
+    /**
+     *
+     * @return array of the number of students each colour
+     */
+    public int[] getStatus() {
+        int[] s = new int[Colour.values().length];
+        for(Colour c: Colour.values()) {
+            s[c.ordinal()] = students.get(c);
+        }
+        return s;
+    }
 }

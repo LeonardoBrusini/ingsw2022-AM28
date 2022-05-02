@@ -23,8 +23,8 @@ class ComputeInfluenceEffectTest {
     void inizialise(){
         ExpertGameManager gm = new ExpertGameManager();
         c.setGameManager(gm);
-        c.getGameManager().addPlayer("g1");
-        c.getGameManager().addPlayer("g2");
+        c.getGameManager().addPlayer();
+        c.getGameManager().addPlayer();
         gm.newGame(true, 2);
         c.setSelectedIsland(gm.getBoard().getIslandManager().getIslandByIndex(7));
         c.setBoard(gm.getBoard());

@@ -9,12 +9,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MultiEchoServer {
-    private final ConnectionsSender connections;
+    private final ConnectionList connections;
     private final int port;
 
     public MultiEchoServer(int port) {
         this.port = port;
-        connections = new ConnectionsSender();
+        connections = new ConnectionList();
     }
 
     public void startServer() {

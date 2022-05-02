@@ -2,15 +2,11 @@ package it.polimi.ingsw.server.network;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import it.polimi.ingsw.network.AddPlayerResponse;
-import it.polimi.ingsw.network.Command;
-import it.polimi.ingsw.network.GameParameters;
-import it.polimi.ingsw.network.StatusCode;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.controller.commands.CommandList;
 import it.polimi.ingsw.server.model.players.Player;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class ConnectionManager {
@@ -18,6 +14,7 @@ public class ConnectionManager {
     private final Gson parser;
     private boolean toAllResponse;
     private boolean needUsername;
+    private String username;
 
     public ConnectionManager(ExpertGameManager gameManager){
         this.gameManager= gameManager;
@@ -25,12 +22,12 @@ public class ConnectionManager {
         needUsername = true;
     }
 
-    public String manageMessage(String message, int playerID){
+    public String manageMessage(String message, int playerID, ConnectionList sender){
         toAllResponse = false;
         if(gameManager.isGameStarted()){
             return manageInGameMessage(message);
         }else{
-            return managePreGameMessage(message);
+            return managePreGameMessage(message,sender,playerID);
         }
     }
 
@@ -46,18 +43,25 @@ public class ConnectionManager {
         }
     }
 
-    public String managePreGameMessage(String message){
+    public String managePreGameMessage(String message, ConnectionList sender, int playerID){
         if(needUsername) {
-            String tmp = parser.fromJson(message,String.class);
+            username = parser.fromJson(message,String.class);
             ArrayList<Player> players = gameManager.getPlayers();
             if(players.size()<3){
-                for (Player p : players)
-                    if (p.getNickname().equals(tmp)) {
+                for (EchoServerClientHandler e: sender.getClients()){
+                    ConnectionManager c = e.getConnectionManager();
+                    if (c!=this && c.getUsername()!=null && c.getUsername().equals(username)) {
+                        System.out.println("a");
                         return StatusCode.ALREADYLOGGED.toJson();
                     }
-                gameManager.addPlayer(tmp);
+                }
+
+                if(sender.getNumConnections()>players.size()) {
+                    gameManager.addPlayer();
+                }
                 needUsername = false;
-                return generateCorrectAddPlayerResponse();
+                System.out.println("b");
+                return generateCorrectAddPlayerResponse(playerID);
             } else {
                 return StatusCode.FULL_LOBBY.toJson();
             }
@@ -70,23 +74,21 @@ public class ConnectionManager {
                 else return StatusCode.ILLEGALARGUMENT.toJson();
                 if(tmp.getNumPlayers()<2 || tmp.getNumPlayers()>3) return StatusCode.ILLEGALARGUMENT.toJson();
                 gameManager.newGame(expert,tmp.getNumPlayers());
+                sender.setNickNames(gameManager);
                 toAllResponse = true;
-                return generateFullCurrentStatus();
+                return parser.toJson(gameManager.getFirstCurrentStatus());
             } catch (JsonSyntaxException e) {
                 return StatusCode.ILLEGALARGUMENT.toJson();
             }
         }
     }
 
-    private String generateFullCurrentStatus() {
-        //not yet implemented;
-        return null;
-    }
-
-    public String generateCorrectAddPlayerResponse(){
+    public String generateCorrectAddPlayerResponse(int playerID){
         AddPlayerResponse response=new AddPlayerResponse();
         response.setStatus(0);
-        response.setUserID(gameManager.getNumPlayers());
+        if(playerID==0) {
+            response.setFirst(true);
+        }
         return parser.toJson(response);
     }
 
@@ -96,5 +98,13 @@ public class ConnectionManager {
 
     public boolean isToAllResponse() {
         return toAllResponse;
+    }
+
+    public boolean doesNeedUsername() {
+        return needUsername;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

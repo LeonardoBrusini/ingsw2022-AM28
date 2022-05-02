@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.board;
 
+import it.polimi.ingsw.network.ArchipelagoStatus;
 import it.polimi.ingsw.server.enumerations.Tower;
 
 import java.util.ArrayList;
@@ -105,6 +106,16 @@ public class IslandManager {
         Island i = getIslandByIndex(islandIndex);
         i.setTower(tower);
         checkAggregation(islandIndex);
+    }
+
+    public ArchipelagoStatus[] getFirstArchipelagosStatus() {
+        ArchipelagoStatus[] as = new ArchipelagoStatus[archipelagos.size()];
+        for(int i=0;i<archipelagos.size();i++) {
+            as[i] = new ArchipelagoStatus();
+            as[i].setIndex(i);
+            as[i].setIslands(archipelagos.get(i).getFirstIslandsStauts());
+        }
+        return as;
     }
 
     //getters & setters for testing

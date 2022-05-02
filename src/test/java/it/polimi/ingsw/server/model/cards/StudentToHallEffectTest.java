@@ -17,10 +17,10 @@ class StudentToHallEffectTest {
     void resolveEffect() {
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD11);
         ExpertGameManager gm = new ExpertGameManager();
-        gm.addPlayer("player1");
-        gm.addPlayer("player2");
+        gm.addPlayer();
+        gm.addPlayer();
         gm.newGame(true,2);
-        gm.addPlayer("g1");
+        gm.addPlayer();
         c.setBoard(gm.getBoard());
         c.setGameManager(gm);
         c.setSelectedColour(Colour.YELLOW);
@@ -38,7 +38,7 @@ class StudentToHallEffectTest {
         Assertions.assertEquals(beforeHall + 1, c.getPlayerThisTurn().getDashboard().getHall().getTotalStudents());
         Assertions.assertEquals(beforeCard, c.getStudentsOnCard().getTotalStudents());
 
-        gm.addPlayer("g2");
+        gm.addPlayer();
         c.setGameManager(gm);
         c.setSelectedColour(Colour.YELLOW);
         c.setStudentsOnCard(new StudentGroup());

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
@@ -30,11 +31,10 @@ public class ExpertGameManager {
 
     /**
      * adds a new player if the lobby is not full (no more than 3 players)
-     * @param s the nickname of the player
      */
-    public void addPlayer(String s){
+    public void addPlayer(){
         if(players.size()<3) {
-            players.add(new Player(s, Tower.values()[players.size()]));
+            players.add(new Player(Tower.values()[players.size()]));
         }
     }
 
@@ -393,6 +393,48 @@ public class ExpertGameManager {
         } catch (IllegalArgumentException exception) {
             //error, player does not have enough coins
         }
+    }
+
+    public CurrentStatus getFirstCurrentStatus() {
+        System.out.println("first current status");
+        CurrentStatus status = new CurrentStatus();
+        status.setStatus(0);
+        status.setTurn(turnManager.getTurnStatus());
+        GameStatus gs = new GameStatus();
+        gs.setMotherNatureIndex(board.getMotherNature().getIslandIndex());
+        gs.setArchipelagos(board.getIslandManager().getFirstArchipelagosStatus());
+        gs.setClouds(board.getCloudsStatus());
+        PlayerStatus[] ps = new PlayerStatus[players.size()];
+        System.out.println("first");
+        for(int i=0;i<players.size();i++) {
+            System.out.println("p1");
+            ps[i] = new PlayerStatus();
+            ps[i].setCoins(players.get(i).getCoins());
+            ps[i].setIndex(i);
+            System.out.println("p2");
+            ps[i].setNumTowers(players.get(i).getDashboard().getNumTowers());
+            System.out.println("p3");
+            ps[i].setStudentsOnEntrance(players.get(i).getDashboard().getEntrance().getStatus());
+            System.out.println("p5");
+            ps[i].setStudentsOnHall(players.get(i).getDashboard().getHall().getStatus());
+            System.out.println("p6");
+            //assistant cards left to do!
+        }
+        gs.setPlayers(ps);
+        System.out.println("current");
+        CharacterCardStatus[] ccs = new CharacterCardStatus[board.getCharacterCards().size()];
+        for(int i=0;i<board.getCharacterCards().size();i++) {
+            ccs[i] = new CharacterCardStatus();
+            ccs[i].setIndex(i);
+            ccs[i].setFileName(board.getCharacterCards().get(i).getCardInfo().getFileName());
+            ccs[i].setNoEntryTiles(board.getCharacterCards().get(i).getNoEntryTiles());
+            ccs[i].setCoinOnIt(board.getCharacterCards().get(i).isCoinOnIt());
+            ccs[i].setStudents(board.getCharacterCards().get(i).getStudentsOnCard().getStatus());
+        }
+        gs.setCharacterCards(ccs);
+        status.setGame(gs);
+        System.out.println("status");
+        return status;
     }
 
     public boolean isGameStarted() {

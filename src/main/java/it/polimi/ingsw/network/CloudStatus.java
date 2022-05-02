@@ -26,4 +26,8 @@ public class CloudStatus {
     public int[] getStudents(){
         return students;
     }
+
+    public void setStudents(int[] students) {
+        this.students = students;
+    }
 }
