@@ -41,12 +41,15 @@ public class TakeFromCloudCommand implements CommandStrategy{
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
         Gson g = new Gson();
-        CloudStatus[] clouds = new CloudStatus[1];
+        CloudStatus[] clouds = new CloudStatus[gameManager.getBoard().getClouds().size()];
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();
 
-        for(Colour c: Colour.values())
-            clouds[0].setStudents(c.ordinal(), gameManager.getBoard().getClouds().get(command.getIndex()).getStudentsOnCloud().getQuantityColour(c));
+        for(int i = 0; i < clouds.length; i++) {
+            clouds[i].setIndex(i);
+            for (Colour c : Colour.values())
+                clouds[i].setStudents(c.ordinal(), gameManager.getBoard().getClouds().get(command.getIndex()).getStudentsOnCloud().getQuantityColour(c));
+        }
         gs.setClouds(clouds);
         cs.setGame(gs);
         return g.toJson(cs, CurrentStatus.class);

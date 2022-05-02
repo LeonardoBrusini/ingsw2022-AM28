@@ -10,7 +10,6 @@ public class PlayerStatus {
     int numTowers;
     int [] studentsOnHall;
     int[] studentsOnEntrance;
-    boolean[] professors;
     boolean[] AssistantCard;
     public void setIndex(int index) {
         this.index = index;
@@ -91,24 +90,6 @@ public class PlayerStatus {
         }
     }
     */
-
-    /**
-     * It sets if the Player can benefit from the professor of that colour
-     * @param pos the position of the professor's colour in the enumeration
-     * @param professor boolean to set true if the player can use the professor in the influence's computation
-     */
-    public void setProfessorsOfAColour(int pos, boolean professor){
-        this.professors[pos] = professor;
-    }
-
-    /**
-     * To set the professors
-     * @param prof professors to set
-     */
-    public void setProfessors(boolean[] prof){
-        this.professors=prof;
-    }
-
     /**
      * The method initializes the AssistantCard
      */
