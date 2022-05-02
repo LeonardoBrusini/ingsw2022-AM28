@@ -6,11 +6,6 @@ import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
-import it.polimi.ingsw.server.model.StudentGroup;
-import it.polimi.ingsw.server.model.board.Archipelago;
-import it.polimi.ingsw.server.model.board.Island;
-
-import java.util.ArrayList;
 
 /**
  * The class that resolves the command to move students to a specific Island
@@ -25,7 +20,10 @@ public class MoveToIslandCommand implements CommandStrategy{
     @Override
     public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
         try{
-            gameManager.moveStudentToIsland(command.getPlayerIndex(), Colour.valueOf(command.getPColour()), command.getIndex());
+            System.out.println("tentativo di esecuzione");
+            //System.out.println(Colour.valueOf(command.getStudentColour()));
+            gameManager.moveStudentToIsland(command.getPlayerIndex(), Colour.valueOf(command.getStudentColour()), command.getIndex());
+            System.out.println("andato a buon fine");
         }catch(WrongTurnException e){
             return StatusCode.WRONGTURN;
         }catch(WrongPhaseException z){
@@ -44,6 +42,7 @@ public class MoveToIslandCommand implements CommandStrategy{
      */
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
+        System.out.println("generazione risposta");
         Gson g = new Gson();
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();

@@ -38,6 +38,7 @@ public class EchoServerClientHandler implements Runnable {
                 if (line.equals("pong")) {
                     sender.setStillConnected(playerID,true);
                 } else {
+                    System.out.println("recieved: "+line);
                     outputString = connectionManager.manageMessage(line, playerID, sender);
                     if(connectionManager.isToAllResponse()) {
                         sender.sendToAll(outputString);

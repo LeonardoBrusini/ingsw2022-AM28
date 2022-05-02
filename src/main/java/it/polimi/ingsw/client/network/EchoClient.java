@@ -23,14 +23,14 @@ public class EchoClient {
                                 new InputStreamReader(System.in))
         ) {
             new Thread(() -> {
-                while (true) {
-                    try {
-                        String line = in.readLine();
+                try {
+                    String line;
+                    while ((line = in.readLine())!=null) {
                         if(line.equals("ping")) out.println("pong");
                         else System.out.println(line);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
                     }
+                }catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }).start();
             String userInput;

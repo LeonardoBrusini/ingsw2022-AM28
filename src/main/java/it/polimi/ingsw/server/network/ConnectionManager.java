@@ -5,6 +5,7 @@ import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.controller.commands.CommandList;
+import it.polimi.ingsw.server.controller.commands.CommandStrategy;
 import it.polimi.ingsw.server.model.players.Player;
 
 import java.util.ArrayList;
@@ -35,7 +36,9 @@ public class ConnectionManager {
         try {
             Command c = parser.fromJson(message,Command.class);
             CommandList command = CommandList.valueOf(c.getCmd());
-            StatusCode sc = command.getCmd().resolveCommand(gameManager,c);
+            System.out.println("comando letto: "+ command);
+            CommandStrategy cs = command.getCmd();
+            StatusCode sc = cs.resolveCommand(gameManager,c);
             if(sc == null) {
                 toAllResponse = true;
                 return command.getCmd().getUpdatedStatus(gameManager,c);
@@ -48,22 +51,26 @@ public class ConnectionManager {
 
     public String managePreGameMessage(String message, ConnectionList sender, int playerID){
         if(needUsername) {
-            username = parser.fromJson(message,String.class);
-            ArrayList<Player> players = gameManager.getPlayers();
-            if(players.size()<3){
-                for (EchoServerClientHandler e: sender.getClients()){
-                    ConnectionManager c = e.getConnectionManager();
-                    if (c!=this && c.getUsername()!=null && c.getUsername().equals(username)) {
-                        return StatusCode.ALREADYLOGGED.toJson();
+            try {
+                username = parser.fromJson("\""+message+"\"",String.class);
+                ArrayList<Player> players = gameManager.getPlayers();
+                if(players.size()<3){
+                    for (EchoServerClientHandler e: sender.getClients()){
+                        ConnectionManager c = e.getConnectionManager();
+                        if (c!=this && c.getUsername()!=null && c.getUsername().equals(username)) {
+                            return StatusCode.ALREADYLOGGED.toJson();
+                        }
                     }
+                    if(sender.getNumConnections()>players.size()) {
+                        gameManager.addPlayer();
+                    }
+                    needUsername = false;
+                    return generateCorrectAddPlayerResponse(playerID);
+                } else {
+                    return StatusCode.FULL_LOBBY.toJson();
                 }
-                if(sender.getNumConnections()>players.size()) {
-                    gameManager.addPlayer();
-                }
-                needUsername = false;
-                return generateCorrectAddPlayerResponse(playerID);
-            } else {
-                return StatusCode.FULL_LOBBY.toJson();
+            } catch (JsonSyntaxException e) {
+                return StatusCode.INVALIDUSERNAME.toJson();
             }
         } else {
             try {
