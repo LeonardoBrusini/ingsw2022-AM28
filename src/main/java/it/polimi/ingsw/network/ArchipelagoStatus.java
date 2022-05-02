@@ -6,4 +6,20 @@ package it.polimi.ingsw.network;
 public class ArchipelagoStatus {
     int index;
     IslandStatus[] islands;
+
+    /**
+     * Setter for the index of the corresponding Archipelago
+     * @param index the index of the Archipelago
+     */
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    /**
+     * Setter for the IslandStatus of the Island in the Archipelago
+     * @param islands the IslandStatus array
+     */
+    public void setIslands(IslandStatus[] islands) {
+        this.islands = islands;
+    }
 }

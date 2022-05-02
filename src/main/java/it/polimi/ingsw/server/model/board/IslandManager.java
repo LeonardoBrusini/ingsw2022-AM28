@@ -114,4 +114,5 @@ public class IslandManager {
     public void setArchipelagos(ArrayList<Archipelago> archipelagos) {
         this.archipelagos = archipelagos;
     }
+    public int getNumArchipelagos(){return archipelagos.size();}
 }
