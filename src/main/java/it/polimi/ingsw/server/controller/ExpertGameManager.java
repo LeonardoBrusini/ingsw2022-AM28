@@ -73,9 +73,10 @@ public class ExpertGameManager {
      * @param p the player who wants to play a card
      * @param c index of the card the player wants to play
      */
-    public void playAssistantCard(int p, int c){
-        if(p<0 || p>=players.size() || c<0 || c>=AssistantCardInfo.values().length) return;
-        if(turnManager.getPhase()!=Phase.PLANNING || turnManager.getCurrentPlayer()!=p) return; //not the correct phase
+    public void playAssistantCard(int p, int c) throws WrongPhaseException, WrongTurnException, IllegalArgumentException{
+        if(p<0 || p>=players.size() || c<0 || c>=AssistantCardInfo.values().length) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.PLANNING) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=p)throw new WrongTurnException();
         try {
             players.get(p).playCard(c);
         } catch (AlreadyPlayedException e) {
