@@ -26,7 +26,7 @@ public class PlayCharacterCardCommand implements CommandStrategy{
      * @return Json message
      */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager) {
+    public String getUpdatedStatus(ExpertGameManager gameManager, Command command) {
         //not implemented yet
         return null;
     }

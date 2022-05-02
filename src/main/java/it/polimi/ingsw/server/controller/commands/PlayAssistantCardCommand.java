@@ -35,10 +35,28 @@ public class PlayAssistantCardCommand implements CommandStrategy{
     /**
      * It creates the message with changes operated by the resolution of the command
      * @param gameManager gameManager reference
+     * @param command the command reference
      * @return Json message
      */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager) {
+    public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
+        Gson g = new Gson();
+        CurrentStatus cs = new CurrentStatus();
+        GameStatus gs = new GameStatus();
+        PlayerStatus[] ps = new PlayerStatus[1];
+
+        boolean[] asc = new boolean[10];
+        for(int j = 0; j < 10; j++)
+            asc[j] = gameManager.getPlayers().get(command.getPlayerIndex()).getAssistantCard(j).isPlayed();
+        ps[0].setAssistantCard(asc);
+        ps[0].setIndex(command.getPlayerIndex());
+        ps[0].setLastAssistantCardPlayed(gameManager.getPlayers().get(command.getPlayerIndex()).getLastPlayedCard().getInfo().ordinal());
+        gs.setPlayers(ps);
+        cs.setGame(gs);
+        return g.toJson(cs, CurrentStatus.class);
+    }
+
+    /*public String getUpdatedStatus(ExpertGameManager gameManager) {
         Gson g = new Gson();
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
@@ -57,7 +75,5 @@ public class PlayAssistantCardCommand implements CommandStrategy{
         gs.setPlayers(ps);
         cs.setGame(gs);
         return g.toJson(cs, CurrentStatus.class);
-    }
-
-
+    }*/
 }

@@ -22,5 +22,5 @@ public interface CommandStrategy {
      * @param gameManager ExpertGameManager references
      * @return Json String
      */
-    String getUpdatedStatus(ExpertGameManager gameManager);
+    String getUpdatedStatus(ExpertGameManager gameManager, Command command);
 }
