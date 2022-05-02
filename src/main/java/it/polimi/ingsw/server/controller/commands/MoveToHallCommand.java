@@ -1,14 +1,14 @@
 package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.network.Command;
-import it.polimi.ingsw.network.StatusCode;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.FullHallException;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
+import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.players.Player;
 
 /**
@@ -47,11 +47,25 @@ public class MoveToHallCommand implements CommandStrategy{
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager) {
         Gson g = new Gson();
-        String status = "{ \"players\" : \n [";
+        GameStatus gs = new GameStatus();
+        CurrentStatus cs = new CurrentStatus();
+        PlayerStatus[] ps = new PlayerStatus[gameManager.getNumPlayers()];
+
         int i = 0;
-        for(Player p: gameManager.getPlayers()) {
-           // status += "index":0, "assistantCardsLeft": [0,1,2,3,4,5,6,7,8,9], "coins":1, "studentsEntrance":[x,x,x,x,x], "studentsHall":[x,x,x,x,x], "numTowwer";
+        for(Player p: gameManager.getPlayers()){
+            PlayerStatus player = new PlayerStatus();
+            int j = 0;
+            StudentGroup hall =p.getDashboard().getHall();
+            for(Colour c: Colour.values()) {
+                player.setStudentsOnHallOfAColour(j, hall.getQuantityColour(c));
+                j++;
+            }
+            player.setIndex(i);
+            ps[i] = player;
+            i++;
         }
-        return null;
+        gs.setPlayers(ps);
+        cs.setGame(gs);
+        return g.toJson(cs, CurrentStatus.class);
     }
 }

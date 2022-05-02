@@ -4,6 +4,30 @@ package it.polimi.ingsw.network;
  * It represents the current status of a Player during the match
  */
 public class PlayerStatus {
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public void setLastAssistantCardPlayed(int lastAssistantCardPlayed) {
+        this.lastAssistantCardPlayed = lastAssistantCardPlayed;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public void setNumTowers(int numTowers) {
+        this.numTowers = numTowers;
+    }
+
+    public void setAssistantCard(boolean[] assistantCard) {
+        AssistantCard = assistantCard;
+    }
+
+    int index;
+    int lastAssistantCardPlayed;
+    int coins;
+    int numTowers;
     int [] studentsOnHall;
     int[] studentsOnEntrance;
     boolean[] professors;
