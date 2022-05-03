@@ -186,12 +186,20 @@ class PlayerTest {
         Player p = new Player(Tower.WHITE);
         for (int i = 0; i < 9; i++) {
             assertFalse(p.getAssistantCard(i).isPlayed());
-            p.playCard(i);
+            try {
+                p.playCard(i);
+            }catch (AlreadyPlayedException e){
+                e.printStackTrace();
+            }
             assertTrue(p.getAssistantCard(i).isPlayed());
             assertEquals(p.getAssistantCard(i), p.getLastPlayedCard());
         }
         assertFalse(EndOfGameChecker.instance().isLastTurn());
-        p.playCard(9);
+        try {
+            p.playCard(9);
+        }catch (AlreadyPlayedException e){
+            e.printStackTrace();
+        }
         assertTrue(EndOfGameChecker.instance().isLastTurn());
         try {
             p.playCard(5);

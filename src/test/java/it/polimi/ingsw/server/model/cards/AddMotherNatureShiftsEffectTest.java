@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model.cards;
 
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Tower;
+import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,11 @@ class AddMotherNatureShiftsEffectTest {
     @Test
     void resolveEffect() {
         Player p = new Player(Tower.BLACK);
-        p.playCard(9);
+        try {
+            p.playCard(9);
+        }catch (AlreadyPlayedException e){
+            e.printStackTrace();
+        }
         int shiftsBefore = p.getLastPlayedCard().getInfo().getMotherNatureShifts();
         c.setPlayerThisTurn(p);
         c.getCardInfo().getEffect().resolveEffect(c);
