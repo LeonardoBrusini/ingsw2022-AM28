@@ -253,12 +253,12 @@ public class ExpertGameManager {
      * @param index player index
      * @param posCharacterCard character card index
      */
-    public void playCharacterCard(int index, int posCharacterCard){
-        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3) return;
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
+    public void playCharacterCard(int index, int posCharacterCard) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
 
         Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
+        if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
 
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
@@ -270,6 +270,7 @@ public class ExpertGameManager {
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
+            throw new NotEnoghCoinsException();
             //error, player does not have enough coins
         }
     }
@@ -280,11 +281,11 @@ public class ExpertGameManager {
      * @param posCharacterCard character card index
      * @param colour colour of the student
      */
-    public void playCharacterCard(int index, int posCharacterCard, Colour colour){
-        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null) return;
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
+    public void playCharacterCard(int index, int posCharacterCard, Colour colour) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
+        if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
 
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
@@ -297,6 +298,7 @@ public class ExpertGameManager {
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
+            throw new NotEnoghCoinsException();
             //error, player does not have enough coins
         }
     }
@@ -308,11 +310,11 @@ public class ExpertGameManager {
      * @param colour colour of the student
      * @param islandIndex index of the island
      */
-    public void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex){
-        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null || islandIndex<1 || islandIndex>12) return;
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
+    public void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null || islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
+        if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
 
         try {
@@ -326,6 +328,7 @@ public class ExpertGameManager {
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
+            throw new NotEnoghCoinsException();
             //error, player does not have enough coins
         }
     }
@@ -336,13 +339,13 @@ public class ExpertGameManager {
      * @param posCharacterCard character card index
      * @param islandIndex index of the island
      */
-    public void playCharacterCard(int index, int posCharacterCard,  int  islandIndex){
-        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || islandIndex<1 || islandIndex>12) return;
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
+    public void playCharacterCard(int index, int posCharacterCard,  int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
+        if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
-        if(card.getCardInfo()==CharacterCardInfo.CARD5 && card.getNoEntryTiles()==0) return;
+        if(card.getCardInfo()==CharacterCardInfo.CARD5 && card.getNoEntryTiles()==0) throw new IllegalArgumentException();
 
         try {
             p.spendCoins(card.getPrice());
@@ -354,6 +357,7 @@ public class ExpertGameManager {
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
+            throw new NotEnoghCoinsException();
             //error, player does not have enough coins
         }
     }
@@ -365,11 +369,11 @@ public class ExpertGameManager {
      * @param studentGroupFrom first group of students
      * @param studentGroupTo second group of students
      */
-    public void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo){
-        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || studentGroupFrom==null || studentGroupTo==null || studentGroupFrom.getTotalStudents()!=studentGroupTo.getTotalStudents()) return;
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) return;
+    public void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+        if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || studentGroupFrom==null || studentGroupTo==null || studentGroupFrom.getTotalStudents()!=studentGroupTo.getTotalStudents()) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         Player p = players.get(index);
-        if(p.isCcActivatedThisTurn()) return;
+        if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
             p.spendCoins(card.getPrice());
@@ -382,6 +386,7 @@ public class ExpertGameManager {
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
+            throw new NotEnoghCoinsException();
             //error, player does not have enough coins
         }
     }

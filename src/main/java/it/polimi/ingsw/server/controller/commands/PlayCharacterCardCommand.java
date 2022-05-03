@@ -6,6 +6,9 @@ import it.polimi.ingsw.network.StatusCode;
 import it.polimi.ingsw.server.controller.EndOfGameChecker;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.enumerations.Colour;
+import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
+import it.polimi.ingsw.server.exceptions.NotEnoghCoinsException;
+import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.model.StudentGroup;
 
 /**
@@ -38,6 +41,12 @@ public class PlayCharacterCardCommand implements CommandStrategy{
             }
         } catch (IllegalArgumentException e) {
             return StatusCode.ILLEGALARGUMENT;
+        }catch (WrongPhaseException f){
+            return StatusCode.WRONGPHASE;
+        }catch (NotEnoghCoinsException r){
+            return StatusCode.NOTENOUGHCOINS;
+        }catch(AlreadyPlayedException h){
+            return StatusCode.ALREADYPLAYEDCC;
         }
         //other ERRORS
         return null;

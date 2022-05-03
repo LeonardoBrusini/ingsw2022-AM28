@@ -1,5 +1,5 @@
 package it.polimi.ingsw.server.exceptions;
 
-public class AlreadyPlayedException extends IllegalArgumentException{
+public class AlreadyPlayedException extends Exception{
 
 }
