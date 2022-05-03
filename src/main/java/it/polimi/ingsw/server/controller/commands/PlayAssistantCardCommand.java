@@ -3,6 +3,8 @@ package it.polimi.ingsw.server.controller.commands;
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.Phase;
+import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
 
@@ -19,13 +21,17 @@ public class PlayAssistantCardCommand implements CommandStrategy{
     @Override
     public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
         try{
+            System.out.println("trying to play assistant card");
             gameManager.playAssistantCard(command.getPlayerIndex(), command.getIndex());
+            System.out.println("assistant card played");
         }catch(IllegalArgumentException e){
             return StatusCode.ILLEGALARGUMENT;
         }catch(WrongTurnException h){
             return StatusCode.WRONGTURN;
         }catch(WrongPhaseException z){
             return StatusCode.WRONGPHASE;
+        }catch (AlreadyPlayedException k) {
+            return StatusCode.ALREADYPLAYEDAC;
         }
         return null;
     }
@@ -38,19 +44,25 @@ public class PlayAssistantCardCommand implements CommandStrategy{
      */
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
+        System.out.println("status creation");
         Gson g = new Gson();
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
+        TurnStatus ts = new TurnStatus();
+        ts.setPlayer(gameManager.getTurnManager().getCurrentPlayer());
+        if(gameManager.getTurnManager().getPhase()==Phase.ACTION) ts.setPhase(Phase.ACTION.name());
+        cs.setTurn(ts);
         PlayerStatus[] ps = new PlayerStatus[1];
-
+        ps[0] = new PlayerStatus();
         boolean[] asc = new boolean[10];
         for(int j = 0; j < 10; j++)
             asc[j] = gameManager.getPlayers().get(command.getPlayerIndex()).getAssistantCard(j).isPlayed();
-        ps[0].setAssistantCard(asc);
+        ps[0].setAssistantCards(asc);
         ps[0].setIndex(command.getPlayerIndex());
         ps[0].setLastAssistantCardPlayed(gameManager.getPlayers().get(command.getPlayerIndex()).getLastPlayedCard().getInfo().ordinal());
         gs.setPlayers(ps);
         cs.setGame(gs);
+        System.out.println("status returning");
         return g.toJson(cs, CurrentStatus.class);
     }
 }

@@ -14,11 +14,10 @@ public class MultiEchoServer {
 
     public MultiEchoServer(int port) {
         this.port = port;
-        connections = new ConnectionList();
+        connections = ConnectionList.instance();
     }
 
     public void startServer() {
-        ExpertGameManager gameManager = new ExpertGameManager();
         ExecutorService executor = Executors.newCachedThreadPool();
         ServerSocket serverSocket;
         try {
@@ -43,7 +42,7 @@ public class MultiEchoServer {
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                EchoServerClientHandler e = new EchoServerClientHandler(socket,gameManager, connections.getNewID(), connections);
+                EchoServerClientHandler e = new EchoServerClientHandler(socket, connections.getNewID());
                 connections.addClient(e);
                 executor.submit(e);
             } catch(IOException e) {

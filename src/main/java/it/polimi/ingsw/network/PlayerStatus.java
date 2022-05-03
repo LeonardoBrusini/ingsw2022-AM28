@@ -4,13 +4,13 @@ package it.polimi.ingsw.network;
  * It represents the current status of a Player during the match
  */
 public class PlayerStatus {
-    private int index;
-    private int lastAssistantCardPlayed;
-    private int coins;
-    private int numTowers;
+    private Integer index;
+    private Integer lastAssistantCardPlayed;
+    private Integer coins;
+    private Integer numTowers;
     private int [] studentsOnHall;
     private int[] studentsOnEntrance;
-    private boolean[] AssistantCard = new boolean[10];
+    private boolean[] assistantCards = new boolean[10];
     private String towerColour;
 
     /**
@@ -53,8 +53,8 @@ public class PlayerStatus {
      * What are the AssistantCard that remain to the player
      * @param assistantCard AssistantCard to set
      */
-    public void setAssistantCard(boolean[] assistantCard) {
-        AssistantCard = assistantCard;
+    public void setAssistantCards(boolean[] assistantCard) {
+        assistantCards = assistantCard;
     }
 
     /**
@@ -91,21 +91,51 @@ public class PlayerStatus {
         this.studentsOnEntrance = s;
     }
 
-    /*
-    public void playAssistantCard(int pos) {
-        if (AssistantCard[pos])
-            AssistantCard[pos] = false;
-        /*else {
-            //Lancia errore;
-        }
-    }
-    */
-    /**
-     * The method initializes the AssistantCard
-     */
-    public void initializeAssistantCard(){
-        for(boolean b:AssistantCard)
-            b=true;
+    public Integer getIndex() {
+        return index;
     }
 
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public Integer getLastAssistantCardPlayed() {
+        return lastAssistantCardPlayed;
+    }
+
+    public void setLastAssistantCardPlayed(Integer lastAssistantCardPlayed) {
+        this.lastAssistantCardPlayed = lastAssistantCardPlayed;
+    }
+
+    public Integer getCoins() {
+        return coins;
+    }
+
+    public void setCoins(Integer coins) {
+        this.coins = coins;
+    }
+
+    public Integer getNumTowers() {
+        return numTowers;
+    }
+
+    public void setNumTowers(Integer numTowers) {
+        this.numTowers = numTowers;
+    }
+
+    public int[] getStudentsOnHall() {
+        return studentsOnHall;
+    }
+
+    public int[] getStudentsOnEntrance() {
+        return studentsOnEntrance;
+    }
+
+    public boolean[] getAssistantCards() {
+        return assistantCards;
+    }
+
+    public String getTowerColour() {
+        return towerColour;
+    }
 }

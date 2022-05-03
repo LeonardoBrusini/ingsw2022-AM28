@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.network;
 
-import it.polimi.ingsw.server.controller.ExpertGameManager;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -10,16 +8,14 @@ import java.util.Scanner;
 public class EchoServerClientHandler implements Runnable {
     private final Socket socket;
     private int playerID;
-    private final ConnectionList sender;
     private final Scanner in;
     private final PrintWriter out;
     private final ConnectionManager connectionManager;
 
-    public EchoServerClientHandler(Socket socket, ExpertGameManager gameManager, int playerID, ConnectionList sender) {
+    public EchoServerClientHandler(Socket socket, int playerID) {
         this.socket = socket;
-        this.connectionManager = new ConnectionManager(gameManager);
+        this.connectionManager = new ConnectionManager();
         this.playerID = playerID;
-        this.sender = sender;
         try {
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream());
@@ -35,13 +31,15 @@ public class EchoServerClientHandler implements Runnable {
                 if(socket.isClosed()) break;
                 line = in.nextLine();
                 if (line.equals("pong")) {
-                    sender.setStillConnected(playerID,true);
+                    ConnectionList.instance().setStillConnected(playerID,true);
                 } else {
-                    outputString = connectionManager.manageMessage(line, playerID, sender);
-                    if(connectionManager.isToAllResponse()) {
-                        sender.sendToAll(outputString);
-                    } else {
-                        sender.sendToOne(outputString,playerID);
+                    outputString = connectionManager.manageMessage(line, playerID);
+                    if(!connectionManager.isFirstStatus()) {
+                        if(connectionManager.isToAllResponse()) {
+                            ConnectionList.instance().sendToAll(outputString);
+                        } else {
+                            ConnectionList.instance().sendToOne(outputString,playerID);
+                        }
                     }
                 }
             }
@@ -67,5 +65,9 @@ public class EchoServerClientHandler implements Runnable {
 
     public ConnectionManager getConnectionManager() {
         return connectionManager;
+    }
+
+    public int getPlayerID() {
+        return playerID;
     }
 }

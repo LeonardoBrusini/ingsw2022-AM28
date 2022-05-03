@@ -5,6 +5,7 @@ package it.polimi.ingsw.network;
  */
 public class CurrentStatus {
     private int status;
+    private Integer playerID;
     private String errorMessage;
     private String winner;
     private TurnStatus turn;
@@ -57,5 +58,13 @@ public class CurrentStatus {
 
     public String getGameMode() {
         return gameMode;
+    }
+
+    public void setPlayerID(Integer playerID) {
+        this.playerID = playerID;
+    }
+
+    public Integer getPlayerID() {
+        return playerID;
     }
 }

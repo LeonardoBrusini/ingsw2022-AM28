@@ -7,7 +7,6 @@ public enum CommandList {
     PLAYASSISTANTCARD(new PlayAssistantCardCommand()),
     PLAYCHARACTERCARD(new PlayCharacterCardCommand()),
     TAKEFROMCLOUD(new TakeFromCloudCommand());
-
     private final CommandStrategy cmd;
     CommandList(CommandStrategy cmd) {
         this.cmd = cmd;

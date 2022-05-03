@@ -24,6 +24,7 @@ public class Player {
     private final Dashboard dashboard;
     private final boolean[][] coinPositions;
     private boolean ccActivatedThisTurn;
+    private boolean connected;
 
     /**
      * Player constructor, builds dashboard and 10 assistant cards
@@ -40,6 +41,7 @@ public class Player {
             cards.add(new AssistantCard(i));
         }
         coinPositions = new boolean[Colour.values().length][3];
+        connected = true;
     }
 
     /**
@@ -175,5 +177,17 @@ public class Player {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public ArrayList<AssistantCard> getCards() {
+        return cards;
     }
 }

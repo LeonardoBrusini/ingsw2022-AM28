@@ -5,6 +5,8 @@ public enum StatusCode {
     FULL_LOBBY(102,"Server has already reached the maximum number of players."),
     GAMESTARTED(103,"Game has already started."),
     INVALIDUSERNAME(104,"Invalid username, try with a different one"),
+    WAITINGFORPLAYERS(105,"Not enough players connected, wait for other players."),
+    NOTFIRSTPLAYER(106,"You're not the first player, you can't start the game"),
     KICKEDOUT(209, "Host chose to play a game of 2 players, you were the third."),
     ALREADYPLAYEDAC(202,"You already played this card! Choose another one."),
     ALREADYPLAYEDCC(203,"You already playerd a character card! Wait until next turn"),

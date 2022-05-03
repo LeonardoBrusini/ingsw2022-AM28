@@ -71,6 +71,11 @@ public class TurnManager {
                 }
             }
         }
+        if(phase==Phase.ACTION) {
+            if(!players.get(actionOrder.get(currentPlayer)).isConnected()) nextPhase(b,players);
+        } else {
+            if(!players.get(planningOrder.get(currentPlayer)).isConnected()) nextPhase(b,players);
+        }
     }
 
     /**
@@ -147,5 +152,12 @@ public class TurnManager {
             t.setPlayer(planningOrder.get(currentPlayer));
         }
         return t;
+    }
+
+    public void nextPlayer(ArrayList<Player> players, Board b) {
+        int p = currentPlayer;
+        while (p==currentPlayer) {
+            nextPhase(b, players);
+        }
     }
 }

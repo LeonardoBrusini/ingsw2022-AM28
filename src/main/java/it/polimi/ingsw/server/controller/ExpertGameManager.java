@@ -31,7 +31,7 @@ public class ExpertGameManager {
     /**
      * adds a new player if the lobby is not full (no more than 3 players)
      */
-    public void addPlayer(){
+    public synchronized void addPlayer(){
         if(players.size()<3) {
             players.add(new Player(Tower.values()[players.size()]));
         }
@@ -40,7 +40,7 @@ public class ExpertGameManager {
     /**
      * initializes the board, which objects on it have attributes which are initialized based on the number of players
      */
-    public void newGame(boolean expertMode, int numPlayers){
+    public synchronized void newGame(boolean expertMode, int numPlayers){
        this.expertMode = expertMode;
        if(numPlayers==2 && players.size()==3) players.remove(2);
        board = new Board(players.size());
@@ -64,15 +64,11 @@ public class ExpertGameManager {
      * @param p the player who wants to play a card
      * @param c index of the card the player wants to play
      */
-    public void playAssistantCard(int p, int c) throws WrongPhaseException, WrongTurnException, IllegalArgumentException{
+    public synchronized void playAssistantCard(int p, int c) throws WrongPhaseException, WrongTurnException, IllegalArgumentException, AlreadyPlayedException{
         if(p<0 || p>=players.size() || c<0 || c>=AssistantCardInfo.values().length) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.PLANNING) throw new WrongPhaseException();
         if(turnManager.getCurrentPlayer()!=p)throw new WrongTurnException();
-        try {
-            players.get(p).playCard(c);
-        } catch (AlreadyPlayedException e) {
-            //what happens?
-        }
+        players.get(p).playCard(c);
         turnManager.nextPhase(board,players);
     }
     /**
@@ -80,7 +76,7 @@ public class ExpertGameManager {
      * @param p the player who wants to move a student
      * @param c the colour of the student
      */
-    public void moveStudentsToHall(int p, Colour c) throws FullHallException, NoStudentsException, WrongPhaseException, WrongTurnException{
+    public synchronized void moveStudentsToHall(int p, Colour c) throws FullHallException, NoStudentsException, WrongPhaseException, WrongTurnException{
         if (p<0 || p>=players.size() || c==null) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
@@ -98,7 +94,7 @@ public class ExpertGameManager {
      * checks which player gets the professor of colour c (modifies behaviour if CARD2 is activated)
      * @param c the colour of the professor
      */
-    public void checkProfessors(Colour c) {
+    public synchronized void checkProfessors(Colour c) {
         int maxStudents = 0;
         Player maxStudentsPlayer = null;
         for(Player p: players) {
@@ -131,7 +127,7 @@ public class ExpertGameManager {
      * @param c the colour of the student
      * @param is index of the island
      */
-    public void moveStudentToIsland(int p, Colour c, int is) throws WrongTurnException, WrongPhaseException{
+    public synchronized void moveStudentToIsland(int p, Colour c, int is) throws WrongTurnException, WrongPhaseException{
         if(p<0 || p>=players.size() || c==null || is<1 || is>12) throw new IllegalArgumentException();
         if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
         if(turnManager.getPhase()!=Phase.ACTION ||  turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
@@ -149,7 +145,7 @@ public class ExpertGameManager {
      * and checks for aggregation.
      * @param moves the number of archipelagos mother nature has to move forward
      */
-    public void moveMotherNature(int moves) throws WrongPhaseException, IllegalArgumentException{
+    public synchronized void moveMotherNature(int moves) throws WrongPhaseException, IllegalArgumentException{
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) throw new WrongPhaseException();
         if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) throw new IllegalArgumentException();
         board.moveMotherNature(moves);
@@ -161,7 +157,7 @@ public class ExpertGameManager {
     /**
      * checks the player with most influence on the archipelago and build towers on it if needed
      */
-    public void checkInfluence() {
+    public synchronized void checkInfluence() {
         Archipelago a = board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex());
         if(a.getNoEntryTiles()>0) {
             for (CharacterCard c: board.getCharacterCards()) {
@@ -190,7 +186,7 @@ public class ExpertGameManager {
      * @param cloudIndex index of the cloud the player selected
      * @param playerIndex player who asked to take the students
      */
-    public void takeStudentsFromCloud(int cloudIndex, int playerIndex) throws WrongPhaseException, IllegalArgumentException, WrongTurnException{
+    public synchronized void takeStudentsFromCloud(int cloudIndex, int playerIndex) throws WrongPhaseException, IllegalArgumentException, WrongTurnException{
         if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) throw new WrongPhaseException();
         if(turnManager.getCurrentPlayer()!=playerIndex) throw new WrongTurnException();
@@ -215,14 +211,14 @@ public class ExpertGameManager {
      * @param t the colour of the tower
      * @return the player who has that tower colour
      */
-    private Player findPlayerByTower(Tower t) {
+    private synchronized Player findPlayerByTower(Tower t) {
         for (Player p: players){
             if(p.getTower()==t) return p;
         }
         return null;
     }
 
-    private void manageEndOfGame() {
+    private synchronized void manageEndOfGame() {
         int winnerIndex;
         if(EndOfGameChecker.instance().isEndOfGame()) {
             winnerIndex = EndOfGameChecker.instance().getWinner();
@@ -253,7 +249,7 @@ public class ExpertGameManager {
      * @param index player index
      * @param posCharacterCard character card index
      */
-    public void playCharacterCard(int index, int posCharacterCard) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
 
@@ -281,7 +277,7 @@ public class ExpertGameManager {
      * @param posCharacterCard character card index
      * @param colour colour of the student
      */
-    public void playCharacterCard(int index, int posCharacterCard, Colour colour) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         Player p = players.get(index);
@@ -310,7 +306,7 @@ public class ExpertGameManager {
      * @param colour colour of the student
      * @param islandIndex index of the island
      */
-    public void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null || islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         Player p = players.get(index);
@@ -339,7 +335,7 @@ public class ExpertGameManager {
      * @param posCharacterCard character card index
      * @param islandIndex index of the island
      */
-    public void playCharacterCard(int index, int posCharacterCard,  int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard,  int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         Player p = players.get(index);
@@ -369,7 +365,7 @@ public class ExpertGameManager {
      * @param studentGroupFrom first group of students
      * @param studentGroupTo second group of students
      */
-    public void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoghCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || studentGroupFrom==null || studentGroupTo==null || studentGroupFrom.getTotalStudents()!=studentGroupTo.getTotalStudents()) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         Player p = players.get(index);
@@ -391,7 +387,7 @@ public class ExpertGameManager {
         }
     }
 
-    public CurrentStatus getFullCurrentStatus() {
+    public synchronized CurrentStatus getFullCurrentStatus() {
         CurrentStatus status = new CurrentStatus();
         status.setStatus(0);
         if(expertMode) status.setGameMode("expert");
@@ -412,7 +408,13 @@ public class ExpertGameManager {
             ps[i].setNumTowers(players.get(i).getDashboard().getNumTowers());
             ps[i].setStudentsOnEntrance(players.get(i).getDashboard().getEntrance().getStatus());
             ps[i].setStudentsOnHall(players.get(i).getDashboard().getHall().getStatus());
-            //assistant cards left to do!
+            if(players.get(i).getLastPlayedCard()!=null) ps[i].setLastAssistantCardPlayed(players.get(i).getLastPlayedCard().getInfo().ordinal());
+            int numCards = players.get(i).getCards().size();
+            boolean[] ac = new boolean[numCards];
+            for(int j=0;j<numCards;j++) {
+                ac[j] = players.get(i).getCards().get(j).isPlayed();
+            }
+            ps[i].setAssistantCards(ac);
         }
         gs.setPlayers(ps);
         if(expertMode) {
