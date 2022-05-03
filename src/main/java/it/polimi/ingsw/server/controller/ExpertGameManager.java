@@ -53,7 +53,7 @@ public class ExpertGameManager {
                p.getDashboard().setNumTowers(6);
            }
        }
-       turnManager = new TurnManager(players.size());
+       turnManager = new TurnManager(players.size(), board);
        gameStarted = true;
        // to be continued
     }
