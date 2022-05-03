@@ -30,7 +30,6 @@ public class EchoServerClientHandler implements Runnable {
 
     public void run() {
        // try {
-            // Leggo e scrivo nella connessione finche' non ricevo "quit"
             String line, outputString;
             while (true) {
                 if(socket.isClosed()) break;
@@ -38,7 +37,6 @@ public class EchoServerClientHandler implements Runnable {
                 if (line.equals("pong")) {
                     sender.setStillConnected(playerID,true);
                 } else {
-                    System.out.println("recieved: "+line);
                     outputString = connectionManager.manageMessage(line, playerID, sender);
                     if(connectionManager.isToAllResponse()) {
                         sender.sendToAll(outputString);
@@ -47,7 +45,6 @@ public class EchoServerClientHandler implements Runnable {
                     }
                 }
             }
-            // Chiudo gli stream e il socket
             //in.close();
             //out.close();
             //socket.close();

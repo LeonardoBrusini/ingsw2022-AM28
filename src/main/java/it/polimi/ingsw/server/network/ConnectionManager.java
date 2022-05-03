@@ -25,6 +25,7 @@ public class ConnectionManager {
 
     public String manageMessage(String message, int playerID, ConnectionList sender){
         toAllResponse = false;
+        if (message.equals("")) return StatusCode.ILLEGALARGUMENT.toJson();
         if(gameManager.isGameStarted()){
             return manageInGameMessage(message);
         }else{

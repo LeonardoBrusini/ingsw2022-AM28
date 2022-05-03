@@ -24,7 +24,7 @@ public class MultiEchoServer {
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
-            System.err.println(e.getMessage()); // Porta non disponibile
+            System.err.println(e.getMessage());
             return;
         }
         System.out.println("Server ready");
@@ -47,7 +47,7 @@ public class MultiEchoServer {
                 connections.addClient(e);
                 executor.submit(e);
             } catch(IOException e) {
-                break; // Entrerei qui se serverSocket venisse chiuso
+                break;
             }
         }
         executor.shutdown();

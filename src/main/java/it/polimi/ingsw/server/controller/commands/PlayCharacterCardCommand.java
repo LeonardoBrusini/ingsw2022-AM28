@@ -60,14 +60,11 @@ public class PlayCharacterCardCommand implements CommandStrategy{
      */
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command) {
+        CurrentStatus cs = gameManager.getFullCurrentStatus();
         if(EndOfGameChecker.instance().isEndOfGame()){
-
-            CurrentStatus cs = gameManager.getFullCurrentStatus();
             cs.setWinner(gameManager.getPlayers().get(EndOfGameChecker.instance().getWinner()).getNickname());
-            return new Gson().toJson(cs, CurrentStatus.class);
-        } else {
-            return new Gson().toJson(gameManager.getFullCurrentStatus());
         }
+        return new Gson().toJson(cs);
     }
 }
 
