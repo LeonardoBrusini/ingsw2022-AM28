@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.Command;
+import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.network.StatusCode;
 import it.polimi.ingsw.server.controller.EndOfGameChecker;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
@@ -60,8 +61,9 @@ public class PlayCharacterCardCommand implements CommandStrategy{
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command) {
         if(EndOfGameChecker.instance().isEndOfGame()){
-            //not implemented yet
-            return null;
+            CurrentStatus cs = gameManager.getFullCurrentStatus();
+            cs.setWinner(gameManager.getPlayers().get(EndOfGameChecker.instance().getWinner()).getNickname());
+            return new Gson().toJson(cs, CurrentStatus.class);
         } else {
             return new Gson().toJson(gameManager.getFullCurrentStatus());
         }
