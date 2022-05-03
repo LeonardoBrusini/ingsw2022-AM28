@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.board;
 
+import it.polimi.ingsw.network.ArchipelagoStatus;
 import it.polimi.ingsw.server.enumerations.Tower;
 
 import java.util.ArrayList;
@@ -96,6 +97,21 @@ public class IslandManager {
     }
 
     /**
+     *
+     * @param islandIndex the index of the island we want to know on which archipelago it is
+     * @return the archipelago index containing the selected island
+     */
+    public int getArchipelagoIndexByIslandIndex(int islandIndex) throws IllegalArgumentException {
+        if(islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
+        for(int i=0;i<archipelagos.size();i++) {
+            for(Island island : archipelagos.get(i).getIslands()) {
+                if(island.getIslandIndex()==islandIndex) return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
      * puts the selected tower to the selected island and checks a possible aggregation of archipelagos
      * @param tower colour of the tower
      * @param islandIndex the index of the island we want to build the tower
@@ -107,6 +123,16 @@ public class IslandManager {
         checkAggregation(islandIndex);
     }
 
+    public ArchipelagoStatus[] getFullArchipelagosStatus() {
+        ArchipelagoStatus[] as = new ArchipelagoStatus[archipelagos.size()];
+        for(int i=0;i<archipelagos.size();i++) {
+            as[i] = new ArchipelagoStatus();
+            as[i].setIndex(i);
+            as[i].setIslands(archipelagos.get(i).getFullIslandsStatus());
+        }
+        return as;
+    }
+
     //getters & setters for testing
     public ArrayList<Archipelago> getArchipelagos() {
         return archipelagos;
@@ -114,4 +140,5 @@ public class IslandManager {
     public void setArchipelagos(ArrayList<Archipelago> archipelagos) {
         this.archipelagos = archipelagos;
     }
+    public int getNumArchipelagos(){return archipelagos.size();}
 }

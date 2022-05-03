@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.network.TurnStatus;
 import it.polimi.ingsw.server.model.board.Board;
 import it.polimi.ingsw.server.model.players.Player;
 
@@ -133,5 +134,16 @@ public class TurnManager {
 
     public boolean isCloudSelectionPhase() {
         return cloudSelectionPhase;
+    }
+
+    public TurnStatus getTurnStatus() {
+        TurnStatus t = new TurnStatus();
+        t.setPhase(phase.name());
+        if(phase==Phase.ACTION) {
+            t.setPlayer(actionOrder.get(currentPlayer));
+        } else {
+            t.setPlayer(planningOrder.get(currentPlayer));
+        }
+        return t;
     }
 }

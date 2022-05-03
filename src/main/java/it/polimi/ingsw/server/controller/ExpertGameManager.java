@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
@@ -21,7 +22,6 @@ public class ExpertGameManager {
     private TurnManager turnManager;
     private boolean gameStarted;
     private boolean expertMode;
-    private int numPlayers;
 
     public ExpertGameManager() {
         players = new ArrayList<>();
@@ -30,11 +30,10 @@ public class ExpertGameManager {
 
     /**
      * adds a new player if the lobby is not full (no more than 3 players)
-     * @param s the nickname of the player
      */
-    public void addPlayer(String s){
+    public void addPlayer(){
         if(players.size()<3) {
-            players.add(new Player(s, Tower.values()[players.size()]));
+            players.add(new Player(Tower.values()[players.size()]));
         }
     }
 
@@ -43,7 +42,6 @@ public class ExpertGameManager {
      */
     public void newGame(boolean expertMode, int numPlayers){
        this.expertMode = expertMode;
-       this.numPlayers = numPlayers;
        if(numPlayers==2 && players.size()==3) players.remove(2);
        board = new Board(players.size());
        if(players.size()==2) {
@@ -62,20 +60,14 @@ public class ExpertGameManager {
 
 
     /**
-     * returns the number of player of the lobby
-     */
-    public int getNumPlayers() {
-        return players.size();
-    }
-
-    /**
      * the selected player plays an assistant card
      * @param p the player who wants to play a card
      * @param c index of the card the player wants to play
      */
-    public void playAssistantCard(int p, int c){
-        if(p<0 || p>=players.size() || c<0 || c>=AssistantCardInfo.values().length) return;
-        if(turnManager.getPhase()!=Phase.PLANNING || turnManager.getCurrentPlayer()!=p) return; //not the correct phase
+    public void playAssistantCard(int p, int c) throws WrongPhaseException, WrongTurnException, IllegalArgumentException{
+        if(p<0 || p>=players.size() || c<0 || c>=AssistantCardInfo.values().length) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.PLANNING) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=p)throw new WrongTurnException();
         try {
             players.get(p).playCard(c);
         } catch (AlreadyPlayedException e) {
@@ -139,9 +131,10 @@ public class ExpertGameManager {
      * @param c the colour of the student
      * @param is index of the island
      */
-    public void moveStudentToIsland(int p, Colour c, int is){
-        if(p<0 || p>=players.size() || c==null || is<1 || is>12) return;
-        if(turnManager.getPhase()!=Phase.ACTION || turnManager.getCurrentPlayer()!=p || turnManager.isMoveStudentsPhase()) return;
+    public void moveStudentToIsland(int p, Colour c, int is) throws WrongTurnException, WrongPhaseException{
+        if(p<0 || p>=players.size() || c==null || is<1 || is>12) throw new IllegalArgumentException();
+        if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
+        if(turnManager.getPhase()!=Phase.ACTION ||  turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         try{
             players.get(p).moveToIsland(c,board.getIslandManager().getIslandByIndex(is));
         } catch (NoStudentsException e) {
@@ -156,10 +149,9 @@ public class ExpertGameManager {
      * and checks for aggregation.
      * @param moves the number of archipelagos mother nature has to move forward
      */
-    public void moveMotherNature(int moves) throws WrongPhaseException{
+    public void moveMotherNature(int moves) throws WrongPhaseException, IllegalArgumentException{
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) throw new WrongPhaseException();
-        /*if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) return;*/
-        if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) return;
+        if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) throw new IllegalArgumentException();
         board.moveMotherNature(moves);
         checkInfluence(); //check if this method works properly
         turnManager.nextPhase(board,players);
@@ -170,7 +162,6 @@ public class ExpertGameManager {
      * checks the player with most influence on the archipelago and build towers on it if needed
      */
     public void checkInfluence() {
-        CharacterCard card = null;
         Archipelago a = board.getIslandManager().getArchipelagoByIslandIndex(board.getMotherNature().getIslandIndex());
         if(a.getNoEntryTiles()>0) {
             for (CharacterCard c: board.getCharacterCards()) {
@@ -199,9 +190,10 @@ public class ExpertGameManager {
      * @param cloudIndex index of the cloud the player selected
      * @param playerIndex player who asked to take the students
      */
-    public void takeStudentsFromCloud(int cloudIndex, int playerIndex) {
-        if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) return;
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) return;
+    public void takeStudentsFromCloud(int cloudIndex, int playerIndex) throws WrongPhaseException, IllegalArgumentException, WrongTurnException{
+        if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) throw new IllegalArgumentException();
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=playerIndex) throw new WrongTurnException();
         ArrayList<Cloud> clouds = board.getClouds();
         StudentGroup sg = clouds.get(cloudIndex).clearStudents();
         if(sg.empty()) {
@@ -394,8 +386,51 @@ public class ExpertGameManager {
         }
     }
 
+    public CurrentStatus getFullCurrentStatus() {
+        CurrentStatus status = new CurrentStatus();
+        status.setStatus(0);
+        if(expertMode) status.setGameMode("expert");
+        else status.setGameMode("simple");
+        status.setTurn(turnManager.getTurnStatus());
+        GameStatus gs = new GameStatus();
+        gs.setMotherNatureIndex(board.getMotherNature().getIslandIndex());
+        gs.setArchipelagos(board.getIslandManager().getFullArchipelagosStatus());
+        gs.setClouds(board.getCloudsStatus());
+        PlayerStatus[] ps = new PlayerStatus[players.size()];
+        for(int i=0;i<players.size();i++) {
+            ps[i] = new PlayerStatus();
+            ps[i].setIndex(i);
+            if(expertMode) {
+                ps[i].setCoins(players.get(i).getCoins());
+            }
+            ps[i].setTowerColour(players.get(i).getTower().toString());
+            ps[i].setNumTowers(players.get(i).getDashboard().getNumTowers());
+            ps[i].setStudentsOnEntrance(players.get(i).getDashboard().getEntrance().getStatus());
+            ps[i].setStudentsOnHall(players.get(i).getDashboard().getHall().getStatus());
+            //assistant cards left to do!
+        }
+        gs.setPlayers(ps);
+        if(expertMode) {
+            CharacterCardStatus[] ccs = new CharacterCardStatus[board.getCharacterCards().size()];
+            for(int i=0;i<board.getCharacterCards().size();i++) {
+                ccs[i] = new CharacterCardStatus();
+                ccs[i].setIndex(i);
+                ccs[i].setFileName(board.getCharacterCards().get(i).getCardInfo().getFileName());
+                ccs[i].setNoEntryTiles(board.getCharacterCards().get(i).getNoEntryTiles());
+                ccs[i].setCoinOnIt(board.getCharacterCards().get(i).isCoinOnIt());
+                ccs[i].setStudents(board.getCharacterCards().get(i).getStudentsOnCard().getStatus());
+            }
+            gs.setCharacterCards(ccs);
+        }
+        status.setGame(gs);
+        return status;
+    }
+
     public boolean isGameStarted() {
         return gameStarted;
     }
 
+    public TurnManager getTurnManager() {
+        return turnManager;
+    }
 }

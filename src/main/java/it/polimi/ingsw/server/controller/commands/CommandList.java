@@ -8,8 +8,9 @@ public enum CommandList {
     PLAYCHARACTERCARD(new PlayCharacterCardCommand()),
     TAKEFROMCLOUD(new TakeFromCloudCommand());
 
-    private CommandStrategy cmd;
+    private final CommandStrategy cmd;
     CommandList(CommandStrategy cmd) {
+        this.cmd = cmd;
     }
     public CommandStrategy getCmd() {
         return cmd;

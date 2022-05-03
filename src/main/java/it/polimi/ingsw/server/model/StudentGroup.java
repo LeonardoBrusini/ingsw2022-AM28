@@ -9,7 +9,7 @@ import java.util.EnumMap;
  * StudentGroup is to store the number of students of each colour, it will be used in Bag, Cloud, Island and on CharacterCard
  */
 public class StudentGroup {
-    private EnumMap<Colour, Integer> students;
+    private final EnumMap<Colour, Integer> students;
 
     /**
      * Constructor of a new StudentGroup without students
@@ -40,7 +40,20 @@ public class StudentGroup {
             students.put(c,r.getQuantityColour(c));
         }
     }
-
+    /**
+     * Constructor of a new StudentGroup by an array of students (i.e. from json)
+     * @param val array of students
+     */
+    public StudentGroup(int[] val) {
+        this.students = new EnumMap<>(Colour.class);
+        if(val!=null && val.length==Colour.values().length) {
+            for(Colour c: Colour.values())
+                students.put(c,val[c.ordinal()]);
+        } else {
+            for(Colour c: Colour.values())
+                students.put(c,0);
+        }
+    }
     /**
      * Constructor of a new StudentGroup by a list of students (i.e. randomly extracted from the bag)
      * @param list list of colours (student extracted in order)
@@ -124,4 +137,15 @@ public class StudentGroup {
         }
     }
 
+    /**
+     *
+     * @return array of the number of students each colour
+     */
+    public int[] getStatus() {
+        int[] s = new int[Colour.values().length];
+        for(Colour c: Colour.values()) {
+            s[c.ordinal()] = students.get(c);
+        }
+        return s;
+    }
 }

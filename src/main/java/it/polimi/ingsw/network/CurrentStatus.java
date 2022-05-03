@@ -4,11 +4,12 @@ package it.polimi.ingsw.network;
  * It represents the current status of the turns and winner
  */
 public class CurrentStatus {
-    int status;
-    String errorMessage;
-    String winner;
-    TurnStatus turn;
-    GameStatus game;
+    private int status;
+    private String errorMessage;
+    private String winner;
+    private TurnStatus turn;
+    private GameStatus game;
+    private String gameMode;
 
     public void setStatus(int status) {
         this.status = status;
@@ -30,4 +31,31 @@ public class CurrentStatus {
         this.game = game;
     }
 
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public TurnStatus getTurn() {
+        return turn;
+    }
+
+    public GameStatus getGame() {
+        return game;
+    }
+
+    public String getGameMode() {
+        return gameMode;
+    }
 }

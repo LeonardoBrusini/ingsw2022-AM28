@@ -2,15 +2,12 @@ package it.polimi.ingsw.server.network;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import it.polimi.ingsw.network.AddPlayerResponse;
-import it.polimi.ingsw.network.Command;
-import it.polimi.ingsw.network.GameParameters;
-import it.polimi.ingsw.network.StatusCode;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.controller.commands.CommandList;
+import it.polimi.ingsw.server.controller.commands.CommandStrategy;
 import it.polimi.ingsw.server.model.players.Player;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class ConnectionManager {
@@ -18,6 +15,7 @@ public class ConnectionManager {
     private final Gson parser;
     private boolean toAllResponse;
     private boolean needUsername;
+    private String username;
 
     public ConnectionManager(ExpertGameManager gameManager){
         this.gameManager= gameManager;
@@ -25,12 +23,12 @@ public class ConnectionManager {
         needUsername = true;
     }
 
-    public String manageMessage(String message, int playerID){
+    public String manageMessage(String message, int playerID, ConnectionList sender){
         toAllResponse = false;
         if(gameManager.isGameStarted()){
             return manageInGameMessage(message);
         }else{
-            return managePreGameMessage(message);
+            return managePreGameMessage(message,sender,playerID);
         }
     }
 
@@ -38,28 +36,41 @@ public class ConnectionManager {
         try {
             Command c = parser.fromJson(message,Command.class);
             CommandList command = CommandList.valueOf(c.getCmd());
-            StatusCode sc = command.getCmd().resolveCommand(gameManager,c);
-            if(sc == null) return command.getCmd().getUpdatedStatus(gameManager);
+            System.out.println("comando letto: "+ command);
+            CommandStrategy cs = command.getCmd();
+            StatusCode sc = cs.resolveCommand(gameManager,c);
+            if(sc == null) {
+                toAllResponse = true;
+                return command.getCmd().getUpdatedStatus(gameManager,c);
+            }
             else return sc.toJson();
-        } catch (JsonSyntaxException e) {
+        } catch (JsonSyntaxException | IllegalArgumentException e) {
             return StatusCode.ILLEGALARGUMENT.toJson();
         }
     }
 
-    public String managePreGameMessage(String message){
+    public String managePreGameMessage(String message, ConnectionList sender, int playerID){
         if(needUsername) {
-            String tmp = parser.fromJson(message,String.class);
-            ArrayList<Player> players = gameManager.getPlayers();
-            if(players.size()<3){
-                for (Player p : players)
-                    if (p.getNickname().equals(tmp)) {
-                        return StatusCode.ALREADYLOGGED.toJson();
+            try {
+                username = parser.fromJson("\""+message+"\"",String.class);
+                ArrayList<Player> players = gameManager.getPlayers();
+                if(players.size()<3){
+                    for (EchoServerClientHandler e: sender.getClients()){
+                        ConnectionManager c = e.getConnectionManager();
+                        if (c!=this && c.getUsername()!=null && c.getUsername().equals(username)) {
+                            return StatusCode.ALREADYLOGGED.toJson();
+                        }
                     }
-                gameManager.addPlayer(tmp);
-                needUsername = false;
-                return generateCorrectAddPlayerResponse();
-            } else {
-                return StatusCode.FULL_LOBBY.toJson();
+                    if(sender.getNumConnections()>players.size()) {
+                        gameManager.addPlayer();
+                    }
+                    needUsername = false;
+                    return generateCorrectAddPlayerResponse(playerID);
+                } else {
+                    return StatusCode.FULL_LOBBY.toJson();
+                }
+            } catch (JsonSyntaxException e) {
+                return StatusCode.INVALIDUSERNAME.toJson();
             }
         } else {
             try {
@@ -70,31 +81,33 @@ public class ConnectionManager {
                 else return StatusCode.ILLEGALARGUMENT.toJson();
                 if(tmp.getNumPlayers()<2 || tmp.getNumPlayers()>3) return StatusCode.ILLEGALARGUMENT.toJson();
                 gameManager.newGame(expert,tmp.getNumPlayers());
+                sender.setNickNames(gameManager);
                 toAllResponse = true;
-                return generateFullCurrentStatus();
+                return parser.toJson(gameManager.getFullCurrentStatus());
             } catch (JsonSyntaxException e) {
                 return StatusCode.ILLEGALARGUMENT.toJson();
             }
         }
     }
 
-    private String generateFullCurrentStatus() {
-        //not yet implemented;
-        return null;
-    }
-
-    public String generateCorrectAddPlayerResponse(){
+    public String generateCorrectAddPlayerResponse(int playerID){
         AddPlayerResponse response=new AddPlayerResponse();
         response.setStatus(0);
-        response.setUserID(gameManager.getNumPlayers());
+        if(playerID==0) {
+            response.setFirst(true);
+        }
         return parser.toJson(response);
-    }
-
-    public ExpertGameManager getExpertGameManager(){
-        return gameManager;
     }
 
     public boolean isToAllResponse() {
         return toAllResponse;
+    }
+
+    public boolean doesNeedUsername() {
+        return needUsername;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.board;
 
+import it.polimi.ingsw.network.IslandStatus;
 import it.polimi.ingsw.server.enumerations.Tower;
 import it.polimi.ingsw.server.model.ProfessorGroup;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
@@ -56,9 +57,18 @@ public class Archipelago {
         noEntryTiles += a.noEntryTiles;
         return this;
     }
+    public IslandStatus[] getFullIslandsStatus() {
+        IslandStatus[] is = new IslandStatus[islands.size()];
+        for (int i=0;i<islands.size();i++) {
+            is[i] = new IslandStatus();
+            if(islands.get(i).getTower()!=null) is[i].setTowerColour(islands.get(i).getTower().toString());
+            is[i].setIslandIndex(islands.get(i).getIslandIndex());
+            is[i].setStudents(islands.get(i).getStudents().getStatus());
+        }
+        return is;
+    }
 
     //getters & setters
-
     public int getFirstIslandIndex() {
         return firstIslandIndex;
     }
@@ -83,5 +93,7 @@ public class Archipelago {
     public void setNoEntryTiles(int noEntryTiles) {
         this.noEntryTiles = noEntryTiles;
     }
+
+
 
 }

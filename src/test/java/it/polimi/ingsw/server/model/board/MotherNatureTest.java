@@ -55,8 +55,8 @@ class MotherNatureTest {
         im.getIslandByIndex(3).setStudents(st);
         EnumMap<Colour, Tower> en = new EnumMap<>(Colour.class);
         ProfessorGroup pg = new ProfessorGroup();
-        Player p1 = new Player("g1", Tower.BLACK);
-        Player p2 = new Player("g2", Tower.WHITE);
+        Player p1 = new Player(Tower.BLACK);
+        Player p2 = new Player(Tower.WHITE);
         players.add(p1);
         players.add(p2);
         assertNull(mn.playerWithMostInfluence(players,im,pg,cards));
@@ -70,7 +70,7 @@ class MotherNatureTest {
         im.getArchipelagos().get(2).merge(im.getArchipelagoByIslandIndex(3));
         assertEquals(players.get(0), mn.playerWithMostInfluence(players, im, pg,cards));
 
-        Player p3 = new Player("g3", Tower.GRAY);
+        Player p3 = new Player(Tower.GRAY);
         players.add(p3);
         en.put(Colour.BLUE, Tower.GRAY);
         pg.setProfessors(en);

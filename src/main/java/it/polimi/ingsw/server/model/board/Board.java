@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.board;
 
+import it.polimi.ingsw.network.CloudStatus;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
 import it.polimi.ingsw.server.model.ProfessorGroup;
@@ -67,6 +68,16 @@ public class Board {
         //game manager must check the player with most influence and build tower if needed (in upper method)
     }
 
+    public CloudStatus[] getCloudsStatus() {
+        CloudStatus[] cs = new CloudStatus[clouds.size()];
+        for (int i=0;i<clouds.size();i++) {
+            cs[i] = new CloudStatus();
+            cs[i].setIndex(i);
+            cs[i].setStudents(clouds.get(i).getStudentsOnCloud().getStatus());
+        }
+        return cs;
+    }
+
     //getters & setters for testing
     public IslandManager getIslandManager() {
         return islandManager;
@@ -110,46 +121,4 @@ public class Board {
     public void setCharacterCards(ArrayList<CharacterCard> characterCards) {
         this.characterCards = characterCards;
     }
-
-
-    /*public void playCharacterCard(int posCharacterCard){
-        CharacterCardInfo[] e = CharacterCardInfo.values();
-        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
-    }
-
-    public void playCharacterCard( int posCharacterCard, Colour colour){
-        CharacterCardInfo[] e = CharacterCardInfo.values();
-
-        characterCards.get(posCharacterCard).setSelectedColour(colour);
-
-        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
-    }
-
-    public void playCharacterCard(int posCharacterCard, Colour colour, int noEntryTiles){
-        CharacterCardInfo[] e = CharacterCardInfo.values();
-
-        characterCards.get(posCharacterCard).setSelectedColour(colour);
-        characterCards.get(posCharacterCard).setNoEntryTiles(noEntryTiles);
-
-        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
-    }
-
-    public void playCharacterCard(int posCharacterCard, int noEntryTiles){
-        CharacterCardInfo[] e = CharacterCardInfo.values();
-
-        characterCards.get(posCharacterCard).setNoEntryTiles(noEntryTiles);
-
-        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
-    }
-
-    public void playCharacterCard(int posCharacterCard, StudentGroup studentGroupFrom , StudentGroup studentGroupTo){
-        CharacterCardInfo[] e = CharacterCardInfo.values();
-
-        characterCards.get(posCharacterCard).setSelectedStudentsFrom(studentGroupFrom);
-        characterCards.get(posCharacterCard).setSelectedStudentsFrom(studentGroupTo);
-
-        e[posCharacterCard].getEffect().resolveEffect(characterCards.get(posCharacterCard));
-
-    }*/
-
 }

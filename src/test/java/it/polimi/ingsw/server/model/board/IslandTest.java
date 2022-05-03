@@ -235,7 +235,7 @@ class IslandTest {
     @Test
     public void playerInfluenceCARD8() {
         cards.add(new CharacterCard(CharacterCardInfo.CARD8));
-        Player p = new Player("p1", Tower.BLACK);
+        Player p = new Player(Tower.BLACK);
         cards.get(0).setPlayerThisTurn(p);
         cards.get(0).getCardInfo().getEffect().resolveEffect(cards.get(0));
         i = new Island(3);

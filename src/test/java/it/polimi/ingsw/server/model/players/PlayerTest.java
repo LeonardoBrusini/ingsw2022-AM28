@@ -24,12 +24,11 @@ class PlayerTest {
     @Test
     void Player() {
         for (Tower t : Tower.values()) {
-            Player p = new Player("g1", t);
+            Player p = new Player(t);
             assertEquals(1, p.getCoins());
             assertEquals(t, p.getTower()); //here because getTower builds a Tower
         }
-        Player p1 = new Player("g2", Tower.WHITE);
-        assertEquals("g2", p1.getNickname());
+        Player p1 = new Player(Tower.WHITE);
     }
 
     /**
@@ -37,7 +36,7 @@ class PlayerTest {
      */
     @Test
     void fillDashboardEntrance() {
-        Player p = new Player("g1", Tower.WHITE);
+        Player p = new Player(Tower.WHITE);
         StudentGroup st = new StudentGroup();
         p.fillDashboardEntrance(st);
         for (Colour c : Colour.values())
@@ -65,7 +64,7 @@ class PlayerTest {
     @Test
     void moveToIsland() {
 
-        Player p = new Player("g2", Tower.GRAY);
+        Player p = new Player(Tower.GRAY);
         StudentGroup st = new StudentGroup(1);
         st.addStudent(Colour.GREEN);
         st.addStudent(Colour.BLUE);
@@ -101,7 +100,7 @@ class PlayerTest {
      */
     @Test
     void moveToHall() {
-        Player p = new Player("g2", Tower.GRAY);
+        Player p = new Player(Tower.GRAY);
         StudentGroup st = new StudentGroup(1);
         st.addStudent(Colour.GREEN);
         st.addStudent(Colour.BLUE);
@@ -155,7 +154,7 @@ class PlayerTest {
     @Test
     void TowerGettersAndSetters() {
         for (Tower tower : Tower.values()) {
-            Player p = new Player("g5", tower);
+            Player p = new Player(tower);
             p.setNumTowers(8);
             assertEquals(8, p.getDashboard().getNumTowers());
             assertEquals(tower, p.getTower());
@@ -167,7 +166,7 @@ class PlayerTest {
      */
     @Test
     void spendCoins() {
-        Player p = new Player("g6", Tower.GRAY);
+        Player p = new Player(Tower.GRAY);
         assertEquals(1, p.getCoins());
         p.spendCoins(1);
         assertEquals(0, p.getCoins());
@@ -184,7 +183,7 @@ class PlayerTest {
     @Test
     void playCard() {
         EndOfGameChecker.resetInstance();
-        Player p = new Player("g7", Tower.WHITE);
+        Player p = new Player(Tower.WHITE);
         for (int i = 0; i < 9; i++) {
             assertFalse(p.getAssistantCard(i).isPlayed());
             p.playCard(i);
@@ -208,7 +207,7 @@ class PlayerTest {
     @Test
     void fillHall() {
         StudentGroup sg = new StudentGroup(3);
-        Player p = new Player("p1", Tower.BLACK);
+        Player p = new Player(Tower.BLACK);
         try {
             p.fillHall(sg);
             for (Colour c: Colour.values()) {

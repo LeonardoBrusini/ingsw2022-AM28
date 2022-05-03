@@ -46,4 +46,40 @@ public class Command {
     public int[] getPStudentsTo() {
         return pStudentsTo;
     }
+
+    public void setCmd(String cmd) {
+        this.cmd = cmd;
+    }
+
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
+
+    public void setStudentColour(String studentColour) {
+        this.studentColour = studentColour;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public void setMotherNatureShifts(int motherNatureShifts) {
+        this.motherNatureShifts = motherNatureShifts;
+    }
+
+    public void setPIndex(int pIndex) {
+        this.pIndex = pIndex;
+    }
+
+    public void setPColour(String pColour) {
+        this.pColour = pColour;
+    }
+
+    public void setPStudentsFrom(int[] pStudentsFrom) {
+        this.pStudentsFrom = pStudentsFrom;
+    }
+
+    public void setPStudentsTo(int[] pStudentsTo) {
+        this.pStudentsTo = pStudentsTo;
+    }
 }

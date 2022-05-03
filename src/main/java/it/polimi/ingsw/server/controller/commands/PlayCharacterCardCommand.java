@@ -1,20 +1,61 @@
 package it.polimi.ingsw.server.controller.commands;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.network.Command;
 import it.polimi.ingsw.network.StatusCode;
+import it.polimi.ingsw.server.controller.EndOfGameChecker;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.enumerations.Colour;
+import it.polimi.ingsw.server.model.StudentGroup;
 
+/**
+ * The class that resolves the command to play the chosen CharacterCard
+ */
 public class PlayCharacterCardCommand implements CommandStrategy{
+    /**
+     * It resolves the command given by the client
+     * @param gameManager gameManager reference
+     * @param command command given by the client
+     * @return null if no Exception thrown, corresponding StatusCode otherwise
+     */
     @Override
     public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
-        //not implemented yet
+        try {
+            int pIndex = command.getPlayerIndex();
+            int cIndex = command.getIndex();
+            if(command.getPStudentsFrom()!=null) {
+                StudentGroup sf = new StudentGroup(command.getPStudentsFrom());
+                StudentGroup st = new StudentGroup(command.getPStudentsTo());
+                gameManager.playCharacterCard(pIndex,cIndex,sf,st);
+            } else if(command.getPIndex()!=0 && command.getPColour()!=null) {
+                gameManager.playCharacterCard(pIndex,cIndex, Colour.valueOf(command.getPColour()),command.getPIndex());
+            } else if(command.getPIndex()!=0) {
+                gameManager.playCharacterCard(pIndex,cIndex,command.getPIndex());
+            } else if(command.getPColour()!=null) {
+                gameManager.playCharacterCard(pIndex,cIndex,Colour.valueOf(command.getPColour()));
+            } else {
+                gameManager.playCharacterCard(pIndex,cIndex);
+            }
+        } catch (IllegalArgumentException e) {
+            return StatusCode.ILLEGALARGUMENT;
+        }
+        //other ERRORS
         return null;
     }
 
+    /**
+     * It creates the message with changes operated by the resolution of the command
+     * @param gameManager gameManager reference
+     * @return Json message
+     */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager) {
-        //not implemented yet
-        return null;
+    public String getUpdatedStatus(ExpertGameManager gameManager, Command command) {
+        if(EndOfGameChecker.instance().isEndOfGame()){
+            //not implemented yet
+            return null;
+        } else {
+            return new Gson().toJson(gameManager.getFullCurrentStatus());
+        }
     }
 }
 

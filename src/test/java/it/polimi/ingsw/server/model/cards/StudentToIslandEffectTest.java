@@ -25,7 +25,7 @@ class StudentToIslandEffectTest {
         c.setSelectedIsland(im.getIslandByIndex(3));
         c.setBoard(new Board(2));
         c.setSelectedColour(Colour.YELLOW);
-        c.setPlayerThisTurn(new Player("g1", Tower.WHITE));
+        c.setPlayerThisTurn(new Player(Tower.WHITE));
     }
     @Test
     /**

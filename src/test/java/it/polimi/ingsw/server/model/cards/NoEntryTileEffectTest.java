@@ -20,32 +20,32 @@ class NoEntryTileEffectTest {
         c.setNoEntryTiles(1);
         a.setNoEntryTiles(3);
         int anet = a.getNoEntryTiles();
-        int cnet = c.getNoEntryTiles();
+        int cNet = c.getNoEntryTiles();
         c.getCardInfo().getEffect().resolveEffect(c);
-        //removed if cycle to test all cases indivually
+        //removed if cycle to test all cases individually
 
         assertEquals(anet + 1, a.getNoEntryTiles());
-        assertEquals(cnet - 1, c.getNoEntryTiles());
+        assertEquals(cNet - 1, c.getNoEntryTiles());
 
         c.setNoEntryTiles(2);
         a.setNoEntryTiles(3);
         int anet1 = a.getNoEntryTiles();
-        int cnet1 = c.getNoEntryTiles();
+        int cNet1 = c.getNoEntryTiles();
         c.getCardInfo().getEffect().resolveEffect(c);
         //removed if cycle to test all cases individually
 
         assertEquals(anet1 + 1, a.getNoEntryTiles());
-        assertEquals(cnet1 - 1, c.getNoEntryTiles());
+        assertEquals(cNet1 - 1, c.getNoEntryTiles());
 
         c.setNoEntryTiles(0);
         a.setNoEntryTiles(3);
         int anet2 = a.getNoEntryTiles();
-        int cnet2 = c.getNoEntryTiles();
+        int cNet2 = c.getNoEntryTiles();
         c.getCardInfo().getEffect().resolveEffect(c);
-        //removed if cycle to test all cases indivually
+        //removed if cycle to test all cases individually
 
         assertEquals(anet2 , a.getNoEntryTiles());
-        assertEquals(cnet2 , c.getNoEntryTiles());
+        assertEquals(cNet2 , c.getNoEntryTiles());
 
     }
 }

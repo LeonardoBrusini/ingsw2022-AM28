@@ -1,9 +1,8 @@
 package it.polimi.ingsw.server.network;
 
 public class CheckDisconnection implements Runnable{
-    private final ConnectionsSender sender;
-
-    public CheckDisconnection(ConnectionsSender sender) {
+    private final ConnectionList sender;
+    public CheckDisconnection(ConnectionList sender) {
         this.sender = sender;
     }
 

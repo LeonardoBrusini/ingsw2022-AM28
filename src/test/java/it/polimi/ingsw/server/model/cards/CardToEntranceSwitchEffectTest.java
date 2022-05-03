@@ -22,7 +22,7 @@ class CardToEntranceSwitchEffectTest {
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD7);
         Board b = new Board(2);
         c.initializeCards(b.getBag());
-        Player p = new Player("g1", Tower.WHITE);
+        Player p = new Player(Tower.WHITE);
         c.setPlayerThisTurn(p);
         Dashboard d = c.getPlayerThisTurn().getDashboard();
         StudentGroup studentOnCard = new StudentGroup(6);
@@ -38,16 +38,16 @@ class CardToEntranceSwitchEffectTest {
 
         ArrayList<Integer> expectedCard = new ArrayList<>();
         ArrayList<Integer> expectedDashboard = new ArrayList<>();
-        Player p1 = new Player("g1", Tower.WHITE);
+        Player p1 = new Player(Tower.WHITE);
         c.setPlayerThisTurn(p1);
         Dashboard d1 = c.getPlayerThisTurn().getDashboard();
         StudentGroup studentOnCard1 = new StudentGroup(6);
         c.setStudentsOnCard(studentOnCard1);
-        ArrayList<Colour> extactedColours1 = b.getBag().removeStudents(3);
-        ArrayList<Colour> extactedColours2 = b.getBag().removeStudents(3);
-        StudentGroup studentsTo1 = new StudentGroup(extactedColours1);
+        ArrayList<Colour> extractedColours1 = b.getBag().removeStudents(3);
+        ArrayList<Colour> extractedColours2 = b.getBag().removeStudents(3);
+        StudentGroup studentsTo1 = new StudentGroup(extractedColours1);
         StudentGroup sp1 = new StudentGroup(6);
-        StudentGroup studentsFrom1 = new StudentGroup(extactedColours2);
+        StudentGroup studentsFrom1 = new StudentGroup(extractedColours2);
         d1.fillEntrance(sp1);
         c.setSelectedStudentsTo(studentsTo1);
         c.setSelectedStudentsFrom(studentsFrom1);
@@ -64,7 +64,7 @@ class CardToEntranceSwitchEffectTest {
             i++;
         }
 
-        Player p2 = new Player("g1", Tower.WHITE);
+        Player p2 = new Player(Tower.WHITE);
         c.setPlayerThisTurn(p2);
         Dashboard d2 = c.getPlayerThisTurn().getDashboard();
         StudentGroup studentsOnCard2 = new StudentGroup(6);
