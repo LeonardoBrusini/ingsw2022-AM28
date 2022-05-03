@@ -10,7 +10,7 @@ public class PlayerStatus {
     private int numTowers;
     private int [] studentsOnHall;
     private int[] studentsOnEntrance;
-    private boolean[] AssistantCard;
+    private boolean[] AssistantCard = new boolean[10];
     private String towerColour;
 
     /**
