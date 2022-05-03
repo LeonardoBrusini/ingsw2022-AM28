@@ -22,7 +22,7 @@ public class TurnManager {
      * TurnManager constructor, starts with the planning phase, random player starts
      * @param numPlayers number of players
      */
-    public TurnManager (int numPlayers) {
+    public TurnManager (int numPlayers, Board board) {
         planningOrder = new ArrayList<>();
         phase = Phase.PLANNING;
         currentPlayer = 0;
@@ -32,6 +32,7 @@ public class TurnManager {
             if(playerIndex==numPlayers-1) playerIndex = 0;
             else playerIndex++;
             planningOrder.add(playerIndex);
+            board.fillClouds();
         }
     }
 
@@ -61,7 +62,7 @@ public class TurnManager {
             } else {
                 if(currentPlayer==players.size()-1) {
                     EndOfGameChecker.instance().updateEOGLastTurn(b,players);
-                    toPlanningPhase(players);
+                    toPlanningPhase(players, b);
                 } else {
                     currentPlayer++;
                     numOfMovedStudents = 0;
@@ -76,10 +77,11 @@ public class TurnManager {
      * sets the order of players to the planning phase
      * @param players list of players
      */
-    private void toPlanningPhase(ArrayList<Player> players) {
+    private void toPlanningPhase(ArrayList<Player> players, Board board) {
         planningOrder = new ArrayList<>();
         phase = Phase.PLANNING;
         currentPlayer = 0;
+        board.fillClouds();
         int playerIndex = actionOrder.get(0);
         for (int i=1;i<players.size();i++) {
             if(playerIndex==players.size()-1) playerIndex = 0;
