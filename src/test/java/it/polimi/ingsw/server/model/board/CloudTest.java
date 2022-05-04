@@ -47,7 +47,7 @@ class CloudTest {
 
         c.addGroup( new StudentGroup( 5 ) );
         for(Colour colour : Colour.values()){
-            assertEquals(8,c.getStudentsOnCloud().getQuantityColour(colour));
+            assertEquals(5,c.getStudentsOnCloud().getQuantityColour(colour));
         }
     }
 
