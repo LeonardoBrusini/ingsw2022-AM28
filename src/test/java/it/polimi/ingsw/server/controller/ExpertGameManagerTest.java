@@ -99,9 +99,9 @@ class ExpertGameManagerTest {
         assertTrue(gm2.isGameStarted());
         ArrayList<Player> players2 = gm2.getPlayers();
         assertEquals(3, gm2.getBoard().getClouds().size());
-        /*for(Cloud cloud: gm2.getBoard().getClouds()) {
+        for(Cloud cloud: gm2.getBoard().getClouds()) {
            assertEquals(4, cloud.getStudentsOnCloud().getTotalStudents());
-        }*/
+        }
         for(Player p: players2){
             assertEquals(6,p.getDashboard().getNumTowers());
             assertEquals(0, p.getDashboard().getHall().getTotalStudents());

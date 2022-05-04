@@ -40,7 +40,7 @@ public class Cloud {
     public void addGroup(StudentGroup s) throws IllegalArgumentException{
         if(s==null) throw new IllegalArgumentException();
         for(Colour c: Colour.values()){
-            students.setNumStudents(students.getQuantityColour(c) + s.getQuantityColour(c),c);
+            students.setNumStudents( s.getQuantityColour(c),c);
         }
     }
 

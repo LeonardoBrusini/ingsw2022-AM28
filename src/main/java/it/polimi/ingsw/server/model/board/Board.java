@@ -41,7 +41,8 @@ public class Board {
      */
     public void fillClouds(){
         for(Cloud c : clouds){
-            c.addGroup(new StudentGroup(bag.removeStudents(clouds.size()+1)));
+            if(c.empty())
+                c.addGroup(new StudentGroup(bag.removeStudents(clouds.size()+1)));
         }
     }
 
