@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentGroupTest {
-    private StudentGroup sg;
-    private StudentGroup sg1;
-    private StudentGroup sg2;
-    private StudentGroup sg3;
+    private StudentGroup sg,sg1,sg2,sg3,sg4;
 
     /**
      * To do before each test
@@ -30,6 +27,11 @@ class StudentGroupTest {
             colourList.add(Colour.PINK);
         }
         sg3 = new StudentGroup(colourList);
+        int[] students = {1,2,3,4,5};
+        sg4 = new StudentGroup(students);
+        int[] students2 = {1,2};
+        StudentGroup sg5 = new StudentGroup(students2);
+        for(Colour c: Colour.values()) assertEquals(0,sg5.getQuantityColour(c));
     }
 
     /**
@@ -150,6 +152,23 @@ class StudentGroupTest {
         sg.setStudents(sg3);
         for (Colour c : Colour.values()) {
             assertEquals(sg3.getQuantityColour(c),sg.getQuantityColour(c));
+        }
+    }
+
+    /**
+     * Tests if the status (useful to communication protocol) works correctly
+     */
+    @Test
+    void getStatus() {
+        int[] students = sg1.getStatus();
+        for (int i:students) assertEquals(10,i);
+        students = sg.getStatus();
+        for (int i:students) assertEquals(0,i);
+        students = sg4.getStatus();
+        int j=0;
+        for (int i:students) {
+            j++;
+            assertEquals(j,i);
         }
     }
 }

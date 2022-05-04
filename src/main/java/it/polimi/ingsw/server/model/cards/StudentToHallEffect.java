@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.cards;
 
+import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.server.exceptions.FullHallException;
 
 public class StudentToHallEffect implements EffectStrategy{
@@ -21,5 +22,10 @@ public class StudentToHallEffect implements EffectStrategy{
         }
         //d.fillHall(new StudentGroup(list));
         c.getStudentsOnCard().addStudent(c.getBoard().getBag().removeStudents(1).get(0));
+    }
+
+    @Override
+    public CurrentStatus getUpdatedStatus(CharacterCard c) {
+        return null;
     }
 }

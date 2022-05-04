@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.cards;
 
+import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.server.model.players.AssistantCard;
 
 public class AddMotherNatureShiftsEffect implements EffectStrategy{
@@ -11,5 +12,10 @@ public class AddMotherNatureShiftsEffect implements EffectStrategy{
     public void resolveEffect(CharacterCard c) {
         AssistantCard as = c.getPlayerThisTurn().getLastPlayedCard();
         as.getInfo().setMotherNatureShifts(as.getInfo().getMotherNatureShifts()+2);
+    }
+
+    @Override
+    public CurrentStatus getUpdatedStatus(CharacterCard c) {
+        return null;
     }
 }

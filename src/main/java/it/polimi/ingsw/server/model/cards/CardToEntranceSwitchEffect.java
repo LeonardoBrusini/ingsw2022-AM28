@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.cards;
 
+import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.model.players.Dashboard;
@@ -16,7 +17,7 @@ public class CardToEntranceSwitchEffect implements EffectStrategy{
         if(c.getSelectedStudentsTo().getTotalStudents() > 3 || c.getSelectedStudentsFrom().getTotalStudents() > 3)
             throw new IllegalArgumentException();
 
-        //this exceptions can break the game; can be that some students get removed from the card or entrance before throwing the exception
+        //this exception can break the game; can be that some students get removed from the card or entrance before throwing the exception
         for(Colour colour : Colour.values()) {
             int quantityColour = c.getSelectedStudentsFrom().getQuantityColour(colour);
             if(c.getStudentsOnCard().getQuantityColour(colour) < quantityColour)
@@ -38,5 +39,10 @@ public class CardToEntranceSwitchEffect implements EffectStrategy{
 
         d.fillEntrance(c.getSelectedStudentsFrom());
         c.getStudentsOnCard().addStudents(c.getSelectedStudentsTo());
+    }
+
+    @Override
+    public CurrentStatus getUpdatedStatus(CharacterCard c) {
+        return null;
     }
 }

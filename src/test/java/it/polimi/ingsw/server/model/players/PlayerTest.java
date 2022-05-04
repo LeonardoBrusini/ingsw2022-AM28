@@ -234,4 +234,25 @@ class PlayerTest {
         }
     }
 
+    @Test
+    void gettersAndSetters() {
+        Player p = new Player(Tower.BLACK);
+        p.setConnected(false);
+        assertFalse(p.isConnected());
+        p.setConnected(true);
+        assertTrue(p.isConnected());
+        p.setNickname("Leonardo");
+        assertEquals("Leonardo",p.getNickname());
+        p.setCcActivatedThisTurn(true);
+        assertTrue(p.isCcActivatedThisTurn());
+        assertNull(p.getLastPlayedCard());
+        try {
+            p.playCard(1);
+        } catch (AlreadyPlayedException e) {
+            assertNull(p.getLastPlayedCard());
+        }
+        assertEquals(p.getCards().get(1),p.getLastPlayedCard());
+        assertTrue(p.getAssistantCard(1).isPlayed());
+    }
+
 }

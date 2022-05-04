@@ -23,16 +23,6 @@ class IslandManagerTest {
     }
 
     /**
-     * To test if is properly returned the correct Island by the IslandManager
-     */
-    @Test
-    void getIsland() {
-        //how to test??
-        Island i = im.getIslandByIndex(4);
-        assertEquals(4,i.getIslandIndex());
-    }
-
-    /**
      * It verifies if the method assign and build a Player's Tower on the Island according to the game's rules
      */
     @Test
@@ -147,5 +137,20 @@ class IslandManagerTest {
         im.getArchipelagos().remove(0);
         assertSame(im.getArchipelagos().get(9), im.getArchipelagoByIslandIndex(12));
         assertSame(im.getArchipelagos().get(9), im.getArchipelagoByIslandIndex(1));
+    }
+
+    @Test
+    void getArchipelagoIndexByIslandIndex() {
+        for (int i = 0;i<12; i++) {
+            assertEquals(i, im.getArchipelagoIndexByIslandIndex(i + 1));
+        }
+        im.getArchipelagos().get(2).merge(im.getArchipelagos().get(3));
+        im.getArchipelagos().remove(3);
+        assertEquals(2, im.getArchipelagoIndexByIslandIndex(3));
+        assertEquals(2, im.getArchipelagoIndexByIslandIndex(4));
+        im.getArchipelagos().get(10).merge(im.getArchipelagos().get(0));
+        im.getArchipelagos().remove(0);
+        assertEquals(9, im.getArchipelagoIndexByIslandIndex(12));
+        assertEquals(9, im.getArchipelagoIndexByIslandIndex(1));
     }
 }

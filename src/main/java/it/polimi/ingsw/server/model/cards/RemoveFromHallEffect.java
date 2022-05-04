@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.cards;
 
+import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.server.model.players.Player;
 
 public class RemoveFromHallEffect implements EffectStrategy{
@@ -14,5 +15,10 @@ public class RemoveFromHallEffect implements EffectStrategy{
                 p.getDashboard().removeFromHall(c.getSelectedColour());
             }
         }
+    }
+
+    @Override
+    public CurrentStatus getUpdatedStatus(CharacterCard c) {
+        return null;
     }
 }

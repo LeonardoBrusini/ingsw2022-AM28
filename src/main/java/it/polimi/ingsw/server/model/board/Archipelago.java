@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Archipelago is a list of islands
  */
 public class Archipelago {
-    private ArrayList<Island> islands;
+    private final ArrayList<Island> islands;
     private boolean presenceMotherNature;
     private int noEntryTiles;
     private int firstIslandIndex;
@@ -72,14 +72,8 @@ public class Archipelago {
     public int getFirstIslandIndex() {
         return firstIslandIndex;
     }
-    public void setFirstIslandIndex(int firstIslandIndex) {
-        this.firstIslandIndex = firstIslandIndex;
-    }
     public ArrayList<Island> getIslands() {
         return islands;
-    }
-    public void setIslands(ArrayList<Island> islands) {
-        this.islands = islands;
     }
     public boolean isPresenceMotherNature() {
         return presenceMotherNature;

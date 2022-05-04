@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.enumerations.Tower;
 import java.util.ArrayList;
 
 public class IslandManager {
-    private ArrayList<Archipelago> archipelagos;
+    private final ArrayList<Archipelago> archipelagos;
 
     /**
      * IslandManager constructor
@@ -137,8 +137,4 @@ public class IslandManager {
     public ArrayList<Archipelago> getArchipelagos() {
         return archipelagos;
     }
-    public void setArchipelagos(ArrayList<Archipelago> archipelagos) {
-        this.archipelagos = archipelagos;
-    }
-    public int getNumArchipelagos(){return archipelagos.size();}
 }

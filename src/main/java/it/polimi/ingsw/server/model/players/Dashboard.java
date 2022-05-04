@@ -108,9 +108,14 @@ public class Dashboard {
         return tower;
     }
 
+    /**
+     * adds to the hall al the players in studentGroup
+     * @param studentGroup students to add
+     * @throws FullHallException hall can have maximum 10 students each colour
+     */
     public void fillHall(StudentGroup studentGroup) throws FullHallException{
         for(Colour colour: Colour.values())
-            if(hall.getQuantityColour(colour)+studentGroup.getQuantityColour(colour) >= 10)
+            if(hall.getQuantityColour(colour)+studentGroup.getQuantityColour(colour) > 10)
                 throw new FullHallException();
         for(Colour colour: Colour.values())
             hall.setNumStudents(hall.getQuantityColour(colour) + studentGroup.getQuantityColour(colour), colour);

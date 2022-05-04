@@ -85,10 +85,6 @@ public class Player {
         }
     }
 
-    public Tower getTower(){
-        return hisTower;
-    }
-
     /**
      * It adds a coin to the ones available to the Player
      */
@@ -119,28 +115,6 @@ public class Player {
         EndOfGameChecker.instance().setLastTurn(true);
     }
 
-    public void setNumTowers(int num) {
-        dashboard.setNumTowers(num);
-    }
-
-    //getters & setters
-    public AssistantCard getLastPlayedCard() {
-        return lastPlayedCard;
-    }
-    public Dashboard getDashboard() {
-        return dashboard;
-    }
-    public int getCoins(){
-        return coins;
-    }
-    public String getNickname() {
-        return nickname;
-    }
-    //getter & setter fot tests
-    public AssistantCard getAssistantCard(int x){
-        return cards.get(x);
-    }
-
     /**
      * The method fills the hall with the given StudentGroup
      * @param selectedStudentsFrom StudentGroup to add to the Hall
@@ -162,31 +136,54 @@ public class Player {
         }
     }
 
+    /**
+     * adds a single student to the dashboard's hall
+     * @param selectedColour colour of the student
+     * @throws FullHallException if there are already 10 students of the selected colour in the hall
+     */
     public void addToHall(Colour selectedColour) throws FullHallException{
         dashboard.addToHall(selectedColour);
         checkCoins(selectedColour);
     }
+    public void setNumTowers(int num) {
+        dashboard.setNumTowers(num);
+    }
 
+    //getters & setters
+    public Tower getTower(){
+        return hisTower;
+    }
+    public AssistantCard getLastPlayedCard() {
+        return lastPlayedCard;
+    }
+    public Dashboard getDashboard() {
+        return dashboard;
+    }
+    public int getCoins(){
+        return coins;
+    }
+    public String getNickname() {
+        return nickname;
+    }
+    //getter & setter fot tests
+    public AssistantCard getAssistantCard(int x){
+        return cards.get(x);
+    }
     public boolean isCcActivatedThisTurn() {
         return ccActivatedThisTurn;
     }
-
     public void setCcActivatedThisTurn(boolean ccActivatedThisTurn) {
         this.ccActivatedThisTurn = ccActivatedThisTurn;
     }
-
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
     public void setConnected(boolean connected) {
         this.connected = connected;
     }
-
     public boolean isConnected() {
         return connected;
     }
-
     public ArrayList<AssistantCard> getCards() {
         return cards;
     }
