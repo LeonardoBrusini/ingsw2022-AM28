@@ -50,6 +50,10 @@ public class CharacterCard {
         }
     }
 
+    /**
+     * It shows the price of the CharacterCard, that could change during the Game
+     * @return CharacterCard's price
+     */
     public int getPrice() {
         int price = cardInfo.getPrice() + (coinOnIt ? 1 : 0);
         coinOnIt = true;
@@ -109,6 +113,7 @@ public class CharacterCard {
     public void setPlayerThisTurn(Player playerThisTurn) {
         this.playerThisTurn = playerThisTurn;
     }
+    public boolean getCoinOnIt(){return coinOnIt;}
 
     //not sure about this
     public Board getBoard() {

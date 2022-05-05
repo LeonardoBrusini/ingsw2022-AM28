@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.network.CurrentStatus;
+import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
 import it.polimi.ingsw.server.model.ProfessorGroup;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.server.model.board.Archipelago;
 import it.polimi.ingsw.server.model.board.Board;
 import it.polimi.ingsw.server.model.board.Cloud;
 import it.polimi.ingsw.server.model.board.MotherNature;
+import it.polimi.ingsw.server.model.cards.CharacterCard;
 import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
@@ -63,6 +65,26 @@ class ExpertGameManagerTest {
                 assertEquals(0, p.getDashboard().getEntrance().getQuantityColour(c));
             }
         }
+        for(CharacterCard c: gm1.getBoard().getCharacterCards()) {
+            assertFalse(c.isActivated());
+            assertFalse(c.getCoinOnIt());
+            if (c.getCardInfo().equals(CharacterCardInfo.CARD1) || c.getCardInfo().equals(CharacterCardInfo.CARD11)){
+                assertEquals(4, c.getStudentsOnCard().getTotalStudents());
+            }else if(c.getCardInfo().equals(CharacterCardInfo.CARD7)){
+                assertEquals(6, c.getStudentsOnCard().getTotalStudents());
+            }else{
+                assertEquals(0,c.getStudentsOnCard().getTotalStudents());
+            }
+            assertNull(c.getSelectedStudentsFrom());
+            assertNull(c.getSelectedStudentsTo());
+            if(c.getCardInfo().equals(CharacterCardInfo.CARD5))
+                assertEquals(4, c.getNoEntryTiles());
+            else assertEquals(0, c.getNoEntryTiles());
+            assertNull(c.getSelectedColour());
+            assertNull(c.getSelectedIsland());
+            assertEquals(c.getPrice(), c.getCardInfo().getPrice());
+        }
+
         cs = gm1.getFullCurrentStatus();
         assertEquals("expert", cs.getGameMode());
         ArrayList<Archipelago> archipelagos = gm1.getBoard().getIslandManager().getArchipelagos();
@@ -142,4 +164,6 @@ class ExpertGameManagerTest {
         }
         assertEquals("simple", cs.getGameMode());
     }
+
+
 }
