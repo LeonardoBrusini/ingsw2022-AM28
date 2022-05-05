@@ -62,7 +62,7 @@ public class PlayCharacterCardCommand implements CommandStrategy{
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command) {
         CharacterCard card = gameManager.getBoard().getCharacterCards().get(command.getIndex());
-        CurrentStatus cs = card.getCardInfo().getEffect().getUpdatedStatus(card);
+        CurrentStatus cs = card.getCardInfo().getEffect().getUpdatedStatus(card,gameManager);
         if(EndOfGameChecker.instance().isEndOfGame()){
             cs.setWinner(gameManager.getPlayers().get(EndOfGameChecker.instance().getWinner()).getNickname());
         }

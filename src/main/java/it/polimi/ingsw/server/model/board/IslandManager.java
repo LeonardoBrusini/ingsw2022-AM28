@@ -129,6 +129,7 @@ public class IslandManager {
             as[i] = new ArchipelagoStatus();
             as[i].setIndex(i);
             as[i].setIslands(archipelagos.get(i).getFullIslandsStatus());
+            as[i].setNoEntryTiles(archipelagos.get(i).getNoEntryTiles());
         }
         return as;
     }

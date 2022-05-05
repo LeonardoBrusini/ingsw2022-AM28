@@ -12,6 +12,7 @@ public class PlayerStatus {
     private int[] studentsOnEntrance;
     private boolean[] assistantCards = new boolean[10];
     private String towerColour;
+    private Boolean addedShifts;
 
     /**
      * To set the tower's colour
@@ -89,6 +90,14 @@ public class PlayerStatus {
      */
     public void setStudentsOnEntrance(int [] s){
         this.studentsOnEntrance = s;
+    }
+
+    public Boolean getAddedShifts() {
+        return addedShifts;
+    }
+
+    public void setAddedShifts(Boolean addedShifts) {
+        this.addedShifts = addedShifts;
     }
 
     public Integer getIndex() {

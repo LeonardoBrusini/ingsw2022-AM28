@@ -373,7 +373,6 @@ public class ExpertGameManager {
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
             p.spendCoins(card.getPrice());
-            //board.playCharacterCard(posCharacterCard,studentGroupFrom,studentGroupTo);
             card.setGameManager(this);
             card.setPlayerThisTurn(p);
             card.setBoard(board);
@@ -387,6 +386,10 @@ public class ExpertGameManager {
         }
     }
 
+    /**
+     * creates report of the game to send to clients
+     * @return full current state of the game
+     */
     public synchronized CurrentStatus getFullCurrentStatus() {
         CurrentStatus status = new CurrentStatus();
         status.setStatus(0);
@@ -418,6 +421,7 @@ public class ExpertGameManager {
         }
         gs.setPlayers(ps);
         if(expertMode) {
+            status.setGameMode("expert");
             CharacterCardStatus[] ccs = new CharacterCardStatus[board.getCharacterCards().size()];
             for(int i=0;i<board.getCharacterCards().size();i++) {
                 ccs[i] = new CharacterCardStatus();
@@ -428,10 +432,14 @@ public class ExpertGameManager {
                 ccs[i].setStudents(board.getCharacterCards().get(i).getStudentsOnCard().getStatus());
             }
             gs.setCharacterCards(ccs);
+        } else {
+            status.setGameMode("simple");
         }
+        gs.setProfessors(board.getProfessorGroup().getStatus());
         status.setGame(gs);
         return status;
     }
+
 
     public boolean isGameStarted() {
         return gameStarted;

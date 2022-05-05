@@ -57,4 +57,12 @@ public class ProfessorGroup {
     public void setProfessors(EnumMap<Colour, Tower> professors) {
         this.professors = professors;
     }
+
+    public int[] getStatus() {
+        int[] prof = new int[Colour.values().length];
+        for (Colour c: Colour.values()) {
+            prof[c.ordinal()] = professors.get(c).ordinal();
+        }
+        return prof;
+    }
 }
