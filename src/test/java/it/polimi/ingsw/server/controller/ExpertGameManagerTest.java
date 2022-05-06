@@ -189,6 +189,7 @@ class ExpertGameManagerTest {
                 }
                 assertTrue(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
             }
+
         }
         //To test AlreadyPlayedException's catching
         for(int j = 0; j < gm1.getPlayers().size(); j++) {
