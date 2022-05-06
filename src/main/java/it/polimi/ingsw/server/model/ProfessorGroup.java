@@ -61,7 +61,9 @@ public class ProfessorGroup {
     public int[] getStatus() {
         int[] prof = new int[Colour.values().length];
         for (Colour c: Colour.values()) {
-            prof[c.ordinal()] = professors.get(c).ordinal();
+            if(professors.get(c) != null)
+                prof[c.ordinal()] = professors.get(c).ordinal();
+            else prof[c.ordinal()] = -1; //it avoids the NullPointerException
         }
         return prof;
     }

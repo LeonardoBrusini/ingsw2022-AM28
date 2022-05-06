@@ -160,4 +160,8 @@ public class TurnManager {
             nextPhase(b, players);
         }
     }
+
+    //methods for testing purposes
+    public void setPhase(Phase phase){this.phase = phase;}
+    public void setCurrentPlayer(int p){currentPlayer = p;}
 }

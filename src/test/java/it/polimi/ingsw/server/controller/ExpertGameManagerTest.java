@@ -4,6 +4,9 @@ import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
+import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
+import it.polimi.ingsw.server.exceptions.WrongPhaseException;
+import it.polimi.ingsw.server.exceptions.WrongTurnException;
 import it.polimi.ingsw.server.model.ProfessorGroup;
 import it.polimi.ingsw.server.model.board.Archipelago;
 import it.polimi.ingsw.server.model.board.Board;
@@ -165,5 +168,90 @@ class ExpertGameManagerTest {
         assertEquals("simple", cs.getGameMode());
     }
 
+    void playAssistantCard(){
+        ExpertGameManager gm1 = new ExpertGameManager();
+        gm1.addPlayer();
+        gm1.addPlayer();
+        gm1.newGame(true, 2);
+        for(int j = 0; j < gm1.getPlayers().size(); j++) {
+            for (int i = 0; i < 10; i++) {
+                assertFalse(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
+                try {
+                    gm1.playAssistantCard(j, i);
+                }catch (WrongPhaseException e){
+                    e.printStackTrace();
+                }catch (WrongTurnException f){
+                    f.printStackTrace();
+                }catch (IllegalArgumentException h){
+                    h.printStackTrace();
+                }catch (AlreadyPlayedException z){
+                    z.printStackTrace();
+                }
+                assertTrue(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
+            }
+        }
+        //To test AlreadyPlayedException's catching
+        for(int j = 0; j < gm1.getPlayers().size(); j++) {
+            for (int i = 0; i < 10; i++) {
+                assertFalse(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
+                try {
+                    gm1.playAssistantCard(j, i);
+                } catch (WrongPhaseException e) {
+                    e.printStackTrace();
+                } catch (WrongTurnException f) {
+                    f.printStackTrace();
+                } catch (IllegalArgumentException h) {
+                    h.printStackTrace();
+                } catch (AlreadyPlayedException z) {
+                    z.printStackTrace();
+                }
+                assertTrue(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
+            }
+        }
 
+        //To test WrongTurnExcpetion's catching
+        gm1.getTurnManager().setCurrentPlayer(1);
+        for(int i = 0; i < 10; i++) {
+            try {
+                gm1.playAssistantCard(0, i);
+            }catch (WrongPhaseException e){
+                e.printStackTrace();
+            }catch (WrongTurnException f){
+                f.printStackTrace();
+            }catch (IllegalArgumentException h){
+                h.printStackTrace();
+            }catch (AlreadyPlayedException z){
+                z.printStackTrace();
+            }
+        }
+
+        //To test WrongPhaseException's catching
+        gm1.getTurnManager().setPhase(Phase.ACTION);
+        for(int i = 0; i < 10; i++) {
+            try {
+                gm1.playAssistantCard(0, i);
+            }catch (WrongPhaseException e){
+                e.printStackTrace();
+            }catch (WrongTurnException f){
+                f.printStackTrace();
+            }catch (IllegalArgumentException h){
+                h.printStackTrace();
+            }catch (AlreadyPlayedException z){
+                z.printStackTrace();
+            }
+        }
+
+        //To test IllegalArgumentException's catching
+        try {
+            gm1.playAssistantCard(0, 11);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (WrongTurnException f){
+            f.printStackTrace();
+        }catch (IllegalArgumentException h){
+            h.printStackTrace();
+        }catch (AlreadyPlayedException z){
+            z.printStackTrace();
+        }
+    }
 }
