@@ -54,7 +54,7 @@ public class EffectsStatusTest {
         compareStatus(cs);
     }
 
-    @Test
+   /* @Test
     void CTESStatus() {
         setCard(CharacterCardInfo.CARD7);
         //card parameters && effect activation
@@ -132,7 +132,7 @@ public class EffectsStatusTest {
         CurrentStatus cs = new CurrentStatus();
         //creation of the expected current status
         compareStatus(cs);
-    }
+    }*/
 
     void compareStatus(CurrentStatus cs) {
         assertEquals(cs.getGameMode(),status.getGameMode());
