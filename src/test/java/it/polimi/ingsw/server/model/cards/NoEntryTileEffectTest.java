@@ -41,11 +41,12 @@ class NoEntryTileEffectTest {
         a.setNoEntryTiles(3);
         int anet2 = a.getNoEntryTiles();
         int cNet2 = c.getNoEntryTiles();
-        c.getCardInfo().getEffect().resolveEffect(c);
-        //removed if cycle to test all cases individually
-
-        assertEquals(anet2 , a.getNoEntryTiles());
-        assertEquals(cNet2 , c.getNoEntryTiles());
+        try {
+            c.getCardInfo().getEffect().resolveEffect(c);
+        } catch (IllegalArgumentException e) {
+            assertEquals(anet2 , a.getNoEntryTiles());
+            assertEquals(cNet2 , c.getNoEntryTiles());
+        }
 
     }
 }

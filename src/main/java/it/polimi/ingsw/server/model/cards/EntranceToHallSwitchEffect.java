@@ -40,6 +40,7 @@ public class EntranceToHallSwitchEffect implements EffectStrategy{
                     throw new RuntimeException(e);
                 }
             }
+            quantityColour = c.getSelectedStudentsTo().getQuantityColour(colour);
             for(int i=0; i<quantityColour; i++) {
                 d.removeFromHall(colour);
             }

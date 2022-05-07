@@ -41,16 +41,24 @@ class ComputeInfluenceEffectTest {
     /**
      * It verifies the correct execution of the card's effect and that it leaves the environment as expected
      */
-   /*@Test
+   @Test
     void resolveEffect() {
         int islandBefore = c.getBoard().getMotherNature().getIslandIndex();
         assertEquals(7, c.getSelectedIsland().getIslandIndex());
         c.getCardInfo().getEffect().resolveEffect(c);
-        //ERROR HERE
-        assertEquals(7,c.getPlayerThisTurn().getDashboard().getNumTowers());
+        if(c.getBoard().getIslandManager().getIslandByIndex(7).getStudents().empty()) {
+            assertEquals(8,c.getPlayerThisTurn().getDashboard().getNumTowers());
+        } else {
+            assertEquals(7,c.getPlayerThisTurn().getDashboard().getNumTowers());
+        }
         assertEquals(c.getGameManager().getPlayers().get(0).getTower(),c.getSelectedIsland().getTower());
         assertEquals(8,c.getGameManager().getPlayers().get(1).getDashboard().getNumTowers());
-        assertFalse(c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()).isPresenceMotherNature());
+        if(islandBefore==c.getSelectedIsland().getIslandIndex()) {
+            assertTrue(c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()).isPresenceMotherNature());
+        } else {
+            assertFalse(c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()).isPresenceMotherNature());
+        }
         assertEquals(islandBefore,c.getBoard().getMotherNature().getIslandIndex());
-    }*/
+        assertTrue(c.getBoard().getIslandManager().getArchipelagoByIslandIndex(islandBefore).isPresenceMotherNature());
+    }
 }

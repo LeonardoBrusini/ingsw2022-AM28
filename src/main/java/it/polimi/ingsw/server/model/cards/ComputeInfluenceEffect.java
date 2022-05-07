@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model.cards;
 
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.model.board.Archipelago;
 import it.polimi.ingsw.server.model.board.MotherNature;
 
 public class ComputeInfluenceEffect implements EffectStrategy{
@@ -20,7 +21,10 @@ public class ComputeInfluenceEffect implements EffectStrategy{
         c.getBoard().getMotherNature().setIsland(c.getSelectedIsland().getIslandIndex());
         c.getGameManager().checkInfluence();
         c.getBoard().getMotherNature().setIsland(islandBefore);
-        c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()).setPresenceMotherNature(false);
+        for(Archipelago a: c.getGameManager().getBoard().getIslandManager().getArchipelagos()) {
+            a.setPresenceMotherNature(false);
+        }
+        //c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()).setPresenceMotherNature(false);
         c.getBoard().getIslandManager().getArchipelagoByIslandIndex(islandBefore).setPresenceMotherNature(true);
     }
 

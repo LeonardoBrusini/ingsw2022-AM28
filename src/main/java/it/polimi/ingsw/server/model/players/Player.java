@@ -72,7 +72,7 @@ public class Player {
     }
 
     /**
-     * every 3rd student of the selected colour added to to the hall, gives the player a coin
+     * every 3rd student of the selected colour added to the hall, gives the player a coin
      * @param c colour of the students
      */
     private void checkCoins(Colour c) {

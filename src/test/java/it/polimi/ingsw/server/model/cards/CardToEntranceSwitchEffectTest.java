@@ -7,19 +7,21 @@ import it.polimi.ingsw.server.model.players.Dashboard;
 import it.polimi.ingsw.server.model.players.Player;
 import it.polimi.ingsw.server.enumerations.Tower;
 import it.polimi.ingsw.server.model.board.Board;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class CardToEntranceSwitchEffectTest {
+    private final CharacterCard c = new CharacterCard(CharacterCardInfo.CARD7);
     /**
      * It verifies the correct throw of Exceptions and the correct number of students
      * at the end of computation in each area
      */
     @Test
     void resolveEffect() {
-        CharacterCard c = new CharacterCard(CharacterCardInfo.CARD7);
         Board b = new Board(2);
         c.initializeCards(b.getBag());
         Player p = new Player(Tower.WHITE);
@@ -59,8 +61,8 @@ class CardToEntranceSwitchEffectTest {
         int i = 0;
         for(Colour cc: Colour.values()){
             //assertEquals(7, resCard);
-            Assertions.assertEquals(expectedDashboard.get(i), d1.getEntrance().getQuantityColour(cc));
-            Assertions.assertEquals(expectedCard.get(i), c.getStudentsOnCard().getQuantityColour(cc));
+            assertEquals(expectedDashboard.get(i), d1.getEntrance().getQuantityColour(cc));
+            assertEquals(expectedCard.get(i), c.getStudentsOnCard().getQuantityColour(cc));
             i++;
         }
 
@@ -77,6 +79,28 @@ class CardToEntranceSwitchEffectTest {
         c.setSelectedStudentsFrom(studentsFrom2);
         //c.getCardInfo().getEffect().resolveEffect(c);
         //The function returns IllegalArgumentException
-    }
 
+        /*Player p = new Player(Tower.BLACK);
+        int[] sOnEntrance = {0,1,2,3,1};
+        p.fillDashboardEntrance(new StudentGroup(sOnEntrance));
+        int[] sOnCard = {0,1,1,1,3};
+        CharacterCard c = new CharacterCard(CharacterCardInfo.CARD7);
+        c.setStudentsOnCard(new StudentGroup(sOnCard));
+        int[] sTo = {0,1,1,1,0};
+        int[] sFrom = {0,0,0,0,3};
+        c.setSelectedStudentsFrom(new StudentGroup(sFrom));
+        c.setSelectedStudentsTo(new StudentGroup(sTo));
+        c.setPlayerThisTurn(p);
+        c.getCardInfo().getEffect().resolveEffect(c);
+        assertEquals(0,c.getStudentsOnCard().getQuantityColour(Colour.YELLOW));
+        assertEquals(2,c.getStudentsOnCard().getQuantityColour(Colour.GREEN));
+        assertEquals(2,c.getStudentsOnCard().getQuantityColour(Colour.BLUE));
+        assertEquals(2,c.getStudentsOnCard().getQuantityColour(Colour.PINK));
+        assertEquals(0,c.getStudentsOnCard().getQuantityColour(Colour.RED));
+        assertEquals(0,p.getDashboard().getEntrance().getQuantityColour(Colour.YELLOW));
+        assertEquals(0,p.getDashboard().getEntrance().getQuantityColour(Colour.GREEN));
+        assertEquals(1,p.getDashboard().getEntrance().getQuantityColour(Colour.BLUE));
+        assertEquals(2,p.getDashboard().getEntrance().getQuantityColour(Colour.PINK));
+        assertEquals(4,p.getDashboard().getEntrance().getQuantityColour(Colour.RED));*/
+    }
 }

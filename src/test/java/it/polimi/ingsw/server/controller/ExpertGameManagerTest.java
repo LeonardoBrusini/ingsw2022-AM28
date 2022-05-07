@@ -9,9 +9,7 @@ import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
 import it.polimi.ingsw.server.model.ProfessorGroup;
 import it.polimi.ingsw.server.model.board.Archipelago;
-import it.polimi.ingsw.server.model.board.Board;
 import it.polimi.ingsw.server.model.board.Cloud;
-import it.polimi.ingsw.server.model.board.MotherNature;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
 import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
@@ -178,14 +176,8 @@ class ExpertGameManagerTest {
                 assertFalse(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
                 try {
                     gm1.playAssistantCard(j, i);
-                }catch (WrongPhaseException e){
+                }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
                     e.printStackTrace();
-                }catch (WrongTurnException f){
-                    f.printStackTrace();
-                }catch (IllegalArgumentException h){
-                    h.printStackTrace();
-                }catch (AlreadyPlayedException z){
-                    z.printStackTrace();
                 }
                 assertTrue(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
             }
@@ -197,14 +189,8 @@ class ExpertGameManagerTest {
                 assertFalse(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
                 try {
                     gm1.playAssistantCard(j, i);
-                } catch (WrongPhaseException e) {
+                } catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e) {
                     e.printStackTrace();
-                } catch (WrongTurnException f) {
-                    f.printStackTrace();
-                } catch (IllegalArgumentException h) {
-                    h.printStackTrace();
-                } catch (AlreadyPlayedException z) {
-                    z.printStackTrace();
                 }
                 assertTrue(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
             }
@@ -215,14 +201,8 @@ class ExpertGameManagerTest {
         for(int i = 0; i < 10; i++) {
             try {
                 gm1.playAssistantCard(0, i);
-            }catch (WrongPhaseException e){
+            }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
                 e.printStackTrace();
-            }catch (WrongTurnException f){
-                f.printStackTrace();
-            }catch (IllegalArgumentException h){
-                h.printStackTrace();
-            }catch (AlreadyPlayedException z){
-                z.printStackTrace();
             }
         }
 
@@ -231,28 +211,16 @@ class ExpertGameManagerTest {
         for(int i = 0; i < 10; i++) {
             try {
                 gm1.playAssistantCard(0, i);
-            }catch (WrongPhaseException e){
+            }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
                 e.printStackTrace();
-            }catch (WrongTurnException f){
-                f.printStackTrace();
-            }catch (IllegalArgumentException h){
-                h.printStackTrace();
-            }catch (AlreadyPlayedException z){
-                z.printStackTrace();
             }
         }
 
         //To test IllegalArgumentException's catching
         try {
             gm1.playAssistantCard(0, 11);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
             e.printStackTrace();
-        }catch (WrongTurnException f){
-            f.printStackTrace();
-        }catch (IllegalArgumentException h){
-            h.printStackTrace();
-        }catch (AlreadyPlayedException z){
-            z.printStackTrace();
         }
     }
 }

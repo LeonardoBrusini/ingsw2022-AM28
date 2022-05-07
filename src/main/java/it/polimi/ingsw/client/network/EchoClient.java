@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.network;
 
+import it.polimi.ingsw.client.cli.Menu;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +11,7 @@ import java.net.UnknownHostException;
 
 public class EchoClient {
     public static void main(String[] args){
+        Menu menu = new Menu();
         String hostName = "127.0.0.1";
         int portNumber = 1234;
         try (
@@ -22,7 +25,7 @@ public class EchoClient {
                     String line;
                     while ((line = in.readLine())!=null) {
                         if(line.equals("ping")) out.println("pong");
-                        else System.out.println(line);
+                        else menu.printResult(line);
                     }
                 }catch (IOException e) {
                     throw new RuntimeException(e);
@@ -30,7 +33,8 @@ public class EchoClient {
             }).start();
             String userInput;
             while ((userInput = stdIn.readLine()) != null) {
-                out.println(userInput);
+                String output = menu.generateCommand(userInput);
+                out.println(output);
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);

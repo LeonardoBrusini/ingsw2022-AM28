@@ -35,6 +35,7 @@ public class CardToEntranceSwitchEffect implements EffectStrategy{
             for(int i=0; i<quantityColour; i++) {
                 c.getStudentsOnCard().removeStudent(colour);
             }
+            quantityColour = c.getSelectedStudentsTo().getQuantityColour(colour);
             for(int i=0; i<quantityColour; i++) {
                 try {
                     d.removeFromEntrance(colour);

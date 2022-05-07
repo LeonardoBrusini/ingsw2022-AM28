@@ -2,7 +2,6 @@ package it.polimi.ingsw.server.model.cards;
 
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
-import it.polimi.ingsw.server.model.board.Archipelago;
 
 public class StudentToIslandEffect implements EffectStrategy{
     /**

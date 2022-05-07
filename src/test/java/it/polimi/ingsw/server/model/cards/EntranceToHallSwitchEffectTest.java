@@ -15,14 +15,14 @@ class EntranceToHallSwitchEffectTest {
     /**
      * It tests the correct number of students in the hall and entrance
      */
-    /*@Test
+    @Test
     void resolveEffect() {
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD10);
         ArrayList<Integer> expectedEntrance = new ArrayList<>();
         ArrayList<Integer> expectedHall = new ArrayList<>();
         ExpertGameManager gm = new ExpertGameManager();
-        gm.addPlayer("player1");
-        gm.addPlayer("player2");
+        gm.addPlayer();
+        gm.addPlayer();
         gm.newGame(true, 2);
         c.setGameManager(gm);
         c.setPlayerThisTurn(gm.getPlayers().get(0));
@@ -31,10 +31,10 @@ class EntranceToHallSwitchEffectTest {
         ArrayList<Colour> extractedColors2 = c.getBoard().getBag().removeStudents(2);
         c.setSelectedStudentsFrom(new StudentGroup(extractedColors1));
         c.setSelectedStudentsTo(new StudentGroup(extractedColors2));
-        gm.getPlayers().get(0).getDashboard().fillEntrance(new StudentGroup(10));
+        gm.getPlayers().get(0).getDashboard().fillEntrance(new StudentGroup(5));
 
         try{
-            gm.getPlayers().get(0).getDashboard().fillHall(new StudentGroup(9));
+            gm.getPlayers().get(0).getDashboard().fillHall(new StudentGroup(5));
         }catch (FullHallException e){
             e.printStackTrace();
         }
@@ -49,7 +49,7 @@ class EntranceToHallSwitchEffectTest {
             assertEquals(expectedHall.get(colour.ordinal()),c.getPlayerThisTurn().getDashboard().getHall().getQuantityColour(colour));
         }
 
-        ArrayList<Colour> extractedColors11 = c.getBoard().getBag().removeStudents(4);
+        /*ArrayList<Colour> extractedColors11 = c.getBoard().getBag().removeStudents(4);
         ArrayList<Colour> extractedColors12 = c.getBoard().getBag().removeStudents(4);
         c.setSelectedStudentsFrom(new StudentGroup(extractedColors11));
         c.setSelectedStudentsTo(new StudentGroup(extractedColors12));
@@ -58,7 +58,7 @@ class EntranceToHallSwitchEffectTest {
             gm.getPlayers().get(0).getDashboard().fillHall(new StudentGroup(9));
         }catch (FullHallException e){
             e.printStackTrace();
-        }
+        }*/
         //c.getCardInfo().getEffect().resolveEffect(c);
        //It throws IllegalArgumentException
 
@@ -76,5 +76,5 @@ class EntranceToHallSwitchEffectTest {
 
         //c.getCardInfo().getEffect().resolveEffect(c);
         //It throws IllegalArgumentException
-    }*/
+    }
 }

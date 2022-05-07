@@ -29,4 +29,24 @@ public class CharacterCardStatus {
     public void setStudents(int[] students) {
         this.students = students;
     }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public boolean isCoinOnIt() {
+        return coinOnIt;
+    }
+
+    public Integer getNoEntryTiles() {
+        return noEntryTiles;
+    }
+
+    public int[] getStudents() {
+        return students;
+    }
 }
