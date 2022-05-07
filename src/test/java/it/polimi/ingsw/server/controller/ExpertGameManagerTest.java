@@ -166,6 +166,7 @@ class ExpertGameManagerTest {
         assertEquals("simple", cs.getGameMode());
     }
 
+    //MUST BE TESTED WITH CURRENT PLAYER IN TURN MANAGER
     void playAssistantCard(){
         ExpertGameManager gm1 = new ExpertGameManager();
         gm1.addPlayer();
@@ -196,7 +197,7 @@ class ExpertGameManagerTest {
             }
         }
 
-        //To test WrongTurnExcpetion's catching
+        //To test WrongTurnException's catching
         gm1.getTurnManager().setCurrentPlayer(1);
         for(int i = 0; i < 10; i++) {
             try {
