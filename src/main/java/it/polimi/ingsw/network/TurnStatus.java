@@ -4,10 +4,10 @@ package it.polimi.ingsw.network;
  * It represents the current status of the Turn during the match
  */
 public class TurnStatus {
-    private int player;
+    private Integer player;
     private String phase;
 
-    public int getPlayer(){
+    public Integer getPlayer(){
         return this.player;
     }
 
@@ -15,7 +15,7 @@ public class TurnStatus {
         return this.phase;
     }
 
-    public void setPlayer(int player){
+    public void setPlayer(Integer player){
         this.player=player;
     }
 

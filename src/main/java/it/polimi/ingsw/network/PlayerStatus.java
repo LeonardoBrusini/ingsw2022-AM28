@@ -4,6 +4,7 @@ package it.polimi.ingsw.network;
  * It represents the current status of a Player during the match
  */
 public class PlayerStatus {
+    private String nickName;
     private Integer index;
     private Integer lastAssistantCardPlayed;
     private Integer coins;
@@ -146,5 +147,13 @@ public class PlayerStatus {
 
     public String getTowerColour() {
         return towerColour;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

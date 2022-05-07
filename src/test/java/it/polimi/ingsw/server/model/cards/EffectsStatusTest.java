@@ -22,12 +22,16 @@ public class EffectsStatusTest {
         gameManager.newGame(true,2);
     }
 
+    void setCard(CharacterCardInfo cci) {
+        gameManager.getBoard().getCharacterCards().set(0,new CharacterCard(cci));
+        c = gameManager.getBoard().getCharacterCards().get(0);
+    }
+
     @Test
     void AMNSStatus(){
+        setCard(CharacterCardInfo.CARD4);
         try {
-            gameManager.getBoard().getCharacterCards().set(0,new CharacterCard(CharacterCardInfo.CARD4));
             gameManager.getPlayers().get(0).playCard(0);
-            c = gameManager.getBoard().getCharacterCards().get(0);
         } catch (AlreadyPlayedException e) {
             throw new RuntimeException(e);
         }
@@ -47,6 +51,86 @@ public class EffectsStatusTest {
         ccs[0].setCoinOnIt(true);
         gs.setCharacterCards(ccs);
         cs.setGame(gs);
+        compareStatus(cs);
+    }
+
+    @Test
+    void CTESStatus() {
+        setCard(CharacterCardInfo.CARD7);
+        //card parameters && effect activation
+        status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        CurrentStatus cs = new CurrentStatus();
+        //creation of the expected current status
+        compareStatus(cs);
+    }
+
+    @Test
+    void CIStatus() {
+        setCard(CharacterCardInfo.CARD3);
+        //card parameters && effect activation
+        status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        CurrentStatus cs = new CurrentStatus();
+        //creation of the expected current status
+        compareStatus(cs);
+    }
+
+    @Test
+    void DCStatus() {
+        setCard(CharacterCardInfo.CARD2);
+        //card parameters && effect activation
+        status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        CurrentStatus cs = new CurrentStatus();
+        //creation of the expected current status
+        compareStatus(cs);
+    }
+
+    @Test
+    void ETHSStatus() {
+        setCard(CharacterCardInfo.CARD10);
+        //card parameters && effect activation
+        status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        CurrentStatus cs = new CurrentStatus();
+        //creation of the expected current status
+        compareStatus(cs);
+    }
+
+    @Test
+    void NETStatus() {
+        setCard(CharacterCardInfo.CARD5);
+        //card parameters && effect activation
+        status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        CurrentStatus cs = new CurrentStatus();
+        //creation of the expected current status
+        compareStatus(cs);
+    }
+
+    @Test
+    void RFHStatus() {
+        setCard(CharacterCardInfo.CARD12);
+        //card parameters && effect activation
+        status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        CurrentStatus cs = new CurrentStatus();
+        //creation of the expected current status
+        compareStatus(cs);
+    }
+
+    @Test
+    void STHStatus() {
+        setCard(CharacterCardInfo.CARD11);
+        //card parameters && effect activation
+        status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        CurrentStatus cs = new CurrentStatus();
+        //creation of the expected current status
+        compareStatus(cs);
+    }
+
+    @Test
+    void STIStatus() {
+        setCard(CharacterCardInfo.CARD1);
+        //card parameters && effect activation
+        status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        CurrentStatus cs = new CurrentStatus();
+        //creation of the expected current status
         compareStatus(cs);
     }
 

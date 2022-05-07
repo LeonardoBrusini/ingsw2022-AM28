@@ -404,6 +404,7 @@ public class ExpertGameManager {
         for(int i=0;i<players.size();i++) {
             ps[i] = new PlayerStatus();
             ps[i].setIndex(i);
+            ps[i].setNickName(players.get(i).getNickname());
             if(expertMode) {
                 ps[i].setCoins(players.get(i).getCoins());
             }
