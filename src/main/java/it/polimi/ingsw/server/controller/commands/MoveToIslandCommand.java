@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.enumerations.Colour;
+import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
 
@@ -22,7 +23,11 @@ public class MoveToIslandCommand implements CommandStrategy{
         try{
             System.out.println("tentativo di esecuzione");
             //System.out.println(Colour.valueOf(command.getStudentColour()));
-            gameManager.moveStudentToIsland(command.getPlayerIndex(), Colour.valueOf(command.getStudentColour()), command.getIndex());
+            try {
+                gameManager.moveStudentToIsland(command.getPlayerIndex(), Colour.valueOf(command.getStudentColour()), command.getIndex());
+            }catch (NoStudentsException e){
+                return StatusCode.NOSTUDENTS;
+            }
             System.out.println("andato a buon fine");
         }catch(WrongTurnException e){
             return StatusCode.WRONGTURN;

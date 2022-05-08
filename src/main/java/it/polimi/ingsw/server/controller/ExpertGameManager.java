@@ -127,15 +127,16 @@ public class ExpertGameManager {
      * @param c the colour of the student
      * @param is index of the island
      */
-    public synchronized void moveStudentToIsland(int p, Colour c, int is) throws WrongTurnException, WrongPhaseException{
+    public synchronized void moveStudentToIsland(int p, Colour c, int is) throws WrongTurnException, WrongPhaseException, NoStudentsException{
         if(p<0 || p>=players.size() || c==null || is<1 || is>12) throw new IllegalArgumentException();
         if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
         if(turnManager.getPhase()!=Phase.ACTION ||  turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
-        try{
+        players.get(p).moveToIsland(c,board.getIslandManager().getIslandByIndex(is));
+       /* try{
             players.get(p).moveToIsland(c,board.getIslandManager().getIslandByIndex(is));
         } catch (NoStudentsException e) {
             //what happens?
-        }
+        }*/
         turnManager.nextPhase(board,players);
     }
 

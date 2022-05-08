@@ -187,4 +187,8 @@ public class Player {
     public ArrayList<AssistantCard> getCards() {
         return cards;
     }
+
+    public void setLastPlayedCard(AssistantCard lastPlayedCard) {
+        this.lastPlayedCard = lastPlayedCard;
+    }
 }

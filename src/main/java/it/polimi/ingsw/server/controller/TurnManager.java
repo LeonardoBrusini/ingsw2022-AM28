@@ -165,4 +165,5 @@ public class TurnManager {
     public void setPhase(Phase phase){this.phase = phase;}
     public void setCurrentPlayer(int p){currentPlayer = p;}
     public void setActionOrder(ArrayList<Integer> action){this.actionOrder = action;}
+    public void setMotherNaturePhase(boolean b){this.motherNaturePhase = b;}
 }

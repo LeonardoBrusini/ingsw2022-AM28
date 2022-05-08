@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.network.CurrentStatus;
+import it.polimi.ingsw.server.enumerations.AssistantCardInfo;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.board.Archipelago;
 import it.polimi.ingsw.server.model.board.Cloud;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
+import it.polimi.ingsw.server.model.players.AssistantCard;
 import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
@@ -299,7 +301,7 @@ class ExpertGameManagerTest {
             h.printStackTrace();
         }
 
-        //to test the FullHallException
+        //to test the FullHallException's catching
         ExpertGameManager gm4 = new ExpertGameManager();
         gm4.addPlayer();
         gm4.addPlayer();
@@ -326,7 +328,7 @@ class ExpertGameManagerTest {
             h.printStackTrace();
         }
 
-        //To test the NoStudentExceptionCatching
+        //To test the NoStudentException's Catching
         ExpertGameManager gm1 = new ExpertGameManager();
         gm1.addPlayer();
         gm1.addPlayer();
@@ -389,4 +391,128 @@ class ExpertGameManagerTest {
             z.printStackTrace();
         }
     }
+
+    @Test
+    /**
+     * It tests the right resolution of the moveStudentToIsland method and the corresponding Exceptions' catch
+     */
+    void moveStudentsToIsland(){
+        ExpertGameManager gm = new ExpertGameManager();
+        gm.addPlayer();
+        gm.addPlayer();
+        gm.newGame(true, 2);
+        StudentGroup se = new StudentGroup(4);
+        gm.getPlayers().get(0).fillDashboardEntrance(se);
+        ArrayList<Integer> order = new ArrayList<>();
+        order.add(0);
+        order.add(1);
+        gm.getTurnManager().setActionOrder(order);
+        gm.getTurnManager().setPhase(Phase.ACTION);
+        try {
+            gm.moveStudentToIsland(0, Colour.YELLOW, 3);
+        }catch (NoStudentsException f){
+            f.printStackTrace();
+        }catch (WrongPhaseException h){
+            h.printStackTrace();
+        }catch (WrongTurnException h){
+            h.printStackTrace();
+        }
+
+        //To test the NoStudentException's Catching
+        ExpertGameManager gm1 = new ExpertGameManager();
+        gm1.addPlayer();
+        gm1.addPlayer();
+        gm1.newGame(true, 2);
+        StudentGroup se2 = new StudentGroup();
+        gm1.getPlayers().get(0).fillDashboardEntrance(se2);
+        gm1.getTurnManager().setActionOrder(order);
+        gm1.getTurnManager().setPhase(Phase.ACTION);
+        try {
+            gm1.moveStudentToIsland(0, Colour.BLUE, 8);
+        }catch (NoStudentsException f){
+            f.printStackTrace();
+        }catch (WrongPhaseException h){
+            h.printStackTrace();
+        }catch (WrongTurnException h){
+            h.printStackTrace();
+        }
+        //To test WrongTurnException's catching
+        ExpertGameManager gm2 = new ExpertGameManager();
+        gm2.addPlayer();
+        gm2.addPlayer();
+        gm2.newGame(true, 2);
+        gm2.getTurnManager().setActionOrder(order);
+        gm2.getTurnManager().setPhase(Phase.ACTION);
+        int v = 0;
+        while(v == gm2.getTurnManager().getCurrentPlayer())
+             v++;
+        try {
+            gm2.moveStudentToIsland(v, Colour.BLUE, 2);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+         }catch (WrongTurnException f){
+            f.printStackTrace();
+        }catch (NoStudentsException h){
+            h.printStackTrace();
+        }
+
+        //To test WrongPhaseException's catching
+        gm.getTurnManager().setPhase(Phase.PLANNING);
+        try {
+            gm.moveStudentToIsland(1, Colour.GREEN, 4);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (WrongTurnException f){
+            f.printStackTrace();
+        }catch (NoStudentsException z){
+            z.printStackTrace();
+        }
+    }
+    @Test
+    /**
+     * It tests the right resolution of the moveStudentToIsland method and the corresponding Exceptions' catch
+     */
+    void moveMotherNature(){
+        ExpertGameManager gm = new ExpertGameManager();
+        gm.addPlayer();
+        gm.addPlayer();
+        gm.newGame(true, 2);
+        ArrayList<Integer> order = new ArrayList<>();
+        order.add(0);
+        order.add(1);
+        gm.getTurnManager().setActionOrder(order);
+        gm.getPlayers().get(0).getAssistantCard(3).setPlayed(true);
+        gm.getPlayers().get(0).setLastPlayedCard(new AssistantCard(AssistantCardInfo.CARD3));
+        try {
+            gm.getTurnManager().setPhase(Phase.ACTION);
+            gm.getTurnManager().setMotherNaturePhase(true);
+            gm.moveMotherNature(2);
+        }catch (WrongPhaseException h){
+            h.printStackTrace();
+        }catch (IllegalArgumentException i){
+            i.printStackTrace();
+        }
+
+        //To test IllegalArgumentException's catching
+        try {
+            gm.getTurnManager().setPhase(Phase.ACTION);
+            gm.getTurnManager().setMotherNaturePhase(true);
+            gm.moveMotherNature(5);
+        }catch (WrongPhaseException h){
+            h.printStackTrace();
+        }catch (IllegalArgumentException i){
+            i.printStackTrace();
+        }
+
+        //To test WrongPhaseException's catching
+        try {
+            gm.getTurnManager().setPhase(Phase.PLANNING);
+            gm.moveMotherNature(3);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (IllegalArgumentException z){
+            z.printStackTrace();
+        }
+    }
+
 }
