@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.network.GameStatus;
 import it.polimi.ingsw.network.PlayerStatus;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.FullHallException;
 
 public class StudentToHallEffect implements EffectStrategy{
@@ -21,7 +22,11 @@ public class StudentToHallEffect implements EffectStrategy{
         c.getStudentsOnCard().removeStudent(c.getSelectedColour());
         try {
             c.getPlayerThisTurn().addToHall(c.getSelectedColour());
-            //CHECK PROFESSORS
+            for (Colour col: Colour.values()) {
+                if(c.getSelectedStudentsFrom().getQuantityColour(col)>0) {
+                    c.getGameManager().checkProfessors(col);
+                }
+            }
         } catch (FullHallException e) {
             e.printStackTrace();
         }
