@@ -22,11 +22,7 @@ public class StudentToHallEffect implements EffectStrategy{
         c.getStudentsOnCard().removeStudent(c.getSelectedColour());
         try {
             c.getPlayerThisTurn().addToHall(c.getSelectedColour());
-            for (Colour col: Colour.values()) {
-                if(c.getSelectedStudentsFrom().getQuantityColour(col)>0) {
-                    c.getGameManager().checkProfessors(col);
-                }
-            }
+            c.getGameManager().checkProfessors(c.getSelectedColour());
         } catch (FullHallException e) {
             e.printStackTrace();
         }

@@ -50,8 +50,8 @@ class ComputeInfluenceEffectTest {
             assertEquals(8,c.getPlayerThisTurn().getDashboard().getNumTowers());
         } else {
             assertEquals(7,c.getPlayerThisTurn().getDashboard().getNumTowers());
+            assertEquals(c.getGameManager().getPlayers().get(0).getTower(),c.getSelectedIsland().getTower());
         }
-        assertEquals(c.getGameManager().getPlayers().get(0).getTower(),c.getSelectedIsland().getTower());
         assertEquals(8,c.getGameManager().getPlayers().get(1).getDashboard().getNumTowers());
         if(islandBefore==c.getSelectedIsland().getIslandIndex()) {
             assertTrue(c.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()).isPresenceMotherNature());
