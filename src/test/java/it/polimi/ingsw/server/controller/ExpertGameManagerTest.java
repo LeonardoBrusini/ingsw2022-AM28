@@ -4,10 +4,9 @@ import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
-import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
-import it.polimi.ingsw.server.exceptions.WrongPhaseException;
-import it.polimi.ingsw.server.exceptions.WrongTurnException;
+import it.polimi.ingsw.server.exceptions.*;
 import it.polimi.ingsw.server.model.ProfessorGroup;
+import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.board.Archipelago;
 import it.polimi.ingsw.server.model.board.Cloud;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
@@ -15,6 +14,7 @@ import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -166,62 +166,227 @@ class ExpertGameManagerTest {
         assertEquals("simple", cs.getGameMode());
     }
 
-    //MUST BE TESTED WITH CURRENT PLAYER IN TURN MANAGER
+    @Test
+    /**
+     * It tests the right resolution of the playAssistantCard method and the corresponding Exceptions' catch
+     */
     void playAssistantCard(){
         ExpertGameManager gm1 = new ExpertGameManager();
         gm1.addPlayer();
         gm1.addPlayer();
         gm1.newGame(true, 2);
+        int i = new Random().nextInt(10);
         for(int j = 0; j < gm1.getPlayers().size(); j++) {
-            for (int i = 0; i < 10; i++) {
-                assertFalse(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
-                try {
-                    gm1.playAssistantCard(j, i);
-                }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
-                    e.printStackTrace();
-                }
-                assertTrue(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
+            int a = gm1.getTurnManager().getCurrentPlayer(); //when the card is played, the current Player is changed. I have to memorize the actual one to verify if the card is played properly
+            assertFalse(gm1.getPlayers().get(gm1.getTurnManager().getCurrentPlayer()).getAssistantCard(i).isPlayed());
+            try {
+                gm1.playAssistantCard(gm1.getTurnManager().getCurrentPlayer(), i);
+            }catch (WrongPhaseException e){
+                e.printStackTrace();
+            }catch (WrongTurnException f){
+                f.printStackTrace();
+            }catch (IllegalArgumentException h){
+                h.printStackTrace();
+            }catch (AlreadyPlayedException z){
+                z.printStackTrace();
             }
-
+            assertTrue(gm1.getPlayers().get(a).getAssistantCard(i).isPlayed());
         }
         //To test AlreadyPlayedException's catching
-        for(int j = 0; j < gm1.getPlayers().size(); j++) {
-            for (int i = 0; i < 10; i++) {
-                assertFalse(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
-                try {
-                    gm1.playAssistantCard(j, i);
-                } catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e) {
-                    e.printStackTrace();
-                }
-                assertTrue(gm1.getPlayers().get(j).getAssistantCard(i).isPlayed());
+       ExpertGameManager gm2 = new ExpertGameManager();
+        gm2.addPlayer();
+        gm2.addPlayer();
+        gm2.newGame(true, 2);
+        for(int z = 0; z < gm2.getPlayers().size(); z++)
+            gm2.getPlayers().get(z).getAssistantCard(0).setPlayed(true);
+        for(int j = 0; j < gm2.getPlayers().size(); j++) {
+            assertTrue(gm2.getPlayers().get(gm2.getTurnManager().getCurrentPlayer()).getAssistantCard(0).isPlayed());
+            try {
+                gm2.playAssistantCard(gm2.getTurnManager().getCurrentPlayer(), 0);
+            } catch (WrongPhaseException e) {
+                e.printStackTrace();
+            } catch (WrongTurnException f) {
+                f.printStackTrace();
+            } catch (IllegalArgumentException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException z) {
+                z.printStackTrace();
             }
         }
 
         //To test WrongTurnException's catching
-        gm1.getTurnManager().setCurrentPlayer(1);
-        for(int i = 0; i < 10; i++) {
-            try {
-                gm1.playAssistantCard(0, i);
-            }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
-                e.printStackTrace();
-            }
+        ExpertGameManager gm3 = new ExpertGameManager();
+        gm3.addPlayer();
+        gm3.addPlayer();
+        gm3.newGame(true, 2);
+        int v = 0;
+        while(v == gm3.getTurnManager().getCurrentPlayer())
+            v++;
+        try {
+            gm3.playAssistantCard(v, 2);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (WrongTurnException f){
+            f.printStackTrace();
+        }catch (IllegalArgumentException h){
+            h.printStackTrace();
+        }catch (AlreadyPlayedException z){
+            z.printStackTrace();
         }
 
         //To test WrongPhaseException's catching
         gm1.getTurnManager().setPhase(Phase.ACTION);
-        for(int i = 0; i < 10; i++) {
-            try {
-                gm1.playAssistantCard(0, i);
-            }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
-                e.printStackTrace();
-            }
+        try {
+            gm1.playAssistantCard(0, 0);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (WrongTurnException f){
+            f.printStackTrace();
+        }catch (IllegalArgumentException h){
+            h.printStackTrace();
+        }catch (AlreadyPlayedException z){
+            z.printStackTrace();
         }
 
         //To test IllegalArgumentException's catching
-        try {
+       try {
             gm1.playAssistantCard(0, 11);
-        }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
+        }catch (WrongPhaseException e){
             e.printStackTrace();
+        }catch (WrongTurnException f){
+            f.printStackTrace();
+        }catch (IllegalArgumentException h){
+            h.printStackTrace();
+        }catch (AlreadyPlayedException z){
+            z.printStackTrace();
+        }
+    }
+
+
+    @Test
+    /**
+     * It tests the right resolution of the moveStudentToHall method and the corresponding Exceptions' catch
+     */
+    void moveStudentToHall(){
+        ExpertGameManager gm = new ExpertGameManager();
+        gm.addPlayer();
+        gm.addPlayer();
+        gm.newGame(true, 2);
+        StudentGroup sh = new StudentGroup(3);
+        StudentGroup se = new StudentGroup(7);
+        try {
+            gm.getPlayers().get(0).fillHall(sh);
+            gm.getPlayers().get(0).fillDashboardEntrance(se);
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }
+
+        ArrayList<Integer> order = new ArrayList<>();
+        order.add(0);
+        order.add(1);
+        gm.getTurnManager().setActionOrder(order);
+        gm.getTurnManager().setPhase(Phase.ACTION);
+        try {
+            gm.moveStudentsToHall(0, Colour.YELLOW);
+            assertEquals(sh.getQuantityColour(Colour.YELLOW)+1, gm.getPlayers().get(0).getDashboard().getHall().getQuantityColour(Colour.YELLOW));
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }catch (NoStudentsException f){
+            f.printStackTrace();
+        }catch (WrongPhaseException h){
+            h.printStackTrace();
+        }catch (WrongTurnException h){
+            h.printStackTrace();
+        }
+
+        //to test the FullHallException
+        ExpertGameManager gm4 = new ExpertGameManager();
+        gm4.addPlayer();
+        gm4.addPlayer();
+        gm4.newGame(true, 2);
+        StudentGroup sh2 = new StudentGroup(10);
+        try {
+            gm4.getPlayers().get(0).fillHall(sh2);
+            gm4.getPlayers().get(0).fillDashboardEntrance(se);
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }
+        gm4.getTurnManager().setActionOrder(order);
+        gm4.getTurnManager().setPhase(Phase.ACTION);
+        try {
+            gm4.moveStudentsToHall(0, Colour.YELLOW);
+            assertEquals(sh.getQuantityColour(Colour.YELLOW)+1, gm4.getPlayers().get(0).getDashboard().getHall().getQuantityColour(Colour.YELLOW));
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }catch (NoStudentsException f){
+            f.printStackTrace();
+        }catch (WrongPhaseException h){
+            h.printStackTrace();
+        }catch (WrongTurnException h){
+            h.printStackTrace();
+        }
+
+        //To test the NoStudentExceptionCatching
+        ExpertGameManager gm1 = new ExpertGameManager();
+        gm1.addPlayer();
+        gm1.addPlayer();
+        gm1.newGame(true, 2);
+        StudentGroup se2 = new StudentGroup();
+        try {
+            gm1.getPlayers().get(0).fillHall(sh);
+            gm1.getPlayers().get(0).fillDashboardEntrance(se2);
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }
+        gm1.getTurnManager().setActionOrder(order);
+        gm1.getTurnManager().setPhase(Phase.ACTION);
+        try {
+            gm1.moveStudentsToHall(0, Colour.YELLOW);
+            assertEquals(sh.getQuantityColour(Colour.YELLOW)+1, gm1.getPlayers().get(0).getDashboard().getHall().getQuantityColour(Colour.YELLOW));
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }catch (NoStudentsException f){
+            f.printStackTrace();
+        }catch (WrongPhaseException h){
+            h.printStackTrace();
+        }catch (WrongTurnException h){
+            h.printStackTrace();
+        }
+
+        //To test WrongTurnException's catching
+        ExpertGameManager gm2 = new ExpertGameManager();
+        gm2.addPlayer();
+        gm2.addPlayer();
+        gm2.newGame(true, 2);
+        gm2.getTurnManager().setActionOrder(order);
+        gm2.getTurnManager().setPhase(Phase.ACTION);
+        int v = 0;
+        while(v == gm2.getTurnManager().getCurrentPlayer())
+            v++;
+        try {
+            gm2.moveStudentsToHall(v, Colour.BLUE);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (WrongTurnException f){
+            f.printStackTrace();
+        }catch (FullHallException h){
+            h.printStackTrace();
+        }catch (NoStudentsException z){
+            z.printStackTrace();
+        }
+
+        //To test WrongPhaseException's catching
+        gm1.getTurnManager().setPhase(Phase.PLANNING);
+        try {
+            gm1.moveStudentsToHall(0, Colour.BLUE);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (WrongTurnException f){
+            f.printStackTrace();
+        }catch (FullHallException h){
+            h.printStackTrace();
+        }catch (NoStudentsException z){
+            z.printStackTrace();
         }
     }
 }
