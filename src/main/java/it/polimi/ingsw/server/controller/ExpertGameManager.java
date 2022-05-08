@@ -187,7 +187,7 @@ public class ExpertGameManager {
      * @param cloudIndex index of the cloud the player selected
      * @param playerIndex player who asked to take the students
      */
-    public synchronized void takeStudentsFromCloud(int cloudIndex, int playerIndex) throws WrongPhaseException, IllegalArgumentException, WrongTurnException{
+    public synchronized void takeStudentsFromCloud(int cloudIndex, int playerIndex) throws WrongPhaseException, IllegalArgumentException, WrongTurnException, NoStudentsException{
         if(cloudIndex<0 || cloudIndex>=players.size() || playerIndex<0 || playerIndex>=players.size()) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isCloudSelectionPhase()) throw new WrongPhaseException();
         if(turnManager.getCurrentPlayer()!=playerIndex) throw new WrongTurnException();
@@ -197,8 +197,7 @@ public class ExpertGameManager {
             boolean error=false;
             for(int i=0; i<clouds.size();i++) {
                 if(!clouds.get(i).empty()) {
-                    //ERROR
-                    return;
+                    throw new NoStudentsException();
                 }
             }
         }

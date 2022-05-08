@@ -16,6 +16,7 @@ import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -436,6 +437,7 @@ class ExpertGameManagerTest {
         }catch (WrongTurnException h){
             h.printStackTrace();
         }
+
         //To test WrongTurnException's catching
         ExpertGameManager gm2 = new ExpertGameManager();
         gm2.addPlayer();
@@ -470,7 +472,7 @@ class ExpertGameManagerTest {
     }
     @Test
     /**
-     * It tests the right resolution of the moveStudentToIsland method and the corresponding Exceptions' catch
+     * It tests the right resolution of the moveMotherNature method and the corresponding Exceptions' catch
      */
     void moveMotherNature(){
         ExpertGameManager gm = new ExpertGameManager();
@@ -512,6 +514,130 @@ class ExpertGameManagerTest {
             e.printStackTrace();
         }catch (IllegalArgumentException z){
             z.printStackTrace();
+        }
+    }
+    @Test
+    /**
+     * It tests the right resolution of the takeStudentsFromCloud method and the corresponding Exceptions' catch
+     */
+    void takeStudentsFromCloud(){
+        ExpertGameManager gm = new ExpertGameManager();
+        gm.addPlayer();
+        gm.addPlayer();
+        gm.newGame(true, 2);
+        ArrayList<Integer> order = new ArrayList<>();
+        order.add(0);
+        order.add(1);
+        gm.getTurnManager().setActionOrder(order);
+        gm.getBoard().fillClouds();
+        int tot = gm.getBoard().getClouds().get(1).getStudentsOnCloud().getTotalStudents();
+        try {
+            gm.getTurnManager().setPhase(Phase.ACTION);
+            gm.getTurnManager().setCloudSelectionPhase(true);
+            gm.takeStudentsFromCloud(1, 0);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (IllegalArgumentException z){
+            z.printStackTrace();
+        }catch (WrongTurnException h){
+            h.printStackTrace();
+        }catch (NoStudentsException g){
+            g.printStackTrace();
+        }
+        assertEquals(0, gm.getBoard().getClouds().get(1).getStudentsOnCloud().getTotalStudents());
+        assertEquals(tot, gm.getPlayers().get(0).getDashboard().getEntrance().getTotalStudents());
+
+        //To test IllegalArgumentException's catching in case of no students on cloud
+        StudentGroup sc = new StudentGroup();
+        gm.getBoard().getClouds().get(1).addGroup(sc);
+        try {
+            gm.getTurnManager().setPhase(Phase.ACTION);
+            gm.getTurnManager().setCloudSelectionPhase(true);
+            gm.takeStudentsFromCloud(1, 1);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (IllegalArgumentException z){
+            z.printStackTrace();
+        }catch (WrongTurnException h){
+            h.printStackTrace();
+        }catch (NoStudentsException g){
+            g.printStackTrace();
+        }
+
+        //To test WrongPhaseException's catching
+        try {
+            gm.getTurnManager().setPhase(Phase.PLANNING);
+            gm.getTurnManager().setCloudSelectionPhase(false);
+            gm.takeStudentsFromCloud(1, 0);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (IllegalArgumentException z){
+            z.printStackTrace();
+        }catch (WrongTurnException h){
+            h.printStackTrace();
+        }catch (NoStudentsException g){
+            g.printStackTrace();
+        }
+
+        //To test WrongTurnException's catching
+        ExpertGameManager gm2 = new ExpertGameManager();
+        gm2.addPlayer();
+        gm2.addPlayer();
+        gm2.newGame(true, 2);
+        gm2.getTurnManager().setActionOrder(order);
+        int v = 0;
+        while(v == gm2.getTurnManager().getCurrentPlayer())
+            v++;
+        try {
+            gm2.getTurnManager().setPhase(Phase.ACTION);
+            gm2.getTurnManager().setCloudSelectionPhase(true);
+            gm2.takeStudentsFromCloud(0, 1);
+        }catch (WrongPhaseException e){
+            e.printStackTrace();
+        }catch (WrongTurnException f){
+            f.printStackTrace();
+        }catch (IllegalArgumentException h){
+            h.printStackTrace();
+        }catch (NoStudentsException g){
+            g.printStackTrace();
+        }
+
+        //To test IllegalArgumentException's catching
+        try {
+            gm.getTurnManager().setPhase(Phase.ACTION);
+            gm.getTurnManager().setCloudSelectionPhase(true);
+            gm.takeStudentsFromCloud(4,0);
+        }catch (WrongPhaseException h){
+            h.printStackTrace();
+        }catch (IllegalArgumentException i){
+            i.printStackTrace();
+        }catch (WrongTurnException z){
+            z.printStackTrace();
+        }catch (NoStudentsException g){
+            g.printStackTrace();
+        }
+
+        ExpertGameManager gm3 = new ExpertGameManager();
+        gm3.addPlayer();
+        gm3.addPlayer();
+        gm3.addPlayer();
+        gm3.newGame(true, 3);
+        order.add(0);
+        order.add(1);
+        order.add(2);
+        gm3.getTurnManager().setActionOrder(order);
+        try {
+            gm3.getTurnManager().setPhase(Phase.ACTION);
+            gm3.getTurnManager().setCloudSelectionPhase(true);
+            gm3.takeStudentsFromCloud(4,0);
+        }catch (WrongPhaseException h){
+            h.printStackTrace();
+        }catch (IllegalArgumentException i){
+            i.printStackTrace();
+        }catch (WrongTurnException z){
+            z.printStackTrace();
+        }catch (NoStudentsException g){
+            g.printStackTrace();
         }
     }
 

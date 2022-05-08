@@ -166,4 +166,8 @@ public class TurnManager {
     public void setCurrentPlayer(int p){currentPlayer = p;}
     public void setActionOrder(ArrayList<Integer> action){this.actionOrder = action;}
     public void setMotherNaturePhase(boolean b){this.motherNaturePhase = b;}
+
+    public void setCloudSelectionPhase(boolean cloudSelectionPhase) {
+        this.cloudSelectionPhase = cloudSelectionPhase;
+    }
 }
