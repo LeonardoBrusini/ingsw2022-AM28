@@ -137,7 +137,7 @@ public class EffectsStatusTest {
         GameStatus gs = new GameStatus();
         PlayerStatus[] ps = new PlayerStatus[1];
         ps[0] = new PlayerStatus();
-        ps[0].setIndex(1);
+        ps[0].setIndex(0);
         ps[0].setCoins(1);
         gs.setPlayers(ps);
         CharacterCardStatus[] ccs = new CharacterCardStatus[1];
@@ -185,7 +185,7 @@ public class EffectsStatusTest {
         GameStatus gs = new GameStatus();
         PlayerStatus[] ps = new PlayerStatus[1];
         ps[0] = new PlayerStatus();
-        ps[0].setIndex(1);
+        ps[0].setIndex(0);
         ps[0].setCoins(1);
         int[] s = new int[5];
         for(Colour colour: Colour.values())
