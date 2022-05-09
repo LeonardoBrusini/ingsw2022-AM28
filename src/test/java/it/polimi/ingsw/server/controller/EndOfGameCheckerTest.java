@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.server.enumerations.Colour;
+import it.polimi.ingsw.server.enumerations.Tower;
+import it.polimi.ingsw.server.model.ProfessorGroup;
+import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -32,5 +35,20 @@ class EndOfGameCheckerTest {
 
     @Test
     void updateEOGLastTurn() {
+    }
+
+    @Test
+    void checkWinner(){
+        expertGameManager=new ExpertGameManager();
+        expertGameManager.addPlayer();
+        expertGameManager.addPlayer();
+        expertGameManager.newGame(true,2);
+
+        ProfessorGroup n = new ProfessorGroup();
+        for(Colour c: Colour.values()){
+            n.setTower(c, Tower.WHITE);
+        }
+
+
     }
 }
