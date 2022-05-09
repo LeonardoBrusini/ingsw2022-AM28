@@ -3,7 +3,10 @@ package it.polimi.ingsw.server.model.cards;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
+import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
+import it.polimi.ingsw.server.exceptions.FullHallException;
+import it.polimi.ingsw.server.model.StudentGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -54,16 +57,69 @@ public class EffectsStatusTest {
         compareStatus(cs);
     }
 
-   /* @Test
+   @Test
     void CTESStatus() {
         setCard(CharacterCardInfo.CARD7);
-        //card parameters && effect activation
-        status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
-        CurrentStatus cs = new CurrentStatus();
-        //creation of the expected current status
-        compareStatus(cs);
-    }
+       //card parameters && effect activation
+       StudentGroup st = new StudentGroup();
+       st.addStudent(Colour.YELLOW);
+       st.addStudent(Colour.BLUE);
+       st.addStudent(Colour.RED);
 
+       c.setSelectedStudentsTo(st);
+       StudentGroup sh = new StudentGroup();
+       sh.addStudent(Colour.PINK);
+       sh.addStudent(Colour.YELLOW);
+       sh.addStudent(Colour.BLUE);
+       sh.addStudent(Colour.RED);
+       sh.addStudent(Colour.GREEN);
+       sh.addStudent(Colour.RED);
+
+       StudentGroup sf = new StudentGroup();
+       sf.addStudent(Colour.RED);
+       sf.addStudent(Colour.GREEN);
+       sf.addStudent(Colour.PINK);
+
+       c.setStudentsOnCard(sf);
+       c.setSelectedStudentsFrom(sf);
+
+       gameManager.getPlayers().get(0).fillDashboardEntrance(sh);
+       c.setSelectedStudentsTo(st);
+       try {
+           gameManager.getPlayers().get(0).playCard(0);
+       } catch (AlreadyPlayedException e) {
+           throw new RuntimeException(e);
+       }catch (IllegalArgumentException h){
+           throw new RuntimeException(h);
+       }
+       c.setPlayerThisTurn(gameManager.getPlayers().get(0));
+       c.getCardInfo().getEffect().resolveEffect(c);
+       status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+       CurrentStatus cs = new CurrentStatus();
+       //creation of the expected current status
+       GameStatus gs = new GameStatus();
+       PlayerStatus[] ps = new PlayerStatus[1];
+       ps[0] = new PlayerStatus();
+       ps[0].setIndex(0);
+       ps[0].setCoins(1);
+       int[] s = new int[5];
+       for(Colour colour: Colour.values())
+           s[colour.ordinal()] = gameManager.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(colour);
+       ps[0].setStudentsOnEntrance(s);
+       gs.setPlayers(ps);
+       CharacterCardStatus[] ccs = new CharacterCardStatus[1];
+       ccs[0] = new CharacterCardStatus();
+       ccs[0].setIndex(0);
+       ccs[0].setCoinOnIt(true);
+       int[] s1 = new int[5];
+       for(Colour colour: Colour.values())
+           s1[colour.ordinal()] = st.getQuantityColour(colour);
+       ccs[0].setStudents(s1);
+       gs.setCharacterCards(ccs);
+       cs.setGame(gs);
+       compareStatus(cs);
+    }
+    /*
     @Test
     void CIStatus() {
         setCard(CharacterCardInfo.CARD3);
