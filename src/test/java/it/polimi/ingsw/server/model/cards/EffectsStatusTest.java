@@ -67,13 +67,7 @@ public class EffectsStatusTest {
        st.addStudent(Colour.RED);
 
        c.setSelectedStudentsTo(st);
-       StudentGroup sh = new StudentGroup();
-       sh.addStudent(Colour.PINK);
-       sh.addStudent(Colour.YELLOW);
-       sh.addStudent(Colour.BLUE);
-       sh.addStudent(Colour.RED);
-       sh.addStudent(Colour.GREEN);
-       sh.addStudent(Colour.RED);
+       StudentGroup sh = new StudentGroup(5);
 
        StudentGroup sf = new StudentGroup();
        sf.addStudent(Colour.RED);
@@ -119,6 +113,7 @@ public class EffectsStatusTest {
        cs.setGame(gs);
        compareStatus(cs);
     }
+
     /*
     @Test
     void CIStatus() {
@@ -128,28 +123,90 @@ public class EffectsStatusTest {
         CurrentStatus cs = new CurrentStatus();
         //creation of the expected current status
         compareStatus(cs);
-    }
+    }*/
+
 
     @Test
     void DCStatus() {
         setCard(CharacterCardInfo.CARD2);
         //card parameters && effect activation
+        c.setPlayerThisTurn(gameManager.getPlayers().get(0));
+        c.getCardInfo().getEffect().resolveEffect(c);
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
         CurrentStatus cs = new CurrentStatus();
+        GameStatus gs = new GameStatus();
+        PlayerStatus[] ps = new PlayerStatus[1];
+        ps[0] = new PlayerStatus();
+        ps[0].setIndex(1);
+        ps[0].setCoins(1);
+        gs.setPlayers(ps);
+        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
+        ccs[0] = new CharacterCardStatus();
+        ccs[0].setIndex(0);
+        ccs[0].setCoinOnIt(true);
         //creation of the expected current status
+        gs.setCharacterCards(ccs);
+        cs.setGame(gs);
         compareStatus(cs);
     }
+
 
     @Test
     void ETHSStatus() {
         setCard(CharacterCardInfo.CARD10);
         //card parameters && effect activation
+        StudentGroup st = new StudentGroup();
+        st.addStudent(Colour.YELLOW);
+        st.addStudent(Colour.BLUE);
+
+
+        c.setSelectedStudentsTo(st);
+        StudentGroup sh = new StudentGroup(5);
+
+        StudentGroup sf = new StudentGroup();
+        sf.addStudent(Colour.RED);
+        sf.addStudent(Colour.GREEN);
+
+        c.setStudentsOnCard(sf);
+        c.setSelectedStudentsFrom(sf);
+        c.setPlayerThisTurn(gameManager.getPlayers().get(0));
+        gameManager.getPlayers().get(0).fillDashboardEntrance(sh);
+        c.setSelectedStudentsTo(st);
+        try {
+            gameManager.getPlayers().get(0).playCard(0);
+        } catch (AlreadyPlayedException e) {
+            throw new RuntimeException(e);
+        }catch (IllegalArgumentException h){
+            throw new RuntimeException(h);
+        }
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
         CurrentStatus cs = new CurrentStatus();
         //creation of the expected current status
+        GameStatus gs = new GameStatus();
+        PlayerStatus[] ps = new PlayerStatus[1];
+        ps[0] = new PlayerStatus();
+        ps[0].setIndex(1);
+        ps[0].setCoins(1);
+        int[] s = new int[5];
+        for(Colour colour: Colour.values())
+            s[colour.ordinal()] = gameManager.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(colour);
+        ps[0].setStudentsOnEntrance(s);
+        int[] s1 = new int[5];
+        for(Colour colour: Colour.values())
+            s1[colour.ordinal()] = gameManager.getPlayers().get(0).getDashboard().getHall().getQuantityColour(colour);
+        ps[0].setStudentsOnHall(s1);
+        gs.setProfessors(gameManager.getBoard().getProfessorGroup().getStatus());
+        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
+        ccs[0] = new CharacterCardStatus();
+        ccs[0].setIndex(0);
+        ccs[0].setCoinOnIt(true);
+        gs.setCharacterCards(ccs);
+        gs.setPlayers(ps);
+        cs.setGame(gs);
         compareStatus(cs);
     }
 
+    /*
     @Test
     void NETStatus() {
         setCard(CharacterCardInfo.CARD5);

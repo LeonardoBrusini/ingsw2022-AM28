@@ -76,7 +76,7 @@ public class EntranceToHallSwitchEffect implements EffectStrategy{
             }
         }
         gs.setPlayers(ps);
-        gs.setProfessors(c.getGameManager().getBoard().getProfessorGroup().getStatus());
+        gs.setProfessors(gameManager.getBoard().getProfessorGroup().getStatus());
         CharacterCardStatus[] ccs = new CharacterCardStatus[1];
         ccs[0] = new CharacterCardStatus();
         for(int i=0;i<gameManager.getBoard().getCharacterCards().size();i++) {
