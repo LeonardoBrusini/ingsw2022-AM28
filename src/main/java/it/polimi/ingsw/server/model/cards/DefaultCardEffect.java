@@ -20,7 +20,7 @@ public class DefaultCardEffect implements EffectStrategy{
         ps[0] = new PlayerStatus();
         for(int i=0;i<gameManager.getPlayers().size();i++) {
             if(c.getPlayerThisTurn()==gameManager.getPlayers().get(i)) {
-                ps[0].setIndex(1);
+                ps[0].setIndex(i);
                 ps[0].setCoins(gameManager.getPlayers().get(i).getCoins());
                 break;
             }
