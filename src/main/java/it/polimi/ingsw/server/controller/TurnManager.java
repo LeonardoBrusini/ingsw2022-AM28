@@ -17,6 +17,17 @@ public class TurnManager {
     private boolean motherNaturePhase;
     private boolean cloudSelectionPhase;
 
+    public ArrayList<Integer> getPlanningOrder() {
+        return planningOrder;
+    }
+
+    public ArrayList<Integer> getActionOrder() {
+        return actionOrder;
+    }
+
+    public int getNumOfMovedStudents() {
+        return numOfMovedStudents;
+    }
 
     /**
      * TurnManager constructor, starts with the planning phase, random player starts
@@ -41,7 +52,7 @@ public class TurnManager {
      * @param players the list of players
      */
     public void nextPhase(Board b, ArrayList<Player> players) {
-        if (phase==Phase.PLANNING) {
+        if (phase == Phase.PLANNING) {
             if(currentPlayer==players.size()-1) {
                 toActionPhase(players);
             } else {
@@ -166,8 +177,17 @@ public class TurnManager {
     public void setCurrentPlayer(int p){currentPlayer = p;}
     public void setActionOrder(ArrayList<Integer> action){this.actionOrder = action;}
     public void setMotherNaturePhase(boolean b){this.motherNaturePhase = b;}
+    public void setMoveStudentsPhase(boolean b){this.moveStudentsPhase=b;}
 
     public void setCloudSelectionPhase(boolean cloudSelectionPhase) {
         this.cloudSelectionPhase = cloudSelectionPhase;
+    }
+
+    public void setPlanningOrder(ArrayList<Integer> planningOrder) {
+        this.planningOrder = planningOrder;
+    }
+
+    public void setNumOfMovedStudents(int numOfMovedStudents) {
+        this.numOfMovedStudents = numOfMovedStudents;
     }
 }
