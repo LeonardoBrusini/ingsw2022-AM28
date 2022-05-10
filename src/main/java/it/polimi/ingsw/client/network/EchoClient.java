@@ -8,9 +8,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EchoClient {
-    public static void main(String[] args){
+    public static void start(){
         Menu menu = new Menu();
         String hostName = "127.0.0.1";
         int portNumber = 1234;
@@ -18,23 +20,34 @@ public class EchoClient {
                 Socket echoSocket = new Socket(hostName, portNumber);
                 PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-                BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))
+                /*BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))*/Scanner stdIn = new Scanner(System.in);
         ) {
             new Thread(() -> {
                 try {
                     String line;
                     while ((line = in.readLine())!=null) {
                         if(line.equals("ping")) out.println("pong");
-                        else menu.printResult(line);
+                        else {
+                            String outputLine = menu.manageReceivedLine(line);
+                            if(outputLine!=null) out.println(outputLine);
+                        }
                     }
                 }catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }).start();
+            menu.printMenu();
+            menu.setWriter(out);
+            menu.setScanner(stdIn);
             String userInput;
-            while ((userInput = stdIn.readLine()) != null) {
-                String output = menu.generateCommand(userInput);
-                out.println(output);
+            while (true) {
+                if(!menu.isBusyScanner()) {
+                    userInput = stdIn.nextLine();
+                    System.out.println("input letto");
+                    String output = menu.manageInputLine(userInput);
+                    if(output == null) System.out.println("Invalid input");
+                    else out.println(output);
+                }
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
@@ -43,5 +56,9 @@ public class EchoClient {
             System.err.println("Couldn't get I/O for the connection to " + hostName);
             System.exit(1);
         }
+    }
+
+    public static void main( String[] args ){
+        EchoClient.start();
     }
 }

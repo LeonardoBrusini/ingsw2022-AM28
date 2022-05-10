@@ -11,4 +11,12 @@ public class GameParameters {
     public String getGameMode() {
         return gameMode;
     }
+
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
 }
