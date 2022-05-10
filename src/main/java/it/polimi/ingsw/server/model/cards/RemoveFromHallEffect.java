@@ -7,6 +7,8 @@ import it.polimi.ingsw.network.PlayerStatus;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.model.players.Player;
 
+import java.util.ArrayList;
+
 public class RemoveFromHallEffect implements EffectStrategy{
     /**
      * removes up to 3 students of the selected colour from every dashboards' hall
@@ -26,20 +28,22 @@ public class RemoveFromHallEffect implements EffectStrategy{
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
         gs.setArchipelagos(gameManager.getBoard().getIslandManager().getFullArchipelagosStatus());
-        PlayerStatus[] ps = new PlayerStatus[gameManager.getPlayers().size()];
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
         for(int i=0;i<gameManager.getPlayers().size();i++) {
-            ps[i] = new PlayerStatus();
-            ps[i].setIndex(i);
-            ps[i].setCoins(gameManager.getPlayers().get(i).getCoins());
-            ps[i].setStudentsOnHall(gameManager.getPlayers().get(i).getDashboard().getHall().getStatus());
+            PlayerStatus psTemp = new PlayerStatus();
+            psTemp.setIndex(i);
+            psTemp.setCoins(gameManager.getPlayers().get(i).getCoins());
+            psTemp.setStudentsOnHall(gameManager.getPlayers().get(i).getDashboard().getHall().getStatus());
+            ps.add(psTemp);
         }
         gs.setPlayers(ps);
-        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
-        ccs[0] = new CharacterCardStatus();
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
         for(int i=0;i<gameManager.getBoard().getCharacterCards().size();i++) {
             if(c==gameManager.getBoard().getCharacterCards().get(i)) {
-                ccs[0].setIndex(i);
-                ccs[0].setCoinOnIt(true);
+                ccs0.setIndex(i);
+                ccs0.setCoinOnIt(true);
+                ccs.add(ccs0);
                 break;
             }
         }

@@ -400,37 +400,39 @@ public class ExpertGameManager {
         gs.setMotherNatureIndex(board.getMotherNature().getIslandIndex());
         gs.setArchipelagos(board.getIslandManager().getFullArchipelagosStatus());
         gs.setClouds(board.getCloudsStatus());
-        PlayerStatus[] ps = new PlayerStatus[players.size()];
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
         for(int i=0;i<players.size();i++) {
-            ps[i] = new PlayerStatus();
-            ps[i].setIndex(i);
-            ps[i].setNickName(players.get(i).getNickname());
+            PlayerStatus psTemp = new PlayerStatus();
+            psTemp.setIndex(i);
+            psTemp.setNickName(players.get(i).getNickname());
             if(expertMode) {
-                ps[i].setCoins(players.get(i).getCoins());
+                psTemp.setCoins(players.get(i).getCoins());
             }
-            ps[i].setTowerColour(players.get(i).getTower().toString());
-            ps[i].setNumTowers(players.get(i).getDashboard().getNumTowers());
-            ps[i].setStudentsOnEntrance(players.get(i).getDashboard().getEntrance().getStatus());
-            ps[i].setStudentsOnHall(players.get(i).getDashboard().getHall().getStatus());
-            if(players.get(i).getLastPlayedCard()!=null) ps[i].setLastAssistantCardPlayed(players.get(i).getLastPlayedCard().getInfo().ordinal());
+            psTemp.setTowerColour(players.get(i).getTower().toString());
+            psTemp.setNumTowers(players.get(i).getDashboard().getNumTowers());
+            psTemp.setStudentsOnEntrance(players.get(i).getDashboard().getEntrance().getStatus());
+            psTemp.setStudentsOnHall(players.get(i).getDashboard().getHall().getStatus());
+            if(players.get(i).getLastPlayedCard()!=null) psTemp.setLastAssistantCardPlayed(players.get(i).getLastPlayedCard().getInfo().ordinal());
             int numCards = players.get(i).getCards().size();
             boolean[] ac = new boolean[numCards];
             for(int j=0;j<numCards;j++) {
                 ac[j] = players.get(i).getCards().get(j).isPlayed();
             }
-            ps[i].setAssistantCards(ac);
+            psTemp.setAssistantCards(ac);
+            ps.add(psTemp);
         }
         gs.setPlayers(ps);
         if(expertMode) {
             status.setGameMode("expert");
-            CharacterCardStatus[] ccs = new CharacterCardStatus[board.getCharacterCards().size()];
+            ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
             for(int i=0;i<board.getCharacterCards().size();i++) {
-                ccs[i] = new CharacterCardStatus();
-                ccs[i].setIndex(i);
-                ccs[i].setFileName(board.getCharacterCards().get(i).getCardInfo().getFileName());
-                ccs[i].setNoEntryTiles(board.getCharacterCards().get(i).getNoEntryTiles());
-                ccs[i].setCoinOnIt(board.getCharacterCards().get(i).isCoinOnIt());
-                ccs[i].setStudents(board.getCharacterCards().get(i).getStudentsOnCard().getStatus());
+                CharacterCardStatus ccsTemp = new CharacterCardStatus();
+                ccsTemp.setIndex(i);
+                ccsTemp.setFileName(board.getCharacterCards().get(i).getCardInfo().getFileName());
+                ccsTemp.setNoEntryTiles(board.getCharacterCards().get(i).getNoEntryTiles());
+                ccsTemp.setCoinOnIt(board.getCharacterCards().get(i).isCoinOnIt());
+                ccsTemp.setStudents(board.getCharacterCards().get(i).getStudentsOnCard().getStatus());
+                ccs.add(ccsTemp);
             }
             gs.setCharacterCards(ccs);
         } else {

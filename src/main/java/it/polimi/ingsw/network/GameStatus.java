@@ -1,14 +1,18 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.server.model.players.Player;
+
+import java.util.ArrayList;
+
 /**
  * It represents the current status of all the Game during the match
  */
 public class GameStatus {
     Integer motherNatureIndex;
-    ArchipelagoStatus[] archipelagos;
-    CloudStatus[] clouds;
-    CharacterCardStatus[] characterCards;
-    PlayerStatus[] players;
+    ArrayList<ArchipelagoStatus> archipelagos;
+    ArrayList<CloudStatus> clouds;
+    ArrayList<CharacterCardStatus> characterCards;
+    ArrayList<PlayerStatus> players;
     int[] professors;
 
     /**
@@ -23,7 +27,7 @@ public class GameStatus {
      * It sets the current Status of all Archipelagos
      * @param archipelagos ArchipelagosStatus to set
      */
-    public void setArchipelagos(ArchipelagoStatus[] archipelagos) {
+    public void setArchipelagos(ArrayList<ArchipelagoStatus> archipelagos) {
         this.archipelagos = archipelagos;
     }
 
@@ -31,7 +35,7 @@ public class GameStatus {
      * It sets the current Status of all Clouds
      * @param clouds CloudStatus to set
      */
-    public void setClouds(CloudStatus[] clouds) {
+    public void setClouds(ArrayList<CloudStatus> clouds) {
         this.clouds = clouds;
     }
 
@@ -39,7 +43,7 @@ public class GameStatus {
      * It sets the current Status of all CharacterCards
      * @param characterCards CharacterCardStatus to set
      */
-    public void setCharacterCards(CharacterCardStatus[] characterCards) {
+    public void setCharacterCards(ArrayList<CharacterCardStatus> characterCards) {
         this.characterCards = characterCards;
     }
 
@@ -47,7 +51,7 @@ public class GameStatus {
      * It sets the current Status of all Players
      * @param players PlayerStatus to set
      */
-    public void setPlayers(PlayerStatus[] players) {
+    public void setPlayers(ArrayList<PlayerStatus> players) {
         this.players = players;
     }
 
@@ -55,19 +59,19 @@ public class GameStatus {
         return motherNatureIndex;
     }
 
-    public ArchipelagoStatus[] getArchipelagos() {
+    public ArrayList<ArchipelagoStatus> getArchipelagos() {
         return archipelagos;
     }
 
-    public CloudStatus[] getClouds() {
+    public ArrayList<CloudStatus> getClouds() {
         return clouds;
     }
 
-    public CharacterCardStatus[] getCharacterCards() {
+    public ArrayList<CharacterCardStatus> getCharacterCards() {
         return characterCards;
     }
 
-    public PlayerStatus[] getPlayers() {
+    public ArrayList<PlayerStatus> getPlayers() {
         return players;
     }
 

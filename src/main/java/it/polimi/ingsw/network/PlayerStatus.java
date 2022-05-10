@@ -5,7 +5,7 @@ package it.polimi.ingsw.network;
  */
 public class PlayerStatus {
     private String nickName;
-    private Integer index;
+    private int index;
     private Integer lastAssistantCardPlayed;
     private Integer coins;
     private Integer numTowers;
@@ -101,7 +101,7 @@ public class PlayerStatus {
         this.addedShifts = addedShifts;
     }
 
-    public Integer getIndex() {
+    public int getIndex() {
         return index;
     }
 

@@ -123,13 +123,14 @@ public class IslandManager {
         checkAggregation(islandIndex);
     }
 
-    public ArchipelagoStatus[] getFullArchipelagosStatus() {
-        ArchipelagoStatus[] as = new ArchipelagoStatus[archipelagos.size()];
+    public ArrayList<ArchipelagoStatus> getFullArchipelagosStatus() {
+        ArrayList<ArchipelagoStatus> as = new ArrayList<>();
         for(int i=0;i<archipelagos.size();i++) {
-            as[i] = new ArchipelagoStatus();
-            as[i].setIndex(i);
-            as[i].setIslands(archipelagos.get(i).getFullIslandsStatus());
-            as[i].setNoEntryTiles(archipelagos.get(i).getNoEntryTiles());
+            ArchipelagoStatus asTemp = new ArchipelagoStatus();
+            asTemp.setIndex(i);
+            asTemp.setIslands(archipelagos.get(i).getFullIslandsStatus());
+            asTemp.setNoEntryTiles(archipelagos.get(i).getNoEntryTiles());
+            as.add(asTemp);
         }
         return as;
     }

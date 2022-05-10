@@ -10,6 +10,8 @@ import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
 import it.polimi.ingsw.server.model.players.Player;
 
+import java.util.ArrayList;
+
 /**
  * The class that resolves the command to play a specific AssistantCard
  */
@@ -58,14 +60,15 @@ public class PlayAssistantCardCommand implements CommandStrategy{
         ts.setPlayer(gameManager.getTurnManager().getCurrentPlayer());
         if(gameManager.getTurnManager().getPhase()==Phase.ACTION) ts.setPhase(Phase.ACTION.name());
         cs.setTurn(ts);
-        PlayerStatus[] ps = new PlayerStatus[1];
-        ps[0] = new PlayerStatus();
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
         boolean[] asc = new boolean[10];
         for(int j = 0; j < 10; j++)
             asc[j] = gameManager.getPlayers().get(command.getPlayerIndex()).getAssistantCard(j).isPlayed();
-        ps[0].setAssistantCards(asc);
-        ps[0].setIndex(command.getPlayerIndex());
-        ps[0].setLastAssistantCardPlayed(gameManager.getPlayers().get(command.getPlayerIndex()).getLastPlayedCard().getInfo().ordinal());
+        ps0.setAssistantCards(asc);
+        ps0.setIndex(command.getPlayerIndex());
+        ps0.setLastAssistantCardPlayed(gameManager.getPlayers().get(command.getPlayerIndex()).getLastPlayedCard().getInfo().ordinal());
+        ps.add(ps0);
         gs.setPlayers(ps);
         cs.setGame(gs);
         System.out.println("status returning");

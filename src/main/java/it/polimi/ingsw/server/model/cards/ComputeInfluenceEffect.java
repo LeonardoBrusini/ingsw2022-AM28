@@ -5,6 +5,8 @@ import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.model.board.Archipelago;
 import it.polimi.ingsw.server.model.board.MotherNature;
 
+import java.util.ArrayList;
+
 public class ComputeInfluenceEffect implements EffectStrategy{
     /**
      * Moves mother nature on the selected island, computes the influence on the island
@@ -33,20 +35,22 @@ public class ComputeInfluenceEffect implements EffectStrategy{
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
         gs.setArchipelagos(gameManager.getBoard().getIslandManager().getFullArchipelagosStatus());
-        PlayerStatus[] ps = new PlayerStatus[gameManager.getPlayers().size()];
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
         for(int i=0;i<gameManager.getPlayers().size();i++) {
-            ps[i] = new PlayerStatus();
-            ps[i].setIndex(i);
-            ps[i].setCoins(gameManager.getPlayers().get(i).getCoins());
-            ps[i].setNumTowers(gameManager.getPlayers().get(i).getDashboard().getNumTowers());
+            PlayerStatus psTemp = new PlayerStatus();
+            psTemp.setIndex(i);
+            psTemp.setCoins(gameManager.getPlayers().get(i).getCoins());
+            psTemp.setNumTowers(gameManager.getPlayers().get(i).getDashboard().getNumTowers());
+            ps.add(psTemp);
         }
         gs.setPlayers(ps);
-        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
-        ccs[0] = new CharacterCardStatus();
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
         for(int i=0;i<gameManager.getBoard().getCharacterCards().size();i++) {
             if(c==gameManager.getBoard().getCharacterCards().get(i)) {
-                ccs[0].setIndex(i);
-                ccs[0].setCoinOnIt(true);
+                ccs0.setIndex(i);
+                ccs0.setCoinOnIt(true);
+                ccs.add(ccs0);
                 break;
             }
         }

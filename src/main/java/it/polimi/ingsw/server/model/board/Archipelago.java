@@ -57,13 +57,14 @@ public class Archipelago {
         noEntryTiles += a.noEntryTiles;
         return this;
     }
-    public IslandStatus[] getFullIslandsStatus() {
-        IslandStatus[] is = new IslandStatus[islands.size()];
+    public ArrayList<IslandStatus> getFullIslandsStatus() {
+        ArrayList<IslandStatus> is = new ArrayList<>();
         for (int i=0;i<islands.size();i++) {
-            is[i] = new IslandStatus();
-            if(islands.get(i).getTower()!=null) is[i].setTowerColour(islands.get(i).getTower().toString());
-            is[i].setIslandIndex(islands.get(i).getIslandIndex());
-            is[i].setStudents(islands.get(i).getStudents().getStatus());
+            IslandStatus isTemp = new IslandStatus();
+            if(islands.get(i).getTower()!=null) isTemp.setTowerColour(islands.get(i).getTower().toString());
+            isTemp.setIslandIndex(islands.get(i).getIslandIndex());
+            isTemp.setStudents(islands.get(i).getStudents().getStatus());
+            is.add(isTemp);
         }
         return is;
     }

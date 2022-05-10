@@ -1,12 +1,13 @@
 package it.polimi.ingsw.network;
 
+import java.util.ArrayList;
+
 /**
  * It represents the current status of an Archipelago during the match
  */
 public class ArchipelagoStatus {
     int index;
-    IslandStatus[] islands;
-    //ArrayList<IslandStatus> islands;
+    ArrayList<IslandStatus> islands;
     Integer noEntryTiles;
     /**
      * Setter for the index of the corresponding Archipelago
@@ -28,7 +29,7 @@ public class ArchipelagoStatus {
      * Setter for the IslandStatus of the Island in the Archipelago
      * @param islands the IslandStatus array
      */
-    public void setIslands(IslandStatus[] islands) {
+    public void setIslands(ArrayList<IslandStatus> islands) {
         this.islands = islands;
     }
 
@@ -37,7 +38,7 @@ public class ArchipelagoStatus {
         return index;
     }
 
-    public IslandStatus[] getIslands() {
+    public ArrayList<IslandStatus> getIslands() {
         return islands;
     }
 

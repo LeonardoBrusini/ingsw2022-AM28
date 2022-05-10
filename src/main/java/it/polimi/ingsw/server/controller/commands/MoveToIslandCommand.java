@@ -8,6 +8,8 @@ import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
 
+import java.util.ArrayList;
+
 /**
  * The class that resolves the command to move students to a specific Island
  */
@@ -51,12 +53,16 @@ public class MoveToIslandCommand implements CommandStrategy{
         Gson g = new Gson();
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
-        ArchipelagoStatus[] ac = new ArchipelagoStatus[1];
-        IslandStatus[] is = new IslandStatus[1];
-        ac[0].setIndex(gameManager.getBoard().getIslandManager().getArchipelagoIndexByIslandIndex(command.getIndex()));
-        is[0].setIslandIndex(command.getIndex());
-        is[0].setStudents(gameManager.getBoard().getIslandManager().getIslandByIndex(command.getIndex()).getStudents().getStatus());
-        ac[0].setIslands(is);
+        ArrayList<ArchipelagoStatus> ac = new ArrayList<>();
+        ArrayList<IslandStatus> is = new ArrayList<>();
+        ArchipelagoStatus ac0 = new ArchipelagoStatus();
+        ac0.setIndex(gameManager.getBoard().getIslandManager().getArchipelagoIndexByIslandIndex(command.getIndex()));
+        IslandStatus is0 = new IslandStatus();
+        is0.setIslandIndex(command.getIndex());
+        is0.setStudents(gameManager.getBoard().getIslandManager().getIslandByIndex(command.getIndex()).getStudents().getStatus());
+        is.add(is0);
+        ac0.setIslands(is);
+        ac.add(ac0);
         gs.setArchipelagos(ac);
         cs.setGame(gs);
         return g.toJson(cs, CurrentStatus.class);

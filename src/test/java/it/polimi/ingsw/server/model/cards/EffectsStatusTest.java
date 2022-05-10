@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.board.Archipelago;
 import it.polimi.ingsw.server.model.board.Island;
 import it.polimi.ingsw.server.model.board.IslandManager;
+import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,15 +49,17 @@ public class EffectsStatusTest {
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
-        PlayerStatus[] ps = new PlayerStatus[1];
-        ps[0] = new PlayerStatus();
-        ps[0].setIndex(0);
-        ps[0].setAddedShifts(true);
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(0);
+        ps0.setAddedShifts(true);
+        ps.add(ps0);
         gs.setPlayers(ps);
-        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
-        ccs[0] = new CharacterCardStatus();
-        ccs[0].setIndex(0);
-        ccs[0].setCoinOnIt(true);
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
+        ccs0.setIndex(0);
+        ccs0.setCoinOnIt(true);
+        ccs.add(ccs0);
         gs.setCharacterCards(ccs);
         cs.setGame(gs);
         compareStatus(cs);
@@ -97,23 +100,25 @@ public class EffectsStatusTest {
        CurrentStatus cs = new CurrentStatus();
        //creation of the expected current status
        GameStatus gs = new GameStatus();
-       PlayerStatus[] ps = new PlayerStatus[1];
-       ps[0] = new PlayerStatus();
-       ps[0].setIndex(0);
-       ps[0].setCoins(1);
+       ArrayList<PlayerStatus> ps = new ArrayList<>();
+       PlayerStatus ps0 = new PlayerStatus();
+       ps0.setIndex(0);
+       ps0.setCoins(1);
        int[] s = new int[5];
        for(Colour colour: Colour.values())
            s[colour.ordinal()] = gameManager.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(colour);
-       ps[0].setStudentsOnEntrance(s);
+       ps0.setStudentsOnEntrance(s);
+       ps.add(ps0);
        gs.setPlayers(ps);
-       CharacterCardStatus[] ccs = new CharacterCardStatus[1];
-       ccs[0] = new CharacterCardStatus();
-       ccs[0].setIndex(0);
-       ccs[0].setCoinOnIt(true);
+       ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+       CharacterCardStatus ccs0 = new CharacterCardStatus();
+       ccs0.setIndex(0);
+       ccs0.setCoinOnIt(true);
        int[] s1 = new int[5];
        for(Colour colour: Colour.values())
            s1[colour.ordinal()] = st.getQuantityColour(colour);
-       ccs[0].setStudents(s1);
+       ccs0.setStudents(s1);
+       ccs.add(ccs0);
        gs.setCharacterCards(ccs);
        cs.setGame(gs);
        compareStatus(cs);
@@ -144,32 +149,36 @@ public class EffectsStatusTest {
         c.getCardInfo().getEffect().resolveEffect(c);
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
         GameStatus gs = new GameStatus();
-        PlayerStatus[] ps = new PlayerStatus[2];
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
         CurrentStatus cs = new CurrentStatus();
-        ps[0] = new PlayerStatus();
-        ps[0].setIndex(0);
-        ps[0].setCoins(1);
-        ps[0].setNumTowers(7);
-        ps[1] = new PlayerStatus();
-        ps[1].setIndex(1);
-        ps[1].setCoins(1);
-        ps[1].setNumTowers(8);
-        ArchipelagoStatus[] as = new ArchipelagoStatus[im.getArchipelagos().size()];
+        PlayerStatus ps0 = new PlayerStatus();
+        PlayerStatus ps1 = new PlayerStatus();
+        ps0.setIndex(0);
+        ps0.setCoins(1);
+        ps0.setNumTowers(7);
+        ps1.setIndex(1);
+        ps1.setCoins(1);
+        ps1.setNumTowers(8);
+        ps.add(ps0);
+        ps.add(ps1);
+        ArrayList<ArchipelagoStatus> as = new ArrayList<>();
         int j = 0;
         for(Archipelago a: im.getArchipelagos()){
-            IslandStatus[] is = a.getFullIslandsStatus();
-            as[j] = new ArchipelagoStatus();
-            as[j].setIslands(is);
-            as[j].setIndex(j);
-            as[j].setNoEntryTiles(a.getNoEntryTiles());
+            ArrayList<IslandStatus> is = a.getFullIslandsStatus();
+            ArchipelagoStatus asTemp = new ArchipelagoStatus();
+            asTemp.setIslands(is);
+            asTemp.setIndex(j);
+            asTemp.setNoEntryTiles(a.getNoEntryTiles());
+            as.add(asTemp);
             j++;
         }
         gs.setArchipelagos(as);
         gs.setPlayers(ps);
-        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
-        ccs[0] = new CharacterCardStatus();
-        ccs[0].setIndex(0);
-        ccs[0].setCoinOnIt(true);
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
+        ccs0.setIndex(0);
+        ccs0.setCoinOnIt(true);
+        ccs.add(ccs0);
         gs.setCharacterCards(ccs);
         cs.setGame(gs);
         //creation of the expected current status
@@ -186,15 +195,17 @@ public class EffectsStatusTest {
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
-        PlayerStatus[] ps = new PlayerStatus[1];
-        ps[0] = new PlayerStatus();
-        ps[0].setIndex(0);
-        ps[0].setCoins(1);
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(0);
+        ps0.setCoins(1);
+        ps.add(ps0);
         gs.setPlayers(ps);
-        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
-        ccs[0] = new CharacterCardStatus();
-        ccs[0].setIndex(0);
-        ccs[0].setCoinOnIt(true);
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
+        ccs0.setIndex(0);
+        ccs0.setCoinOnIt(true);
+        ccs.add(ccs0);
         //creation of the expected current status
         gs.setCharacterCards(ccs);
         cs.setGame(gs);
@@ -234,24 +245,26 @@ public class EffectsStatusTest {
         CurrentStatus cs = new CurrentStatus();
         //creation of the expected current status
         GameStatus gs = new GameStatus();
-        PlayerStatus[] ps = new PlayerStatus[1];
-        ps[0] = new PlayerStatus();
-        ps[0].setIndex(0);
-        ps[0].setCoins(1);
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(0);
+        ps0.setCoins(1);
         int[] s = new int[5];
         for(Colour colour: Colour.values())
             s[colour.ordinal()] = gameManager.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(colour);
-        ps[0].setStudentsOnEntrance(s);
+        ps0.setStudentsOnEntrance(s);
         int[] s1 = new int[5];
         for(Colour colour: Colour.values())
             s1[colour.ordinal()] = gameManager.getPlayers().get(0).getDashboard().getHall().getQuantityColour(colour);
-        ps[0].setStudentsOnHall(s1);
+        ps0.setStudentsOnHall(s1);
         gs.setProfessors(gameManager.getBoard().getProfessorGroup().getStatus());
-        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
-        ccs[0] = new CharacterCardStatus();
-        ccs[0].setIndex(0);
-        ccs[0].setCoinOnIt(true);
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
+        ccs0.setIndex(0);
+        ccs0.setCoinOnIt(true);
+        ccs.add(ccs0);
         gs.setCharacterCards(ccs);
+        ps.add(ps0);
         gs.setPlayers(ps);
         cs.setGame(gs);
         compareStatus(cs);
@@ -328,57 +341,57 @@ public class EffectsStatusTest {
             assertNull(status.getGame().getProfessors());
         }
         if(gs.getPlayers()!=null) {
-            assertEquals(gs.getPlayers().length,status.getGame().getPlayers().length);
-            for(int i=0;i<gs.getPlayers().length;i++) {
-                comparePStatus(gs.getPlayers()[i],i);
+            assertEquals(gs.getPlayers().size(),status.getGame().getPlayers().size());
+            for(int i=0;i<gs.getPlayers().size();i++) {
+                comparePStatus(gs.getPlayers().get(i),i);
             }
         } else {
             assertNull(status.getGame().getPlayers());
         }
         if(gs.getCharacterCards()!=null) {
-            assertEquals(gs.getCharacterCards().length,status.getGame().getCharacterCards().length);
-            for(int i=0;i<gs.getCharacterCards().length;i++) {
-                compareCCStatus(gs.getCharacterCards()[i],i);
+            assertEquals(gs.getCharacterCards().size(),status.getGame().getCharacterCards().size());
+            for(int i=0;i<gs.getCharacterCards().size();i++) {
+                compareCCStatus(gs.getCharacterCards().get(i),i);
             }
         } else {
             assertNull(status.getGame().getCharacterCards());
         }
         if(gs.getArchipelagos()!=null) {
-            assertEquals(gs.getArchipelagos().length,status.getGame().getArchipelagos().length);
-            for(int i=0;i<gs.getArchipelagos().length;i++) {
-                compareAStatus(gs.getArchipelagos()[i],i);
+            assertEquals(gs.getArchipelagos().size(),status.getGame().getArchipelagos().size());
+            for(int i=0;i<gs.getArchipelagos().size();i++) {
+                compareAStatus(gs.getArchipelagos().get(i),i);
             }
         } else {
             assertNull(status.getGame().getArchipelagos());
         }
         if(gs.getClouds()!=null) {
-            assertEquals(gs.getClouds().length,status.getGame().getClouds().length);
-            for(int i=0;i<gs.getClouds().length;i++) {
-                compareCStatus(gs.getClouds()[i], i);
+            assertEquals(gs.getClouds().size(),status.getGame().getClouds().size());
+            for(int i=0;i<gs.getClouds().size();i++) {
+                compareCStatus(gs.getClouds().get(i), i);
             }
         } else {
             assertNull(status.getGame().getClouds());
         }
     }
     private void compareCStatus(CloudStatus cloud, int i) {
-        assertEquals(cloud.getIndex(),status.getGame().getClouds()[i].getIndex());
+        assertEquals(cloud.getIndex(),status.getGame().getClouds().get(i).getIndex());
         if(cloud.getStudents()!=null) {
-            assertEquals(cloud.getStudents().length,status.getGame().getClouds()[i].getStudents().length);
+            assertEquals(cloud.getStudents().length,status.getGame().getClouds().get(i).getStudents().length);
             for(int j=0;j<cloud.getStudents().length;j++) {
-                assertEquals(cloud.getStudents()[j],status.getGame().getClouds()[i].getStudents()[j]);
+                assertEquals(cloud.getStudents()[j],status.getGame().getClouds().get(i).getStudents()[j]);
             }
         } else {
-            assertNull(status.getGame().getClouds()[i].getStudents());
+            assertNull(status.getGame().getClouds().get(i).getStudents());
         }
     }
     private void compareAStatus(ArchipelagoStatus as, int i) {
-        ArchipelagoStatus a = status.getGame().getArchipelagos()[i];
+        ArchipelagoStatus a = status.getGame().getArchipelagos().get(i);
         assertEquals(as.getIndex(),a.getIndex());
         assertEquals(as.getNoEntryTiles(),a.getNoEntryTiles());
         if(as.getIslands()!=null) {
-            assertEquals(as.getIslands().length,a.getIslands().length);
-            for (int j=0;j<as.getIslands().length;j++) {
-                compareIStatus(as.getIslands()[j],a.getIslands()[j]);
+            assertEquals(as.getIslands().size(),a.getIslands().size());
+            for (int j=0;j<as.getIslands().size();j++) {
+                compareIStatus(as.getIslands().get(j),a.getIslands().get(j));
             }
         } else {
             assertNull(as.getIslands());
@@ -397,7 +410,7 @@ public class EffectsStatusTest {
         }
     }
     private void compareCCStatus(CharacterCardStatus ccs, int i) {
-        CharacterCardStatus c = status.getGame().getCharacterCards()[i];
+        CharacterCardStatus c = status.getGame().getCharacterCards().get(i);
         assertEquals(ccs.getIndex(),c.getIndex());
         assertEquals(ccs.getFileName(),c.getFileName());
         assertEquals(ccs.getNoEntryTiles(),c.getNoEntryTiles());
@@ -411,7 +424,7 @@ public class EffectsStatusTest {
         }
     }
     private void comparePStatus(PlayerStatus player, int i) {
-        PlayerStatus p = status.getGame().getPlayers()[i];
+        PlayerStatus p = status.getGame().getPlayers().get(i);
         assertEquals(player.getIndex(),p.getIndex());
         assertEquals(player.getCoins(),p.getCoins());
         assertEquals(player.getAddedShifts(),p.getAddedShifts());

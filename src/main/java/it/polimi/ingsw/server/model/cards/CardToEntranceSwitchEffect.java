@@ -9,6 +9,8 @@ import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.model.players.Dashboard;
 
+import java.util.ArrayList;
+
 public class CardToEntranceSwitchEffect implements EffectStrategy{
     /**
      * takes the selected students (max 3) from the card (stored in selectedStudentsFrom) and moves them from the card to the dashboard entrance
@@ -53,24 +55,26 @@ public class CardToEntranceSwitchEffect implements EffectStrategy{
     public CurrentStatus getUpdatedStatus(CharacterCard c, ExpertGameManager gameManager) {
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
-        PlayerStatus[] ps = new PlayerStatus[1];
-        ps[0] = new PlayerStatus();
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
         for(int i=0;i<gameManager.getPlayers().size();i++) {
             if(c.getPlayerThisTurn()==gameManager.getPlayers().get(i)) {
-                ps[0].setIndex(i);
-                ps[0].setCoins(gameManager.getPlayers().get(i).getCoins());
-                ps[0].setStudentsOnEntrance(gameManager.getPlayers().get(i).getDashboard().getEntrance().getStatus());
+                ps0.setIndex(i);
+                ps0.setCoins(gameManager.getPlayers().get(i).getCoins());
+                ps0.setStudentsOnEntrance(gameManager.getPlayers().get(i).getDashboard().getEntrance().getStatus());
+                ps.add(ps0);
                 break;
             }
         }
         gs.setPlayers(ps);
-        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
-        ccs[0] = new CharacterCardStatus();
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
         for(int i=0;i<gameManager.getBoard().getCharacterCards().size();i++) {
             if(c==gameManager.getBoard().getCharacterCards().get(i)) {
-                ccs[0].setIndex(i);
-                ccs[0].setCoinOnIt(true);
-                ccs[0].setStudents(c.getStudentsOnCard().getStatus());
+                ccs0.setIndex(i);
+                ccs0.setCoinOnIt(true);
+                ccs0.setStudents(c.getStudentsOnCard().getStatus());
+                ccs.add(ccs0);
                 break;
             }
         }

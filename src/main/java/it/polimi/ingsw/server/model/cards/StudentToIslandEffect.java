@@ -3,6 +3,8 @@ package it.polimi.ingsw.server.model.cards;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 
+import java.util.ArrayList;
+
 public class StudentToIslandEffect implements EffectStrategy{
     /**
      * effect of the card 1: takes the selected student from the card and puts it on the selected island
@@ -20,35 +22,40 @@ public class StudentToIslandEffect implements EffectStrategy{
     public CurrentStatus getUpdatedStatus(CharacterCard c, ExpertGameManager gameManager) {
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
-        PlayerStatus[] ps = new PlayerStatus[1];
-        ps[0] = new PlayerStatus();
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
         for(int i=0;i<gameManager.getPlayers().size();i++) {
             if(c.getPlayerThisTurn()==gameManager.getPlayers().get(i)) {
-                ps[0].setCoins(gameManager.getPlayers().get(i).getCoins());
-                ps[0].setIndex(i);
+                ps0.setCoins(gameManager.getPlayers().get(i).getCoins());
+                ps0.setIndex(i);
+                ps.add(ps0);
                 break;
             }
         }
         gs.setPlayers(ps);
-        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
-        ccs[0] = new CharacterCardStatus();
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
         for(int i=0;i<gameManager.getBoard().getCharacterCards().size();i++) {
             if(c==gameManager.getBoard().getCharacterCards().get(i)) {
-                ccs[0].setIndex(i);
-                ccs[0].setCoinOnIt(true);
-                ccs[0].setStudents(c.getStudentsOnCard().getStatus());
+                ccs0.setIndex(i);
+                ccs0.setCoinOnIt(true);
+                ccs0.setStudents(c.getStudentsOnCard().getStatus());
+                ccs.add(ccs0);
                 break;
             }
         }
         gs.setCharacterCards(ccs);
-        ArchipelagoStatus[] as = new ArchipelagoStatus[1];
-        as[0] = new ArchipelagoStatus();
-        as[0].setIndex(gameManager.getBoard().getIslandManager().getArchipelagoIndexByIslandIndex(c.getSelectedIsland().getIslandIndex()));
-        IslandStatus[] is = new IslandStatus[1];
-        is[0] = new IslandStatus();
-        is[0].setIslandIndex(c.getSelectedIsland().getIslandIndex());
-        is[0].setStudents(c.getSelectedIsland().getStudents().getStatus());
-        as[0].setIslands(is);
+        ArrayList<ArchipelagoStatus> as = new ArrayList<>();
+        ArchipelagoStatus as0 = new ArchipelagoStatus();
+        as0.setIndex(gameManager.getBoard().getIslandManager().getArchipelagoIndexByIslandIndex(c.getSelectedIsland().getIslandIndex()));
+        ArrayList<IslandStatus> is = new ArrayList<>();
+        IslandStatus is0 = new IslandStatus();
+        is0.setIslandIndex(c.getSelectedIsland().getIslandIndex());
+        is0.setStudents(c.getSelectedIsland().getStudents().getStatus());
+        is.add(is0);
+        as0.setIslands(is);
+        as.add(as0);
+        gs.setArchipelagos(as);
         cs.setGame(gs);
         return cs;
     }

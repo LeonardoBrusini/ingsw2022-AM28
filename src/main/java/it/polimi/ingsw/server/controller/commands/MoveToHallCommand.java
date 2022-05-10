@@ -11,6 +11,8 @@ import it.polimi.ingsw.server.exceptions.WrongTurnException;
 import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.players.Player;
 
+import java.util.ArrayList;
+
 /**
  * The class that resolves the command to move students to the corresponding Hall
  */
@@ -50,9 +52,11 @@ public class MoveToHallCommand implements CommandStrategy{
         Gson g = new Gson();
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();
-        PlayerStatus[] ps = new PlayerStatus[1];
-        ps[0].setIndex(command.getPlayerIndex());
-        ps[0].setStudentsOnHall(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getHall().getStatus());
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(command.getPlayerIndex());
+        ps0.setStudentsOnHall(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getHall().getStatus());
+        ps.add(ps0);
         gs.setPlayers(ps);
         gs.setProfessors(gameManager.getBoard().getProfessorGroup().getStatus());
         cs.setGame(gs);

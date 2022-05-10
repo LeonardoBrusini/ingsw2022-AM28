@@ -69,12 +69,12 @@ public class Board {
         //game manager must check the player with most influence and build tower if needed (in upper method)
     }
 
-    public CloudStatus[] getCloudsStatus() {
-        CloudStatus[] cs = new CloudStatus[clouds.size()];
+    public ArrayList<CloudStatus> getCloudsStatus() {
+        ArrayList<CloudStatus> cs = new ArrayList<>();
         for (int i=0;i<clouds.size();i++) {
-            cs[i] = new CloudStatus();
-            cs[i].setIndex(i);
-            cs[i].setStudents(clouds.get(i).getStudentsOnCloud().getStatus());
+            cs.add(new CloudStatus());
+            cs.get(i).setIndex(i);
+            cs.get(i).setStudents(clouds.get(i).getStudentsOnCloud().getStatus());
         }
         return cs;
     }

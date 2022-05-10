@@ -51,9 +51,4 @@ public class MultiEchoServer {
         }
         executor.shutdown();
     }
-
-    public static void main(String[] args) {
-        MultiEchoServer echoServer = new MultiEchoServer(1234);
-        echoServer.startServer();
-    }
 }
