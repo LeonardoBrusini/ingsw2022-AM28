@@ -7,8 +7,13 @@ import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.exceptions.FullHallException;
 import it.polimi.ingsw.server.model.StudentGroup;
+import it.polimi.ingsw.server.model.board.Archipelago;
+import it.polimi.ingsw.server.model.board.Island;
+import it.polimi.ingsw.server.model.board.IslandManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -114,16 +119,62 @@ public class EffectsStatusTest {
        compareStatus(cs);
     }
 
-    /*
+
     @Test
     void CIStatus() {
         setCard(CharacterCardInfo.CARD3);
+        IslandManager im = gameManager.getBoard().getIslandManager();
+        int before = 3;
+        int after = 6;
+        im.getArchipelagoByIslandIndex(3).setPresenceMotherNature(false);
+        im.getArchipelagoByIslandIndex(6).setPresenceMotherNature(true);
+        StudentGroup si = new StudentGroup();
+        si.addStudent(Colour.YELLOW);
+        im.getIslandByIndex(6).setStudents(si);
+        gameManager.getBoard().getProfessorGroup().setTower(Colour.YELLOW,gameManager.getPlayers().get(0).getTower());
+        for(Archipelago a: im.getArchipelagos()){
+            ArchipelagoStatus as = new ArchipelagoStatus();
+                as.setIslands(a.getFullIslandsStatus());
+        }
         //card parameters && effect activation
+        c.setSelectedIsland(im.getIslandByIndex(6));
+        c.setPlayerThisTurn(gameManager.getPlayers().get(0));
+        c.setBoard(gameManager.getBoard());
+        c.setGameManager(gameManager);
+        c.getCardInfo().getEffect().resolveEffect(c);
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        GameStatus gs = new GameStatus();
+        PlayerStatus[] ps = new PlayerStatus[2];
         CurrentStatus cs = new CurrentStatus();
+        ps[0] = new PlayerStatus();
+        ps[0].setIndex(0);
+        ps[0].setCoins(1);
+        ps[0].setNumTowers(7);
+        ps[1] = new PlayerStatus();
+        ps[1].setIndex(1);
+        ps[1].setCoins(1);
+        ps[1].setNumTowers(8);
+        ArchipelagoStatus[] as = new ArchipelagoStatus[im.getArchipelagos().size()];
+        int j = 0;
+        for(Archipelago a: im.getArchipelagos()){
+            IslandStatus[] is = a.getFullIslandsStatus();
+            as[j] = new ArchipelagoStatus();
+            as[j].setIslands(is);
+            as[j].setIndex(j);
+            as[j].setNoEntryTiles(a.getNoEntryTiles());
+            j++;
+        }
+        gs.setArchipelagos(as);
+        gs.setPlayers(ps);
+        CharacterCardStatus[] ccs = new CharacterCardStatus[1];
+        ccs[0] = new CharacterCardStatus();
+        ccs[0].setIndex(0);
+        ccs[0].setCoinOnIt(true);
+        gs.setCharacterCards(ccs);
+        cs.setGame(gs);
         //creation of the expected current status
         compareStatus(cs);
-    }*/
+    }
 
 
     @Test
