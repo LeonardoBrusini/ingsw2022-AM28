@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model.cards;
 
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.Phase;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
@@ -233,14 +234,16 @@ public class EffectsStatusTest {
         c.setSelectedStudentsFrom(sf);
         c.setPlayerThisTurn(gameManager.getPlayers().get(0));
         gameManager.getPlayers().get(0).fillDashboardEntrance(sh);
-        c.setSelectedStudentsTo(st);
         try {
-            gameManager.getPlayers().get(0).playCard(0);
-        } catch (AlreadyPlayedException e) {
-            throw new RuntimeException(e);
-        }catch (IllegalArgumentException h){
-            throw new RuntimeException(h);
+            gameManager.getPlayers().get(0).fillHall(sh);
+        }catch (FullHallException e){
+            throw new RuntimeException();
         }
+        c.setSelectedStudentsTo(st);
+        c.setGameManager(gameManager);
+        assertEquals(6, gameManager.getPlayers().get(0).getCoins()); //The player gets coins when it adds students to the Hall
+        c.getCardInfo().getEffect().resolveEffect(c);
+
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
         CurrentStatus cs = new CurrentStatus();
         //creation of the expected current status
@@ -248,7 +251,7 @@ public class EffectsStatusTest {
         ArrayList<PlayerStatus> ps = new ArrayList<>();
         PlayerStatus ps0 = new PlayerStatus();
         ps0.setIndex(0);
-        ps0.setCoins(1);
+        ps0.setCoins(8); //The player gets coins when it adds students to the Hall (2 added in EntranceToHallSwitchEffect
         int[] s = new int[5];
         for(Colour colour: Colour.values())
             s[colour.ordinal()] = gameManager.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(colour);
@@ -270,17 +273,47 @@ public class EffectsStatusTest {
         compareStatus(cs);
     }
 
-    /*
+
     @Test
     void NETStatus() {
         setCard(CharacterCardInfo.CARD5);
         //card parameters && effect activation
+        c.setSelectedIsland(gameManager.getBoard().getIslandManager().getIslandByIndex(4));
+        c.setBoard(gameManager.getBoard());
+        c.setPlayerThisTurn(gameManager.getPlayers().get(0));
+        c.setNoEntryTiles(4); //With this card at the beginning are added 4 NoEntryTiles on it
+        assertEquals(4, c.getNoEntryTiles());
+        assertEquals(0, gameManager.getBoard().getIslandManager().getArchipelagoByIslandIndex(c.getSelectedIsland().getIslandIndex()).getNoEntryTiles());
+        c.getCardInfo().getEffect().resolveEffect(c);
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
+        assertEquals(3, c.getNoEntryTiles());
+        assertEquals(1, c.getBoard().getIslandManager().getArchipelagoByIslandIndex(4).getNoEntryTiles());
+        ArrayList<ArchipelagoStatus> arc = new ArrayList<>();
         CurrentStatus cs = new CurrentStatus();
+        GameStatus gs = new GameStatus();
+        ArchipelagoStatus arcstatus = new ArchipelagoStatus();
+        arcstatus.setNoEntryTiles(1);
+        arcstatus.setIndex(gameManager.getBoard().getIslandManager().getArchipelagoIndexByIslandIndex(4));
+        arc.add(arcstatus);
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(0);
+        ps0.setCoins(1);
+        ps.add(ps0);
+        gs.setPlayers(ps);
+        gs.setArchipelagos(arc);
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
+        ccs0.setIndex(0);
+        ccs0.setCoinOnIt(true);
+        ccs.add(ccs0);
         //creation of the expected current status
+        gs.setCharacterCards(ccs);
+        cs.setGame(gs);
         compareStatus(cs);
     }
 
+    /*
     @Test
     void RFHStatus() {
         setCard(CharacterCardInfo.CARD12);
