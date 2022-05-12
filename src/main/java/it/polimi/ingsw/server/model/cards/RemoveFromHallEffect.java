@@ -27,7 +27,7 @@ public class RemoveFromHallEffect implements EffectStrategy{
     public CurrentStatus getUpdatedStatus(CharacterCard c, ExpertGameManager gameManager) {
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
-        gs.setArchipelagos(gameManager.getBoard().getIslandManager().getFullArchipelagosStatus());
+        //gs.setArchipelagos(gameManager.getBoard().getIslandManager().getFullArchipelagosStatus());
         ArrayList<PlayerStatus> ps = new ArrayList<>();
         for(int i=0;i<gameManager.getPlayers().size();i++) {
             PlayerStatus psTemp = new PlayerStatus();

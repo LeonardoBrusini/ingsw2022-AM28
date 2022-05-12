@@ -313,36 +313,152 @@ public class EffectsStatusTest {
         compareStatus(cs);
     }
 
-    /*
+
     @Test
     void RFHStatus() {
         setCard(CharacterCardInfo.CARD12);
+        StudentGroup sh = new StudentGroup();
+        sh.addStudent(Colour.YELLOW);
+        sh.addStudent(Colour.YELLOW);
+        sh.addStudent(Colour.YELLOW);
+        sh.addStudent(Colour.YELLOW);
+        for(Player p: gameManager.getPlayers()) {
+            try{
+                p.fillHall(sh);
+            }catch (FullHallException e){
+                throw new RuntimeException(e);
+            }
+        }
+        int[] hall = new int[5];
+        for(Colour colour: Colour.values())
+            if(colour != Colour.YELLOW)
+                hall[colour.ordinal()] = 0;
+        hall[Colour.YELLOW.ordinal()] = 1;
+        c.setSelectedColour(Colour.YELLOW);
+        c.setGameManager(gameManager);
+        c.setPlayerThisTurn(gameManager.getPlayers().get(0));
+        c.getCardInfo().getEffect().resolveEffect(c);
         //card parameters && effect activation
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
         CurrentStatus cs = new CurrentStatus();
         //creation of the expected current status
+        for(Player p: gameManager.getPlayers())
+            assertEquals(1, p.getDashboard().getHall().getQuantityColour(Colour.YELLOW));
+        GameStatus gs = new GameStatus();
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(0);
+        ps0.setCoins(2); //adding students on hall as before, the player earns a coin
+        ps0.setStudentsOnHall(hall);
+        ps.add(ps0);
+        PlayerStatus ps1 = new PlayerStatus();
+        ps1.setIndex(1);
+        ps1.setCoins(2); //adding students on hall as before, the player earns a coin
+        ps1.setStudentsOnHall(hall);
+        ps.add(ps1);
+        gs.setPlayers(ps);
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
+        ccs0.setIndex(0);
+        ccs0.setCoinOnIt(true);
+        ccs.add(ccs0);
+        gs.setCharacterCards(ccs);
+        cs.setGame(gs);
         compareStatus(cs);
     }
+
 
     @Test
     void STHStatus() {
         setCard(CharacterCardInfo.CARD11);
+        StudentGroup sc = new StudentGroup(2);
+        c.setStudentsOnCard(sc);
+        c.setSelectedColour(Colour.PINK);
+        int[] hall = new int[5];
+        hall[Colour.PINK.ordinal()] = 1;
+        for(Colour colour: Colour.values())
+            if(colour != Colour.PINK)
+                hall[colour.ordinal()] = 0;
         //card parameters && effect activation
+        c.setBoard(gameManager.getBoard());
+        c.setGameManager(gameManager);
+        c.setPlayerThisTurn(gameManager.getPlayers().get(0));
+        c.getCardInfo().getEffect().resolveEffect(c);
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
         CurrentStatus cs = new CurrentStatus();
         //creation of the expected current status
+        GameStatus gs = new GameStatus();
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(0);
+        ps0.setCoins(1);
+        ps0.setStudentsOnHall(hall);
+        ps.add(ps0);
+        gs.setPlayers(ps);
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
+        ccs0.setIndex(0);
+        ccs0.setCoinOnIt(true);
+        ccs0.setStudents(c.getStudentsOnCard().getStatus());
+        assertEquals(10, c.getStudentsOnCard().getTotalStudents());
+        ccs.add(ccs0);
+        gs.setCharacterCards(ccs);
+        gs.setProfessors(gameManager.getBoard().getProfessorGroup().getStatus());
+        cs.setGame(gs);
         compareStatus(cs);
     }
+
 
     @Test
     void STIStatus() {
         setCard(CharacterCardInfo.CARD1);
+        c.setSelectedColour(Colour.BLUE);
+        c.setSelectedIsland(gameManager.getBoard().getIslandManager().getIslandByIndex(4));
+        StudentGroup sc = new StudentGroup(2);
+        c.setStudentsOnCard(sc);
+        c.setBoard(gameManager.getBoard());
+        gameManager.getBoard().getIslandManager().getIslandByIndex(4).setStudents(new StudentGroup());
+        int[] island = new int[5];
+        for(Colour colour: Colour.values())
+            if(colour != Colour.BLUE)
+                island[colour.ordinal()] = 0;
+        island[Colour.BLUE.ordinal()] = 1;
         //card parameters && effect activation
+        c.setGameManager(gameManager);
+        c.setPlayerThisTurn(gameManager.getPlayers().get(0));
+        c.getCardInfo().getEffect().resolveEffect(c);
         status = c.getCardInfo().getEffect().getUpdatedStatus(c,gameManager);
         CurrentStatus cs = new CurrentStatus();
         //creation of the expected current status
+        GameStatus gs = new GameStatus();
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        ArrayList<IslandStatus> is = new ArrayList<>();
+        ArrayList<ArchipelagoStatus> arc = new ArrayList<>();
+        ArchipelagoStatus arcstatus = new ArchipelagoStatus();
+        IslandStatus isstatus = new IslandStatus();
+        isstatus.setIslandIndex(4);
+        isstatus.setStudents(island);
+        is.add(isstatus);
+        arcstatus.setIslands(is);
+        arc.add(arcstatus);
+        arcstatus.setIndex(gameManager.getBoard().getIslandManager().getArchipelagoIndexByIslandIndex(4));
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(0);
+        ps0.setCoins(1);
+        ps.add(ps0);
+        gs.setArchipelagos(arc);
+        gs.setPlayers(ps);
+        ArrayList<CharacterCardStatus> ccs = new ArrayList<>();
+        CharacterCardStatus ccs0 = new CharacterCardStatus();
+        ccs0.setIndex(0);
+        ccs0.setCoinOnIt(true);
+        ccs0.setStudents(c.getStudentsOnCard().getStatus());
+        assertEquals(10, c.getStudentsOnCard().getTotalStudents());
+        ccs.add(ccs0);
+        gs.setCharacterCards(ccs);
+        cs.setGame(gs);
         compareStatus(cs);
-    }*/
+    }
 
     void compareStatus(CurrentStatus cs) {
         assertEquals(cs.getGameMode(),status.getGameMode());
