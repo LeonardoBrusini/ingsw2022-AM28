@@ -16,7 +16,6 @@ import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -638,6 +637,190 @@ class ExpertGameManagerTest {
             z.printStackTrace();
         }catch (NoStudentsException g){
             g.printStackTrace();
+        }
+    }
+
+    @Test
+    void playCharacterCard2468(){
+        ExpertGameManager gm = new ExpertGameManager();
+        gm.addPlayer();
+        gm.addPlayer();
+        gm.getPlayers().get(0).setCoins(8);
+        gm.newGame(true, 2);
+        CharacterCard card2 = new CharacterCard(CharacterCardInfo.CARD2);
+        CharacterCard card4 = new CharacterCard(CharacterCardInfo.CARD4);
+        CharacterCard card6 = new CharacterCard(CharacterCardInfo.CARD6);
+        CharacterCard card8 = new CharacterCard(CharacterCardInfo.CARD8);
+        ArrayList<CharacterCard> cards = new ArrayList<>();
+        cards.add(card2);
+        cards.add(card4);
+        gm.getBoard().setCharacterCards(cards);
+        try {
+            gm.getPlayers().get(0).playCard(3);
+        }catch (AlreadyPlayedException e){
+            throw new RuntimeException(e);
+        }
+        for(int i = 0; i < cards.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(0, i);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+        assertTrue(card2.isActivated());
+        assertEquals(4, gm.getPlayers().get(0).getLastPlayedCard().getInfo().getMotherNatureShifts());
+        ArrayList<CharacterCard> cards1 = new ArrayList<>();
+        cards1.add(card6);
+        cards1.add(card8);
+        gm.getBoard().setCharacterCards(cards1);
+        for(int i = 0; i < cards1.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(0, i);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+        assertTrue(card6.isActivated());
+        assertTrue(card8.isActivated());
+
+        //To test AlreadyPlayedException
+        gm.getPlayers().get(0).setCoins(8);
+        CharacterCard card12 = new CharacterCard(CharacterCardInfo.CARD2);
+        CharacterCard card14 = new CharacterCard(CharacterCardInfo.CARD4);
+        CharacterCard card16 = new CharacterCard(CharacterCardInfo.CARD6);
+        CharacterCard card18 = new CharacterCard(CharacterCardInfo.CARD8);
+        ArrayList<CharacterCard> cards2 = new ArrayList<>();
+        cards2.add(card12);
+        cards2.add(card14);
+        gm.getBoard().setCharacterCards(cards2);
+        for(int i = 0; i < cards2.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.playCharacterCard(0, i);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+
+        //To test NotEnoughCoinsException
+        CharacterCard card22 = new CharacterCard(CharacterCardInfo.CARD2);
+        CharacterCard card24 = new CharacterCard(CharacterCardInfo.CARD4);
+        ArrayList<CharacterCard> cards4 = new ArrayList<>();
+        cards4.add(card22);
+        cards4.add(card24);
+        gm.getBoard().setCharacterCards(cards4);
+        try {
+            gm.getPlayers().get(0).playCard(7);
+        }catch (AlreadyPlayedException e){
+            throw new RuntimeException(e);
+        }
+        for(int i = 0; i < cards.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(0, i);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+
+
+        //To test WrongPhaseException
+        CharacterCard card32 = new CharacterCard(CharacterCardInfo.CARD2);
+        CharacterCard card34 = new CharacterCard(CharacterCardInfo.CARD4);
+        ArrayList<CharacterCard> cards5 = new ArrayList<>();
+        cards5.add(card32);
+        cards5.add(card34);
+        gm.getBoard().setCharacterCards(cards5);
+        try {
+            gm.getPlayers().get(0).playCard(5);
+        }catch (AlreadyPlayedException e){
+            e.printStackTrace();
+        }
+        gm.getPlayers().get(0).setCoins(8);
+        for(int i = 0; i < cards.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.PLANNING);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(0, i);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+
+        //To test IllegalArgumentException
+        CharacterCard card42 = new CharacterCard(CharacterCardInfo.CARD2);
+        CharacterCard card44 = new CharacterCard(CharacterCardInfo.CARD4);
+        ArrayList<CharacterCard> cards6 = new ArrayList<>();
+        cards6.add(card42);
+        cards6.add(card44);
+        gm.getBoard().setCharacterCards(cards6);
+        try {
+            gm.getPlayers().get(0).playCard(4);
+        }catch (AlreadyPlayedException e){
+            throw new RuntimeException(e);
+        }
+        gm.getPlayers().get(0).setCoins(8);
+        for(int i = 0; i < cards.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.PLANNING);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(2, i);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
         }
     }
 
