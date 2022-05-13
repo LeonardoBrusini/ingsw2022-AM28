@@ -1136,4 +1136,362 @@ class ExpertGameManagerTest {
         }
     }
 
+    @Test
+    void playCharacterCard35(){
+        ExpertGameManager gm = new ExpertGameManager();
+        gm.addPlayer();
+        gm.addPlayer();
+        gm.getPlayers().get(0).setCoins(8);
+        gm.newGame(true, 2);
+        CharacterCard card3 = new CharacterCard(CharacterCardInfo.CARD3);
+        CharacterCard card5 = new CharacterCard(CharacterCardInfo.CARD5);
+        ArrayList<CharacterCard> cards = new ArrayList<>();
+        card5.setNoEntryTiles(1);
+        cards.add(card3);
+        cards.add(card5);
+        gm.getBoard().setCharacterCards(cards);
+        int before = gm.getBoard().getMotherNature().getIslandIndex();
+        gm.getBoard().getProfessorGroup().setTower(Colour.YELLOW, gm.getPlayers().get(0).getTower());
+        StudentGroup si = new StudentGroup();
+        si.addStudent(Colour.YELLOW);
+        gm.getBoard().getIslandManager().getIslandByIndex(4).setStudents(si);
+        for(int i = 0; i < cards.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(0, i, 4);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+        assertEquals(1, gm.getBoard().getIslandManager().getArchipelagoByIslandIndex(4).getNoEntryTiles());
+        assertEquals(0, card5.getNoEntryTiles());
+        assertEquals(before, gm.getBoard().getMotherNature().getIslandIndex());
+        assertEquals(gm.getPlayers().get(0).getTower(), gm.getBoard().getIslandManager().getIslandByIndex(4).getTower());
+
+        //To test AlreadyPlayedException
+        CharacterCard card13 = new CharacterCard(CharacterCardInfo.CARD3);
+        CharacterCard card15 = new CharacterCard(CharacterCardInfo.CARD5);
+        ArrayList<CharacterCard> cards2 = new ArrayList<>();
+        card5.setNoEntryTiles(1);
+        cards2.add(card13);
+        cards2.add(card15);
+        gm.getBoard().setCharacterCards(cards2);
+        gm.getPlayers().get(0).setCoins(8);
+        for(int i = 0; i < cards2.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.playCharacterCard(0, i, 4);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+
+
+        //To test NotEnoughCoinsException
+        CharacterCard card23 = new CharacterCard(CharacterCardInfo.CARD3);
+        CharacterCard card25 = new CharacterCard(CharacterCardInfo.CARD5);
+        ArrayList<CharacterCard> cards3 = new ArrayList<>();
+        card5.setNoEntryTiles(1);
+        cards3.add(card23);
+        cards3.add(card25);
+        gm.getBoard().setCharacterCards(cards3);
+        for(int i = 0; i < cards3.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(0, i, 4);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+
+
+        //To test WrongPhaseException
+        CharacterCard card33 = new CharacterCard(CharacterCardInfo.CARD3);
+        CharacterCard card35 = new CharacterCard(CharacterCardInfo.CARD5);
+        ArrayList<CharacterCard> cards4 = new ArrayList<>();
+        card5.setNoEntryTiles(1);
+        cards4.add(card33);
+        cards4.add(card35);
+        gm.getBoard().setCharacterCards(cards4);
+        gm.getPlayers().get(0).setCoins(8);
+        for(int i = 0; i < cards4.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.PLANNING);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(0, i, 4);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+
+        //To test IllegalArgumentException
+        CharacterCard card43 = new CharacterCard(CharacterCardInfo.CARD3);
+        CharacterCard card45 = new CharacterCard(CharacterCardInfo.CARD5);
+        ArrayList<CharacterCard> cards5 = new ArrayList<>();
+        card5.setNoEntryTiles(1);
+        cards5.add(card43);
+        cards5.add(card45);
+        gm.getBoard().setCharacterCards(cards5);
+        gm.getPlayers().get(0).setCoins(8);
+        for(int i = 0; i < cards5.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(2, i,  4);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    void playCharacterCard710(){
+        ExpertGameManager gm = new ExpertGameManager();
+        gm.addPlayer();
+        gm.addPlayer();
+        gm.newGame(true, 2);
+        CharacterCard card7 = new CharacterCard(CharacterCardInfo.CARD7);
+        CharacterCard card10 = new CharacterCard(CharacterCardInfo.CARD10);
+        ArrayList<CharacterCard> cards = new ArrayList<>();
+        StudentGroup sf = new StudentGroup();
+        sf.addStudent(Colour.RED);
+        sf.addStudent(Colour.RED);
+        StudentGroup st = new StudentGroup();
+        st.addStudent(Colour.BLUE);
+        st.addStudent(Colour.BLUE);
+        StudentGroup soc = new StudentGroup(5);
+        card7.setStudentsOnCard(soc);
+        card10.setStudentsOnCard(soc);
+        gm.getPlayers().get(0).getDashboard().fillEntrance(new StudentGroup(5));
+        gm.getPlayers().get(1).getDashboard().fillEntrance(new StudentGroup(5));
+        try {
+            gm.getPlayers().get(1).getDashboard().fillHall(new StudentGroup(5));
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }
+        cards.add(card7);
+        cards.add(card10);
+        gm.getBoard().setCharacterCards(cards);
+        gm.getPlayers().get(0).setCoins(10);
+        try {
+            gm.getTurnManager().setPhase(Phase.ACTION);
+            gm.getTurnManager().setMoveStudentsPhase(true);
+            gm.getTurnManager().setCurrentPlayer(0);
+            gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+            gm.playCharacterCard(0, 0,sf,st);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (WrongPhaseException w) {
+            w.printStackTrace();
+        } catch (NotEnoughCoinsException h) {
+            h.printStackTrace();
+        } catch (AlreadyPlayedException r) {
+            r.printStackTrace();
+        }
+        assertEquals(7, card7.getStudentsOnCard().getQuantityColour(Colour.BLUE));
+        assertEquals(7, gm.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(Colour.RED));
+        assertEquals(3, card7.getStudentsOnCard().getQuantityColour(Colour.RED));
+        assertEquals(3, gm.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(Colour.BLUE));
+
+        gm.getPlayers().get(1).setCoins(10);
+        try {
+            gm.getTurnManager().setPhase(Phase.ACTION);
+            gm.getTurnManager().setMoveStudentsPhase(true);
+            gm.getTurnManager().setCurrentPlayer(0);
+            gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+            gm.playCharacterCard(1, 1,sf,st);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (WrongPhaseException w) {
+            w.printStackTrace();
+        } catch (NotEnoughCoinsException h) {
+            h.printStackTrace();
+        } catch (AlreadyPlayedException r) {
+            r.printStackTrace();
+        }
+        assertEquals(7, gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.RED));
+        assertEquals(7, gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.BLUE));
+        assertEquals(3, gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.BLUE));
+        assertEquals(3, gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.RED));
+
+        //To test AlreadyPlayedException
+        CharacterCard card17 = new CharacterCard(CharacterCardInfo.CARD7);
+        CharacterCard card110 = new CharacterCard(CharacterCardInfo.CARD10);
+        ArrayList<CharacterCard> cards2 = new ArrayList<>();
+        cards2.add(card17);
+        cards2.add(card110);
+        card17.setStudentsOnCard(soc);
+        card110.setStudentsOnCard(soc);
+        gm.getPlayers().get(0).getDashboard().fillEntrance(new StudentGroup(5));
+        gm.getPlayers().get(1).getDashboard().fillEntrance(new StudentGroup(5));
+        gm.getBoard().setCharacterCards(cards2);
+        gm.getPlayers().get(0).setCoins(8);
+        for(int i = 0; i < cards2.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.playCharacterCard(0, i, sf, st);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+
+
+        //To test NotEnoughCoinsException
+        CharacterCard card27 = new CharacterCard(CharacterCardInfo.CARD7);
+        CharacterCard card210 = new CharacterCard(CharacterCardInfo.CARD10);
+        ArrayList<CharacterCard> cards3 = new ArrayList<>();
+        cards3.add(card27);
+        cards3.add(card210);
+        card27.setStudentsOnCard(soc);
+        card210.setStudentsOnCard(soc);
+        gm.getPlayers().get(0).getDashboard().fillEntrance(new StudentGroup(5));
+        gm.getPlayers().get(1).getDashboard().fillEntrance(new StudentGroup(5));
+        gm.getBoard().setCharacterCards(cards3);
+        try {
+            gm.getPlayers().get(0).getDashboard().fillHall(new StudentGroup(5));
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }
+        gm.getPlayers().get(0).setCoins(0);
+        gm.getBoard().setCharacterCards(cards3);
+        for(int i = 0; i < cards3.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(0, i, sf,st);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+
+
+        //To test WrongPhaseException
+        CharacterCard card37 = new CharacterCard(CharacterCardInfo.CARD7);
+        CharacterCard card310 = new CharacterCard(CharacterCardInfo.CARD10);
+        ArrayList<CharacterCard> cards4 = new ArrayList<>();
+        cards4.add(card37);
+        cards4.add(card310);
+        card37.setStudentsOnCard(soc);
+        card310.setStudentsOnCard(soc);
+        gm.getPlayers().get(0).getDashboard().fillEntrance(new StudentGroup(5));
+        gm.getPlayers().get(1).getDashboard().fillEntrance(new StudentGroup(5));
+        gm.getBoard().setCharacterCards(cards4);
+        try {
+            gm.getPlayers().get(0).getDashboard().fillHall(new StudentGroup(5));
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }
+        gm.getPlayers().get(0).setCoins(8);
+        for(int i = 0; i < cards4.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.PLANNING);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(0, i, sf,st);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+
+        //To test IllegalArgumentException
+        CharacterCard card47 = new CharacterCard(CharacterCardInfo.CARD7);
+        CharacterCard card410 = new CharacterCard(CharacterCardInfo.CARD10);
+        ArrayList<CharacterCard> cards5 = new ArrayList<>();
+        cards5.add(card47);
+        cards5.add(card410);
+        card47.setStudentsOnCard(soc);
+        card410.setStudentsOnCard(soc);
+        gm.getPlayers().get(0).getDashboard().fillEntrance(new StudentGroup(5));
+        gm.getPlayers().get(1).getDashboard().fillEntrance(new StudentGroup(5));
+        gm.getBoard().setCharacterCards(cards5);
+        try {
+            gm.getPlayers().get(0).getDashboard().fillHall(new StudentGroup(5));
+        }catch (FullHallException e){
+            e.printStackTrace();
+        }
+        gm.getPlayers().get(0).setCoins(8);
+        for(int i = 0; i < cards5.size(); i++) {
+            try {
+                gm.getTurnManager().setPhase(Phase.ACTION);
+                gm.getTurnManager().setMoveStudentsPhase(true);
+                gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+                gm.playCharacterCard(2, i,  sf,st);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (WrongPhaseException w) {
+                w.printStackTrace();
+            } catch (NotEnoughCoinsException h) {
+                h.printStackTrace();
+            } catch (AlreadyPlayedException r) {
+                r.printStackTrace();
+            }
+        }
+    }
+
 }

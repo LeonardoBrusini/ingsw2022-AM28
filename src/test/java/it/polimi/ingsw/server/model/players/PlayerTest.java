@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.enumerations.Tower;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.exceptions.FullHallException;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
+import it.polimi.ingsw.server.exceptions.NotEnoughCoinsException;
 import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.board.Island;
 import it.polimi.ingsw.server.model.board.Bag;
@@ -168,11 +169,15 @@ class PlayerTest {
     void spendCoins() {
         Player p = new Player(Tower.GRAY);
         assertEquals(1, p.getCoins());
-        p.spendCoins(1);
+        try {
+            p.spendCoins(1);
+        }catch (NotEnoughCoinsException e){
+            assertEquals(0, p.getCoins());
+        }
         assertEquals(0, p.getCoins());
         try {
             p.spendCoins(1);
-        } catch (IllegalArgumentException e) {
+        } catch (NotEnoughCoinsException e) {
             assertEquals(0, p.getCoins());
         }
     }

@@ -265,9 +265,11 @@ public class ExpertGameManager {
             card.setBoard(board);
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
-        } catch (IllegalArgumentException exception) {
+        } catch (NotEnoughCoinsException exception) {
             throw new NotEnoughCoinsException();
             //error, player does not have enough coins
+        }catch (IllegalArgumentException ex){
+            throw new IllegalArgumentException();
         }
     }
 
@@ -293,9 +295,11 @@ public class ExpertGameManager {
             card.setSelectedColour(colour);
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
-        } catch (IllegalArgumentException exception) {
+        } catch (NotEnoughCoinsException exception) {
             throw new NotEnoughCoinsException();
             //error, player does not have enough coins
+        }catch (IllegalArgumentException h){
+            throw new IllegalArgumentException();
         }
     }
 
@@ -323,9 +327,11 @@ public class ExpertGameManager {
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
-        } catch (IllegalArgumentException exception) {
+        } catch (NotEnoughCoinsException exception) {
             throw new NotEnoughCoinsException();
             //error, player does not have enough coins
+        }catch (IllegalArgumentException h){
+            throw new IllegalArgumentException();
         }
     }
 
@@ -352,9 +358,11 @@ public class ExpertGameManager {
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
-        } catch (IllegalArgumentException exception) {
+        } catch (NotEnoughCoinsException exception) {
             throw new NotEnoughCoinsException();
             //error, player does not have enough coins
+        }catch (IllegalArgumentException h){
+            throw new IllegalArgumentException();
         }
     }
 
@@ -381,8 +389,10 @@ public class ExpertGameManager {
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
         } catch (IllegalArgumentException exception) {
-            throw new NotEnoughCoinsException();
+            throw new IllegalArgumentException();
             //error, player does not have enough coins
+        }catch (NotEnoughCoinsException ex){
+            throw new NotEnoughCoinsException();
         }
     }
 

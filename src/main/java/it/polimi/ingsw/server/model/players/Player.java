@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.exceptions.FullHallException;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
+import it.polimi.ingsw.server.exceptions.NotEnoughCoinsException;
 import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.board.Island;
 import it.polimi.ingsw.server.enumerations.Tower;
@@ -96,8 +97,8 @@ public class Player {
      * It removes a coin from the ones available to the Player
      * @param x the number of coins chosen to be spent
      */
-    public void spendCoins(int x) throws IllegalArgumentException{
-        if(coins<x) throw new IllegalArgumentException();
+    public void spendCoins(int x) throws NotEnoughCoinsException{
+        if(coins<x) throw new NotEnoughCoinsException();
         coins -= x;
     }
 
