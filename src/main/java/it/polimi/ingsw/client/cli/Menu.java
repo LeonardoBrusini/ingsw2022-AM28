@@ -3,14 +3,18 @@ package it.polimi.ingsw.client.cli;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.server.enumerations.Colour;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
+    private ArrayList<CLIPhases> phases;
     private CurrentStatus currentStatus;
+    private GameParameters parameters;
     private Command command;
+    private final Gson parser;
     private boolean firstPlayer;
     private String username;
     private ParameterHandler parameterHandler;
@@ -21,6 +25,9 @@ public class Menu {
     public Menu() {
         firstPlayer = false;
         busyScanner = false;
+        phases = new ArrayList<>();
+        phases.add(CLIPhases.USERNAME);
+        parser = new Gson();
     }
 
     public synchronized String generateCommand(String userInput) {
@@ -50,32 +57,7 @@ public class Menu {
 
 
     public void printMenu() {
-        if(currentStatus==null) {
-            if(username==null) {
-                System.out.println("Insert your username: ");
-                return;
-            }
-            /*if(firstPlayer) {
-                askParameters();
-                return;
-            }*/
-            System.out.println("Waiting for the game to begin...");
-            return;
-        }
-        if(currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID())) {
-            if(currentStatus.getTurn().getPhase().equals("PLANNING")) {
-                System.out.println("1) Play Assistant Card");
-                System.out.println("Chose your move: ");
-                return;
-            }
-            System.out.println("1) Move Student on an Island");
-            System.out.println("2) Move Student on your Hall");
-            System.out.println("3) Move mother Nature");
-            System.out.println("4) Take students from a cloud");
-            if(currentStatus.getGame().getCharacterCards()!=null) System.out.println("5) Activate Character Card effect");
-            return;
-        }
-        System.out.println("Waiting for other players to make their moves...");
+        System.out.println(phases.get(0).getMenuPrompt());
     }
 
     private synchronized String askParameters(){
@@ -263,6 +245,31 @@ public class Menu {
 
     public synchronized String manageReceivedLine(String line) {
         System.out.println(line);
+        switch (phases.get(0)) {
+            case USERNAME -> {
+                //username response (addplayer response or error)
+                //if ok response and first --> game parameters phases
+                //if ok response --> pre wait phase
+                //if error --> still username
+            }
+            case GAME_MODE -> {
+                //first current status or error
+                //if error wait for players --> pre wait phase
+                //if other error, ask again for parameters
+            }
+            case SENDCOMMAND,WAIT -> {
+                //update on currentsatus or error
+                //if currentstatus and my turn --> set current phase planning/action
+                //if currentstatus and not my turn --> set wait phase
+                //if error --> set current phase planning/action
+            }
+            case PRE_WAIT -> {
+                //firt current status or addplayer response
+                //if addplayer response --> if first game parameters phase
+                //if currentstatus and my turn --> set current phase planning/action
+                //if currentstatus and not my turn --> set wait phase
+            }
+        }
         if(currentStatus==null) {
             try {
                 AddPlayerResponse apr = new Gson().fromJson(line,AddPlayerResponse.class);
@@ -310,43 +317,187 @@ public class Menu {
     }
 
     public String manageInputLine(String line) {
-        if(currentStatus==null && username==null) {
-            username = line;
-            busyScanner = true;
-            return line;
-        }
-        if(currentStatus==null) return null;
-        if(currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID())) {
-            busyScanner = true;
-            if(currentStatus.getTurn().getPhase().equals("PLANNING")) {
-                if(line.equals("1")) {
-                    return parameterHandler.askAssistantCardParameters();
+        switch (phases.get(0)) {
+            case USERNAME -> {
+                return line;
+                //UPDATE ON PHASES DEPENDS BY SERVER RESPONSE
+            }
+            case NUM_PLAYERS -> {
+                if(line.equals("2") || line.equals("3")){
+                    parameters = new GameParameters();
+                    parameters.setNumPlayers(Integer.parseInt(line));
+                    nextPhase();
                 }
-                return null;
+                printMenu();
             }
-            switch (line) {
-                case "1": return parameterHandler.askMoveStudentToIslandParameters();
-                case "2": return parameterHandler.askMoveStudentToHallParameters();
-                case "3":
-                    int lacShifts=1;
-                    for(PlayerStatus ps: currentStatus.getGame().getPlayers()) {
-                        if (currentStatus.getPlayerID() == ps.getIndex()) {
-                            lacShifts = ps.getLastAssistantCardPlayed()/2+1;
-                            if(ps.getAddedShifts()) lacShifts+=2;
-                            break;
-                        }
+            case GAME_MODE -> {
+                line = line.toLowerCase();
+                if(line.equals("expert") || line.equals("simple")) {
+                    parameters.setGameMode(line);
+                    return parser.toJson(parameters);
+                    //UPDATE ON PHASES DEPENDS BY SERVER RESPONSE
+                }
+            }
+            case PLANNING_COMMAND -> {
+                try {
+                    int i = Integer.parseInt(line);
+                    if(i<1 || i>10) {
+                        command = new Command();
+                        command.setPlayerIndex(currentStatus.getPlayerID());
+                        command.setCmd("PLAYASSISTANTCARD");
+                        command.setIndex(i-1);
+                        return parser.toJson(command);
+                        //UPDATE ON PHASES DEPENDS BY SERVER RESPONSE
+                    } else {
+                        printMenu();
                     }
-                    return parameterHandler.askMoveMotherNatureParameters(lacShifts);
-                case "4":
-                    int numPlayers = currentStatus.getGame().getPlayers().size();
-                    return parameterHandler.askTakeStudentsFromCloudParameters(numPlayers);
-                case "5":
-                    if(currentStatus.getGame().getCharacterCards()==null) return null;
-                    return parameterHandler.askPlayCharacterCardStatus();
-                default: return null;
+                } catch (NumberFormatException e){
+                    printMenu();
+                }
             }
+            case ACTION_COMMAND -> {
+                try {
+                    manageActionCommand(line);
+                } catch (NumberFormatException e){
+                    printMenu();
+                }
+            }
+            case P_STUDENT_COLOUR -> {
+                line = line.toUpperCase();
+                try {
+                    command.setStudentColour(Colour.valueOf(line).name());
+                    nextPhase();
+                    printMenu();
+                } catch (IllegalArgumentException e) {
+                    printMenu();
+                }
+            }
+            case P_ISLAND_INDEX -> {
+                try {
+                    int i = Integer.parseInt(line);
+                    if(i>=1 && i<=12) {
+                        command.setIndex(i);
+                        nextPhase();
+                    }
+                    printMenu();
+                } catch (NumberFormatException e) {
+                    printMenu();
+                }
+            }
+            case P_CLOUD_INDEX -> {
+                try {
+                    int i = Integer.parseInt(line);
+                    if(i>=1 && i<=currentStatus.getGame().getPlayers().size()) {
+                        command.setIndex(i-1);
+                        nextPhase();
+                    }
+                    printMenu();
+                } catch (NumberFormatException e) {
+                    printMenu();
+                }
+            }
+            case P_CCARD_INDEX -> {
+                //LOT TO DO HERE
+            }
+            case P_MNSHIFTS -> {
+                try {
+                    int i = Integer.parseInt(line);
+                    int max = currentStatus.getGame().getPlayers().get(currentStatus.getPlayerID()).getLastAssistantCardPlayed()/2+1;
+                    if(currentStatus.getGame().getPlayers().get(currentStatus.getPlayerID()).getAddedShifts()) max+=2;
+                    if(i>=1 && i<=max) {
+                        command.setMotherNatureShifts(i);
+                        nextPhase();
+                    }
+                    printMenu();
+                } catch (NumberFormatException e) {
+                    printMenu();
+                }
+            }
+            case PCC_ISLAND_INDEX -> {
+                try {
+                    int i = Integer.parseInt(line);
+                    if(i>=1 && i<=12) {
+                        command.setPIndex(i);
+                        nextPhase();
+                    }
+                    printMenu();
+                } catch (NumberFormatException e) {
+                    printMenu();
+                }
+            }
+            case PCC_STUDENT_COLOUR -> {
+                line = line.toUpperCase();
+                try {
+                    command.setPColour(Colour.valueOf(line).name());
+                    nextPhase();
+                    printMenu();
+                } catch (IllegalArgumentException e) {
+                    printMenu();
+                }
+            }
+            case PCC_SFROM -> {
+                //STILL TO DO (based on the card can ask for a max of 2 or 3 students)
+            }
+            case PCC_STO -> {
+                //STILL TO DO pt 2 (based on the card can ask for a max of 2 or 3 students)
+            }
+            case SENDCOMMAND -> {
+                return parser.toJson(command);
+                //UPDATE ON PHASES DEPENDS BY SERVER RESPONSE
+            }
+            default -> printMenu();
         }
         return null;
+    }
+
+    private void manageActionCommand(String line) throws NumberFormatException{
+        int i = Integer.parseInt(line);
+        command = new Command();
+        command.setPlayerIndex(currentStatus.getPlayerID());
+        switch (i) {
+            case 1 -> {
+                command.setCmd("MOVETOISLAND");
+                phases.add(CLIPhases.P_STUDENT_COLOUR);
+                phases.add(CLIPhases.P_ISLAND_INDEX);
+                phases.add(CLIPhases.SENDCOMMAND);
+                nextPhase();
+                printMenu();
+            }
+            case 2 -> {
+                command.setCmd("MOVETOHALL");
+                phases.add(CLIPhases.P_STUDENT_COLOUR);
+                phases.add(CLIPhases.SENDCOMMAND);
+                nextPhase();
+                printMenu();
+            }
+            case 3 -> {
+                command.setCmd("MOVEMOTHERNATURE");
+                phases.add(CLIPhases.P_MNSHIFTS);
+                phases.add(CLIPhases.SENDCOMMAND);
+                nextPhase();
+                printMenu();
+            }
+            case 4 -> {
+                command.setCmd("TAKEFROMCLOUD");
+                phases.add(CLIPhases.P_CLOUD_INDEX);
+                phases.add(CLIPhases.SENDCOMMAND);
+                nextPhase();
+                printMenu();
+            }
+            case 5 -> {
+                if(currentStatus.getGameMode().equals("expert")) {
+                    command.setCmd("PLAYCHARACTERCARD");
+                    phases.add(CLIPhases.P_CCARD_INDEX);
+                    nextPhase();
+                }
+                printMenu();
+            }
+            default -> printMenu();
+        }
+    }
+
+    public void nextPhase() {
+        phases.remove(0);
     }
 
     public boolean isBusyScanner() {

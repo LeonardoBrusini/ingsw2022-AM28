@@ -8,8 +8,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EchoClient {
     public static void start(){
@@ -20,7 +18,7 @@ public class EchoClient {
                 Socket echoSocket = new Socket(hostName, portNumber);
                 PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-                /*BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))*/Scanner stdIn = new Scanner(System.in);
+                BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))
         ) {
             new Thread(() -> {
                 try {
@@ -36,18 +34,13 @@ public class EchoClient {
                     throw new RuntimeException(e);
                 }
             }).start();
-            menu.printMenu();
-            menu.setWriter(out);
-            menu.setScanner(stdIn);
+
             String userInput;
-            while (true) {
-                if(!menu.isBusyScanner()) {
-                    userInput = stdIn.nextLine();
-                    System.out.println("input letto");
-                    String output = menu.manageInputLine(userInput);
-                    if(output == null) System.out.println("Invalid input");
-                    else out.println(output);
-                }
+            while ((userInput = stdIn.readLine())!=null) {
+                System.out.println("input letto");
+                String output = menu.manageInputLine(userInput);
+                if(output == null) System.out.println("Invalid input");
+                else out.println(output);
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
