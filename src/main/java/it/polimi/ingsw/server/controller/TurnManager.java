@@ -117,7 +117,8 @@ public class TurnManager {
         actionOrder = new ArrayList<>();
         int actionWeight, i, j;
         for(i=0;i<players.size();i++) {
-            actionWeight = players.get(i).getLastPlayedCard().getInfo().getTurnWeight();
+            if(players.get(i).getLastPlayedCard()==null) actionWeight = 0;
+            else actionWeight = players.get(i).getLastPlayedCard().getInfo().getTurnWeight();
             j = 0;
             while (j<actionOrder.size() && players.get(actionOrder.get(j)).getLastPlayedCard().getInfo().getTurnWeight()<=actionWeight){
                 j++;

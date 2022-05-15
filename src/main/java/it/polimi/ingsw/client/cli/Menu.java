@@ -5,33 +5,19 @@ import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Menu {
-    private ArrayList<CLIPhases> phases;
+    private final ArrayList<CLIPhases> phases;
     private CurrentStatus currentStatus;
     private GameParameters parameters;
     private Command command;
     private final Gson parser;
-    private boolean firstPlayer;
-    private String username;
-    private ParameterHandler parameterHandler;
-    private boolean busyScanner;
-    private PrintWriter writer;
-    private Scanner scanner;
 
     public Menu() {
-        firstPlayer = false;
-        busyScanner = false;
         phases = new ArrayList<>();
         phases.add(CLIPhases.USERNAME);
         parser = new Gson();
-    }
-
-    public synchronized String generateCommand(String userInput) {
-        return userInput;
     }
 
     public synchronized void updateStatus(CurrentStatus c) {
@@ -50,37 +36,10 @@ public class Menu {
         if(c.getGame()!=null) updateGameStatus(c.getGame());
     }
 
-    public synchronized void printResult(String line) {
-
-        System.out.println(line);
-    }
-
-
     public void printMenu() {
+        if(phases.get(0)==CLIPhases.SENDCOMMAND) return;
+        if(currentStatus!=null) printStatus();
         System.out.println(phases.get(0).getMenuPrompt());
-    }
-
-    private synchronized String askParameters(){
-        int numPlayers;
-        System.out.println("How many players? (min 2 - max 3):");
-        numPlayers = scanner.nextInt();
-        while (numPlayers!=2 && numPlayers!=3){
-            System.out.println("How many players? (min 2 - max 3):");
-            numPlayers = scanner.nextInt();
-        }
-        String gameMode;
-        System.out.println("type \"expert\" for expert game mode, \"simple\" for simple game mode: ");
-        gameMode = scanner.nextLine();
-        while (!gameMode.equals("expert") && !gameMode.equals("simple")){
-            System.out.println("type \"expert\" for expert game mode, \"simple\" for simple game mode: ");
-            gameMode = scanner.nextLine();
-        }
-        GameParameters gm = new GameParameters();
-        gm.setGameMode(gameMode);
-        gm.setNumPlayers(numPlayers);
-        busyScanner = false;
-        System.out.println(new Gson().toJson(gm));
-        return new Gson().toJson(gm);
     }
 
     public synchronized void printStatus() {
@@ -90,7 +49,7 @@ public class Menu {
         System.out.println("PLAYERS:");
         for(PlayerStatus ps : currentStatus.getGame().getPlayers()) {
             System.out.println(ps.getNickName()+": "+ps.getTowerColour()+" towers, "+ps.getCoins()+" coins");
-            System.out.println("Dashboard: Entrance: "+ps.getStudentsOnEntrance()+", Hall: "+ps.getStudentsOnHall()+ ", Towers: "+ps.getNumTowers());
+            System.out.println("Dashboard: Entrance: "+vectToString(ps.getStudentsOnEntrance())+", Hall: "+vectToString(ps.getStudentsOnHall())+ ", Towers: "+ps.getNumTowers());
             System.out.println("Assistant Cards left: "+printAssistantCards(ps));
         }
         System.out.println("BOARD");
@@ -100,7 +59,7 @@ public class Menu {
             System.out.println(s+":");
             for (IslandStatus is:as.getIslands()) {
                 s = "Island "+is.getIslandIndex()+": ";
-                s+=is.getStudents();
+                s+=vectToString(is.getStudents());
                 if(is.getTowerColour()!=null) s+=" Tower: "+is.getTowerColour();
                 System.out.println(s);
             }
@@ -110,26 +69,26 @@ public class Menu {
             for(CharacterCardStatus cs : currentStatus.getGame().getCharacterCards()) {
                 String s = "Card "+cs.getIndex()+", Name: "+cs.getFileName();
                 if(cs.getNoEntryTiles()!=null) s+=", NoEntryTiles: "+cs.getNoEntryTiles();
-                if(cs.getStudents()!=null) s+=", Students: "+cs.getStudents();
+                if(cs.getStudents()!=null) s+=", Students: "+vectToString(cs.getStudents());
                 System.out.println(s);
             }
         }
         System.out.println("Clouds");
         for(CloudStatus cs : currentStatus.getGame().getClouds()) {
-            System.out.println("Cloud "+cs.getIndex()+", Students: "+cs.getStudents());
+            System.out.println("Cloud "+cs.getIndex()+", Students: "+vectToString(cs.getStudents()));
         }
-        System.out.println("Professors: "+currentStatus.getGame().getProfessors());
+        System.out.println("Professors: "+vectToString(currentStatus.getGame().getProfessors()));
         System.out.println("Current Player: "+currentStatus.getTurn().getPlayer()+", Phase: "+currentStatus.getTurn().getPhase());
     }
 
     private String printAssistantCards(PlayerStatus ps) {
         String s="[";
         for(int i=0;i<ps.getAssistantCards().length-1;i++) {
-            if(ps.getAssistantCards()[i]) {
+            if(!ps.getAssistantCards()[i]) {
                 s+=(i+",");
             }
         }
-        if(ps.getAssistantCards()[ps.getAssistantCards().length-1]) s+=ps.getAssistantCards().length-1;
+        if(!ps.getAssistantCards()[ps.getAssistantCards().length-1]) s+=ps.getAssistantCards().length-1;
         s+="]";
         return s;
     }
@@ -243,76 +202,89 @@ public class Menu {
         }
     }
 
-    public synchronized String manageReceivedLine(String line) {
+    public synchronized void manageReceivedLine(String line) {
         System.out.println(line);
         switch (phases.get(0)) {
-            case USERNAME -> {
-                //username response (addplayer response or error)
-                //if ok response and first --> game parameters phases
-                //if ok response --> pre wait phase
-                //if error --> still username
+            case USERNAME,PRE_WAIT -> {
+                try {
+                    AddPlayerResponse apr = parser.fromJson(line,AddPlayerResponse.class);
+                    if(apr.isFirst()==null && apr.getErrorMessage()==null) {
+                        manageCS(line);
+                        return;
+                    }
+                    System.out.println("UPDATE APR");
+                    if(apr.getStatus()!=0) {
+                        System.out.println("ERROR: Status code "+apr.getStatus()+", "+apr.getErrorMessage());
+                        printMenu();
+                        return;
+                    }
+                    if(apr.isFirst()) {
+                        phases.add(CLIPhases.NUM_PLAYERS);
+                        phases.add(CLIPhases.GAME_MODE);
+                    } else {
+                        phases.add(CLIPhases.PRE_WAIT);
+                    }
+                    nextPhase();
+                    printMenu();
+                } catch (JsonSyntaxException e) {
+                    System.out.println("ERROR: received unreadable message");
+                    printStatus();
+                }
             }
-            case GAME_MODE -> {
-                //first current status or error
-                //if error wait for players --> pre wait phase
-                //if other error, ask again for parameters
-            }
-            case SENDCOMMAND,WAIT -> {
-                //update on currentsatus or error
-                //if currentstatus and my turn --> set current phase planning/action
-                //if currentstatus and not my turn --> set wait phase
-                //if error --> set current phase planning/action
-            }
-            case PRE_WAIT -> {
-                //firt current status or addplayer response
-                //if addplayer response --> if first game parameters phase
-                //if currentstatus and my turn --> set current phase planning/action
-                //if currentstatus and not my turn --> set wait phase
+            case SENDCOMMAND,WAIT,GAME_MODE -> {
+                try {
+                    manageCS(line);
+                } catch (JsonSyntaxException e) {
+                    System.out.println("ERROR: received unreadable message");
+                    printStatus();
+                }
             }
         }
-        if(currentStatus==null) {
-            try {
-                AddPlayerResponse apr = new Gson().fromJson(line,AddPlayerResponse.class);
-                if(apr.getStatus()!=0) {
-                    System.out.println("ERROR: Status code "+apr.getStatus()+", "+apr.getErrorMessage());
-                    username=null;
-                }
-                if(apr.isFirst()) {
-                    return askParameters();
-                }
-                busyScanner = false;
-                return null;
-            } catch (JsonSyntaxException e) {
-                try {
-                    updateStatus(new Gson().fromJson(line, CurrentStatus.class));
-                    parameterHandler = new ParameterHandler(currentStatus.getPlayerID());
-                    System.out.flush();
-                    printStatus();
-                    printMenu();
-                } catch (JsonSyntaxException g){
-                    username=null;
-                    System.out.println("ERROR: received unreadable message");
-                }
-                return null;
-            }
+    }
+
+    /*private void manageAPR(String line) throws JsonSyntaxException{
+        AddPlayerResponse apr = parser.fromJson(line,AddPlayerResponse.class);
+        System.out.println("UPDATE APR");
+        if(apr.getStatus()!=0) {
+            System.out.println("ERROR: Status code "+apr.getStatus()+", "+apr.getErrorMessage());
+            printMenu();
+            return;
+        }
+        if(apr.isFirst()) {
+            phases.add(CLIPhases.NUM_PLAYERS);
+            phases.add(CLIPhases.GAME_MODE);
         } else {
-            try {
-                CurrentStatus cs = new Gson().fromJson(line, CurrentStatus.class);
-                if(cs.getStatus()==105) {
-                    busyScanner = true;
-                    return askParameters();
-                }
-                if(cs.getStatus()!=0) {
-                    System.out.println("ERROR: Status code "+cs.getStatus()+", "+cs.getErrorMessage());
-                }
-                updateStatus(cs);
-                System.out.flush();
-                printStatus();
+            phases.add(CLIPhases.PRE_WAIT);
+        }
+        nextPhase();
+        printMenu();
+    }*/
+
+    private void manageCS(String line) throws JsonSyntaxException{
+        try {
+            CurrentStatus cs = parser.fromJson(line, CurrentStatus.class);
+            System.out.println("UPDATE CS");
+            if(cs.getStatus()==105) {
+                phases.add(CLIPhases.PRE_WAIT);
+                nextPhase();
                 printMenu();
-            } catch (JsonSyntaxException e) {
-                System.out.println("ERROR: received unreadable message");
+                return;
             }
-            return null;
+            if(cs.getStatus()!=0) {
+                System.out.println("ERROR: Status code "+cs.getStatus()+", "+cs.getErrorMessage());
+            }
+            updateStatus(cs);
+            if(!currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID())) {
+                phases.add(CLIPhases.WAIT);
+            } else if(currentStatus.getTurn().getPhase().equals("PLANNING")) {
+                phases.add(CLIPhases.PLANNING_COMMAND);
+            } else {
+                phases.add(CLIPhases.ACTION_COMMAND);
+            }
+            nextPhase();
+            printMenu();
+        } catch (JsonSyntaxException e) {
+            System.out.println("ERR");
         }
     }
 
@@ -340,12 +312,16 @@ public class Menu {
             }
             case PLANNING_COMMAND -> {
                 try {
+                    System.out.println("PLANNING COMMAND 1");
                     int i = Integer.parseInt(line);
-                    if(i<1 || i>10) {
+                    if(i>=1 && i<=10) {
                         command = new Command();
                         command.setPlayerIndex(currentStatus.getPlayerID());
                         command.setCmd("PLAYASSISTANTCARD");
                         command.setIndex(i-1);
+                        phases.add(CLIPhases.SENDCOMMAND);
+                        nextPhase();
+                        System.out.println("Sending: "+parser.toJson(command)+" in phase: "+phases.get(0).toString());
                         return parser.toJson(command);
                         //UPDATE ON PHASES DEPENDS BY SERVER RESPONSE
                     } else {
@@ -403,7 +379,8 @@ public class Menu {
                 try {
                     int i = Integer.parseInt(line);
                     int max = currentStatus.getGame().getPlayers().get(currentStatus.getPlayerID()).getLastAssistantCardPlayed()/2+1;
-                    if(currentStatus.getGame().getPlayers().get(currentStatus.getPlayerID()).getAddedShifts()) max+=2;
+                    Boolean gas = currentStatus.getGame().getPlayers().get(currentStatus.getPlayerID()).getAddedShifts();
+                    if(gas!=null && gas) max+=2;
                     if(i>=1 && i<=max) {
                         command.setMotherNatureShifts(i);
                         nextPhase();
@@ -441,11 +418,12 @@ public class Menu {
             case PCC_STO -> {
                 //STILL TO DO pt 2 (based on the card can ask for a max of 2 or 3 students)
             }
-            case SENDCOMMAND -> {
-                return parser.toJson(command);
-                //UPDATE ON PHASES DEPENDS BY SERVER RESPONSE
-            }
             default -> printMenu();
+        }
+        if(phases.get(0)==CLIPhases.SENDCOMMAND) {
+            System.out.println("SENDCOMMAND: returning the command json");
+            System.out.println(parser.toJson(command));
+            return parser.toJson(command);
         }
         return null;
     }
@@ -500,15 +478,13 @@ public class Menu {
         phases.remove(0);
     }
 
-    public boolean isBusyScanner() {
-        return busyScanner;
+    private String vectToString(int[] v) {
+        String s = "[";
+        for(int i=0;i<v.length-1;i++) {
+            s+=v[i]+", ";
+        }
+        s+=v[v.length-1]+"]";
+        return s;
     }
 
-    public void setWriter(PrintWriter out) {
-        writer = out;
-    }
-
-    public void setScanner(Scanner stdIn) {
-        scanner = stdIn;
-    }
 }

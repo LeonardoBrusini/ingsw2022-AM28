@@ -24,10 +24,12 @@ public class ConnectionManager {
     }
 
     public String manageMessage(String message, int playerID){
+        System.out.println("MANAGE MESSAGE");
         toAllResponse = false;
         firstStatus = false;
         if (message.equals("")) return StatusCode.ILLEGALARGUMENT.toJson();
         if(ConnectionList.instance().getGameManager().isGameStarted()){
+            System.out.println("MANAGING IN-GAME MESSAGE");
             return manageInGameMessage(message,playerID);
         }else{
             return managePreGameMessage(message,playerID);
@@ -60,7 +62,9 @@ public class ConnectionManager {
             } catch (JsonSyntaxException e) {
                 return StatusCode.INVALIDUSERNAME.toJson();
             }
-        } try {
+        }
+        try {
+            System.out.println("PARSING COMANDO");
             Command c = parser.fromJson(message,Command.class);
             CommandList command = CommandList.valueOf(c.getCmd());
             System.out.println("read command: "+ command);
@@ -131,6 +135,8 @@ public class ConnectionManager {
         response.setStatus(0);
         if(playerID==0) {
             response.setFirst(true);
+        } else {
+            response.setFirst(false);
         }
         return parser.toJson(response);
     }

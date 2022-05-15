@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.EndOfGameChecker;
 import it.polimi.ingsw.server.controller.ExpertGameManager;
 import it.polimi.ingsw.server.controller.Phase;
+import it.polimi.ingsw.server.enumerations.AssistantCardInfo;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
@@ -26,10 +27,6 @@ public class PlayAssistantCardCommand implements CommandStrategy{
     public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
         try{
             System.out.println("trying to play assistant card");
-            for(Player player: gameManager.getPlayers())
-                if(player.getLastPlayedCard().getInfo().getTurnWeight() == gameManager.getPlayers().get(command.getPlayerIndex()).getAssistantCard(command.getIndex()).getInfo().getTurnWeight())
-                    if(!EndOfGameChecker.instance().isLastTurn())
-                        return StatusCode.ILLEGALARGUMENT;
             gameManager.playAssistantCard(command.getPlayerIndex(), command.getIndex());
             System.out.println("assistant card played");
         }catch(IllegalArgumentException e){

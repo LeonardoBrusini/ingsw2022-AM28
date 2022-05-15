@@ -1,19 +1,19 @@
 package it.polimi.ingsw.network;
 
 public class AddPlayerResponse {
-    private int status;
-    private boolean first;
+    private int statusCode;
+    private Boolean first;
     private String errorMessage;
 
     public int getStatus() {
-        return status;
+        return statusCode;
     }
 
     public void setStatus(int status) {
-        this.status = status;
+        this.statusCode = status;
     }
 
-    public boolean isFirst() {
+    public Boolean isFirst() {
         return first;
     }
 
@@ -24,12 +24,4 @@ public class AddPlayerResponse {
     public String getErrorMessage() {
         return errorMessage;
     }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-
-
-
 }

@@ -23,7 +23,7 @@ public class MoveToIslandCommand implements CommandStrategy{
     @Override
     public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
         try{
-            System.out.println("tentativo di esecuzione");
+            System.out.println("tentativo di esecuzione MOVE STUDENT TO ISLAND");
             //System.out.println(Colour.valueOf(command.getStudentColour()));
             try {
                 gameManager.moveStudentToIsland(command.getPlayerIndex(), Colour.valueOf(command.getStudentColour()), command.getIndex());
@@ -64,6 +64,12 @@ public class MoveToIslandCommand implements CommandStrategy{
         ac0.setIslands(is);
         ac.add(ac0);
         gs.setArchipelagos(ac);
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(command.getPlayerIndex());
+        ps0.setStudentsOnEntrance(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getEntrance().getStatus());
+        ps.add(ps0);
+        gs.setPlayers(ps);
         cs.setGame(gs);
         return g.toJson(cs, CurrentStatus.class);
     }

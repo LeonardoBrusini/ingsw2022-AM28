@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.model.board.Cloud;
 import it.polimi.ingsw.server.model.board.Island;
 import it.polimi.ingsw.server.enumerations.AssistantCardInfo;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
+import it.polimi.ingsw.server.model.players.AssistantCard;
 import it.polimi.ingsw.server.model.players.Player;
 
 import java.util.ArrayList;
@@ -47,10 +48,12 @@ public class ExpertGameManager {
        if(players.size()==2) {
            for (Player p: players) {
                p.getDashboard().setNumTowers(8);
+               p.getDashboard().fillEntrance(new StudentGroup(board.getBag().removeStudents(7)));
            }
        } else if (players.size()==3) {
            for (Player p: players) {
                p.getDashboard().setNumTowers(6);
+               p.getDashboard().fillEntrance(new StudentGroup(board.getBag().removeStudents(9)));
            }
        }
        turnManager = new TurnManager(players.size(), board);
@@ -68,6 +71,26 @@ public class ExpertGameManager {
         if(p<0 || p>=players.size() || c<0 || c>=AssistantCardInfo.values().length) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.PLANNING) throw new WrongPhaseException();
         if(turnManager.getCurrentPlayer()!=p)throw new WrongTurnException();
+        boolean alreadyPlayed = false;
+        ArrayList<AssistantCardInfo> alreadyPlayedCards = new ArrayList<>();
+        for(int i=0; i<turnManager.getPlanningOrder().size(); i++) {
+            if(i==p) break;
+            if(players.get(i).getLastPlayedCard()!=null) {
+                alreadyPlayedCards.add(players.get(i).getLastPlayedCard().getInfo());
+                if(players.get(i).getLastPlayedCard().getInfo().ordinal()==c) {
+                    alreadyPlayed = true;
+                }
+            }
+        }
+        if(alreadyPlayed) {
+            for(AssistantCard ac: players.get(p).getCards()) {
+                boolean notPlayedByOthers = true;
+                for(AssistantCardInfo aci: alreadyPlayedCards) {
+                    if(ac.getInfo()==aci && !ac.isPlayed()) notPlayedByOthers = false;
+                }
+                if(notPlayedByOthers) throw new IllegalArgumentException();
+            }
+        }
         players.get(p).playCard(c);
         turnManager.nextPhase(board,players);
     }
@@ -78,14 +101,9 @@ public class ExpertGameManager {
      */
     public synchronized void moveStudentsToHall(int p, Colour c) throws FullHallException, NoStudentsException, WrongPhaseException, WrongTurnException{
         if (p<0 || p>=players.size() || c==null) throw new IllegalArgumentException();
-        if(turnManager.getPhase()!=Phase.ACTION || turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
         players.get(p).moveToHall(c);
-   /* try {
-        players.get(p).moveToHall(c);
-    } catch (NoStudentsException | FullHallException e) {
-        //what happens?
-    }*/
         checkProfessors(c);
         turnManager.nextPhase(board,players);
     }
@@ -130,7 +148,7 @@ public class ExpertGameManager {
     public synchronized void moveStudentToIsland(int p, Colour c, int is) throws WrongTurnException, WrongPhaseException, NoStudentsException{
         if(p<0 || p>=players.size() || c==null || is<1 || is>12) throw new IllegalArgumentException();
         if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
-        if(turnManager.getPhase()!=Phase.ACTION ||  turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
+        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         players.get(p).moveToIsland(c,board.getIslandManager().getIslandByIndex(is));
        /* try{
             players.get(p).moveToIsland(c,board.getIslandManager().getIslandByIndex(is));

@@ -8,9 +8,6 @@ import it.polimi.ingsw.server.exceptions.FullHallException;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
-import it.polimi.ingsw.server.model.StudentGroup;
-import it.polimi.ingsw.server.model.players.Player;
-
 import java.util.ArrayList;
 
 /**
@@ -26,7 +23,8 @@ public class MoveToHallCommand implements CommandStrategy{
     @Override
     public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
         try{
-           gameManager.moveStudentsToHall(command.getPlayerIndex(), Colour.valueOf(command.getPColour()));
+            System.out.println("trying to resolve MOVETOHALL COMMAND");
+            gameManager.moveStudentsToHall(command.getPlayerIndex(), Colour.valueOf(command.getStudentColour()));
         }catch (FullHallException e){
             return StatusCode.FULLHALL;
         }catch (NoStudentsException f){
@@ -49,18 +47,18 @@ public class MoveToHallCommand implements CommandStrategy{
      */
     @Override
     public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
-        Gson g = new Gson();
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();
         ArrayList<PlayerStatus> ps = new ArrayList<>();
         PlayerStatus ps0 = new PlayerStatus();
         ps0.setIndex(command.getPlayerIndex());
         ps0.setStudentsOnHall(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getHall().getStatus());
+        ps0.setStudentsOnEntrance(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getEntrance().getStatus());
         ps.add(ps0);
         gs.setPlayers(ps);
         gs.setProfessors(gameManager.getBoard().getProfessorGroup().getStatus());
         cs.setGame(gs);
-        return g.toJson(cs, CurrentStatus.class);
+        return new Gson().toJson(cs, CurrentStatus.class);
     }
 }
 

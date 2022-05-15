@@ -33,6 +33,7 @@ public class EchoServerClientHandler implements Runnable {
                 if (line.equals("pong")) {
                     ConnectionList.instance().setStillConnected(playerID,true);
                 } else {
+                    System.out.println(line);
                     outputString = connectionManager.manageMessage(line, playerID);
                     if(!connectionManager.isFirstStatus()) {
                         if(connectionManager.isToAllResponse()) {

@@ -4,10 +4,10 @@ public class Command {
     private String cmd;
     private int playerIndex;
     private String studentColour;
-    private int index;
-    private int motherNatureShifts;
+    private Integer index;
+    private Integer motherNatureShifts;
     //character card parameters
-    private int pIndex;
+    private Integer pIndex;
     private String pColour;
     private int[] pStudentsFrom, pStudentsTo;
 
@@ -23,15 +23,15 @@ public class Command {
         return studentColour;
     }
 
-    public int getIndex() {
+    public Integer getIndex() {
         return index;
     }
 
-    public int getMotherNatureShifts() {
+    public Integer getMotherNatureShifts() {
         return motherNatureShifts;
     }
 
-    public int getPIndex() {
+    public Integer getPIndex() {
         return pIndex;
     }
 

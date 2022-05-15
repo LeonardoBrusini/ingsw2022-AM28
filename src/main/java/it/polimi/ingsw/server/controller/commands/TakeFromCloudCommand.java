@@ -8,6 +8,8 @@ import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
 
+import java.util.ArrayList;
+
 /**
  * The class that resolves the command to take students from a cloud
  */
@@ -51,12 +53,12 @@ public class TakeFromCloudCommand implements CommandStrategy{
             GameStatus gs = new GameStatus();
             CurrentStatus cs = new CurrentStatus();
             cs.setTurn(gameManager.getTurnManager().getTurnStatus());
-            /*for(int i = 0; i < clouds.length; i++) {
-                clouds[i].setIndex(i);
-                for (Colour c : Colour.values())
-                    clouds[i].setStudents(c.ordinal(), gameManager.getBoard().getClouds().get(command.getIndex()).getStudentsOnCloud().getQuantityColour(c));
-            }
-            */
+            ArrayList<PlayerStatus> ps = new ArrayList<>();
+            PlayerStatus ps0 = new PlayerStatus();
+            ps0.setIndex(command.getPlayerIndex());
+            ps0.setStudentsOnEntrance(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getEntrance().getStatus());
+            ps.add(ps0);
+            gs.setPlayers(ps);
             gs.setClouds(gameManager.getBoard().getCloudsStatus());
             cs.setGame(gs);
             return g.toJson(cs, CurrentStatus.class);

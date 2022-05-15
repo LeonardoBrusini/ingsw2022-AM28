@@ -4,7 +4,7 @@ package it.polimi.ingsw.network;
  * It represents the current status of the turns and winner
  */
 public class CurrentStatus {
-    private int status;
+    private int statusCode;
     private Integer playerID;
     private String errorMessage;
     private String winner;
@@ -13,7 +13,7 @@ public class CurrentStatus {
     private String gameMode;
 
     public void setStatus(int status) {
-        this.status = status;
+        this.statusCode = status;
     }
 
     public void setErrorMessage(String errorMessage) {
@@ -37,7 +37,7 @@ public class CurrentStatus {
     }
 
     public int getStatus() {
-        return status;
+        return statusCode;
     }
 
     public String getErrorMessage() {

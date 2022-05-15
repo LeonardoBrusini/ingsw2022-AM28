@@ -94,7 +94,9 @@ public class ConnectionList {
                     gameManager.getPlayers().get(i).setConnected(false);
                     if(gameManager.getTurnManager().getCurrentPlayer()==i && !noClients()) {
                         gameManager.getTurnManager().nextPlayer(gameManager.getPlayers(),gameManager.getBoard());
-                        sendToAllLogged(new Gson().toJson(gameManager.getTurnManager().getTurnStatus()));
+                        CurrentStatus cs = new CurrentStatus();
+                        cs.setTurn(gameManager.getTurnManager().getTurnStatus());
+                        sendToAllLogged(new Gson().toJson(cs));
                     }
                 }
             }
