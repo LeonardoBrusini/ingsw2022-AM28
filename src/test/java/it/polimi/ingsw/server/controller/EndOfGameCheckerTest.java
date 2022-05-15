@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EndOfGameCheckerTest {
     private ExpertGameManager expertGameManager;
+    private EndOfGameChecker endOfGameChecker;
 
     @Test
     void updateEOG() {
@@ -30,11 +31,26 @@ class EndOfGameCheckerTest {
         EndOfGameChecker.instance().updateEOG(expertGameManager.getBoard(),expertGameManager.getPlayers());
         assertEquals(true, EndOfGameChecker.instance().isEndOfGame());
 
-
+        Boolean b = EndOfGameChecker.instance().isEndOfGame();
+        b = EndOfGameChecker.instance().isLastTurn();
+        EndOfGameChecker.instance().setLastTurn(true);
+        EndOfGameChecker.instance().setLastTurn(false);
+        int c = EndOfGameChecker.instance().getWinner();
+        EndOfGameChecker.resetInstance();
     }
 
     @Test
     void updateEOGLastTurn() {
+        ExpertGameManager expertGameManager = new ExpertGameManager();
+        expertGameManager.addPlayer();
+        expertGameManager.addPlayer();
+        expertGameManager.addPlayer();
+        expertGameManager.newGame(true,2);
+        EndOfGameChecker.instance().setLastTurn(true);
+
+        endOfGameChecker.updateEOGLastTurn(expertGameManager.getBoard(),expertGameManager.getPlayers());
+
+        assertTrue(endOfGameChecker.isEndOfGame());
     }
 
     @Test
