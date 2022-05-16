@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.cards;
 
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.FullHallException;
@@ -16,7 +16,7 @@ class StudentToHallEffectTest {
      */
     void resolveEffect() {
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD11);
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.newGame(true,2);

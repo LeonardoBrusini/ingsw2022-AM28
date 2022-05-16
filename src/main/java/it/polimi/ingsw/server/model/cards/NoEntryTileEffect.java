@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.cards;
 
 import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.model.board.Archipelago;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class NoEntryTileEffect implements EffectStrategy{
     }
 
     @Override
-    public CurrentStatus getUpdatedStatus(CharacterCard c, ExpertGameManager gameManager) {
+    public CurrentStatus getUpdatedStatus(CharacterCard c, GameManager gameManager) {
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
         ArrayList<PlayerStatus> ps = new ArrayList<>();

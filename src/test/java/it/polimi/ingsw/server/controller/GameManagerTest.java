@@ -1,18 +1,13 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.server.enumerations.AssistantCardInfo;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
 import it.polimi.ingsw.server.exceptions.*;
-import it.polimi.ingsw.server.model.ProfessorGroup;
 import it.polimi.ingsw.server.model.StudentGroup;
-import it.polimi.ingsw.server.model.board.Archipelago;
-import it.polimi.ingsw.server.model.board.Cloud;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
 import it.polimi.ingsw.server.model.players.AssistantCard;
-import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -20,8 +15,8 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ExpertGameManagerTest {
-    private final ExpertGameManager gm = new ExpertGameManager();
+class GameManagerTest {
+    private final GameManager gm = new GameManager();
 
     /**
      * The tests verify the correct initialization of players
@@ -168,12 +163,12 @@ class ExpertGameManagerTest {
         assertEquals("simple", cs.getGameMode());
     }*/
 
-    @Test
     /**
      * It tests the right resolution of the playAssistantCard method and the corresponding Exceptions' catch
      */
+    /*@Test
     void playAssistantCard(){
-        ExpertGameManager gm1 = new ExpertGameManager();
+        GameManager gm1 = new GameManager();
         gm1.addPlayer();
         gm1.addPlayer();
         gm1.newGame(true, 2);
@@ -195,7 +190,7 @@ class ExpertGameManagerTest {
             assertTrue(gm1.getPlayers().get(a).getAssistantCard(i).isPlayed());
         }
         //To test AlreadyPlayedException's catching
-       ExpertGameManager gm2 = new ExpertGameManager();
+       GameManager gm2 = new GameManager();
         gm2.addPlayer();
         gm2.addPlayer();
         gm2.newGame(true, 2);
@@ -217,7 +212,7 @@ class ExpertGameManagerTest {
         }
 
         //To test WrongTurnException's catching
-        ExpertGameManager gm3 = new ExpertGameManager();
+        GameManager gm3 = new GameManager();
         gm3.addPlayer();
         gm3.addPlayer();
         gm3.newGame(true, 2);
@@ -262,7 +257,7 @@ class ExpertGameManagerTest {
         }catch (AlreadyPlayedException z){
             z.printStackTrace();
         }
-    }
+    }*/
 
 
     @Test
@@ -270,7 +265,7 @@ class ExpertGameManagerTest {
      * It tests the right resolution of the moveStudentToHall method and the corresponding Exceptions' catch
      */
     void moveStudentToHall(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.newGame(true, 2);
@@ -302,7 +297,7 @@ class ExpertGameManagerTest {
         }
 
         //to test the FullHallException's catching
-        ExpertGameManager gm4 = new ExpertGameManager();
+        GameManager gm4 = new GameManager();
         gm4.addPlayer();
         gm4.addPlayer();
         gm4.newGame(true, 2);
@@ -329,7 +324,7 @@ class ExpertGameManagerTest {
         }
 
         //To test the NoStudentException's Catching
-        ExpertGameManager gm1 = new ExpertGameManager();
+        GameManager gm1 = new GameManager();
         gm1.addPlayer();
         gm1.addPlayer();
         gm1.newGame(true, 2);
@@ -356,7 +351,7 @@ class ExpertGameManagerTest {
         }
 
         //To test WrongTurnException's catching
-        ExpertGameManager gm2 = new ExpertGameManager();
+        GameManager gm2 = new GameManager();
         gm2.addPlayer();
         gm2.addPlayer();
         gm2.newGame(true, 2);
@@ -397,7 +392,7 @@ class ExpertGameManagerTest {
      * It tests the right resolution of the moveStudentToIsland method and the corresponding Exceptions' catch
      */
     void moveStudentsToIsland(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.newGame(true, 2);
@@ -419,7 +414,7 @@ class ExpertGameManagerTest {
         }
 
         //To test the NoStudentException's Catching
-        ExpertGameManager gm1 = new ExpertGameManager();
+        GameManager gm1 = new GameManager();
         gm1.addPlayer();
         gm1.addPlayer();
         gm1.newGame(true, 2);
@@ -438,7 +433,7 @@ class ExpertGameManagerTest {
         }
 
         //To test WrongTurnException's catching
-        ExpertGameManager gm2 = new ExpertGameManager();
+        GameManager gm2 = new GameManager();
         gm2.addPlayer();
         gm2.addPlayer();
         gm2.newGame(true, 2);
@@ -474,7 +469,7 @@ class ExpertGameManagerTest {
      * It tests the right resolution of the moveMotherNature method and the corresponding Exceptions' catch
      */
     void moveMotherNature(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.newGame(true, 2);
@@ -642,7 +637,7 @@ class ExpertGameManagerTest {
 
     @Test
     void playCharacterCard2468(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.getPlayers().get(0).setCoins(8);
@@ -825,7 +820,7 @@ class ExpertGameManagerTest {
     }
     @Test
     void playCharacterCard91112(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.getPlayers().get(0).setCoins(8);
@@ -997,7 +992,7 @@ class ExpertGameManagerTest {
 
     @Test
     void playAssistantCard1(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.getPlayers().get(0).setCoins(8);
@@ -1138,7 +1133,7 @@ class ExpertGameManagerTest {
 
     @Test
     void playCharacterCard35(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.getPlayers().get(0).setCoins(8);

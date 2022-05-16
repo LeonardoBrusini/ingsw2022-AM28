@@ -17,14 +17,14 @@ import it.polimi.ingsw.server.model.players.Player;
 
 import java.util.ArrayList;
 
-public class ExpertGameManager {
+public class GameManager {
     private ArrayList<Player> players;
     private Board board;
     private TurnManager turnManager;
     private boolean gameStarted;
     private boolean expertMode;
 
-    public ExpertGameManager() {
+    public GameManager() {
         players = new ArrayList<>();
         gameStarted = false;
     }

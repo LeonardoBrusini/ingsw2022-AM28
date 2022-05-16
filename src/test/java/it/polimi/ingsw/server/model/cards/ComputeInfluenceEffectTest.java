@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.cards;
 
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
@@ -21,7 +21,7 @@ class ComputeInfluenceEffectTest {
      */
    @BeforeEach
     void initialise(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         c.setGameManager(gm);
         c.getGameManager().addPlayer();
         c.getGameManager().addPlayer();

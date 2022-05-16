@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.FullHallException;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
@@ -21,7 +21,7 @@ public class MoveToHallCommand implements CommandStrategy{
      * @return null if no Exception thrown, corresponding StatusCode otherwise
      */
     @Override
-    public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
+    public StatusCode resolveCommand(GameManager gameManager, Command command) {
         try{
             System.out.println("trying to resolve MOVETOHALL COMMAND");
             gameManager.moveStudentsToHall(command.getPlayerIndex(), Colour.valueOf(command.getStudentColour()));
@@ -46,7 +46,7 @@ public class MoveToHallCommand implements CommandStrategy{
      * @return Json message
      */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
+    public String getUpdatedStatus(GameManager gameManager, Command command){
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();
         ArrayList<PlayerStatus> ps = new ArrayList<>();

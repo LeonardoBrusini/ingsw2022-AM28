@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.controller.Phase;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.model.players.Player;
@@ -20,7 +20,7 @@ public class MoveMotherNatureCommand implements CommandStrategy{
      * @return null if no Exception thrown, corresponding StatusCode otherwise
      */
     @Override
-    public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
+    public StatusCode resolveCommand(GameManager gameManager, Command command) {
         if(command.getPlayerIndex()!=gameManager.getTurnManager().getCurrentPlayer()) return StatusCode.WRONGTURN;
         if(gameManager.getTurnManager().getPhase()!= Phase.ACTION) return StatusCode.WRONGPHASE;
         try {
@@ -40,7 +40,7 @@ public class MoveMotherNatureCommand implements CommandStrategy{
      * @return Json message
      */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager, Command command) {
+    public String getUpdatedStatus(GameManager gameManager, Command command) {
         Gson g = new Gson();
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();

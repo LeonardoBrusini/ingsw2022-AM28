@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.cards;
 
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.model.StudentGroup;
@@ -22,7 +22,7 @@ public class CharacterCard {
     private Player playerThisTurn;
 
     private Board board; //card effect 3 can't work otherwise
-    private ExpertGameManager gameManager;
+    private GameManager gameManager;
 
     /**
      *
@@ -122,10 +122,10 @@ public class CharacterCard {
     public void setBoard(Board board) {
         this.board = board;
     }
-    public ExpertGameManager getGameManager() {
+    public GameManager getGameManager() {
         return gameManager;
     }
-    public void setGameManager(ExpertGameManager gameManager) {
+    public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 }

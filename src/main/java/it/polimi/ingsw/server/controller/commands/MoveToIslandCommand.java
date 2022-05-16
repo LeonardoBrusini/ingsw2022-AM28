@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
@@ -21,7 +21,7 @@ public class MoveToIslandCommand implements CommandStrategy{
      * @return null if no Exception thrown, corresponding StatusCode otherwise
      */
     @Override
-    public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
+    public StatusCode resolveCommand(GameManager gameManager, Command command) {
         try{
             System.out.println("tentativo di esecuzione MOVE STUDENT TO ISLAND");
             //System.out.println(Colour.valueOf(command.getStudentColour()));
@@ -48,7 +48,7 @@ public class MoveToIslandCommand implements CommandStrategy{
      * @return Json message
      */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
+    public String getUpdatedStatus(GameManager gameManager, Command command){
         System.out.println("generazione risposta");
         Gson g = new Gson();
         CurrentStatus cs = new CurrentStatus();

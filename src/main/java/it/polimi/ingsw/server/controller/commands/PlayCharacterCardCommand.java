@@ -5,7 +5,7 @@ import it.polimi.ingsw.network.Command;
 import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.network.StatusCode;
 import it.polimi.ingsw.server.controller.EndOfGameChecker;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.exceptions.NotEnoughCoinsException;
@@ -24,7 +24,7 @@ public class PlayCharacterCardCommand implements CommandStrategy{
      * @return null if no Exception thrown, corresponding StatusCode otherwise
      */
     @Override
-    public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
+    public StatusCode resolveCommand(GameManager gameManager, Command command) {
         try {
             int pIndex = command.getPlayerIndex();
             int cIndex = command.getIndex();
@@ -60,7 +60,7 @@ public class PlayCharacterCardCommand implements CommandStrategy{
      * @return Json message
      */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager, Command command) {
+    public String getUpdatedStatus(GameManager gameManager, Command command) {
         CharacterCard card = gameManager.getBoard().getCharacterCards().get(command.getIndex());
         CurrentStatus cs = card.getCardInfo().getEffect().getUpdatedStatus(card,gameManager);
         if(EndOfGameChecker.instance().isEndOfGame()){

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.cards;
 
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.FullHallException;
@@ -20,7 +20,7 @@ class EntranceToHallSwitchEffectTest {
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD10);
         ArrayList<Integer> expectedEntrance = new ArrayList<>();
         ArrayList<Integer> expectedHall = new ArrayList<>();
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.newGame(true, 2);

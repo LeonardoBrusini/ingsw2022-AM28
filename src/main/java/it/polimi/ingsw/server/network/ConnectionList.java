@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.AddPlayerResponse;
 import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.network.StatusCode;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.model.players.Player;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class ConnectionList {
     private ArrayList<EchoServerClientHandler> clients;
     private ArrayList<Boolean> connected;
-    private ExpertGameManager gameManager;
+    private GameManager gameManager;
     private int numOfActualPlayers;
     private HashMap<String,Integer> savedUsernames;
     private static ConnectionList instance;
@@ -26,7 +26,7 @@ public class ConnectionList {
         connected = new ArrayList<>();
         savedUsernames = new HashMap<>();
         numOfActualPlayers = 0;
-        gameManager = new ExpertGameManager();
+        gameManager = new GameManager();
         waitForPlayers = false;
     }
 
@@ -106,7 +106,7 @@ public class ConnectionList {
                 connected = new ArrayList<>();
                 savedUsernames = new HashMap<>();
                 numOfActualPlayers = 0;
-                gameManager = new ExpertGameManager();
+                gameManager = new GameManager();
                 waitForPlayers = false;
                 return;
             }
@@ -193,7 +193,7 @@ public class ConnectionList {
         this.numOfActualPlayers = numOfActualPlayers;
     }
 
-    public ExpertGameManager getGameManager() {
+    public GameManager getGameManager() {
         return gameManager;
     }
 

@@ -4,7 +4,7 @@ import it.polimi.ingsw.network.CharacterCardStatus;
 import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.network.GameStatus;
 import it.polimi.ingsw.network.PlayerStatus;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.model.players.AssistantCard;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class AddMotherNatureShiftsEffect implements EffectStrategy{
     }
 
     @Override
-    public CurrentStatus getUpdatedStatus(CharacterCard c, ExpertGameManager gameManager) {
+    public CurrentStatus getUpdatedStatus(CharacterCard c, GameManager gameManager) {
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();
         ArrayList<PlayerStatus> ps = new ArrayList<>();

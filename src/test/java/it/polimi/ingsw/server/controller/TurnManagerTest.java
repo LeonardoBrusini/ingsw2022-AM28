@@ -5,13 +5,12 @@ import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TurnManagerTest {
     private TurnManager turnManager;
-    private ExpertGameManager expertGameManager = new ExpertGameManager();;
+    private GameManager gameManager = new GameManager();;
 
     @Test
     void nextPhase() {
@@ -25,25 +24,25 @@ class TurnManagerTest {
         planningorder.add(0);
 
 
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.newGame(true, 3);
-        turnManager = expertGameManager.getTurnManager();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.newGame(true, 3);
+        turnManager = gameManager.getTurnManager();
 
         turnManager.setPhase(Phase.PLANNING);;
         turnManager.setPlanningOrder(planningorder);
         turnManager.setActionOrder(actionorder);
-        turnManager.nextPhase(expertGameManager.getBoard(), expertGameManager.getPlayers());
+        turnManager.nextPhase(gameManager.getBoard(), gameManager.getPlayers());
 
         assertEquals(Phase.PLANNING, turnManager.getPhase());
 
 
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.newGame(true, 3);
-        turnManager = expertGameManager.getTurnManager();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.newGame(true, 3);
+        turnManager = gameManager.getTurnManager();
 
         turnManager.setMotherNaturePhase(true);
         turnManager.setMoveStudentsPhase(true);
@@ -51,17 +50,17 @@ class TurnManagerTest {
         turnManager.setNumOfMovedStudents(2);
         turnManager.setPlanningOrder(planningorder);
         turnManager.setActionOrder(actionorder);
-        turnManager.nextPhase(expertGameManager.getBoard(), expertGameManager.getPlayers());
+        turnManager.nextPhase(gameManager.getBoard(), gameManager.getPlayers());
 
 
         assertEquals(3, turnManager.getNumOfMovedStudents());
 
 
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.newGame(true, 3);
-        turnManager = expertGameManager.getTurnManager();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.newGame(true, 3);
+        turnManager = gameManager.getTurnManager();
 
         turnManager.setMotherNaturePhase(true);
         turnManager.setMoveStudentsPhase(true);
@@ -69,18 +68,18 @@ class TurnManagerTest {
         turnManager.setNumOfMovedStudents(3);
         turnManager.setPlanningOrder(planningorder);
         turnManager.setActionOrder(actionorder);
-        turnManager.nextPhase(expertGameManager.getBoard(), expertGameManager.getPlayers());
+        turnManager.nextPhase(gameManager.getBoard(), gameManager.getPlayers());
 
 
         assertEquals(true, turnManager.isMotherNaturePhase());
         assertEquals(true, turnManager.isMotherNaturePhase());
 
 
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.newGame(true, 3);
-        turnManager = expertGameManager.getTurnManager();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.newGame(true, 3);
+        turnManager = gameManager.getTurnManager();
 
         turnManager.setMotherNaturePhase(false);
         turnManager.setMoveStudentsPhase(false);
@@ -89,7 +88,7 @@ class TurnManagerTest {
         turnManager.setNumOfMovedStudents(3);
         turnManager.setPlanningOrder(planningorder);
         turnManager.setActionOrder(actionorder);
-        turnManager.nextPhase(expertGameManager.getBoard(), expertGameManager.getPlayers());
+        turnManager.nextPhase(gameManager.getBoard(), gameManager.getPlayers());
 
 
 
@@ -99,11 +98,11 @@ class TurnManagerTest {
         //assertEquals(1,turnManager.getCurrentPlayer());
         assertEquals(3, turnManager.getNumOfMovedStudents());
 
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.addPlayer();
-        expertGameManager.newGame(true, 3);
-        turnManager = expertGameManager.getTurnManager();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.addPlayer();
+        gameManager.newGame(true, 3);
+        turnManager = gameManager.getTurnManager();
 
 
         turnManager.setMotherNaturePhase(true);
@@ -114,15 +113,15 @@ class TurnManagerTest {
         turnManager.setActionOrder(actionorder);
 
 
-        turnManager.nextPhase(expertGameManager.getBoard(), expertGameManager.getPlayers());
+        turnManager.nextPhase(gameManager.getBoard(), gameManager.getPlayers());
 
 
         boolean[] vet = new boolean[2];
         vet[0] = true;
         vet[1] = false;
         Phase[] phases = Phase.values();
-        Board b = expertGameManager.getBoard();
-        ArrayList<Player> players=expertGameManager.getPlayers();
+        Board b = gameManager.getBoard();
+        ArrayList<Player> players= gameManager.getPlayers();
         for(int m=2;m<=3;m++) {
             for (Phase p : phases) {
                 for (int i = 0; i < 2; i++) {
@@ -137,13 +136,13 @@ class TurnManagerTest {
                             planningorder.add(2);
                             planningorder.add(0);
 
-                            expertGameManager = new ExpertGameManager();
+                            gameManager = new GameManager();
 
-                            expertGameManager.addPlayer();
-                            expertGameManager.addPlayer();
-                            expertGameManager.addPlayer();
-                            expertGameManager.newGame(true, 3);
-                            turnManager = expertGameManager.getTurnManager();
+                            gameManager.addPlayer();
+                            gameManager.addPlayer();
+                            gameManager.addPlayer();
+                            gameManager.newGame(true, 3);
+                            turnManager = gameManager.getTurnManager();
 
                             turnManager.setMotherNaturePhase(vet[i]);
                             turnManager.setMoveStudentsPhase(vet[j]);
@@ -154,8 +153,8 @@ class TurnManagerTest {
 
                             turnManager.setPlanningOrder(planningorder);
                             turnManager.setActionOrder(actionorder);
-                            b = expertGameManager.getBoard();
-                            players = expertGameManager.getPlayers();
+                            b = gameManager.getBoard();
+                            players = gameManager.getPlayers();
 
                             turnManager.nextPhase(b, players);
                         }

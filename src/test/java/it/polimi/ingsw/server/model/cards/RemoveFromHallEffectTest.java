@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.cards;
 
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.FullHallException;
@@ -19,7 +19,7 @@ class RemoveFromHallEffectTest {
      */
     @Test
     void resolveEffect() {
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         ArrayList<Integer> before = new ArrayList<>();
         CharacterCard c = new CharacterCard(CharacterCardInfo.CARD12);
         c.setGameManager(gm);

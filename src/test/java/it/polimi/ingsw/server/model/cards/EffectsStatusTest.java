@@ -1,15 +1,13 @@
 package it.polimi.ingsw.server.model.cards;
 
 import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
-import it.polimi.ingsw.server.controller.Phase;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.exceptions.FullHallException;
 import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.board.Archipelago;
-import it.polimi.ingsw.server.model.board.Island;
 import it.polimi.ingsw.server.model.board.IslandManager;
 import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,12 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EffectsStatusTest {
     private CharacterCard c;
-    private ExpertGameManager gameManager;
+    private GameManager gameManager;
     private CurrentStatus status;
 
     @BeforeEach
     void createGame(){
-        gameManager = new ExpertGameManager();
+        gameManager = new GameManager();
         gameManager.addPlayer();
         gameManager.addPlayer();
         gameManager.newGame(true,2);

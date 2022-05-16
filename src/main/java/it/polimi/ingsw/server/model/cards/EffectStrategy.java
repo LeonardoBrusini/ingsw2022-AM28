@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.cards;
 
 import it.polimi.ingsw.network.CurrentStatus;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 
 /**
  * the interface for the strategy pattern used for the cards effect
@@ -9,5 +9,5 @@ import it.polimi.ingsw.server.controller.ExpertGameManager;
 
 public interface EffectStrategy {
     void resolveEffect(CharacterCard c);
-    CurrentStatus getUpdatedStatus(CharacterCard c, ExpertGameManager gameManager);
+    CurrentStatus getUpdatedStatus(CharacterCard c, GameManager gameManager);
 }

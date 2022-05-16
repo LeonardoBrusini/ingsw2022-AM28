@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.controller.commands;
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.EndOfGameChecker;
-import it.polimi.ingsw.server.controller.ExpertGameManager;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
 import it.polimi.ingsw.server.exceptions.WrongTurnException;
@@ -21,7 +21,7 @@ public class TakeFromCloudCommand implements CommandStrategy{
      * @return null if no Exception thrown, corresponding StatusCode otherwise
      */
     @Override
-    public StatusCode resolveCommand(ExpertGameManager gameManager, Command command) {
+    public StatusCode resolveCommand(GameManager gameManager, Command command) {
        try{
            gameManager.takeStudentsFromCloud(command.getIndex(), command.getPlayerIndex());
        }catch (WrongPhaseException e){
@@ -43,7 +43,7 @@ public class TakeFromCloudCommand implements CommandStrategy{
      * @return Json message
      */
     @Override
-    public String getUpdatedStatus(ExpertGameManager gameManager, Command command){
+    public String getUpdatedStatus(GameManager gameManager, Command command){
         Gson g = new Gson();
         if(EndOfGameChecker.instance().isEndOfGame()) {
             //not implemented yet
