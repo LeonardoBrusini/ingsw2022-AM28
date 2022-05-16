@@ -269,7 +269,7 @@ public class ExpertGameManager {
      */
     public synchronized void playCharacterCard(int index, int posCharacterCard) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3) throw new IllegalArgumentException();
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
+        if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
 
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
@@ -299,7 +299,7 @@ public class ExpertGameManager {
      */
     public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null) throw new IllegalArgumentException();
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
+        if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
 
@@ -330,7 +330,7 @@ public class ExpertGameManager {
      */
     public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null || islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
+        if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
@@ -361,7 +361,7 @@ public class ExpertGameManager {
      */
     public synchronized void playCharacterCard(int index, int posCharacterCard,  int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
+        if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
@@ -393,7 +393,7 @@ public class ExpertGameManager {
      */
     public synchronized void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || studentGroupFrom==null || studentGroupTo==null || studentGroupFrom.getTotalStudents()!=studentGroupTo.getTotalStudents()) throw new IllegalArgumentException();
-        if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
+        if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
@@ -478,5 +478,9 @@ public class ExpertGameManager {
 
     public TurnManager getTurnManager() {
         return turnManager;
+    }
+
+    public boolean isExpertMode() {
+        return expertMode;
     }
 }

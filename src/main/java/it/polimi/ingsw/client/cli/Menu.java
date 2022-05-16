@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Menu {
     private final ArrayList<CLIPhases> phases;
@@ -13,11 +14,30 @@ public class Menu {
     private GameParameters parameters;
     private Command command;
     private final Gson parser;
+    private final HashMap<String,String> characterCardDescriptions;
+    private int[] temporaryGroup;
 
     public Menu() {
+        characterCardDescriptions = new HashMap<>();
+        fillDescriprions(characterCardDescriptions);
         phases = new ArrayList<>();
         phases.add(CLIPhases.USERNAME);
         parser = new Gson();
+    }
+
+    private void fillDescriprions(HashMap<String, String> characterCardDescriptions) {
+        characterCardDescriptions.put("P01.jpg","");
+        characterCardDescriptions.put("P02.jpg","");
+        characterCardDescriptions.put("P03.jpg","");
+        characterCardDescriptions.put("P04.jpg","");
+        characterCardDescriptions.put("P05.jpg","");
+        characterCardDescriptions.put("P06.jpg","");
+        characterCardDescriptions.put("P07.jpg","");
+        characterCardDescriptions.put("P08.jpg","");
+        characterCardDescriptions.put("P09.jpg","");
+        characterCardDescriptions.put("P10.jpg","");
+        characterCardDescriptions.put("P11.jpg","");
+        characterCardDescriptions.put("P12.jpg","");
     }
 
     public synchronized void updateStatus(CurrentStatus c) {
@@ -38,7 +58,9 @@ public class Menu {
 
     public void printMenu() {
         if(phases.get(0)==CLIPhases.SENDCOMMAND) return;
-        if(currentStatus!=null) printStatus();
+        switch (phases.get(0)) {
+            case WAIT,ACTION_COMMAND,PLANNING_COMMAND -> {if(currentStatus!=null) printStatus();}
+        }
         System.out.println(phases.get(0).getMenuPrompt());
     }
 
@@ -210,6 +232,7 @@ public class Menu {
                     AddPlayerResponse apr = parser.fromJson(line,AddPlayerResponse.class);
                     if(apr.isFirst()==null && apr.getErrorMessage()==null) {
                         manageCS(line);
+                        if(currentStatus.getGameMode().equals("expert")) CLIPhases.ACTION_COMMAND.setMenuPrompt(CLIPhases.ACTION_COMMAND.getMenuPrompt()+"\n5) Play a Character Card");
                         return;
                     }
                     System.out.println("UPDATE APR");
@@ -231,7 +254,16 @@ public class Menu {
                     printStatus();
                 }
             }
-            case SENDCOMMAND,WAIT,GAME_MODE -> {
+            case GAME_MODE -> {
+                try {
+                    manageCS(line);
+                    if(currentStatus.getGameMode().equals("expert")) CLIPhases.ACTION_COMMAND.setMenuPrompt(CLIPhases.ACTION_COMMAND.getMenuPrompt()+"\n5) Play a Character Card");
+                } catch (JsonSyntaxException e) {
+                    System.out.println("ERROR: received unreadable message");
+                    printStatus();
+                }
+            }
+            case SENDCOMMAND,WAIT -> {
                 try {
                     manageCS(line);
                 } catch (JsonSyntaxException e) {
@@ -241,24 +273,6 @@ public class Menu {
             }
         }
     }
-
-    /*private void manageAPR(String line) throws JsonSyntaxException{
-        AddPlayerResponse apr = parser.fromJson(line,AddPlayerResponse.class);
-        System.out.println("UPDATE APR");
-        if(apr.getStatus()!=0) {
-            System.out.println("ERROR: Status code "+apr.getStatus()+", "+apr.getErrorMessage());
-            printMenu();
-            return;
-        }
-        if(apr.isFirst()) {
-            phases.add(CLIPhases.NUM_PLAYERS);
-            phases.add(CLIPhases.GAME_MODE);
-        } else {
-            phases.add(CLIPhases.PRE_WAIT);
-        }
-        nextPhase();
-        printMenu();
-    }*/
 
     private void manageCS(String line) throws JsonSyntaxException{
         try {
@@ -312,7 +326,6 @@ public class Menu {
             }
             case PLANNING_COMMAND -> {
                 try {
-                    System.out.println("PLANNING COMMAND 1");
                     int i = Integer.parseInt(line);
                     if(i>=1 && i<=10) {
                         command = new Command();
@@ -373,7 +386,17 @@ public class Menu {
                 }
             }
             case P_CCARD_INDEX -> {
-                //LOT TO DO HERE
+                try {
+                    int i = Integer.parseInt(line);
+                    if(i>=1 && i<=3) {
+                        command.setIndex(i-1);
+                        setCardRequirements(i-1);
+                        nextPhase();
+                    }
+                    printMenu();
+                } catch (NumberFormatException e) {
+                    printMenu();
+                }
             }
             case P_MNSHIFTS -> {
                 try {
@@ -412,13 +435,88 @@ public class Menu {
                     printMenu();
                 }
             }
-            case PCC_SFROM -> {
-                //STILL TO DO (based on the card can ask for a max of 2 or 3 students)
+            case PCC_GROUP_ON_CARD -> {
+                try {
+                    int i = Integer.parseInt(line);
+                    int[] studentsOnEntrance = currentStatus.getGame().getPlayers().get(currentStatus.getPlayerID()).getStudentsOnEntrance();
+                    int sumE=0;
+                    for(int s: studentsOnEntrance) sumE+=s;
+                    if(i>=1 && i<=3) {
+                        if(i>sumE) {
+                            System.out.println("NOT ENOUGH STUDENTS IN YOUR ENTRANCE");
+                            phases.add(CLIPhases.ACTION_COMMAND);
+                        } else {
+                            temporaryGroup=new int[5];
+                            for (int j = 0; j < i; j++) phases.add(CLIPhases.PCC_STUDENT_ON_CARD);
+                            phases.add(CLIPhases.PCC_SUBMIT_GROUP_FROM);
+                            phases.add(CLIPhases.PCC_GROUP_ON_ENTRANCE);
+                            for (int j = 0; j < i; j++) phases.add(CLIPhases.PCC_STUDENT_ON_ENTRANCE);
+                            phases.add(CLIPhases.PCC_SUBMIT_GROUP_TO);
+                            phases.add(CLIPhases.SENDCOMMAND);
+                        }
+                        nextPhase();
+                    }
+                    printMenu();
+                } catch (NumberFormatException e) {
+                    printMenu();
+                }
             }
-            case PCC_STO -> {
-                //STILL TO DO pt 2 (based on the card can ask for a max of 2 or 3 students)
+            case PCC_GROUP_ON_HALL -> {
+                try {
+                    int i = Integer.parseInt(line);
+                    int[] studentsOnHall = currentStatus.getGame().getPlayers().get(currentStatus.getPlayerID()).getStudentsOnHall();
+                    int[] studentsOnEntrance = currentStatus.getGame().getPlayers().get(currentStatus.getPlayerID()).getStudentsOnEntrance();
+                    int sumH=0,sumE=0;
+                    for(int s: studentsOnHall) sumH+=s;
+                    for(int s: studentsOnEntrance) sumE+=s;
+                    if(i>=1 && i<=2) {
+                        if(i>sumH || i>sumE) {
+                            System.out.println("NOT ENOUGH STUDENTS IN YOUR HALL OR ENTRANCE");
+                            phases.add(CLIPhases.ACTION_COMMAND);
+                        } else {
+                            temporaryGroup=new int[5];
+                            for(int j=0;j<i;j++) phases.add(CLIPhases.PCC_STUDENT_ON_HALL);
+                            phases.add(CLIPhases.PCC_SUBMIT_GROUP_TO);
+                            phases.add(CLIPhases.PCC_GROUP_ON_ENTRANCE);
+                            for(int j=0;j<i;j++) phases.add(CLIPhases.PCC_STUDENT_ON_ENTRANCE);
+                            phases.add(CLIPhases.PCC_SUBMIT_GROUP_FROM);
+                            phases.add(CLIPhases.SENDCOMMAND);
+                        }
+                        nextPhase();
+                    }
+                    printMenu();
+                } catch (NumberFormatException e) {
+                    printMenu();
+                }
+            }
+            case PCC_STUDENT_ON_CARD,PCC_STUDENT_ON_HALL,PCC_STUDENT_ON_ENTRANCE -> {
+                line = line.toUpperCase();
+                try {
+                    temporaryGroup[Colour.valueOf(line).ordinal()]++;
+                    nextPhase();
+                    printMenu();
+                } catch (IllegalArgumentException e) {
+                    printMenu();
+                }
             }
             default -> printMenu();
+        }
+        switch (phases.get(0)) {
+            case PCC_SUBMIT_GROUP_FROM -> {
+                command.setPStudentsFrom(temporaryGroup);
+                nextPhase();
+                printMenu();
+            }
+            case PCC_SUBMIT_GROUP_TO -> {
+                command.setPStudentsTo(temporaryGroup);
+                nextPhase();
+                printMenu();
+            }
+        }
+        if(phases.get(0)==CLIPhases.PCC_GROUP_ON_ENTRANCE) {
+            temporaryGroup = new int[5];
+            nextPhase();
+            printMenu();
         }
         if(phases.get(0)==CLIPhases.SENDCOMMAND) {
             System.out.println("SENDCOMMAND: returning the command json");
@@ -426,6 +524,27 @@ public class Menu {
             return parser.toJson(command);
         }
         return null;
+    }
+
+    private void setCardRequirements(int i) {
+        CharacterCardStatus ccs = currentStatus.getGame().getCharacterCards().get(i);
+        switch (ccs.getFileName()) {
+            case "P01.jpg" -> {
+                phases.add(CLIPhases.PCC_STUDENT_COLOUR);
+                phases.add(CLIPhases.PCC_ISLAND_INDEX);
+                phases.add(CLIPhases.SENDCOMMAND);
+            }
+            case "P03.jpg","P05.jpg" -> {
+                phases.add(CLIPhases.PCC_ISLAND_INDEX);
+                phases.add(CLIPhases.SENDCOMMAND);
+            }
+            case "P07.jpg" -> phases.add(CLIPhases.PCC_GROUP_ON_CARD);
+            case "P10.jpg" -> phases.add(CLIPhases.PCC_GROUP_ON_HALL);
+            case "P09.jpg","P11.jpg","P12.jpg" -> {
+                phases.add(CLIPhases.PCC_STUDENT_COLOUR);
+                phases.add(CLIPhases.SENDCOMMAND);
+            }
+        }
     }
 
     private void manageActionCommand(String line) throws NumberFormatException{
@@ -486,5 +605,4 @@ public class Menu {
         s+=v[v.length-1]+"]";
         return s;
     }
-
 }

@@ -11,15 +11,21 @@ public enum CLIPhases {
     WAIT("Not your turn, wait for other players..."),
     WIN("WINNER!!!"),
     DRAW("GAME ENDED IN A DRAW"),
-    P_STUDENT_COLOUR("Select the colour of the student: "),
+    P_STUDENT_COLOUR("Select the colour of the student from your entrance: "),
     P_ISLAND_INDEX("Select the index of the island (1-12): "),
     P_CCARD_INDEX("Select the index of the card (1-3): "),
     P_CLOUD_INDEX("Select the index of the cloud: "),
     P_MNSHIFTS("Select how many steps Mother Nature must move: "),
     PCC_ISLAND_INDEX("Select the index of the island (1-12): "),
     PCC_STUDENT_COLOUR("Select the colour of the student: "),
-    PCC_SFROM("Select the colour of the student: "),
-    PCC_STO("Select the colour of the student: "),
+    PCC_GROUP_ON_CARD("How many students you want to take from this card? (MAX 3): "),
+    PCC_GROUP_ON_ENTRANCE("Take the same amount of students from your entrance."),
+    PCC_GROUP_ON_HALL("How many students you want to take from your hall? (MAX 2): "),
+    PCC_STUDENT_ON_CARD("Select the colour of the student from the card: "),
+    PCC_STUDENT_ON_ENTRANCE("Select the colour of the student from your entrance: "),
+    PCC_STUDENT_ON_HALL("Select the colour of the student from your hall: "),
+    PCC_SUBMIT_GROUP_FROM("Students selected..."),
+    PCC_SUBMIT_GROUP_TO("Students selected..."),
     SENDCOMMAND("Sending command to server...");
 
     private String menuPrompt;
@@ -29,5 +35,9 @@ public enum CLIPhases {
 
     public String getMenuPrompt() {
         return menuPrompt;
+    }
+
+    public void setMenuPrompt(String menuPrompt) {
+        this.menuPrompt = menuPrompt;
     }
 }

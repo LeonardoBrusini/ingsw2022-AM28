@@ -54,6 +54,7 @@ public class MoveToHallCommand implements CommandStrategy{
         ps0.setIndex(command.getPlayerIndex());
         ps0.setStudentsOnHall(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getHall().getStatus());
         ps0.setStudentsOnEntrance(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getEntrance().getStatus());
+        if(gameManager.isExpertMode()) ps0.setCoins(gameManager.getPlayers().get(command.getPlayerIndex()).getCoins());
         ps.add(ps0);
         gs.setPlayers(ps);
         gs.setProfessors(gameManager.getBoard().getProfessorGroup().getStatus());
