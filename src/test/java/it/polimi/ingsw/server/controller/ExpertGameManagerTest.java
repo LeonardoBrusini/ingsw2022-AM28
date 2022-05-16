@@ -45,7 +45,7 @@ class ExpertGameManagerTest {
     /**
      * It tests that the Game is ready with all right  parameters
      */
-    @Test
+    /*@Test
     void newGame(){
         ExpertGameManager gm1 = new ExpertGameManager();
         CurrentStatus cs;
@@ -166,7 +166,7 @@ class ExpertGameManagerTest {
             }
         }
         assertEquals("simple", cs.getGameMode());
-    }
+    }*/
 
     @Test
     /**
@@ -515,10 +515,10 @@ class ExpertGameManagerTest {
             z.printStackTrace();
         }
     }
-    @Test
+    /*@Test
     /**
      * It tests the right resolution of the takeStudentsFromCloud method and the corresponding Exceptions' catch
-     */
+     /
     void takeStudentsFromCloud(){
         ExpertGameManager gm = new ExpertGameManager();
         gm.addPlayer();
@@ -638,7 +638,7 @@ class ExpertGameManagerTest {
         }catch (NoStudentsException g){
             g.printStackTrace();
         }
-    }
+    }*/
 
     @Test
     void playCharacterCard2468(){
@@ -1286,7 +1286,7 @@ class ExpertGameManagerTest {
         }
     }
 
-    @Test
+    /*@Test
     void playCharacterCard710(){
         ExpertGameManager gm = new ExpertGameManager();
         gm.addPlayer();
@@ -1492,6 +1492,6 @@ class ExpertGameManagerTest {
                 r.printStackTrace();
             }
         }
-    }
+    }*/
 
 }

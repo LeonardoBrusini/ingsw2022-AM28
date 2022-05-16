@@ -39,7 +39,7 @@ class EndOfGameCheckerTest {
         EndOfGameChecker.resetInstance();
     }
 
-    @Test
+    /*@Test
     void updateEOGLastTurn() {
         ExpertGameManager expertGameManager = new ExpertGameManager();
         expertGameManager.addPlayer();
@@ -51,7 +51,7 @@ class EndOfGameCheckerTest {
         endOfGameChecker.updateEOGLastTurn(expertGameManager.getBoard(),expertGameManager.getPlayers());
 
         assertTrue(endOfGameChecker.isEndOfGame());
-    }
+    }*/
 
     @Test
     void checkWinner(){

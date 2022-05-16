@@ -133,11 +133,7 @@ public class ConnectionManager {
     public String generateCorrectAddPlayerResponse(int playerID){
         AddPlayerResponse response=new AddPlayerResponse();
         response.setStatus(0);
-        if(playerID==0) {
-            response.setFirst(true);
-        } else {
-            response.setFirst(false);
-        }
+        response.setFirst(playerID == 0);
         return parser.toJson(response);
     }
 
