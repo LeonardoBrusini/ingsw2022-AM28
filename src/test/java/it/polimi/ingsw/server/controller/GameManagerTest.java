@@ -1,13 +1,18 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.network.CurrentStatus;
 import it.polimi.ingsw.server.enumerations.AssistantCardInfo;
 import it.polimi.ingsw.server.enumerations.CharacterCardInfo;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
 import it.polimi.ingsw.server.exceptions.*;
+import it.polimi.ingsw.server.model.ProfessorGroup;
 import it.polimi.ingsw.server.model.StudentGroup;
+import it.polimi.ingsw.server.model.board.Archipelago;
+import it.polimi.ingsw.server.model.board.Cloud;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
 import it.polimi.ingsw.server.model.players.AssistantCard;
+import it.polimi.ingsw.server.model.players.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -40,9 +45,9 @@ class GameManagerTest {
     /**
      * It tests that the Game is ready with all right  parameters
      */
-    /*@Test
+    @Test
     void newGame(){
-        ExpertGameManager gm1 = new ExpertGameManager();
+        GameManager gm1 = new GameManager();
         CurrentStatus cs;
         assertFalse(gm1.isGameStarted());
         gm1.addPlayer();
@@ -109,7 +114,7 @@ class GameManagerTest {
             i++;
         }
 
-        ExpertGameManager gm2 = new ExpertGameManager();
+        GameManager gm2 = new GameManager();
         assertFalse(gm2.isGameStarted());
         gm2.addPlayer();
         gm2.addPlayer();
@@ -138,7 +143,7 @@ class GameManagerTest {
         assertEquals("expert", cs.getGameMode());
 
 
-        ExpertGameManager gm3 = new ExpertGameManager();
+        GameManager gm3 = new GameManager();
         assertFalse(gm3.isGameStarted());
         gm3.addPlayer();
         gm3.addPlayer();
@@ -161,12 +166,12 @@ class GameManagerTest {
             }
         }
         assertEquals("simple", cs.getGameMode());
-    }*/
+    }
 
     /**
      * It tests the right resolution of the playAssistantCard method and the corresponding Exceptions' catch
      */
-    /*@Test
+    @Test
     void playAssistantCard(){
         GameManager gm1 = new GameManager();
         gm1.addPlayer();
@@ -177,7 +182,16 @@ class GameManagerTest {
             int a = gm1.getTurnManager().getCurrentPlayer(); //when the card is played, the current Player is changed. I have to memorize the actual one to verify if the card is played properly
             assertFalse(gm1.getPlayers().get(gm1.getTurnManager().getCurrentPlayer()).getAssistantCard(i).isPlayed());
             try {
-                gm1.playAssistantCard(gm1.getTurnManager().getCurrentPlayer(), i);
+                boolean isPlayed = false;
+                gm1.getPlayers().get(gm1.getTurnManager().getCurrentPlayer());
+                for(int z=0; z< gm1.getPlayers().size(); z++) {
+                    if (gm1.getPlayers().get(z).getAssistantCard(i).isPlayed() && !gm1.getPlayers().get(z).equals(gm1.getPlayers().get(gm1.getTurnManager().getCurrentPlayer())))
+                        isPlayed = true;
+                }
+                if(!isPlayed) {
+                    gm1.playAssistantCard(gm1.getTurnManager().getCurrentPlayer(), i);
+                    assertTrue(gm1.getPlayers().get(a).getAssistantCard(i).isPlayed());
+                }
             }catch (WrongPhaseException e){
                 e.printStackTrace();
             }catch (WrongTurnException f){
@@ -187,10 +201,9 @@ class GameManagerTest {
             }catch (AlreadyPlayedException z){
                 z.printStackTrace();
             }
-            assertTrue(gm1.getPlayers().get(a).getAssistantCard(i).isPlayed());
         }
         //To test AlreadyPlayedException's catching
-       GameManager gm2 = new GameManager();
+        GameManager gm2 = new GameManager();
         gm2.addPlayer();
         gm2.addPlayer();
         gm2.newGame(true, 2);
@@ -257,7 +270,32 @@ class GameManagerTest {
         }catch (AlreadyPlayedException z){
             z.printStackTrace();
         }
-    }*/
+        //To test AlreadyPlayedException's catching
+        for(int j = 0; j < gm2.getPlayers().size(); j++) {
+            int a = gm2.getTurnManager().getCurrentPlayer(); //when the card is played, the current Player is changed. I have to memorize the actual one to verify if the card is played properly
+            assertFalse(gm2.getPlayers().get(gm2.getTurnManager().getCurrentPlayer()).getAssistantCard(i).isPlayed());
+            try {
+                boolean isPlayed = false;
+                gm2.getPlayers().get(gm2.getTurnManager().getCurrentPlayer());
+                for(int z=0; z< gm1.getPlayers().size(); z++) {
+                    if (gm2.getPlayers().get(z).getAssistantCard(i).isPlayed() && !gm2.getPlayers().get(z).equals(gm2.getPlayers().get(gm2.getTurnManager().getCurrentPlayer())))
+                        isPlayed = true;
+                }
+                if(isPlayed) {
+                    gm2.playAssistantCard(gm2.getTurnManager().getCurrentPlayer(), i);
+                    //It should throw new IllegalArgumentException
+                }
+            }catch (WrongPhaseException e){
+                e.printStackTrace();
+            }catch (WrongTurnException f){
+                f.printStackTrace();
+            }catch (IllegalArgumentException h){
+                h.printStackTrace();
+            }catch (AlreadyPlayedException z){
+                z.printStackTrace();
+            }
+        }
+    }
 
 
     @Test
@@ -510,12 +548,12 @@ class GameManagerTest {
             z.printStackTrace();
         }
     }
-    /*@Test
+    @Test
     /**
      * It tests the right resolution of the takeStudentsFromCloud method and the corresponding Exceptions' catch
-     /
+     */
     void takeStudentsFromCloud(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.newGame(true, 2);
@@ -524,7 +562,8 @@ class GameManagerTest {
         order.add(1);
         gm.getTurnManager().setActionOrder(order);
         gm.getBoard().fillClouds();
-        int tot = gm.getBoard().getClouds().get(1).getStudentsOnCloud().getTotalStudents();
+        int totCloud = gm.getBoard().getClouds().get(1).getStudentsOnCloud().getTotalStudents();
+        int totEntrance = gm.getPlayers().get(0).getDashboard().getEntrance().getTotalStudents();
         try {
             gm.getTurnManager().setPhase(Phase.ACTION);
             gm.getTurnManager().setCloudSelectionPhase(true);
@@ -539,9 +578,9 @@ class GameManagerTest {
             g.printStackTrace();
         }
         assertEquals(0, gm.getBoard().getClouds().get(1).getStudentsOnCloud().getTotalStudents());
-        assertEquals(tot, gm.getPlayers().get(0).getDashboard().getEntrance().getTotalStudents());
+        assertEquals(totCloud + totEntrance, gm.getPlayers().get(0).getDashboard().getEntrance().getTotalStudents());
 
-        //To test IllegalArgumentException's catching in case of no students on cloud
+        //To test NoStudentException's catching in case of no students on cloud
         StudentGroup sc = new StudentGroup();
         gm.getBoard().getClouds().get(1).addGroup(sc);
         try {
@@ -574,7 +613,7 @@ class GameManagerTest {
         }
 
         //To test WrongTurnException's catching
-        ExpertGameManager gm2 = new ExpertGameManager();
+        GameManager gm2 = new GameManager();
         gm2.addPlayer();
         gm2.addPlayer();
         gm2.newGame(true, 2);
@@ -611,7 +650,7 @@ class GameManagerTest {
             g.printStackTrace();
         }
 
-        ExpertGameManager gm3 = new ExpertGameManager();
+        GameManager gm3 = new GameManager();
         gm3.addPlayer();
         gm3.addPlayer();
         gm3.addPlayer();
@@ -633,7 +672,7 @@ class GameManagerTest {
         }catch (NoStudentsException g){
             g.printStackTrace();
         }
-    }*/
+    }
 
     @Test
     void playCharacterCard2468(){
@@ -1281,9 +1320,9 @@ class GameManagerTest {
         }
     }
 
-    /*@Test
+    @Test
     void playCharacterCard710(){
-        ExpertGameManager gm = new ExpertGameManager();
+        GameManager gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();
         gm.newGame(true, 2);
@@ -1292,15 +1331,15 @@ class GameManagerTest {
         ArrayList<CharacterCard> cards = new ArrayList<>();
         StudentGroup sf = new StudentGroup();
         sf.addStudent(Colour.RED);
-        sf.addStudent(Colour.RED);
         StudentGroup st = new StudentGroup();
-        st.addStudent(Colour.BLUE);
         st.addStudent(Colour.BLUE);
         StudentGroup soc = new StudentGroup(5);
         card7.setStudentsOnCard(soc);
         card10.setStudentsOnCard(soc);
         gm.getPlayers().get(0).getDashboard().fillEntrance(new StudentGroup(5));
         gm.getPlayers().get(1).getDashboard().fillEntrance(new StudentGroup(5));
+        int tot11 = gm.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(Colour.RED);
+        int tot12 = gm.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(Colour.BLUE);
         try {
             gm.getPlayers().get(1).getDashboard().fillHall(new StudentGroup(5));
         }catch (FullHallException e){
@@ -1325,12 +1364,16 @@ class GameManagerTest {
         } catch (AlreadyPlayedException r) {
             r.printStackTrace();
         }
-        assertEquals(7, card7.getStudentsOnCard().getQuantityColour(Colour.BLUE));
-        assertEquals(7, gm.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(Colour.RED));
-        assertEquals(3, card7.getStudentsOnCard().getQuantityColour(Colour.RED));
-        assertEquals(3, gm.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(Colour.BLUE));
+        assertEquals(6, card7.getStudentsOnCard().getQuantityColour(Colour.BLUE));
+        assertEquals(tot11+1, gm.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(Colour.RED));
+        assertEquals(4, card7.getStudentsOnCard().getQuantityColour(Colour.RED));
+        assertEquals(tot12-1, gm.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(Colour.BLUE));
 
         gm.getPlayers().get(1).setCoins(10);
+        int tot21entranceblue = gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.BLUE);
+        int tot22hallred = gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.RED);
+        int tot21entrancered = gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.RED);
+        int tot22hallblue = gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.RED);
         try {
             gm.getTurnManager().setPhase(Phase.ACTION);
             gm.getTurnManager().setMoveStudentsPhase(true);
@@ -1346,10 +1389,10 @@ class GameManagerTest {
         } catch (AlreadyPlayedException r) {
             r.printStackTrace();
         }
-        assertEquals(7, gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.RED));
-        assertEquals(7, gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.BLUE));
-        assertEquals(3, gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.BLUE));
-        assertEquals(3, gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.RED));
+        assertEquals(tot22hallred + 1, gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.RED));
+        assertEquals(tot21entranceblue+1, gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.BLUE));
+        assertEquals(tot22hallblue-1, gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.BLUE));
+        assertEquals(tot21entrancered-1, gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.RED));
 
         //To test AlreadyPlayedException
         CharacterCard card17 = new CharacterCard(CharacterCardInfo.CARD7);
@@ -1487,6 +1530,6 @@ class GameManagerTest {
                 r.printStackTrace();
             }
         }
-    }*/
+    }
 
 }
