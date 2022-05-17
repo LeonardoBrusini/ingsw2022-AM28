@@ -77,12 +77,12 @@ public class Menu {
         System.out.println("BOARD");
         for(ArchipelagoStatus as : currentStatus.getGame().getArchipelagos()) {
             String s = "Archipelago "+as.getIndex();
-            if(currentStatus.getGame().getMotherNatureIndex()==as.getIndex()) s+=" MN";
             System.out.println(s+":");
             for (IslandStatus is:as.getIslands()) {
                 s = "Island "+is.getIslandIndex()+": ";
                 s+=vectToString(is.getStudents());
                 if(is.getTowerColour()!=null) s+=" Tower: "+is.getTowerColour();
+                if(currentStatus.getGame().getMotherNatureIndex()== is.getIslandIndex()) s+=" MN";
                 System.out.println(s);
             }
         }

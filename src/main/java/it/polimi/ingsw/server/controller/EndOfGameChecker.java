@@ -43,12 +43,14 @@ public class EndOfGameChecker {
     public void updateEOG(Board b, ArrayList<Player> players) {
         for(int i=0; i<players.size(); i++) {
             if(players.get(i).getDashboard().getNumTowers()==0) {
+                System.out.println("END OF GAME ALL TOWERS BUILDED");
                 endOfGame=true;
                 winner = i;
                 return;
             }
         }
         if (b.getIslandManager().getArchipelagos().size()<=3){
+            System.out.println("END OF GAME 3 ARCHIPELAGOS");
             endOfGame = true;
             checkWinner(players, b.getProfessorGroup());
         }
@@ -61,6 +63,7 @@ public class EndOfGameChecker {
      */
     public void updateEOGLastTurn(Board b, ArrayList<Player> players) {
         if(lastTurn) {
+            System.out.println("END OF GAME LAST TURN");
             endOfGame = true;
             checkWinner(players, b.getProfessorGroup());
         }

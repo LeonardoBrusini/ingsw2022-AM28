@@ -99,11 +99,8 @@ public class TurnManager {
         currentPlayer = 0;
         board.fillClouds();
         int playerIndex = actionOrder.get(0);
-        for (int i=1;i<players.size();i++) {
-            if(playerIndex==players.size()-1) playerIndex = 0;
-            else playerIndex++;
-            planningOrder.add(playerIndex);
-        }
+        for (int i=playerIndex;i<players.size();i++) planningOrder.add(i);
+        for(int i=0;i<playerIndex;i++) planningOrder.add(i);
         for (Player p: players) {
             p.setCcActivatedThisTurn(false);
         }

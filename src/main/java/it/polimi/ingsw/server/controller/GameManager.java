@@ -170,7 +170,6 @@ public class GameManager {
         board.moveMotherNature(moves);
         checkInfluence(); //check if this method works properly
         turnManager.nextPhase(board,players);
-        manageEndOfGame();
     }
 
     /**
@@ -221,7 +220,6 @@ public class GameManager {
         }
         players.get(playerIndex).fillDashboardEntrance(sg);
         turnManager.nextPhase(board,players);
-        manageEndOfGame();
     }
 
     /**
@@ -234,18 +232,6 @@ public class GameManager {
             if(p.getTower()==t) return p;
         }
         return null;
-    }
-
-    private synchronized void manageEndOfGame() {
-        int winnerIndex;
-        if(EndOfGameChecker.instance().isEndOfGame()) {
-            winnerIndex = EndOfGameChecker.instance().getWinner();
-            if(winnerIndex==-1) {
-                //manage draw
-            } else {
-                //manage winner
-            }
-        }
     }
 
     //getters & setters methods

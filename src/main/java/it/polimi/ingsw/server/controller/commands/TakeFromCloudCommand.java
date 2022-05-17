@@ -45,23 +45,20 @@ public class TakeFromCloudCommand implements CommandStrategy{
     @Override
     public String getUpdatedStatus(GameManager gameManager, Command command){
         Gson g = new Gson();
+        GameStatus gs = new GameStatus();
+        CurrentStatus cs = new CurrentStatus();
+        cs.setTurn(gameManager.getTurnManager().getTurnStatus());
+        ArrayList<PlayerStatus> ps = new ArrayList<>();
+        PlayerStatus ps0 = new PlayerStatus();
+        ps0.setIndex(command.getPlayerIndex());
+        ps0.setStudentsOnEntrance(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getEntrance().getStatus());
+        ps.add(ps0);
+        gs.setPlayers(ps);
+        gs.setClouds(gameManager.getBoard().getCloudsStatus());
+        cs.setGame(gs);
         if(EndOfGameChecker.instance().isEndOfGame()) {
-            //not implemented yet
-            return null;
-        } else {
-            //CloudStatus[] clouds = new CloudStatus[gameManager.getBoard().getClouds().size()];
-            GameStatus gs = new GameStatus();
-            CurrentStatus cs = new CurrentStatus();
-            cs.setTurn(gameManager.getTurnManager().getTurnStatus());
-            ArrayList<PlayerStatus> ps = new ArrayList<>();
-            PlayerStatus ps0 = new PlayerStatus();
-            ps0.setIndex(command.getPlayerIndex());
-            ps0.setStudentsOnEntrance(gameManager.getPlayers().get(command.getPlayerIndex()).getDashboard().getEntrance().getStatus());
-            ps.add(ps0);
-            gs.setPlayers(ps);
-            gs.setClouds(gameManager.getBoard().getCloudsStatus());
-            cs.setGame(gs);
-            return g.toJson(cs, CurrentStatus.class);
+            cs.setWinner(gameManager.getPlayers().get(EndOfGameChecker.instance().getWinner()).getNickname());
         }
+        return g.toJson(cs, CurrentStatus.class);
     }
 }
