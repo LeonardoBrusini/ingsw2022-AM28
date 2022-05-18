@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.StudentGroup;
  * a single student group which represents the student on the cloud, that players can take at the end of their turn
  */
 public class Cloud {
-    private final StudentGroup students;
+    private StudentGroup students;
 
     /**
      * Constructor. initialize an empty student group
@@ -25,11 +25,8 @@ public class Cloud {
      * @return the students who were on the cloud
      */
     public StudentGroup clearStudents() {
-        StudentGroup ret = new StudentGroup(students);
-        Colour[] e = Colour.values();
-        for (Colour c : e) {
-            students.setNumStudents(0, c);
-        }
+        StudentGroup ret = students;
+        students = new StudentGroup();
         return ret;
     }
 

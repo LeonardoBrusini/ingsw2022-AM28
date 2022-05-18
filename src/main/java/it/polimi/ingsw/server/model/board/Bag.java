@@ -24,14 +24,26 @@ public class Bag {
     public void initializeIslands(int mnIndex, IslandManager im) {
         for(Colour c : Colour.values()) { students.setNumStudents(2,c); }
         int oppositeOfMNIndex = mnIndex>6 ? mnIndex-6 : mnIndex+6;
-        ArrayList<Colour> extractedStudents = removeStudents(10);
+        ArrayList<Colour> extractedStudents = new ArrayList<>();
+        Random generator = new Random();
+        Colour[] e = Colour.values();
+        Colour c;
+        int i = 0;
+        while (i<10 && getTotalStudents()>0) {
+            c = e[generator.nextInt(e.length)];
+            if(students.getQuantityColour(c)>0) {
+                extractedStudents.add(c);
+                students.removeStudent(c);
+                i++;
+            }
+        }
         int j = 0;
-        for(int i=1;i<=12;i++) {
+        for(i=1;i<=12;i++) {
             if(i!=mnIndex && i!=oppositeOfMNIndex) {
                 im.getIslandByIndex(i).addStudent(extractedStudents.get(j++));
             }
         }
-        for(Colour c : Colour.values()) { students.setNumStudents(24,c); }
+        for(Colour col : Colour.values()) { students.setNumStudents(24,col); }
     }
 
     /**
@@ -60,6 +72,7 @@ public class Bag {
 
     /**
      * this method extracts students and inserts them in a StudentGroup
+     * USED ONLY IN TESTS
      * @param n the number of students to be extracted
      * @return StudentGroup of extracted students
      */

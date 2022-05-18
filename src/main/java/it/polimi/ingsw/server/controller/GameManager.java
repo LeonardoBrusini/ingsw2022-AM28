@@ -211,9 +211,8 @@ public class GameManager {
         ArrayList<Cloud> clouds = board.getClouds();
         StudentGroup sg = clouds.get(cloudIndex).clearStudents();
         if(sg.empty()) {
-            boolean error=false;
-            for(int i=0; i<clouds.size();i++) {
-                if(!clouds.get(i).empty()) {
+            for (Cloud cloud : clouds) {
+                if (!cloud.empty()) {
                     throw new NoStudentsException();
                 }
             }

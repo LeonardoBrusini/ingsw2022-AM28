@@ -43,8 +43,8 @@ public class TurnManager {
             if(playerIndex==numPlayers-1) playerIndex = 0;
             else playerIndex++;
             planningOrder.add(playerIndex);
-            board.fillClouds();
         }
+        board.fillClouds();
     }
 
     /**

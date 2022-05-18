@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.server.controller.EndOfGameChecker;
 import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.controller.Phase;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
@@ -56,6 +57,9 @@ public class MoveMotherNatureCommand implements CommandStrategy{
         }
         gs.setPlayers(ps);
         cs.setGame(gs);
+        if(EndOfGameChecker.instance().isEndOfGame()) {
+            cs.setWinner(gameManager.getPlayers().get(EndOfGameChecker.instance().getWinner()).getNickname());
+        }
         return g.toJson(cs, CurrentStatus.class);
     }
 }

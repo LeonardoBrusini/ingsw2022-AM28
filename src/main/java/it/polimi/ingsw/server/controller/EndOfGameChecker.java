@@ -43,7 +43,7 @@ public class EndOfGameChecker {
     public void updateEOG(Board b, ArrayList<Player> players) {
         for(int i=0; i<players.size(); i++) {
             if(players.get(i).getDashboard().getNumTowers()==0) {
-                System.out.println("END OF GAME ALL TOWERS BUILDED");
+                System.out.println("END OF GAME ALL TOWERS BUILT");
                 endOfGame=true;
                 winner = i;
                 return;
@@ -129,6 +129,7 @@ public class EndOfGameChecker {
         return lastTurn;
     }
     public void setLastTurn(boolean lastTurn) {
+        System.out.println("THI WILL BE THE LAST TURN!!!");
         this.lastTurn = lastTurn;
     }
     public int getWinner() {
