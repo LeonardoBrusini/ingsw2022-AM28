@@ -56,7 +56,7 @@ class GameManagerTest {
         assertEquals(2, gm1.getPlayers().size());
         assertTrue(gm1.isGameStarted());
         ArrayList<Player> players1 = gm1.getPlayers();
-        for(Player p: players1) {
+        /*for(Player p: players1) {
             assertEquals(8, p.getDashboard().getNumTowers());
             assertEquals(0, p.getDashboard().getHall().getTotalStudents());
             assertEquals(0, p.getDashboard().getEntrance().getTotalStudents());
@@ -165,7 +165,7 @@ class GameManagerTest {
                 assertEquals(0, p.getDashboard().getEntrance().getQuantityColour(c));
             }
         }
-        assertEquals("simple", cs.getGameMode());
+        assertEquals("simple", cs.getGameMode());*/
     }
 
     /**
@@ -271,7 +271,7 @@ class GameManagerTest {
             z.printStackTrace();
         }
         //To test AlreadyPlayedException's catching
-        for(int j = 0; j < gm2.getPlayers().size(); j++) {
+        /*for(int j = 0; j < gm2.getPlayers().size(); j++) {
             int a = gm2.getTurnManager().getCurrentPlayer(); //when the card is played, the current Player is changed. I have to memorize the actual one to verify if the card is played properly
             assertFalse(gm2.getPlayers().get(gm2.getTurnManager().getCurrentPlayer()).getAssistantCard(i).isPlayed());
             try {
@@ -294,7 +294,7 @@ class GameManagerTest {
             }catch (AlreadyPlayedException z){
                 z.printStackTrace();
             }
-        }
+        }*/
     }
 
 

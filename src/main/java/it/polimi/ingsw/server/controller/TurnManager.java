@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.network.TurnStatus;
 import it.polimi.ingsw.server.model.board.Board;
+import it.polimi.ingsw.server.model.players.AssistantCard;
 import it.polimi.ingsw.server.model.players.Player;
 
 import java.util.ArrayList;
@@ -114,11 +115,15 @@ public class TurnManager {
         actionOrder = new ArrayList<>();
         int actionWeight, i, j;
         for(i=0;i<players.size();i++) {
-            if(players.get(i).getLastPlayedCard()==null) actionWeight = 0;
+            if(players.get(i).getLastPlayedCard()==null) actionWeight = 11;
             else actionWeight = players.get(i).getLastPlayedCard().getInfo().getTurnWeight();
-            j = 0;
-            while (j<actionOrder.size() && players.get(actionOrder.get(j)).getLastPlayedCard().getInfo().getTurnWeight()<=actionWeight){
-                j++;
+            for(j=0;j<actionOrder.size();j++) {
+                AssistantCard ac = players.get(actionOrder.get(j)).getLastPlayedCard();
+                if(ac!=null) {
+                    if(ac.getInfo().getTurnWeight()>actionWeight) break;
+                } else {
+                    if(11>actionWeight) break;
+                }
             }
             actionOrder.add(j,i);
         }

@@ -70,13 +70,15 @@ public class Menu {
         }
         System.out.println("PLAYERS:");
         for(PlayerStatus ps : currentStatus.getGame().getPlayers()) {
-            System.out.println(ps.getNickName()+": "+ps.getTowerColour()+" towers, "+ps.getCoins()+" coins");
+            String s = ps.getNickName()+": "+ps.getTowerColour()+" towers";
+            if(currentStatus.getGameMode().equals("expert")) s+=", "+ps.getCoins()+" coins";
+            System.out.println(s);
             System.out.println("Dashboard: Entrance: "+vectToString(ps.getStudentsOnEntrance())+", Hall: "+vectToString(ps.getStudentsOnHall())+ ", Towers: "+ps.getNumTowers());
             System.out.println("Assistant Cards left: "+printAssistantCards(ps));
         }
         System.out.println("BOARD");
         for(ArchipelagoStatus as : currentStatus.getGame().getArchipelagos()) {
-            String s = "Archipelago "+as.getIndex();
+            String s = "Archipelago "+(as.getIndex()+1);
             System.out.println(s+":");
             for (IslandStatus is:as.getIslands()) {
                 s = "Island "+is.getIslandIndex()+": ";
@@ -89,7 +91,7 @@ public class Menu {
         if(currentStatus.getGame().getCharacterCards()!=null) {
             System.out.println("Character cards:");
             for(CharacterCardStatus cs : currentStatus.getGame().getCharacterCards()) {
-                String s = "Card "+cs.getIndex()+", Name: "+cs.getFileName();
+                String s = "Card "+(cs.getIndex()+1)+", Name: "+cs.getFileName();
                 if(cs.getNoEntryTiles()!=null) s+=", NoEntryTiles: "+cs.getNoEntryTiles();
                 if(cs.getStudents()!=null) s+=", Students: "+vectToString(cs.getStudents());
                 System.out.println(s);
@@ -97,7 +99,7 @@ public class Menu {
         }
         System.out.println("Clouds");
         for(CloudStatus cs : currentStatus.getGame().getClouds()) {
-            System.out.println("Cloud "+cs.getIndex()+", Students: "+vectToString(cs.getStudents()));
+            System.out.println("Cloud "+(cs.getIndex()+1)+", Students: "+vectToString(cs.getStudents()));
         }
         System.out.println("Professors: "+vectToString(currentStatus.getGame().getProfessors()));
         System.out.println("Current Player: "+currentStatus.getTurn().getPlayer()+", Phase: "+currentStatus.getTurn().getPhase());
@@ -227,7 +229,7 @@ public class Menu {
     public synchronized void manageReceivedLine(String line) {
         System.out.println(line);
         switch (phases.get(0)) {
-            case USERNAME,PRE_WAIT -> {
+            case USERNAME,PRE_WAIT,GAME_MODE,NUM_PLAYERS -> {
                 try {
                     AddPlayerResponse apr = parser.fromJson(line,AddPlayerResponse.class);
                     if(apr.isFirst()==null && apr.getErrorMessage()==null) {
@@ -236,28 +238,27 @@ public class Menu {
                         return;
                     }
                     System.out.println("UPDATE APR");
+                    if(apr.getStatus()==105) {
+                        phases.add(CLIPhases.PRE_WAIT);
+                        nextPhase();
+                        printMenu();
+                        return;
+                    }
                     if(apr.getStatus()!=0) {
                         System.out.println("ERROR: Status code "+apr.getStatus()+", "+apr.getErrorMessage());
                         printMenu();
                         return;
                     }
-                    if(apr.isFirst()) {
-                        phases.add(CLIPhases.NUM_PLAYERS);
-                        phases.add(CLIPhases.GAME_MODE);
-                    } else {
-                        phases.add(CLIPhases.PRE_WAIT);
+                    if(phases.get(0)!=CLIPhases.NUM_PLAYERS && phases.get(0)!=CLIPhases.GAME_MODE) {
+                        if(apr.isFirst()) {
+                            phases.add(CLIPhases.NUM_PLAYERS);
+                            phases.add(CLIPhases.GAME_MODE);
+                        } else {
+                            phases.add(CLIPhases.PRE_WAIT);
+                        }
+                        nextPhase();
+                        printMenu();
                     }
-                    nextPhase();
-                    printMenu();
-                } catch (JsonSyntaxException e) {
-                    System.out.println("ERROR: received unreadable message");
-                    printStatus();
-                }
-            }
-            case GAME_MODE -> {
-                try {
-                    manageCS(line);
-                    if(currentStatus.getGameMode().equals("expert")) CLIPhases.ACTION_COMMAND.setMenuPrompt(CLIPhases.ACTION_COMMAND.getMenuPrompt()+"\n5) Play a Character Card");
                 } catch (JsonSyntaxException e) {
                     System.out.println("ERROR: received unreadable message");
                     printStatus();
@@ -278,12 +279,6 @@ public class Menu {
         try {
             CurrentStatus cs = parser.fromJson(line, CurrentStatus.class);
             System.out.println("UPDATE CS");
-            if(cs.getStatus()==105) {
-                phases.add(CLIPhases.PRE_WAIT);
-                nextPhase();
-                printMenu();
-                return;
-            }
             if(cs.getStatus()!=0) {
                 System.out.println("ERROR: Status code "+cs.getStatus()+", "+cs.getErrorMessage());
             }
@@ -593,7 +588,7 @@ public class Menu {
         }
     }
 
-    public void nextPhase() {
+    private void nextPhase() {
         phases.remove(0);
     }
 

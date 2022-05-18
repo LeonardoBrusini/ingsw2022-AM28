@@ -35,7 +35,7 @@ public class EchoServerClientHandler implements Runnable {
                 } else {
                     System.out.println(line);
                     outputString = connectionManager.manageMessage(line, playerID);
-                    if(!connectionManager.isFirstStatus()) {
+                    if(!connectionManager.isFirstStatus() && outputString!=null) {
                         if(connectionManager.isToAllResponse()) {
                             ConnectionList.instance().sendToAll(outputString);
                         } else {

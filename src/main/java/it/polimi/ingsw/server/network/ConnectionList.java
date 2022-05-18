@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.network;
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.AddPlayerResponse;
 import it.polimi.ingsw.network.CurrentStatus;
+import it.polimi.ingsw.network.GameParameters;
 import it.polimi.ingsw.network.StatusCode;
 import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.model.players.Player;
@@ -19,9 +20,10 @@ public class ConnectionList {
     private int numOfActualPlayers;
     private HashMap<String,Integer> savedUsernames;
     private static ConnectionList instance;
-    public boolean waitForPlayers;
-
+    private boolean waitForPlayers;
+    private GameParameters gameParameters;
     private ConnectionList() {
+        gameParameters = null;
         clients = new ArrayList<>();
         connected = new ArrayList<>();
         savedUsernames = new HashMap<>();
@@ -49,19 +51,21 @@ public class ConnectionList {
         clients.add(e);
         connected.add(true);
         notifyAll();
-        System.out.println("player aggiunto");
+        System.out.println("player added");
     }
 
     public synchronized void sendToAll(String msg) {
-        for (EchoServerClientHandler c : clients) {
-            if(c!=null) {
-                c.getOut().println(msg);
-                c.getOut().flush();
+        if(!msg.equals("ping")) System.out.println("sending: "+msg+" to everyone");
+        for (int i=0;i<clients.size();i++) {
+            if(clients.get(i)!=null && (!gameManager.isGameStarted() || i < gameManager.getPlayers().size())) {
+                clients.get(i).getOut().println(msg);
+                clients.get(i).getOut().flush();
             }
         }
     }
 
     public synchronized void sendToOne(String msg, int ID) {
+        System.out.println("sending: "+msg+" to player "+ID);
         if(clients.size()>0) {
             clients.get(ID).getOut().println(msg);
             clients.get(ID).getOut().flush();
@@ -84,6 +88,7 @@ public class ConnectionList {
         if(gameManager.isGameStarted()) {
             for (int i=0;i<numOfActualPlayers;i++) {
                 if(clients.get(i)!=null && !connected.get(i)) {
+                    System.out.println("player "+i+" disconnected");
                     try {
                         clients.get(i).getSocket().close();
                     } catch (IOException e) {
@@ -91,6 +96,7 @@ public class ConnectionList {
                     }
                     savedUsernames.put(clients.get(i).getConnectionManager().getUsername(),i);
                     clients.set(i,null);
+                    connected.set(i,false);
                     gameManager.getPlayers().get(i).setConnected(false);
                     if(gameManager.getTurnManager().getCurrentPlayer()==i && !noClients()) {
                         gameManager.getTurnManager().nextPlayer(gameManager.getPlayers(),gameManager.getBoard());
@@ -111,32 +117,41 @@ public class ConnectionList {
                 return;
             }
         } else {
+            boolean playerErased = false;
             int i=connected.size()-1;
             while (i>=0) {
                 if(!connected.get(i)) {
                     try {
-                        clients.get(0).getSocket().close();
+                        clients.get(i).getSocket().close();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    clients.remove(0);
-                    connected.remove(0);
-                    if(i==0 && clients.size()>0 && !clients.get(0).getConnectionManager().doesNeedUsername()) {
+                    clients.remove(i);
+                    connected.remove(i);
+                    playerErased = true;
+                }
+                i--;
+            }
+            if(playerErased) {
+                for (i=0;i<clients.size();i++) {
+                    if(!clients.get(i).getConnectionManager().doesNeedUsername()) {
                         AddPlayerResponse a = new AddPlayerResponse();
                         a.setStatus(0);
                         a.setFirst(true);
                         sendToOne(new Gson().toJson(a),0);
+                        break;
                     }
                 }
-                i--;
             }
         }
         resetIDs();
     }
 
     private void sendToAllLogged(String msg) {
-        for (EchoServerClientHandler c : clients) {
-            if(c!=null && !c.getConnectionManager().doesNeedUsername()) {
+        System.out.println("sending: "+msg+" to everyone logged");
+        for (int i=0;i<clients.size();i++) {
+            EchoServerClientHandler c = clients.get(i);
+            if(c!=null && !c.getConnectionManager().doesNeedUsername() && (!gameManager.isGameStarted() || i < gameManager.getPlayers().size())) {
                 c.getOut().println(msg);
                 c.getOut().flush();
             }
@@ -229,5 +244,17 @@ public class ConnectionList {
             if(e!=null && !e.getConnectionManager().doesNeedUsername()) i++;
         }
         return i;
+    }
+
+    public ArrayList<Boolean> getConnected() {
+        return connected;
+    }
+
+    public void setGameParameters(GameParameters gameParameters) {
+        this.gameParameters = gameParameters;
+    }
+
+    public GameParameters getGameParameters() {
+        return gameParameters;
     }
 }

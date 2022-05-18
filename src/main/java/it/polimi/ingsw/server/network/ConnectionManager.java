@@ -46,9 +46,11 @@ public class ConnectionManager {
                     System.out.println("2");
                     fullStatus.setPlayerID(index);
                     ArrayList<EchoServerClientHandler> clients = ConnectionList.instance().getClients();
+                    System.out.println("PlayerID attuale: "+playerID+", ID precedente: "+index);
                     clients.set(index,clients.get(playerID));
                     clients.remove(playerID);
                     clients.get(index).setPlayerID(index);
+                    ConnectionList.instance().setStillConnected(index,true);
                     System.out.println("3");
                     ConnectionList.instance().getGameManager().getPlayers().get(index).setConnected(true);
                     ConnectionList.instance().getSavedUsernames().remove(username);
@@ -96,11 +98,21 @@ public class ConnectionManager {
                         ConnectionList.instance().getGameManager().addPlayer();
                     }
                     needUsername = false;
-                    return generateCorrectAddPlayerResponse(playerID);
+                    ConnectionList.instance().sendToOne(generateCorrectAddPlayerResponse(playerID),playerID);
                 } else {
                     if(ConnectionList.instance().getClients().size()>players.size()) return StatusCode.FULL_LOBBY.toJson();
-                    else return generateCorrectAddPlayerResponse(playerID);
+                    else ConnectionList.instance().sendToOne(generateCorrectAddPlayerResponse(playerID),playerID);
                 }
+                GameParameters gp = ConnectionList.instance().getGameParameters();
+                if(gp!=null && ConnectionList.instance().getGameManager().getPlayers().size()==gp.getNumPlayers()) {
+                    System.out.println("STARTING GAME");
+                    ConnectionList.instance().getGameManager().newGame(gp.getGameMode().equals("expert"),gp.getNumPlayers());
+                    ConnectionList.instance().setNumOfActualPlayers(gp.getNumPlayers());
+                    ConnectionList.instance().setNicknames();
+                    firstStatus = true;
+                    ConnectionList.instance().sendFirstStatus();
+                }
+                return null;
             } catch (JsonSyntaxException e) {
                 return StatusCode.INVALIDUSERNAME.toJson();
             }
@@ -115,8 +127,11 @@ public class ConnectionManager {
                 if(tmp.getNumPlayers()<2 || tmp.getNumPlayers()>3) return StatusCode.ILLEGALARGUMENT.toJson();
                 ConnectionList.instance().orderClients();
                 int loggedPlayers = ConnectionList.instance().getNumOfLoggedPlayers();
-                int gamePlayers = ConnectionList.instance().getGameManager().getPlayers().size();
-                if(loggedPlayers<gamePlayers || gamePlayers<tmp.getNumPlayers()) return StatusCode.WAITINGFORPLAYERS.toJson();
+                if(loggedPlayers<tmp.getNumPlayers()) {
+                    ConnectionList.instance().setGameParameters(tmp);
+                    System.out.println("SAVED PARAMETERS");
+                    return StatusCode.WAITINGFORPLAYERS.toJson();
+                }
                 ConnectionList.instance().getGameManager().newGame(expert,tmp.getNumPlayers());
                 ConnectionList.instance().setNumOfActualPlayers(tmp.getNumPlayers());
                 ConnectionList.instance().setNicknames();
