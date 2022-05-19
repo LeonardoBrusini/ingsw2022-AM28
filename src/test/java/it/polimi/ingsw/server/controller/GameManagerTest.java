@@ -56,16 +56,15 @@ class GameManagerTest {
         assertEquals(2, gm1.getPlayers().size());
         assertTrue(gm1.isGameStarted());
         ArrayList<Player> players1 = gm1.getPlayers();
-        /*for(Player p: players1) {
+        for(Player p: players1) {
             assertEquals(8, p.getDashboard().getNumTowers());
             assertEquals(0, p.getDashboard().getHall().getTotalStudents());
-            assertEquals(0, p.getDashboard().getEntrance().getTotalStudents());
+            assertEquals(7, p.getDashboard().getEntrance().getTotalStudents());
             for (int i = 0; i < 10; i++)
                 assertFalse(p.getAssistantCard(i).isPlayed());
             assertEquals(1, p.getCoins());
             for (Colour c : Colour.values()) {
                 assertEquals(0, p.getDashboard().getHall().getQuantityColour(c));
-                assertEquals(0, p.getDashboard().getEntrance().getQuantityColour(c));
             }
         }
         for(CharacterCard c: gm1.getBoard().getCharacterCards()) {
@@ -130,13 +129,12 @@ class GameManagerTest {
         for(Player p: players2){
             assertEquals(6,p.getDashboard().getNumTowers());
             assertEquals(0, p.getDashboard().getHall().getTotalStudents());
-            assertEquals(0, p.getDashboard().getEntrance().getTotalStudents());
+            assertEquals(9, p.getDashboard().getEntrance().getTotalStudents());
             for(int j = 0; i < 10; i++)
                 assertFalse(p.getAssistantCard(j).isPlayed());
             assertEquals(1, p.getCoins());
             for(Colour c: Colour.values()){
                 assertEquals(0, p.getDashboard().getHall().getQuantityColour(c));
-                assertEquals(0, p.getDashboard().getEntrance().getQuantityColour(c));
             }
         }
         cs = gm2.getFullCurrentStatus();
@@ -156,16 +154,15 @@ class GameManagerTest {
         for(Player p: players3) {
             assertEquals(8, p.getDashboard().getNumTowers());
             assertEquals(0, p.getDashboard().getHall().getTotalStudents());
-            assertEquals(0, p.getDashboard().getEntrance().getTotalStudents());
+            assertEquals(7, p.getDashboard().getEntrance().getTotalStudents());
             for (int j = 0; j < 10; j++)
                 assertFalse(p.getAssistantCard(j).isPlayed());
             assertEquals(1, p.getCoins());
             for (Colour c : Colour.values()) {
                 assertEquals(0, p.getDashboard().getHall().getQuantityColour(c));
-                assertEquals(0, p.getDashboard().getEntrance().getQuantityColour(c));
             }
         }
-        assertEquals("simple", cs.getGameMode());*/
+        assertEquals("simple", cs.getGameMode());
     }
 
     /**
