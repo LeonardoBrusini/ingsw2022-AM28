@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
 import it.polimi.ingsw.server.exceptions.NotEnoughCoinsException;
 import it.polimi.ingsw.server.exceptions.WrongPhaseException;
+import it.polimi.ingsw.server.exceptions.WrongTurnException;
 import it.polimi.ingsw.server.model.StudentGroup;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
 
@@ -32,9 +33,9 @@ public class PlayCharacterCardCommand implements CommandStrategy{
                 StudentGroup sf = new StudentGroup(command.getPStudentsFrom());
                 StudentGroup st = new StudentGroup(command.getPStudentsTo());
                 gameManager.playCharacterCard(pIndex,cIndex,sf,st);
-            } else if(command.getPIndex()!=0 && command.getPColour()!=null) {
+            } else if(command.getPIndex()!=null && command.getPColour()!=null) {
                 gameManager.playCharacterCard(pIndex,cIndex, Colour.valueOf(command.getPColour()),command.getPIndex());
-            } else if(command.getPIndex()!=0) {
+            } else if(command.getPIndex()!=null) {
                 gameManager.playCharacterCard(pIndex,cIndex,command.getPIndex());
             } else if(command.getPColour()!=null) {
                 gameManager.playCharacterCard(pIndex,cIndex,Colour.valueOf(command.getPColour()));
@@ -49,6 +50,8 @@ public class PlayCharacterCardCommand implements CommandStrategy{
             return StatusCode.NOTENOUGHCOINS;
         }catch(AlreadyPlayedException h){
             return StatusCode.ALREADYPLAYEDCC;
+        } catch (WrongTurnException i) {
+            return StatusCode.WRONGTURN;
         }
         //other ERRORS
         return null;

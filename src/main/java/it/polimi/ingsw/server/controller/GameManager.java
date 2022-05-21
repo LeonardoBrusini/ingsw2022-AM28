@@ -74,10 +74,10 @@ public class GameManager {
         boolean alreadyPlayed = false;
         ArrayList<AssistantCardInfo> alreadyPlayedCards = new ArrayList<>();
         for(int i=0; i<turnManager.getPlanningOrder().size(); i++) {
-            if(i==p) break;
-            if(players.get(i).getLastPlayedCard()!=null) {
-                alreadyPlayedCards.add(players.get(i).getLastPlayedCard().getInfo());
-                if(players.get(i).getLastPlayedCard().getInfo().ordinal()==c) {
+            if(turnManager.getPlanningOrder().get(i)==p) break;
+            if(players.get(turnManager.getPlanningOrder().get(i)).getLastPlayedCard()!=null) {
+                alreadyPlayedCards.add(players.get(turnManager.getPlanningOrder().get(i)).getLastPlayedCard().getInfo());
+                if(players.get(turnManager.getPlanningOrder().get(i)).getLastPlayedCard().getInfo().ordinal()==c) {
                     alreadyPlayed = true;
                 }
             }
@@ -147,14 +147,9 @@ public class GameManager {
      */
     public synchronized void moveStudentToIsland(int p, Colour c, int is) throws WrongTurnException, WrongPhaseException, NoStudentsException{
         if(p<0 || p>=players.size() || c==null || is<1 || is>12) throw new IllegalArgumentException();
-        if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
         players.get(p).moveToIsland(c,board.getIslandManager().getIslandByIndex(is));
-       /* try{
-            players.get(p).moveToIsland(c,board.getIslandManager().getIslandByIndex(is));
-        } catch (NoStudentsException e) {
-            //what happens?
-        }*/
         turnManager.nextPhase(board,players);
     }
 
@@ -252,10 +247,10 @@ public class GameManager {
      * @param index player index
      * @param posCharacterCard character card index
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException, WrongTurnException {
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
-
+        if(turnManager.getCurrentPlayer()!=index) throw new WrongTurnException();
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
 
@@ -282,9 +277,10 @@ public class GameManager {
      * @param posCharacterCard character card index
      * @param colour colour of the student
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException, WrongTurnException {
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=index) throw new WrongTurnException();
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
 
@@ -313,9 +309,10 @@ public class GameManager {
      * @param colour colour of the student
      * @param islandIndex index of the island
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard, Colour colour, int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException, WrongTurnException {
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || colour==null || islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=index) throw new WrongTurnException();
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
@@ -344,9 +341,10 @@ public class GameManager {
      * @param posCharacterCard character card index
      * @param islandIndex index of the island
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard,  int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard,  int  islandIndex) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException, WrongTurnException {
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=index) throw new WrongTurnException();
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
@@ -376,27 +374,22 @@ public class GameManager {
      * @param studentGroupFrom first group of students
      * @param studentGroupTo second group of students
      */
-    public synchronized void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException{
+    public synchronized void playCharacterCard(int index, int posCharacterCard, StudentGroup studentGroupFrom, StudentGroup studentGroupTo) throws IllegalArgumentException, WrongPhaseException, AlreadyPlayedException, NotEnoughCoinsException, WrongTurnException {
         if(index<0 || index>=players.size() || posCharacterCard<0 || posCharacterCard>=3 || studentGroupFrom==null || studentGroupTo==null || studentGroupFrom.getTotalStudents()!=studentGroupTo.getTotalStudents()) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || (!turnManager.isMoveStudentsPhase() && !turnManager.isMotherNaturePhase())) throw new WrongPhaseException();
+        if(turnManager.getCurrentPlayer()!=index) throw new WrongTurnException();
         Player p = players.get(index);
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
-        try {
-            p.spendCoins(card.getPrice());
-            card.setGameManager(this);
-            card.setPlayerThisTurn(p);
-            card.setBoard(board);
-            card.setSelectedStudentsFrom(studentGroupFrom);
-            card.setSelectedStudentsTo(studentGroupTo);
-            card.getCardInfo().getEffect().resolveEffect(card);
-            p.setCcActivatedThisTurn(true);
-        } catch (IllegalArgumentException exception) {
-            throw new IllegalArgumentException();
-            //error, player does not have enough coins
-        }catch (NotEnoughCoinsException ex){
-            throw new NotEnoughCoinsException();
-        }
+
+        p.spendCoins(card.getPrice());
+        card.setGameManager(this);
+        card.setPlayerThisTurn(p);
+        card.setBoard(board);
+        card.setSelectedStudentsFrom(studentGroupFrom);
+        card.setSelectedStudentsTo(studentGroupTo);
+        card.getCardInfo().getEffect().resolveEffect(card);
+        p.setCcActivatedThisTurn(true);
     }
 
     /**

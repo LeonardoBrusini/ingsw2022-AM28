@@ -23,7 +23,6 @@ public class PlayAssistantCardCommand implements CommandStrategy{
     @Override
     public StatusCode resolveCommand(GameManager gameManager, Command command) {
         try{
-            System.out.println("trying to play assistant card");
             gameManager.playAssistantCard(command.getPlayerIndex(), command.getIndex());
             System.out.println("assistant card played");
         }catch(IllegalArgumentException e){
@@ -46,7 +45,6 @@ public class PlayAssistantCardCommand implements CommandStrategy{
      */
     @Override
     public String getUpdatedStatus(GameManager gameManager, Command command){
-        System.out.println("status creation");
         Gson g = new Gson();
         CurrentStatus cs = new CurrentStatus();
         GameStatus gs = new GameStatus();

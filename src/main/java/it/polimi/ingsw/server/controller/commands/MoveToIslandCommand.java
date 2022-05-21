@@ -23,29 +23,24 @@ public class MoveToIslandCommand implements CommandStrategy{
     @Override
     public StatusCode resolveCommand(GameManager gameManager, Command command) {
         try{
-            System.out.println("tentativo di esecuzione MOVE STUDENT TO ISLAND");
-            //System.out.println(Colour.valueOf(command.getStudentColour()));
-            try {
-                gameManager.moveStudentToIsland(command.getPlayerIndex(), Colour.valueOf(command.getStudentColour()), command.getIndex());
-            }catch (NoStudentsException e){
-                return StatusCode.NOSTUDENTS;
-            }
-            System.out.println("andato a buon fine");
+            gameManager.moveStudentToIsland(command.getPlayerIndex(), Colour.valueOf(command.getStudentColour()), command.getIndex());
         }catch(WrongTurnException e){
             return StatusCode.WRONGTURN;
         }catch(WrongPhaseException z){
             return StatusCode.WRONGPHASE;
         }catch(IllegalArgumentException h){
             return StatusCode.ILLEGALARGUMENT;
+        } catch (NoStudentsException e) {
+            return StatusCode.NOSTUDENTS;
         }
         return null;
     }
 
     /**
-     * It creates the message with changes operated by the resolution of the command
-     * @param gameManager gameManager reference
-     * @param command the command reference
-     * @return Json message
+     *  It creates the message with changes operated by the resolution of the command
+     *  @param gameManager gameManager reference
+     *  @param command the command reference
+     *  @return Json message
      */
     @Override
     public String getUpdatedStatus(GameManager gameManager, Command command){

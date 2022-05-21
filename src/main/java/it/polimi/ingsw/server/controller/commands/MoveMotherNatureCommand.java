@@ -23,7 +23,6 @@ public class MoveMotherNatureCommand implements CommandStrategy{
     @Override
     public StatusCode resolveCommand(GameManager gameManager, Command command) {
         if(command.getPlayerIndex()!=gameManager.getTurnManager().getCurrentPlayer()) return StatusCode.WRONGTURN;
-        if(gameManager.getTurnManager().getPhase()!= Phase.ACTION) return StatusCode.WRONGPHASE;
         try {
             gameManager.moveMotherNature(command.getMotherNatureShifts());
         }catch (WrongPhaseException e){

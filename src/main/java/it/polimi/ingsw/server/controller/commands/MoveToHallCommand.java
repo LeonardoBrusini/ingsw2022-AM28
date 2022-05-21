@@ -23,7 +23,6 @@ public class MoveToHallCommand implements CommandStrategy{
     @Override
     public StatusCode resolveCommand(GameManager gameManager, Command command) {
         try{
-            System.out.println("trying to resolve MOVETOHALL COMMAND");
             gameManager.moveStudentsToHall(command.getPlayerIndex(), Colour.valueOf(command.getStudentColour()));
         }catch (FullHallException e){
             return StatusCode.FULLHALL;
