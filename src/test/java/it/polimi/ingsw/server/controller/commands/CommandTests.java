@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller.commands;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.server.controller.EndOfGameChecker;
 import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.controller.Phase;
 import it.polimi.ingsw.server.controller.TurnManager;
@@ -25,6 +26,7 @@ class CommandTests {
 
     @BeforeEach
     void createGame(){
+        EndOfGameChecker.resetInstance();
         gm = new GameManager();
         gm.addPlayer();
         gm.addPlayer();

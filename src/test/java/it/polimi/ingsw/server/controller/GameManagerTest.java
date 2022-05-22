@@ -13,6 +13,7 @@ import it.polimi.ingsw.server.model.board.Cloud;
 import it.polimi.ingsw.server.model.cards.CharacterCard;
 import it.polimi.ingsw.server.model.players.AssistantCard;
 import it.polimi.ingsw.server.model.players.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -22,6 +23,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameManagerTest {
     private final GameManager gm = new GameManager();
+
+    @BeforeEach
+    void resetEOGChecker() {
+        EndOfGameChecker.resetInstance();
+    }
 
     /**
      * The tests verify the correct initialization of players
@@ -268,7 +274,7 @@ class GameManagerTest {
             z.printStackTrace();
         }
         //To test AlreadyPlayedException's catching
-        /*for(int j = 0; j < gm2.getPlayers().size(); j++) {
+        for(int j = 0; j < gm2.getPlayers().size(); j++) {
             int a = gm2.getTurnManager().getCurrentPlayer(); //when the card is played, the current Player is changed. I have to memorize the actual one to verify if the card is played properly
             assertFalse(gm2.getPlayers().get(gm2.getTurnManager().getCurrentPlayer()).getAssistantCard(i).isPlayed());
             try {
@@ -291,7 +297,7 @@ class GameManagerTest {
             }catch (AlreadyPlayedException z){
                 z.printStackTrace();
             }
-        }*/
+        }
     }
 
 
@@ -1369,7 +1375,7 @@ class GameManagerTest {
         }
     }
 
-    /*@Test
+    @Test
     void playCharacterCard710(){
         GameManager gm = new GameManager();
         gm.addPlayer();
@@ -1428,9 +1434,10 @@ class GameManagerTest {
         int tot21entrancered = gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.RED);
         int tot22hallblue = gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.RED);
         try {
-            gm.getTurnManager().setPhase(Phase.ACTION);
-            gm.getTurnManager().setMoveStudentsPhase(true);
-            gm.getTurnManager().setCurrentPlayer(0);
+            while (t.getCurrentPlayer()!=1 || t.getPhase()!=Phase.ACTION || !t.isMoveStudentsPhase()) t.nextPhase(gm.getBoard(),gm.getPlayers());
+            //gm.getTurnManager().setPhase(Phase.ACTION);
+            //gm.getTurnManager().setMoveStudentsPhase(true);
+            //gm.getTurnManager().setCurrentPlayer(0);
             gm.getPlayers().get(0).setCcActivatedThisTurn(false);
             gm.playCharacterCard(1, 1,sf,st);
         } catch (IllegalArgumentException e) {
@@ -1593,6 +1600,6 @@ class GameManagerTest {
                 s.printStackTrace();
             }
         }
-    }*/
+    }
 
 }

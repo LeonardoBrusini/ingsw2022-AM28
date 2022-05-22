@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.network.TurnStatus;
 import it.polimi.ingsw.server.model.board.Board;
+import it.polimi.ingsw.server.model.cards.CharacterCard;
 import it.polimi.ingsw.server.model.players.AssistantCard;
 import it.polimi.ingsw.server.model.players.Player;
 
@@ -72,6 +73,8 @@ public class TurnManager {
                 motherNaturePhase = false;
                 EndOfGameChecker.instance().updateEOG(b,players);
             } else {
+                for (CharacterCard card: b.getCharacterCards()) card.setActivated(false);
+                players.get(actionOrder.get(currentPlayer)).setCcActivatedThisTurn(false);
                 if(currentPlayer==players.size()-1) {
                     EndOfGameChecker.instance().updateEOGLastTurn(b,players);
                     toPlanningPhase(players, b);
