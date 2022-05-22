@@ -925,8 +925,8 @@ class GameManagerTest {
         try {
             gm.getTurnManager().setPhase(Phase.ACTION);
             gm.getTurnManager().setMoveStudentsPhase(true);
-            gm.getTurnManager().setCurrentPlayer(0);
-            gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+            gm.getTurnManager().setCurrentPlayer(1);
+            gm.getPlayers().get(1).setCcActivatedThisTurn(false);
             gm.playCharacterCard(0, 2, Colour.YELLOW);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -1438,7 +1438,7 @@ class GameManagerTest {
             //gm.getTurnManager().setPhase(Phase.ACTION);
             //gm.getTurnManager().setMoveStudentsPhase(true);
             //gm.getTurnManager().setCurrentPlayer(0);
-            gm.getPlayers().get(0).setCcActivatedThisTurn(false);
+            gm.getPlayers().get(1).setCcActivatedThisTurn(false);
             gm.playCharacterCard(1, 1,sf,st);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
