@@ -195,14 +195,8 @@ class GameManagerTest {
                     gm1.playAssistantCard(gm1.getTurnManager().getCurrentPlayer(), i);
                     assertTrue(gm1.getPlayers().get(a).getAssistantCard(i).isPlayed());
                 }
-            }catch (WrongPhaseException e){
+            }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
                 e.printStackTrace();
-            }catch (WrongTurnException f){
-                f.printStackTrace();
-            }catch (IllegalArgumentException h){
-                h.printStackTrace();
-            }catch (AlreadyPlayedException z){
-                z.printStackTrace();
             }
         }
         //To test AlreadyPlayedException's catching
@@ -216,14 +210,8 @@ class GameManagerTest {
             assertTrue(gm2.getPlayers().get(gm2.getTurnManager().getCurrentPlayer()).getAssistantCard(0).isPlayed());
             try {
                 gm2.playAssistantCard(gm2.getTurnManager().getCurrentPlayer(), 0);
-            } catch (WrongPhaseException e) {
+            } catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e) {
                 e.printStackTrace();
-            } catch (WrongTurnException f) {
-                f.printStackTrace();
-            } catch (IllegalArgumentException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException z) {
-                z.printStackTrace();
             }
         }
 
@@ -237,41 +225,23 @@ class GameManagerTest {
             v++;
         try {
             gm3.playAssistantCard(v, 2);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
             e.printStackTrace();
-        }catch (WrongTurnException f){
-            f.printStackTrace();
-        }catch (IllegalArgumentException h){
-            h.printStackTrace();
-        }catch (AlreadyPlayedException z){
-            z.printStackTrace();
         }
 
         //To test WrongPhaseException's catching
         gm1.getTurnManager().setPhase(Phase.ACTION);
         try {
             gm1.playAssistantCard(0, 0);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
             e.printStackTrace();
-        }catch (WrongTurnException f){
-            f.printStackTrace();
-        }catch (IllegalArgumentException h){
-            h.printStackTrace();
-        }catch (AlreadyPlayedException z){
-            z.printStackTrace();
         }
 
         //To test IllegalArgumentException's catching
        try {
             gm1.playAssistantCard(0, 11);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
             e.printStackTrace();
-        }catch (WrongTurnException f){
-            f.printStackTrace();
-        }catch (IllegalArgumentException h){
-            h.printStackTrace();
-        }catch (AlreadyPlayedException z){
-            z.printStackTrace();
         }
         //To test AlreadyPlayedException's catching
         for(int j = 0; j < gm2.getPlayers().size(); j++) {
@@ -288,14 +258,8 @@ class GameManagerTest {
                     gm2.playAssistantCard(gm2.getTurnManager().getCurrentPlayer(), i);
                     //It should throw new IllegalArgumentException
                 }
-            }catch (WrongPhaseException e){
+            }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | AlreadyPlayedException e){
                 e.printStackTrace();
-            }catch (WrongTurnException f){
-                f.printStackTrace();
-            }catch (IllegalArgumentException h){
-                h.printStackTrace();
-            }catch (AlreadyPlayedException z){
-                z.printStackTrace();
             }
         }
     }
@@ -327,14 +291,8 @@ class GameManagerTest {
         try {
             gm.moveStudentsToHall(0, Colour.YELLOW);
             assertEquals(sh.getQuantityColour(Colour.YELLOW)+1, gm.getPlayers().get(0).getDashboard().getHall().getQuantityColour(Colour.YELLOW));
-        }catch (FullHallException e){
+        }catch (FullHallException | NoStudentsException | WrongPhaseException | WrongTurnException e){
             e.printStackTrace();
-        }catch (NoStudentsException f){
-            f.printStackTrace();
-        }catch (WrongPhaseException h){
-            h.printStackTrace();
-        }catch (WrongTurnException h){
-            h.printStackTrace();
         }
 
         //to test the FullHallException's catching
@@ -354,14 +312,8 @@ class GameManagerTest {
         try {
             gm4.moveStudentsToHall(0, Colour.YELLOW);
             assertEquals(sh.getQuantityColour(Colour.YELLOW)+1, gm4.getPlayers().get(0).getDashboard().getHall().getQuantityColour(Colour.YELLOW));
-        }catch (FullHallException e){
+        }catch (FullHallException | NoStudentsException | WrongPhaseException | WrongTurnException e){
             e.printStackTrace();
-        }catch (NoStudentsException f){
-            f.printStackTrace();
-        }catch (WrongPhaseException h){
-            h.printStackTrace();
-        }catch (WrongTurnException h){
-            h.printStackTrace();
         }
 
         //To test the NoStudentException's Catching
@@ -381,14 +333,8 @@ class GameManagerTest {
         try {
             gm1.moveStudentsToHall(0, Colour.YELLOW);
             assertEquals(sh.getQuantityColour(Colour.YELLOW)+1, gm1.getPlayers().get(0).getDashboard().getHall().getQuantityColour(Colour.YELLOW));
-        }catch (FullHallException e){
+        }catch (FullHallException | NoStudentsException | WrongPhaseException | WrongTurnException e){
             e.printStackTrace();
-        }catch (NoStudentsException f){
-            f.printStackTrace();
-        }catch (WrongPhaseException h){
-            h.printStackTrace();
-        }catch (WrongTurnException h){
-            h.printStackTrace();
         }
 
         //To test WrongTurnException's catching
@@ -403,28 +349,16 @@ class GameManagerTest {
             v++;
         try {
             gm2.moveStudentsToHall(v, Colour.BLUE);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | WrongTurnException | FullHallException | NoStudentsException e){
             e.printStackTrace();
-        }catch (WrongTurnException f){
-            f.printStackTrace();
-        }catch (FullHallException h){
-            h.printStackTrace();
-        }catch (NoStudentsException z){
-            z.printStackTrace();
         }
 
         //To test WrongPhaseException's catching
         gm1.getTurnManager().setPhase(Phase.PLANNING);
         try {
             gm1.moveStudentsToHall(0, Colour.BLUE);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | WrongTurnException | FullHallException | NoStudentsException e){
             e.printStackTrace();
-        }catch (WrongTurnException f){
-            f.printStackTrace();
-        }catch (FullHallException h){
-            h.printStackTrace();
-        }catch (NoStudentsException z){
-            z.printStackTrace();
         }
     }
 
@@ -446,12 +380,8 @@ class GameManagerTest {
         gm.getTurnManager().setPhase(Phase.ACTION);
         try {
             gm.moveStudentToIsland(0, Colour.YELLOW, 3);
-        }catch (NoStudentsException f){
+        }catch (NoStudentsException | WrongPhaseException | WrongTurnException f){
             f.printStackTrace();
-        }catch (WrongPhaseException h){
-            h.printStackTrace();
-        }catch (WrongTurnException h){
-            h.printStackTrace();
         }
 
         //To test the NoStudentException's Catching
@@ -465,12 +395,8 @@ class GameManagerTest {
         gm1.getTurnManager().setPhase(Phase.ACTION);
         try {
             gm1.moveStudentToIsland(0, Colour.BLUE, 8);
-        }catch (NoStudentsException f){
+        }catch (NoStudentsException | WrongPhaseException | WrongTurnException f){
             f.printStackTrace();
-        }catch (WrongPhaseException h){
-            h.printStackTrace();
-        }catch (WrongTurnException h){
-            h.printStackTrace();
         }
 
         //To test WrongTurnException's catching
@@ -485,24 +411,16 @@ class GameManagerTest {
              v++;
         try {
             gm2.moveStudentToIsland(v, Colour.BLUE, 2);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | WrongTurnException | NoStudentsException e){
             e.printStackTrace();
-         }catch (WrongTurnException f){
-            f.printStackTrace();
-        }catch (NoStudentsException h){
-            h.printStackTrace();
-        }
+         }
 
         //To test WrongPhaseException's catching
         gm.getTurnManager().setPhase(Phase.PLANNING);
         try {
             gm.moveStudentToIsland(1, Colour.GREEN, 4);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | WrongTurnException | NoStudentsException e){
             e.printStackTrace();
-        }catch (WrongTurnException f){
-            f.printStackTrace();
-        }catch (NoStudentsException z){
-            z.printStackTrace();
         }
     }
     @Test
@@ -524,10 +442,8 @@ class GameManagerTest {
             gm.getTurnManager().setPhase(Phase.ACTION);
             gm.getTurnManager().setMotherNaturePhase(true);
             gm.moveMotherNature(2);
-        }catch (WrongPhaseException h){
+        }catch (WrongPhaseException | IllegalArgumentException h){
             h.printStackTrace();
-        }catch (IllegalArgumentException i){
-            i.printStackTrace();
         }
 
         //To test IllegalArgumentException's catching
@@ -535,20 +451,16 @@ class GameManagerTest {
             gm.getTurnManager().setPhase(Phase.ACTION);
             gm.getTurnManager().setMotherNaturePhase(true);
             gm.moveMotherNature(5);
-        }catch (WrongPhaseException h){
+        }catch (WrongPhaseException | IllegalArgumentException h){
             h.printStackTrace();
-        }catch (IllegalArgumentException i){
-            i.printStackTrace();
         }
 
         //To test WrongPhaseException's catching
         try {
             gm.getTurnManager().setPhase(Phase.PLANNING);
             gm.moveMotherNature(3);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | IllegalArgumentException e){
             e.printStackTrace();
-        }catch (IllegalArgumentException z){
-            z.printStackTrace();
         }
     }
     @Test
@@ -571,14 +483,8 @@ class GameManagerTest {
             gm.getTurnManager().setPhase(Phase.ACTION);
             gm.getTurnManager().setCloudSelectionPhase(true);
             gm.takeStudentsFromCloud(1, 0);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | IllegalArgumentException | WrongTurnException | NoStudentsException e){
             e.printStackTrace();
-        }catch (IllegalArgumentException z){
-            z.printStackTrace();
-        }catch (WrongTurnException h){
-            h.printStackTrace();
-        }catch (NoStudentsException g){
-            g.printStackTrace();
         }
         assertEquals(0, gm.getBoard().getClouds().get(1).getStudentsOnCloud().getTotalStudents());
         assertEquals(totCloud + totEntrance, gm.getPlayers().get(0).getDashboard().getEntrance().getTotalStudents());
@@ -590,14 +496,8 @@ class GameManagerTest {
             gm.getTurnManager().setPhase(Phase.ACTION);
             gm.getTurnManager().setCloudSelectionPhase(true);
             gm.takeStudentsFromCloud(1, 1);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | IllegalArgumentException | WrongTurnException | NoStudentsException e){
             e.printStackTrace();
-        }catch (IllegalArgumentException z){
-            z.printStackTrace();
-        }catch (WrongTurnException h){
-            h.printStackTrace();
-        }catch (NoStudentsException g){
-            g.printStackTrace();
         }
 
         //To test WrongPhaseException's catching
@@ -605,14 +505,8 @@ class GameManagerTest {
             gm.getTurnManager().setPhase(Phase.PLANNING);
             gm.getTurnManager().setCloudSelectionPhase(false);
             gm.takeStudentsFromCloud(1, 0);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | IllegalArgumentException | WrongTurnException | NoStudentsException e){
             e.printStackTrace();
-        }catch (IllegalArgumentException z){
-            z.printStackTrace();
-        }catch (WrongTurnException h){
-            h.printStackTrace();
-        }catch (NoStudentsException g){
-            g.printStackTrace();
         }
 
         //To test WrongTurnException's catching
@@ -628,14 +522,8 @@ class GameManagerTest {
             gm2.getTurnManager().setPhase(Phase.ACTION);
             gm2.getTurnManager().setCloudSelectionPhase(true);
             gm2.takeStudentsFromCloud(0, 1);
-        }catch (WrongPhaseException e){
+        }catch (WrongPhaseException | WrongTurnException | IllegalArgumentException | NoStudentsException e){
             e.printStackTrace();
-        }catch (WrongTurnException f){
-            f.printStackTrace();
-        }catch (IllegalArgumentException h){
-            h.printStackTrace();
-        }catch (NoStudentsException g){
-            g.printStackTrace();
         }
 
         //To test IllegalArgumentException's catching
@@ -643,14 +531,8 @@ class GameManagerTest {
             gm.getTurnManager().setPhase(Phase.ACTION);
             gm.getTurnManager().setCloudSelectionPhase(true);
             gm.takeStudentsFromCloud(4,0);
-        }catch (WrongPhaseException h){
+        }catch (WrongPhaseException | IllegalArgumentException | WrongTurnException | NoStudentsException h){
             h.printStackTrace();
-        }catch (IllegalArgumentException i){
-            i.printStackTrace();
-        }catch (WrongTurnException z){
-            z.printStackTrace();
-        }catch (NoStudentsException g){
-            g.printStackTrace();
         }
 
         GameManager gm3 = new GameManager();
@@ -666,14 +548,8 @@ class GameManagerTest {
             gm3.getTurnManager().setPhase(Phase.ACTION);
             gm3.getTurnManager().setCloudSelectionPhase(true);
             gm3.takeStudentsFromCloud(4,0);
-        }catch (WrongPhaseException h){
+        }catch (WrongPhaseException | IllegalArgumentException | WrongTurnException | NoStudentsException h){
             h.printStackTrace();
-        }catch (IllegalArgumentException i){
-            i.printStackTrace();
-        }catch (WrongTurnException z){
-            z.printStackTrace();
-        }catch (NoStudentsException g){
-            g.printStackTrace();
         }
     }
 
@@ -706,16 +582,8 @@ class GameManagerTest {
                 //gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
         assertTrue(card2.isActivated());
@@ -731,16 +599,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
         assertTrue(card6.isActivated());
@@ -762,16 +622,8 @@ class GameManagerTest {
                 gm.getTurnManager().setMoveStudentsPhase(true);
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.playCharacterCard(0, i);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -794,16 +646,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -828,16 +672,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -861,16 +697,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(2, i);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
     }
@@ -904,16 +732,8 @@ class GameManagerTest {
                 //gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, Colour.YELLOW);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
         assertTrue(card9.isActivated());
@@ -928,16 +748,8 @@ class GameManagerTest {
             gm.getTurnManager().setCurrentPlayer(1);
             gm.getPlayers().get(1).setCcActivatedThisTurn(false);
             gm.playCharacterCard(0, 2, Colour.YELLOW);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
             e.printStackTrace();
-        } catch (WrongPhaseException w) {
-            w.printStackTrace();
-        } catch (NotEnoughCoinsException h) {
-            h.printStackTrace();
-        } catch (AlreadyPlayedException r) {
-            r.printStackTrace();
-        } catch (WrongTurnException s) {
-            s.printStackTrace();
         }
         assertEquals(23, gm.getPlayers().get(0).getDashboard().getHall().getTotalStudents());
         assertEquals(3, gm.getPlayers().get(0).getDashboard().getHall().getQuantityColour(card12.getSelectedColour()));
@@ -959,16 +771,8 @@ class GameManagerTest {
                 gm.getTurnManager().setMoveStudentsPhase(true);
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.playCharacterCard(0, i, Colour.YELLOW);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -987,16 +791,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, Colour.YELLOW);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1017,16 +813,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, Colour.YELLOW);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1046,16 +834,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(2, i, Colour.YELLOW);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
     }
@@ -1084,16 +864,8 @@ class GameManagerTest {
                 //gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, Colour.YELLOW, 4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
         beforeC++;
@@ -1116,16 +888,8 @@ class GameManagerTest {
                 gm.getTurnManager().setMoveStudentsPhase(true);
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.playCharacterCard(0, i, Colour.YELLOW, 4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1144,16 +908,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, Colour.YELLOW, 4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1172,16 +928,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, Colour.YELLOW, 4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1199,16 +947,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(2, i, Colour.YELLOW, 4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
     }
@@ -1241,16 +981,8 @@ class GameManagerTest {
                 //gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, 4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
         assertEquals(1, gm.getBoard().getIslandManager().getArchipelagoByIslandIndex(4).getNoEntryTiles());
@@ -1273,16 +1005,8 @@ class GameManagerTest {
                 gm.getTurnManager().setMoveStudentsPhase(true);
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.playCharacterCard(0, i, 4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongTurnException | AlreadyPlayedException | NotEnoughCoinsException | WrongPhaseException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1302,16 +1026,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, 4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1332,16 +1048,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, 4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1361,16 +1069,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(2, i,  4);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongTurnException | AlreadyPlayedException | NotEnoughCoinsException | WrongPhaseException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
     }
@@ -1412,16 +1112,8 @@ class GameManagerTest {
             //gm.getTurnManager().setCurrentPlayer(0);
             gm.getPlayers().get(0).setCcActivatedThisTurn(false);
             gm.playCharacterCard(0, 0,sf,st);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
             e.printStackTrace();
-        } catch (WrongPhaseException w) {
-            w.printStackTrace();
-        } catch (NotEnoughCoinsException h) {
-            h.printStackTrace();
-        } catch (AlreadyPlayedException r) {
-            r.printStackTrace();
-        } catch (WrongTurnException s) {
-            s.printStackTrace();
         }
         assertEquals(6, card7.getStudentsOnCard().getQuantityColour(Colour.BLUE));
         assertEquals(tot11+1, gm.getPlayers().get(0).getDashboard().getEntrance().getQuantityColour(Colour.RED));
@@ -1440,16 +1132,8 @@ class GameManagerTest {
             //gm.getTurnManager().setCurrentPlayer(0);
             gm.getPlayers().get(1).setCcActivatedThisTurn(false);
             gm.playCharacterCard(1, 1,sf,st);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NotEnoughCoinsException | WrongPhaseException | AlreadyPlayedException | WrongTurnException e) {
             e.printStackTrace();
-        } catch (WrongPhaseException w) {
-            w.printStackTrace();
-        } catch (NotEnoughCoinsException h) {
-            h.printStackTrace();
-        } catch (AlreadyPlayedException r) {
-            r.printStackTrace();
-        } catch (WrongTurnException s) {
-            s.printStackTrace();
         }
         assertEquals(tot22hallred + 1, gm.getPlayers().get(1).getDashboard().getHall().getQuantityColour(Colour.RED));
         assertEquals(tot21entranceblue+1, gm.getPlayers().get(1).getDashboard().getEntrance().getQuantityColour(Colour.BLUE));
@@ -1474,16 +1158,8 @@ class GameManagerTest {
                 gm.getTurnManager().setMoveStudentsPhase(true);
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.playCharacterCard(0, i, sf, st);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1513,16 +1189,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, sf,st);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1551,16 +1219,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, sf,st);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
 
@@ -1588,16 +1248,8 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(2, i,  sf,st);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
-            } catch (WrongPhaseException w) {
-                w.printStackTrace();
-            } catch (NotEnoughCoinsException h) {
-                h.printStackTrace();
-            } catch (AlreadyPlayedException r) {
-                r.printStackTrace();
-            } catch (WrongTurnException s) {
-                s.printStackTrace();
             }
         }
     }
