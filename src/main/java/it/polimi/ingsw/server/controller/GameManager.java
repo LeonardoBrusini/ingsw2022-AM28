@@ -27,6 +27,7 @@ public class GameManager {
     public GameManager() {
         players = new ArrayList<>();
         gameStarted = false;
+        EndOfGameChecker.resetInstance();
     }
 
     /**

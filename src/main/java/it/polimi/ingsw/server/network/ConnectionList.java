@@ -114,6 +114,7 @@ public class ConnectionList {
                 numOfActualPlayers = 0;
                 gameManager = new GameManager();
                 waitForPlayers = false;
+                gameParameters = null;
                 return;
             }
         } else {

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.network;
 
 import it.polimi.ingsw.client.cli.Menu;
+import org.fusesource.jansi.AnsiConsole;
+import org.fusesource.jansi.internal.JansiLoader;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -59,60 +59,47 @@ public class Menu {
     public void printMenu() {
         if(phases.get(0)==CLIPhases.SENDCOMMAND) return;
         switch (phases.get(0)) {
-            case WAIT,ACTION_COMMAND,PLANNING_COMMAND -> {if(currentStatus!=null) printStatus();}
+            case WAIT,ACTION_COMMAND,PLANNING_COMMAND,WIN,DRAW -> {if(currentStatus!=null) printStatus();}
         }
         System.out.println(phases.get(0).getMenuPrompt());
     }
 
     public synchronized void printStatus() {
-        if(currentStatus.getWinner()!=null) {
-            System.out.println("PLAYER "+currentStatus.getWinner()+" WON!");
-        }
         System.out.println("PLAYERS:");
         for(PlayerStatus ps : currentStatus.getGame().getPlayers()) {
             String s = ps.getNickName()+": "+ps.getTowerColour()+" towers";
             if(currentStatus.getGameMode().equals("expert")) s+=", "+ps.getCoins()+" coins";
+            s+=", Assistant Cards left: "+printAssistantCards(ps);
             System.out.println(s);
-            System.out.println("Dashboard: Entrance: "+vectToString(ps.getStudentsOnEntrance())+", Hall: "+vectToString(ps.getStudentsOnHall())+ ", Towers: "+ps.getNumTowers());
-            System.out.println("Assistant Cards left: "+printAssistantCards(ps));
+            CLIPrinter.printDashboard(ps.getStudentsOnEntrance(),ps.getStudentsOnHall(),ps.getNumTowers());
         }
         System.out.println("BOARD");
         for(ArchipelagoStatus as : currentStatus.getGame().getArchipelagos()) {
-            String s = "Archipelago "+(as.getIndex()+1);
-            System.out.println(s+":");
-            for (IslandStatus is:as.getIslands()) {
-                s = "Island "+is.getIslandIndex()+": ";
-                s+=vectToString(is.getStudents());
-                if(is.getTowerColour()!=null) s+=" Tower: "+is.getTowerColour();
-                if(currentStatus.getGame().getMotherNatureIndex()== is.getIslandIndex()) s+=" MN";
-                System.out.println(s);
-            }
+            CLIPrinter.printArchipelago(as, currentStatus.getGame().getMotherNatureIndex());
         }
         if(currentStatus.getGame().getCharacterCards()!=null) {
             System.out.println("Character cards:");
             for(CharacterCardStatus cs : currentStatus.getGame().getCharacterCards()) {
-                String s = "Card "+(cs.getIndex()+1)+", Name: "+cs.getFileName();
-                if(cs.getNoEntryTiles()!=null) s+=", NoEntryTiles: "+cs.getNoEntryTiles();
-                if(cs.getStudents()!=null) s+=", Students: "+vectToString(cs.getStudents());
-                System.out.println(s);
+                CLIPrinter.printCCards(cs,characterCardDescriptions.get(cs.getFileName()));
             }
         }
         System.out.println("Clouds");
-        for(CloudStatus cs : currentStatus.getGame().getClouds()) {
-            System.out.println("Cloud "+(cs.getIndex()+1)+", Students: "+vectToString(cs.getStudents()));
-        }
-        System.out.println("Professors: "+vectToString(currentStatus.getGame().getProfessors()));
+        CLIPrinter.printClouds(currentStatus.getGame().getClouds());
+        CLIPrinter.printProfessors(currentStatus.getGame().getProfessors());
         System.out.println("Current Player: "+currentStatus.getTurn().getPlayer()+", Phase: "+currentStatus.getTurn().getPhase());
+        if(currentStatus.getWinner()!=null) {
+            System.out.println("\uD83C\uDF89PLAYER "+currentStatus.getWinner()+" WON!\uD83C\uDF89");
+        }
     }
 
     private String printAssistantCards(PlayerStatus ps) {
         String s="[";
         for(int i=0;i<ps.getAssistantCards().length-1;i++) {
             if(!ps.getAssistantCards()[i]) {
-                s+=(i+",");
+                s+=((i+1)+",");
             }
         }
-        if(!ps.getAssistantCards()[ps.getAssistantCards().length-1]) s+=ps.getAssistantCards().length-1;
+        if(!ps.getAssistantCards()[ps.getAssistantCards().length-1]) s+=ps.getAssistantCards().length;
         s+="]";
         return s;
     }
@@ -283,12 +270,20 @@ public class Menu {
                 System.out.println("ERROR: Status code "+cs.getStatus()+", "+cs.getErrorMessage());
             }
             updateStatus(cs);
-            if(!currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID())) {
-                phases.add(CLIPhases.WAIT);
-            } else if(currentStatus.getTurn().getPhase().equals("PLANNING")) {
-                phases.add(CLIPhases.PLANNING_COMMAND);
+            if(currentStatus.getWinner()!=null) {
+                if(currentStatus.getWinner().equals("")) {
+                    phases.add(CLIPhases.DRAW);
+                } else {
+                    phases.add(CLIPhases.WIN);
+                }
             } else {
-                phases.add(CLIPhases.ACTION_COMMAND);
+                if(!currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID())) {
+                    phases.add(CLIPhases.WAIT);
+                } else if(currentStatus.getTurn().getPhase().equals("PLANNING")) {
+                    phases.add(CLIPhases.PLANNING_COMMAND);
+                } else {
+                    phases.add(CLIPhases.ACTION_COMMAND);
+                }
             }
             nextPhase();
             printMenu();
@@ -494,6 +489,7 @@ public class Menu {
                     printMenu();
                 }
             }
+            case WIN,DRAW -> System.out.println(phases.get(0).getMenuPrompt());
             default -> printMenu();
         }
         switch (phases.get(0)) {
