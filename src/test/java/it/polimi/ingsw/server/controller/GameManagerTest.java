@@ -704,7 +704,8 @@ class GameManagerTest {
             }
         }
     }
-    /*@Test
+
+    @Test
     void playCharacterCard91112(){
         GameManager gm = new GameManager();
         gm.addPlayer();
@@ -732,6 +733,7 @@ class GameManagerTest {
                 //gm.getTurnManager().setPhase(Phase.ACTION);
                 //gm.getTurnManager().setMoveStudentsPhase(true);
                 //gm.getTurnManager().setCurrentPlayer(0);
+                gm.getPlayers().get(0).setCoins(10);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i, Colour.YELLOW);
             } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
@@ -748,6 +750,7 @@ class GameManagerTest {
             gm.getTurnManager().setPhase(Phase.ACTION);
             gm.getTurnManager().setMoveStudentsPhase(true);
             gm.getTurnManager().setCurrentPlayer(1);
+            gm.getPlayers().get(1).setCoins(10);
             gm.getPlayers().get(1).setCcActivatedThisTurn(false);
             gm.playCharacterCard(1, 2, Colour.YELLOW);
         } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
@@ -840,7 +843,7 @@ class GameManagerTest {
                 e.printStackTrace();
             }
         }
-    }*/
+    }
 
     @Test
     void playAssistantCard1(){
