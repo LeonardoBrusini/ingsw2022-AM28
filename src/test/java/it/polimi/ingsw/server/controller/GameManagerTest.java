@@ -704,6 +704,7 @@ class GameManagerTest {
             }
         }
     }
+
     @Test
     void playCharacterCard91112(){
         GameManager gm = new GameManager();
