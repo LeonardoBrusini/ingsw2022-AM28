@@ -24,6 +24,7 @@ public class MultiEchoServer {
             System.err.println(e.getMessage());
             return;
         }
+
         System.out.println("Server ready");
         new Thread(() -> {
             try {

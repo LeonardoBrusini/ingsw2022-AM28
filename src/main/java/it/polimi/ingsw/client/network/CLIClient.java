@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client.network;
 
-import it.polimi.ingsw.client.cli.Menu;
-import org.fusesource.jansi.AnsiConsole;
-import org.fusesource.jansi.internal.JansiLoader;
+import it.polimi.ingsw.client.cli.CLIMenu;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,9 +9,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class EchoClient {
+public class CLIClient {
     public static void start(){
-        Menu menu = new Menu();
+        CLIMenu menu = new CLIMenu();
         String hostName = "127.0.0.1";
         int portNumber = 1234;
         try (
@@ -55,6 +53,6 @@ public class EchoClient {
     }
 
     public static void main( String[] args ){
-        EchoClient.start();
+        CLIClient.start();
     }
 }

@@ -2,13 +2,14 @@ package it.polimi.ingsw.client.cli;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import it.polimi.ingsw.client.network.StatusUpdater;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Menu {
+public class CLIMenu {
     private final ArrayList<CLIPhases> phases;
     private CurrentStatus currentStatus;
     private GameParameters parameters;
@@ -17,7 +18,7 @@ public class Menu {
     private final HashMap<String,String> characterCardDescriptions;
     private int[] temporaryGroup;
 
-    public Menu() {
+    public CLIMenu() {
         characterCardDescriptions = new HashMap<>();
         fillDescriprions(characterCardDescriptions);
         phases = new ArrayList<>();
@@ -269,7 +270,7 @@ public class Menu {
             if(cs.getStatus()!=0) {
                 System.out.println("ERROR: Status code "+cs.getStatus()+", "+cs.getErrorMessage());
             }
-            updateStatus(cs);
+            currentStatus = StatusUpdater.updateStatus(currentStatus,cs);
             if(currentStatus.getWinner()!=null) {
                 if(currentStatus.getWinner().equals("")) {
                     phases.add(CLIPhases.DRAW);
@@ -586,14 +587,5 @@ public class Menu {
 
     private void nextPhase() {
         phases.remove(0);
-    }
-
-    private String vectToString(int[] v) {
-        String s = "[";
-        for(int i=0;i<v.length-1;i++) {
-            s+=v[i]+", ";
-        }
-        s+=v[v.length-1]+"]";
-        return s;
     }
 }
