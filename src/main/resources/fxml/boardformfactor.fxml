@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="myBoard" fitHeight="101.0" fitWidth="213.0" layoutX="29.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="adversaryBoard" fitHeight="77.0" fitWidth="160.0" layoutX="56.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island1" fitHeight="46.0" fitWidth="100.0" layoutX="310.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island2" fitHeight="46.0" fitWidth="100.0" layoutX="369.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island3" fitHeight="46.0" fitWidth="100.0" layoutX="439.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island4" fitHeight="46.0" fitWidth="100.0" layoutX="403.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island5" fitHeight="46.0" fitWidth="100.0" layoutX="389.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island6" fitHeight="46.0" fitWidth="100.0" layoutX="389.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island7" fitHeight="46.0" fitWidth="100.0" layoutX="369.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island8" fitHeight="46.0" fitWidth="100.0" layoutX="319.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island9" fitHeight="46.0" fitWidth="100.0" layoutX="260.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island10" fitHeight="46.0" fitWidth="100.0" layoutX="486.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island11" fitHeight="46.0" fitWidth="100.0" layoutX="403.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="island12" fitHeight="46.0" fitWidth="100.0" layoutX="269.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</Pane>
