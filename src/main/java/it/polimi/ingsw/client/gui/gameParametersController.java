@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.gui;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.network.NetworkManager;
+import it.polimi.ingsw.network.Command;
+import it.polimi.ingsw.network.CurrentStatus;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +16,11 @@ public class gameParametersController {
     ChoiceBox numPlayersMenu;
     @FXML
     ChoiceBox gameModeMenu;
+    CurrentStatus cs;
+
+    public gameParametersController(CurrentStatus cs) {
+        this.cs = cs;
+    }
 
     public void sendGameParameters(ActionEvent actionEvent) {
         Gson gson = new Gson();

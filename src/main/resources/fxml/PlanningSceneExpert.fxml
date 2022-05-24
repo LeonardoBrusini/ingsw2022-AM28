@@ -4,65 +4,64 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.PlanningSceneExpertController">
    <children>
-      <ImageView fx:id="immagine" fitHeight="112.5" fitWidth="150.0" layoutX="14.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac1" fitHeight="112.5" fitWidth="150.0" layoutX="14.0" layoutY="482.0" onMouseClicked="#playCard1" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A01.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="90.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac2" fitHeight="112.5" fitWidth="150.0" layoutX="90.0" layoutY="482.0" onMouseClicked="#playCard2" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A02.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="167.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac3" fitHeight="112.5" fitWidth="150.0" layoutX="167.0" layoutY="482.0" onMouseClicked="#playCard3" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A03.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="243.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac4" fitHeight="112.5" fitWidth="150.0" layoutX="243.0" layoutY="482.0" onMouseClicked="#playCard4" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A04.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="320.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac5" fitHeight="112.5" fitWidth="150.0" layoutX="320.0" layoutY="482.0" onMouseClicked="#playCard5" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A05.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="14.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac6" fitHeight="112.5" fitWidth="150.0" layoutX="14.0" layoutY="593.0" onMouseClicked="#playCard6" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A06.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="90.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac7" fitHeight="112.5" fitWidth="150.0" layoutX="90.0" layoutY="593.0" onMouseClicked="#playCard7" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A07.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="167.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac8" fitHeight="112.5" fitWidth="150.0" layoutX="167.0" layoutY="593.0" onMouseClicked="#playCard8" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A08.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="243.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac9" fitHeight="112.5" fitWidth="150.0" layoutX="243.0" layoutY="593.0" onMouseClicked="#playCard9" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A09.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="320.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ac10" fitHeight="112.5" fitWidth="150.0" layoutX="320.0" layoutY="593.0" onMouseClicked="#playCard10" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/assistantCards/A10.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="300.0" fitWidth="400.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="adversaryBoard" fitHeight="300.0" fitWidth="400.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/Plancia_DEF2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="245.0" fitWidth="550.0" layoutX="14.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="myBoard" fitHeight="245.0" fitWidth="550.0" layoutX="14.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/Plancia_DEF2.png" />
          </image>
