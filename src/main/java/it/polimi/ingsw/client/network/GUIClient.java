@@ -16,6 +16,7 @@ public class GUIClient extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/titleScreen.fxml"));
         primaryStage.setTitle("Eriantys");
+        primaryStage.setMaximized(true);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
