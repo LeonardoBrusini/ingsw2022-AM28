@@ -4,7 +4,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="immagine" fitHeight="112.5" fitWidth="150.0" layoutX="14.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
@@ -70,6 +69,42 @@
       <ImageView fitHeight="192.0" fitWidth="153.0" layoutX="422.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/characterCards/P01.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="422.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/BlackFrame.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="572.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/BlackFrame.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="754.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="300.0" fitWidth="500.0" layoutX="644.0" layoutY="23.0">
+         <image>
+            <Image url="@../images/board/reameB_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="300.0" fitWidth="500.0" layoutX="854.0" layoutY="23.0">
+         <image>
+            <Image url="@../images/board/reameB_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="300.0" fitWidth="500.0" layoutX="854.0" layoutY="246.0">
+         <image>
+            <Image url="@../images/board/reameB_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="300.0" fitWidth="500.0" layoutX="644.0" layoutY="246.0">
+         <image>
+            <Image url="@../images/board/reameB_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="300.0" fitWidth="500.0" layoutX="430.0" layoutY="414.0">
+         <image>
+            <Image url="@../images/board/reameB_2.png" />
          </image>
       </ImageView>
    </children>
