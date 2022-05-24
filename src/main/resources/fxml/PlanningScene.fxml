@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="immagine" fitHeight="112.5" fitWidth="150.0" layoutX="14.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A01.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="90.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A02.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="167.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A03.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="243.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A04.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="320.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A05.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="14.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A06.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="90.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A07.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="167.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A08.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="243.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A09.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.5" fitWidth="150.0" layoutX="320.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/assistantCards/A10.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="300.0" fitWidth="400.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/Plancia_DEF2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="245.0" fitWidth="550.0" layoutX="14.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/Plancia_DEF2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="192.0" fitWidth="153.0" layoutX="422.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/characterCards/P01.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
