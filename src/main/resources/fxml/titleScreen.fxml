@@ -3,14 +3,26 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.titleScreenController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.titleScreenController">
    <children>
+      <ImageView fitHeight="756.0" fitWidth="2622.0" layoutX="-251.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/backGroundTitle.png" />
+         </image>
+      </ImageView>
       <TextField fx:id="serverIP" layoutX="225.0" layoutY="163.0" text="127.0.0.1" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="253.0" layoutY="146.0" text="Server IP Address" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="253.0" layoutY="146.0" text="Server IP Address" textFill="WHITE" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="273.0" layoutY="84.0" text="ERIANTYS" />
       <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="236.0" mnemonicParsing="false" onAction="#connectToServer" text="PLAY" />
       <Label fx:id="connectionErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="200.0" opacity="0.0" text="Error message" />
+      <ImageView fitHeight="106.0" fitWidth="85.0" layoutX="1174.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/1487161053_LOGO_CRANIO_CREATIONS-02.jpg" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
