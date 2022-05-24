@@ -27,18 +27,18 @@ public class CLIMenu {
     }
 
     private void fillDescriprions(HashMap<String, String> characterCardDescriptions) {
-        characterCardDescriptions.put("P01.jpg","");
-        characterCardDescriptions.put("P02.jpg","");
-        characterCardDescriptions.put("P03.jpg","");
-        characterCardDescriptions.put("P04.jpg","");
-        characterCardDescriptions.put("P05.jpg","");
-        characterCardDescriptions.put("P06.jpg","");
-        characterCardDescriptions.put("P07.jpg","");
-        characterCardDescriptions.put("P08.jpg","");
-        characterCardDescriptions.put("P09.jpg","");
-        characterCardDescriptions.put("P10.jpg","");
-        characterCardDescriptions.put("P11.jpg","");
-        characterCardDescriptions.put("P12.jpg","");
+        characterCardDescriptions.put("P01.jpg","Take 1 Student from this card and place it on an Island of your choice. Then draw a new Student from the Bag and place it on this card.");
+        characterCardDescriptions.put("P02.jpg","During this turn, you take control of any number of Professor even if you have the same number of Students as the player who currently controls them.");
+        characterCardDescriptions.put("P03.jpg","Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.");
+        characterCardDescriptions.put("P04.jpg","You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played.");
+        characterCardDescriptions.put("P05.jpg","Place a No Entry tile on a Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers.");
+        characterCardDescriptions.put("P06.jpg","When resolving a Conquering on an Island, Tower do not count towards influence.");
+        characterCardDescriptions.put("P07.jpg","You may take up to 3 students from this card and replace them with the same number of Students from your Entrance.");
+        characterCardDescriptions.put("P08.jpg","During the influence calculation this turn, you count as having 2 more influence.");
+        characterCardDescriptions.put("P09.jpg","Choose a color of Student: during the influence calculation this turn, that color adds no influence.");
+        characterCardDescriptions.put("P10.jpg","You may exchange up to 2 Students between your Entrance and your Dining Room.");
+        characterCardDescriptions.put("P11.jpg","Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card.");
+        characterCardDescriptions.put("P12.jpg","Choose a type of Student: every player must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.");
     }
 
     public synchronized void updateStatus(CurrentStatus c) {
