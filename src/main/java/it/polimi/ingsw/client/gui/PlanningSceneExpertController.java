@@ -45,12 +45,15 @@ public class PlanningSceneExpertController{
     }
 
     public void playCard8(MouseEvent mouseEvent) {
+        //NetworkManager.instance().send(generateCommand(8));
     }
 
     public void playCard9(MouseEvent mouseEvent) {
+        //NetworkManager.instance().send(generateCommand(9));
     }
 
     public void playCard10(MouseEvent mouseEvent) {
+        //NetworkManager.instance().send(generateCommand(10));
     }
 
     private Gson generateCommand(int index){
