@@ -14,9 +14,13 @@
             <Image url="@../images/backGroundTitle.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="334.0" fitWidth="445.0" layoutX="68.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/EriantysLogo.PNG" />
+         </image>
+      </ImageView>
       <TextField fx:id="serverIP" layoutX="225.0" layoutY="163.0" text="127.0.0.1" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="253.0" layoutY="146.0" text="Server IP Address" textFill="WHITE" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="273.0" layoutY="84.0" text="ERIANTYS" />
       <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="236.0" mnemonicParsing="false" onAction="#connectToServer" text="PLAY" />
       <Label fx:id="connectionErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="200.0" opacity="0.0" text="Error message" />
       <ImageView fitHeight="106.0" fitWidth="85.0" layoutX="1174.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">

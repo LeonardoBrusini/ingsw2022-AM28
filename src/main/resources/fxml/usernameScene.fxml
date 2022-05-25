@@ -15,13 +15,13 @@
             <Image url="@../images/MADRENATURA_1.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="196.0" layoutY="82.0" prefHeight="33.0" prefWidth="193.0" text="Insert your username:">
+      <Label layoutX="192.0" layoutY="107.0" prefHeight="33.0" prefWidth="193.0" text="Insert your username:">
          <font>
             <Font size="21.0" />
          </font></Label>
       <TextField fx:id="usernameField" layoutX="189.0" layoutY="195.0" prefHeight="40.0" prefWidth="247.0" />
       <Button fx:id="usernameButton" layoutX="276.0" layoutY="274.0" mnemonicParsing="false" onAction="#sendUsername" prefHeight="36.0" prefWidth="82.0" text="Play" />
-      <Label fx:id="usernameErrorLabel" layoutX="183.0" layoutY="134.0" opacity="0.87" prefHeight="37.0" prefWidth="342.0" text="Error: xxx, error message" />
+      <Label fx:id="usernameErrorLabel" layoutX="182.0" layoutY="148.0" opacity="0.0" prefHeight="37.0" prefWidth="342.0" text="Error: xxx, error message" />
       <ImageView fitHeight="106.0" fitWidth="85.0" layoutX="1174.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/1487161053_LOGO_CRANIO_CREATIONS-02.jpg" />
