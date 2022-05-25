@@ -2,14 +2,15 @@ package it.polimi.ingsw.client.cli;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import it.polimi.ingsw.client.network.StatusUpdater;
+import it.polimi.ingsw.client.ClientObserver;
+import it.polimi.ingsw.client.StatusUpdater;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CLIMenu {
+public class CLIMenu implements ClientObserver {
     private final ArrayList<CLIPhases> phases;
     private CurrentStatus currentStatus;
     private GameParameters parameters;
@@ -39,22 +40,6 @@ public class CLIMenu {
         characterCardDescriptions.put("P10.jpg","You may exchange up to 2 Students between your Entrance and your Dining Room.");
         characterCardDescriptions.put("P11.jpg","Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card.");
         characterCardDescriptions.put("P12.jpg","Choose a type of Student: every player must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.");
-    }
-
-    public synchronized void updateStatus(CurrentStatus c) {
-        if(currentStatus==null) {
-            currentStatus = c;
-            return;
-        }
-        if(c.getGameMode()!=null) currentStatus.setGameMode(c.getGameMode());
-        if(c.getPlayerID()!=null) currentStatus.setPlayerID(c.getPlayerID());
-        if(c.getWinner()!=null) currentStatus.setWinner(c.getWinner());
-        if(c.getTurn()!=null) {
-            if(currentStatus.getTurn()==null) currentStatus.setTurn(new TurnStatus());
-            if(c.getTurn().getPlayer()!=null) currentStatus.getTurn().setPlayer(c.getTurn().getPlayer());
-            if(c.getTurn().getPhase()!=null) currentStatus.getTurn().setPhase(c.getTurn().getPhase());
-        }
-        if(c.getGame()!=null) updateGameStatus(c.getGame());
     }
 
     public void printMenu() {
@@ -103,115 +88,6 @@ public class CLIMenu {
         if(!ps.getAssistantCards()[ps.getAssistantCards().length-1]) s+=ps.getAssistantCards().length;
         s+="]";
         return s;
-    }
-
-    private void updateGameStatus(GameStatus g) {
-        if(currentStatus.getGame()==null) {
-            currentStatus.setGame(g);
-            return;
-        }
-        GameStatus gameStatus = currentStatus.getGame();
-        if(g.getMotherNatureIndex()!=null) gameStatus.setMotherNatureIndex(g.getMotherNatureIndex());
-        if(g.getProfessors()!=null) {
-            if(gameStatus.getProfessors()==null) gameStatus.setProfessors(new int[g.getProfessors().length]);
-            for(int i=0;i<g.getProfessors().length;i++){
-                gameStatus.getProfessors()[i] = g.getProfessors()[i];
-            }
-        }
-        if(g.getClouds()!=null) updateCloudStatus(g.getClouds());
-        if(g.getArchipelagos()!=null) updateArchipelagoStatus(g.getArchipelagos());
-        if(g.getPlayers()!=null) updatePlayerStatus(g.getPlayers());
-        if(g.getCharacterCards()!=null) updateCardStatus(g.getCharacterCards());
-    }
-    private void updateCloudStatus(ArrayList<CloudStatus> clouds) {
-        if(currentStatus.getGame().getClouds()==null) {
-            currentStatus.getGame().setClouds(clouds);
-            return;
-        }
-        ArrayList<CloudStatus> cloudsStatus = currentStatus.getGame().getClouds();
-        for(CloudStatus cs: clouds) {
-            for (CloudStatus status : cloudsStatus) {
-                if (status.getIndex() == cs.getIndex()) {
-                    if (cs.getStudents() != null) {
-                        status.setStudents(cs.getStudents());
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    private void updateArchipelagoStatus(ArrayList<ArchipelagoStatus> archipelagos){
-        if(currentStatus.getGame().getArchipelagos()==null || archipelagos.size()>1) {
-            currentStatus.getGame().setArchipelagos(archipelagos);
-            return;
-        }
-        ArrayList<ArchipelagoStatus> archipelagosStatus = currentStatus.getGame().getArchipelagos();
-        for(ArchipelagoStatus as: archipelagos) {
-            for (int i=0;i<archipelagosStatus.size();i++) {
-                if(archipelagosStatus.get(i).getIndex()==as.getIndex()) {
-                    if(as.getNoEntryTiles()!=null) archipelagosStatus.get(i).setNoEntryTiles(as.getNoEntryTiles());
-                    if(as.getIslands()!=null) updateIslandStatus(i,as.getIslands());
-                    break;
-                }
-            }
-        }
-    }
-    private void updateIslandStatus(int i, ArrayList<IslandStatus> islands){
-        ArchipelagoStatus as = currentStatus.getGame().getArchipelagos().get(i);
-        if(as.getIslands()==null || islands.size()>1) {
-            as.setIslands(islands);
-            return;
-        }
-        for (IslandStatus is: islands) {
-            for (int j=0;j<as.getIslands().size();j++) {
-                if(as.getIslands().get(j).getIslandIndex()==is.getIslandIndex()) {
-                    if(is.getStudents()!=null) as.getIslands().get(j).setStudents(is.getStudents());
-                    if(is.getTowerColour()!=null) as.getIslands().get(j).setTowerColour(is.getTowerColour());
-                    break;
-                }
-            }
-        }
-    }
-    private void updateCardStatus(ArrayList<CharacterCardStatus> characterCards){
-        ArrayList<CharacterCardStatus> characterCardsStatus = currentStatus.getGame().getCharacterCards();
-        if(characterCardsStatus==null) {
-            currentStatus.getGame().setCharacterCards(characterCards);
-            return;
-        }
-        for(CharacterCardStatus cs : characterCards) {
-            for (CharacterCardStatus cardsStatus : characterCardsStatus) {
-                if (cardsStatus.getIndex() == cs.getIndex()) {
-                    if (cs.getStudents() != null) cardsStatus.setStudents(cs.getStudents());
-                    if (cs.getFileName() != null) cardsStatus.setFileName(cs.getFileName());
-                    if (cs.getNoEntryTiles() != null) cardsStatus.setNoEntryTiles(cs.getNoEntryTiles());
-                    break;
-                }
-            }
-        }
-    }
-    private void updatePlayerStatus(ArrayList<PlayerStatus> players){
-        ArrayList<PlayerStatus> playersStatus = currentStatus.getGame().getPlayers();
-        if(playersStatus==null) {
-            currentStatus.getGame().setPlayers(players);
-            return;
-        }
-        for(PlayerStatus ps : players) {
-            for (PlayerStatus status : playersStatus) {
-                if (status.getIndex() == ps.getIndex()) {
-                    if (ps.getStudentsOnHall() != null) status.setStudentsOnHall(ps.getStudentsOnHall());
-                    if (ps.getStudentsOnEntrance() != null) status.setStudentsOnEntrance(ps.getStudentsOnEntrance());
-                    if (ps.getAssistantCards() != null) status.setAssistantCards(ps.getAssistantCards());
-                    if (ps.getAddedShifts() != null) status.setAddedShifts(ps.getAddedShifts());
-                    if (ps.getCoins() != null) status.setCoins(ps.getCoins());
-                    if (ps.getLastAssistantCardPlayed() != null)
-                        status.setLastAssistantCardPlayed(ps.getLastAssistantCardPlayed());
-                    if (ps.getNumTowers() != null) status.setNumTowers(ps.getNumTowers());
-                    if (ps.getTowerColour() != null) status.setTowerColour(ps.getTowerColour());
-                    if (ps.getNickName() != null) status.setNickName(ps.getNickName());
-                    break;
-                }
-            }
-        }
     }
 
     public synchronized void manageReceivedLine(String line) {
@@ -587,5 +463,10 @@ public class CLIMenu {
 
     private void nextPhase() {
         phases.remove(0);
+    }
+
+    @Override
+    public void manageMessage(String line) {
+        manageReceivedLine(line);
     }
 }

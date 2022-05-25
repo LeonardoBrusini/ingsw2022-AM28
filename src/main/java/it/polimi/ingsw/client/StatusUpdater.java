@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.network;
+package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.network.*;
 
