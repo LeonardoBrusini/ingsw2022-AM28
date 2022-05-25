@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.gui;
+package it.polimi.ingsw.client.gui.scenecontrollers;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.network.NetworkManager;

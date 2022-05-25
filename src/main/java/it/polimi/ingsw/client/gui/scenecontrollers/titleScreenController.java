@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.gui;
+package it.polimi.ingsw.client.gui.scenecontrollers;
 
 import it.polimi.ingsw.client.network.NetworkManager;
 import javafx.event.ActionEvent;
