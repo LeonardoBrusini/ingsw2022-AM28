@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.client.ClientObserver;
+import it.polimi.ingsw.client.StatusUpdater;
 import it.polimi.ingsw.client.cli.CLIPhases;
 import it.polimi.ingsw.network.AddPlayerResponse;
 import it.polimi.ingsw.network.CurrentStatus;
@@ -57,6 +58,7 @@ public class GUIMenu implements ClientObserver {
                 });
                 return;
             }
+            manageFirstCS(cs);
         } catch (JsonSyntaxException e) {
             Platform.runLater(() -> {
                 parametersErrorLabel.setText("ERROR: received unreadable message");
@@ -71,14 +73,8 @@ public class GUIMenu implements ClientObserver {
         try {
             addPlayerResponse = parser.fromJson(line,AddPlayerResponse.class);
             if(addPlayerResponse.isFirst()==null && addPlayerResponse.getErrorMessage()==null) {
-                manageCS(line);
-                if(currentStatus.getGameMode().equals("expert")) {
-                    if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_EXPERT));
-                    else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_EXPERT));
-                } else {
-                    if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_SIMPLE));
-                    else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_SIMPLE));
-                }
+                CurrentStatus cs = parser.fromJson(line,CurrentStatus.class);
+                manageFirstCS(cs);
                 return;
             }
             if(addPlayerResponse.getStatus()!=0) {
@@ -105,7 +101,20 @@ public class GUIMenu implements ClientObserver {
         }
     }
 
+    private void manageFirstCS(CurrentStatus cs) {
+        StatusUpdater.instance().updateStatus(cs);
+        currentStatus = StatusUpdater.instance().getCurrentStatus();
+        if(currentStatus.getGameMode().equals("expert")) {
+            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_EXPERT));
+            else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_EXPERT));
+        } else {
+            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_SIMPLE));
+            else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_SIMPLE));
+        }
+    }
     private void manageCS(String line) {
+
+
     }
 
     public void toNextScene(GUIScene sceneType) {
@@ -113,6 +122,7 @@ public class GUIMenu implements ClientObserver {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/"+sceneType.getFileName()));
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setMaximized(true);
             stage.show();
             if(sceneType==GUIScene.TITLE_SCREEN) currentScene = GUIScene.USERNAME;
             else {
@@ -122,5 +132,4 @@ public class GUIMenu implements ClientObserver {
             throw new RuntimeException(e);
         }
     }
-
 }

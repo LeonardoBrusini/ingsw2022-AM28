@@ -5,6 +5,37 @@ import it.polimi.ingsw.network.*;
 import java.util.ArrayList;
 
 public class StatusUpdater {
+    private CurrentStatus currentStatus;
+    private static StatusUpdater instance;
+    private StatusUpdater() {
+        currentStatus = null;
+    }
+
+    public static StatusUpdater instance() {
+        if(instance==null) instance=new StatusUpdater();
+        return instance;
+    }
+
+    public CurrentStatus getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public synchronized void updateStatus(CurrentStatus c) {
+        if(currentStatus==null) {
+            currentStatus = c;
+            return;
+        }
+        if(c.getGameMode()!=null) currentStatus.setGameMode(c.getGameMode());
+        if(c.getPlayerID()!=null) currentStatus.setPlayerID(c.getPlayerID());
+        if(c.getWinner()!=null) currentStatus.setWinner(c.getWinner());
+        if(c.getTurn()!=null) {
+            if(currentStatus.getTurn()==null) currentStatus.setTurn(new TurnStatus());
+            if(c.getTurn().getPlayer()!=null) currentStatus.getTurn().setPlayer(c.getTurn().getPlayer());
+            if(c.getTurn().getPhase()!=null) currentStatus.getTurn().setPhase(c.getTurn().getPhase());
+        }
+        if(c.getGame()!=null) updateGameStatus(currentStatus,c.getGame());
+    }
+
     public static synchronized CurrentStatus updateStatus(CurrentStatus currentStatus, CurrentStatus c) {
         if(currentStatus==null) {
             currentStatus = c;

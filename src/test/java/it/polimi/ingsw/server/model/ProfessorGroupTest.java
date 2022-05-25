@@ -128,8 +128,8 @@ class ProfessorGroupTest {
         assertEquals(2,listBlack.size());
         assertEquals(0,listWhite.size());
         assertEquals(0,listGrey.size());
-        assertEquals(Colour.YELLOW,listBlack.get(0));
-        assertEquals(Colour.GREEN,listBlack.get(1));
+        assertEquals(Colour.GREEN,listBlack.get(0));
+        assertEquals(Colour.YELLOW,listBlack.get(1));
 
         //pg full
         pg.setTower(Colour.YELLOW,Tower.BLACK);
@@ -146,8 +146,8 @@ class ProfessorGroupTest {
         assertEquals(Colour.YELLOW,listBlack.get(0));
         assertEquals(Colour.BLUE,listWhite.get(0));
         assertEquals(Colour.GREEN,listGrey.get(0));
-        assertEquals(Colour.PINK,listGrey.get(1));
-        assertEquals(Colour.RED,listGrey.get(2));
+        assertEquals(Colour.RED,listGrey.get(1));
+        assertEquals(Colour.PINK,listGrey.get(2));
 
     }
 }
