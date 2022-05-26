@@ -6,24 +6,31 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.titleScreenController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.titleScreenController">
    <children>
-      <ImageView fitHeight="756.0" fitWidth="2622.0" layoutX="-251.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1401.0" fitWidth="2477.0" layoutX="-16.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/backGroundTitle.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="334.0" fitWidth="445.0" layoutX="68.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="510.0" fitWidth="776.0" layoutX="-60.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/EriantysLogo.PNG" />
          </image>
       </ImageView>
-      <TextField fx:id="serverIP" layoutX="225.0" layoutY="163.0" text="127.0.0.1" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="253.0" layoutY="146.0" text="Server IP Address" textFill="WHITE" />
-      <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="236.0" mnemonicParsing="false" onAction="#connectToServer" text="PLAY" />
+      <TextField fx:id="serverIP" layoutX="233.0" layoutY="410.0" prefHeight="45.0" prefWidth="217.0" text="127.0.0.1">
+         <font>
+            <Font size="19.0" />
+         </font></TextField>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="268.0" layoutY="364.0" text="Server IP Address" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="292.0" layoutY="481.0" mnemonicParsing="false" onAction="#connectToServer" prefHeight="33.0" prefWidth="91.0" text="PLAY" />
       <Label fx:id="connectionErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="200.0" opacity="0.0" text="Error message" />
-      <ImageView fitHeight="106.0" fitWidth="85.0" layoutX="1174.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="99.0" fitWidth="64.0" layoutX="1317.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/1487161053_LOGO_CRANIO_CREATIONS-02.jpg" />
          </image>
