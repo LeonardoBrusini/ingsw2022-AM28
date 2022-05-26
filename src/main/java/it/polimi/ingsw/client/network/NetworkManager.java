@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.network;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.client.ClientObserver;
+import it.polimi.ingsw.network.Command;
+import it.polimi.ingsw.server.model.cards.NoEntryTileEffect;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +17,11 @@ public class NetworkManager {
     private BufferedReader in;
     private ClientObserver menu;
     private static NetworkManager instance;
+    private static Gson parser;
+
+    private NetworkManager(){
+        parser = new Gson();
+    }
 
     public static NetworkManager instance() {
         if(instance==null) instance = new NetworkManager();
@@ -46,6 +54,11 @@ public class NetworkManager {
 
     public void send(String line) {
         out.println(line);
+        out.flush();
+    }
+
+    public void sendJSON(Command c) {
+        out.println(parser.toJson(c));
         out.flush();
     }
 

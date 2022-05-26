@@ -35,6 +35,20 @@ public class GUIMenu implements ClientObserver {
         switch (currentScene) {
             case USERNAME -> manageAPR(line);
             case GAME_PARAMETERS -> manageGPR(line);
+            case PLANNING_2_SIMPLE,PLANNING_2_EXPERT,PLANNING_3_EXPERT,PLANNING_3_SIMPLE -> manageCSPlanning(line);
+        }
+    }
+
+    private void manageCSPlanning(String line) {
+        CurrentStatus cs = parser.fromJson(line,CurrentStatus.class);
+        StatusUpdater.instance().updateStatus(cs);
+        currentStatus = StatusUpdater.instance().getCurrentStatus();
+        if(currentStatus.getGameMode().equals("expert")) {
+            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_EXPERT));
+            else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_EXPERT));
+        } else {
+            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_SIMPLE));
+            else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_SIMPLE));
         }
     }
 

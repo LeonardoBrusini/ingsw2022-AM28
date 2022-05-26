@@ -6,7 +6,7 @@ public enum GUIScene {
     GAME_PARAMETERS("gameParametersScene.fxml"),
     PLANNING_2_EXPERT("planning2ExpertScene.fxml"),
     PLANNING_3_EXPERT("planning3ExpertScene.fxml"),
-    PLANNING_2_SIMPLE("PlanningSceneSimple.fxml"),
+    PLANNING_2_SIMPLE("PlanningSceneSimpleSMALL.fxml"),
     PLANNING_3_SIMPLE("planning3SimpleScene.fxml"),
     ACTION_2_EXPERT("action2ExpertScene.fxml"),
     ACTION_3_EXPERT("action3ExpertScene.fxml"),
