@@ -616,4 +616,6 @@
       <ImageView fx:id="tower11" fitHeight="40.0" fitWidth="42.0" layoutX="1249.0" layoutY="856.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="mn2" fitHeight="42.0" fitWidth="44.0" layoutX="1715.0" layoutY="718.0" pickOnBounds="true" preserveRatio="true" />
    </children>
+
+   
 </Pane>

@@ -7,6 +7,8 @@ import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.awt.*;
+
 
 public class GUIClient extends Application {
 
@@ -21,6 +23,11 @@ public class GUIClient extends Application {
         GUIMenu menu = new GUIMenu(primaryStage);
         NetworkManager.instance().setObserver(menu);
         menu.toNextScene(GUIScene.TITLE_SCREEN);
+
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        System.out.println(gd.getDisplayMode().getWidth()+" "+gd.getDisplayMode().getHeight());
+        System.out.println(primaryStage.getWidth()+" "+primaryStage.getHeight());
+        System.out.println(primaryStage.getScene().getWidth()+" "+primaryStage.getScene().getHeight());
     }
 
 }
