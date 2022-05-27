@@ -276,7 +276,7 @@ class CommandTests {
         assertEquals(StatusCode.WRONGPHASE,strategy.getCmd().resolveCommand(gm,command));
 
         t.setMotherNaturePhase(true);
-        command.setMotherNatureShifts(2);
+        command.setMotherNatureShifts(gm.getPlayers().get(t.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()+1);
         assertEquals(StatusCode.ILLEGALARGUMENT,strategy.getCmd().resolveCommand(gm,command));
 
         command.setMotherNatureShifts(1);
