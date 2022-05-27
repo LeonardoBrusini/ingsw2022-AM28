@@ -1,22 +1,32 @@
 package it.polimi.ingsw.client.gui.scenecontrollers;
 
-import com.google.gson.Gson;
-import it.polimi.ingsw.client.network.NetworkManager;
-import it.polimi.ingsw.network.Command;
-import it.polimi.ingsw.network.CurrentStatus;
+import it.polimi.ingsw.network.CharacterCardStatus;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+
+import java.util.ArrayList;
 
 
-public class PlanningSceneExpertController{
-    public CurrentStatus cs;
-    public PlanningSceneExpertController(CurrentStatus currentStatus) {
-        cs = currentStatus;
+public class Planning2ExpertController extends Planning2SimpleController{
+    //public CurrentStatus cs;
+    //public Planning2ExpertController(CurrentStatus currentStatus) {
+    //    cs = currentStatus;
+    //}
+    @FXML
+    ArrayList<ImageView> characterCardsImages;
+    @FXML
+    ArrayList<GridPane> studentsOnCardPanes;
+    @FXML
+    ArrayList<ImageView> noEntryTileImages;
+
+    @FXML
+    public void initialize() {
+        super.initialize();
+        ControllerUtils.addPlanningCharacterCards(characterCardsImages,studentsOnCardPanes,noEntryTileImages,getClass().getClassLoader());
     }
 
-
-    public void playCard1(MouseEvent mouseEvent) {
+    /*public void playCard1(MouseEvent mouseEvent) {
         NetworkManager.instance().send(generateCommand(1).toString());
     }
 
@@ -64,5 +74,5 @@ public class PlanningSceneExpertController{
         command.setCmd("PLAYASSISTANTCARD");
         gson.toJson(command, Command.class);
         return gson;
-    }
+    }*/
 }
