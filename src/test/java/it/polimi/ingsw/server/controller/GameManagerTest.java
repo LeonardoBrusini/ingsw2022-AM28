@@ -248,7 +248,8 @@ class GameManagerTest {
         //To test AlreadyPlayedException's catching
         for(int j = 0; j < gm2.getPlayers().size(); j++) {
             int a = gm2.getTurnManager().getCurrentPlayer(); //when the card is played, the current Player is changed. I have to memorize the actual one to verify if the card is played properly
-            assertFalse(gm2.getPlayers().get(gm2.getTurnManager().getCurrentPlayer()).getAssistantCard(i).isPlayed());
+            if(!gm2.getPlayers().get(a).getAssistantCard(i).isPlayed())
+                assertFalse(gm2.getPlayers().get(a).getAssistantCard(i).isPlayed());
             try {
                 boolean isPlayed = false;
                 gm2.getPlayers().get(gm2.getTurnManager().getCurrentPlayer());
