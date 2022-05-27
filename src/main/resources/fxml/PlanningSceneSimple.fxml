@@ -48,7 +48,7 @@
             <Image url="@../images/board/island1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="island11" fitHeight="175.0" fitWidth="180.0" layoutX="1144.0" layoutY="794.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="island011" fitHeight="175.0" fitWidth="180.0" layoutX="1144.0" layoutY="794.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/island2.png" />
          </image>
@@ -73,7 +73,7 @@
             <Image url="@../images/board/island3.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="island12" fitHeight="175.0" fitWidth="180.0" layoutX="1336.0" layoutY="831.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="island012" fitHeight="175.0" fitWidth="180.0" layoutX="1336.0" layoutY="831.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/island3.png" />
          </image>
@@ -83,7 +83,7 @@
             <Image url="@../images/board/island3.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="island10" fitHeight="175.0" fitWidth="180.0" layoutX="1058.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="island010" fitHeight="175.0" fitWidth="180.0" layoutX="1058.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/island1.png" />
          </image>

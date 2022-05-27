@@ -10,7 +10,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.usernameSceneController">
    <children>
-      <ImageView fitHeight="2501.0" fitWidth="1649.0" layoutX="-4.0" layoutY="-246.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="2864.0" fitWidth="1944.0" layoutX="-11.0" layoutY="-399.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/MADRENATURA_1.jpg" />
          </image>
@@ -28,7 +28,7 @@
          <font>
             <Font size="21.0" />
          </font></Label>
-      <ImageView fitHeight="99.0" fitWidth="64.0" layoutX="1327.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="99.0" fitWidth="64.0" layoutX="1827.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/1487161053_LOGO_CRANIO_CREATIONS-02.jpg" />
          </image>

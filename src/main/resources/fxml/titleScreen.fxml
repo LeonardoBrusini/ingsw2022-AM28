@@ -20,17 +20,20 @@
             <Image url="@../images/EriantysLogo.PNG" />
          </image>
       </ImageView>
-      <TextField fx:id="serverIP" layoutX="233.0" layoutY="410.0" prefHeight="45.0" prefWidth="217.0" text="127.0.0.1">
+      <TextField fx:id="serverIP" layoutX="254.0" layoutY="409.0" prefHeight="45.0" prefWidth="217.0" text="127.0.0.1">
          <font>
             <Font size="19.0" />
          </font></TextField>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="268.0" layoutY="364.0" text="Server IP Address" textFill="WHITE">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="289.0" layoutY="363.0" text="Server IP Address" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="292.0" layoutY="481.0" mnemonicParsing="false" onAction="#connectToServer" prefHeight="33.0" prefWidth="91.0" text="PLAY" />
-      <Label fx:id="connectionErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="200.0" opacity="0.0" text="Error message" />
-      <ImageView fitHeight="99.0" fitWidth="64.0" layoutX="1317.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="313.0" layoutY="480.0" mnemonicParsing="false" onAction="#connectToServer" prefHeight="33.0" prefWidth="91.0" text="PLAY" />
+      <Label fx:id="connectionErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="308.0" opacity="0.0" prefHeight="64.0" prefWidth="313.0" text="Error message" textFill="#f8f7f7">
+         <font>
+            <Font size="26.0" />
+         </font></Label>
+      <ImageView fitHeight="99.0" fitWidth="64.0" layoutX="1817.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/1487161053_LOGO_CRANIO_CREATIONS-02.jpg" />
          </image>

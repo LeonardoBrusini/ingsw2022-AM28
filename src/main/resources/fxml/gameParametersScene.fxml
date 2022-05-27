@@ -6,21 +6,28 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.gameParametersController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.gameParametersController">
    <children>
-      <ImageView fitHeight="2282.0" fitWidth="1797.0" layoutX="-18.0" layoutY="-325.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="2864.0" fitWidth="1944.0" layoutX="-1.0" layoutY="-389.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/MADRENATURA_1.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="167.0" layoutY="114.0" text="Number of players" />
-      <Label layoutX="184.0" layoutY="183.0" text="Game mode" />
-      <ChoiceBox fx:id="numPlayersMenu" layoutX="300.0" layoutY="110.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="gameModeMenu" layoutX="300.0" layoutY="179.0" prefWidth="150.0" />
-      <Button fx:id="parametersButton" layoutX="274.0" layoutY="254.0" mnemonicParsing="false" onAction="#sendGameParameters" text="Confirm" />
+      <Label layoutX="75.0" layoutY="196.0" text="Number of players">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
+      <Label layoutX="164.0" layoutY="282.0" text="Game mode">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
+      <ChoiceBox fx:id="numPlayersMenu" layoutX="294.0" layoutY="175.0" prefHeight="58.0" prefWidth="207.0" />
+      <ChoiceBox fx:id="gameModeMenu" layoutX="295.0" layoutY="269.0" prefHeight="53.0" prefWidth="204.0" />
+      <Button fx:id="parametersButton" layoutX="276.0" layoutY="363.0" mnemonicParsing="false" onAction="#sendGameParameters" prefHeight="44.0" prefWidth="98.0" text="Confirm" />
       <Label fx:id="parametersErrorLabel" layoutX="235.0" layoutY="224.0" opacity="0.0" text="Error: xxx, error message" />
-      <ImageView fitHeight="106.0" fitWidth="85.0" layoutX="1174.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="99.0" fitWidth="64.0" layoutX="1837.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/1487161053_LOGO_CRANIO_CREATIONS-02.jpg" />
          </image>
