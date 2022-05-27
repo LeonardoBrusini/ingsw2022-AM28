@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.PlanningSceneController">
+   <children>
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/standardbackground.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="MyDashBoard" fitHeight="350.0" fitWidth="700.0" layoutX="27.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/dashboard.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Cloud2" fitHeight="220.0" fitWidth="220.0" layoutX="1479.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/cloud.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island2" fitHeight="220.0" fitWidth="220.0" layoutX="996.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island8" fitHeight="220.0" fitWidth="220.0" layoutX="1669.0" layoutY="622.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island5" fitHeight="220.0" fitWidth="220.0" layoutX="1559.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island10" fitHeight="220.0" fitWidth="220.0" layoutX="1348.0" layoutY="855.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island1" fitHeight="220.0" fitWidth="220.0" layoutX="909.0" layoutY="438.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island4" fitHeight="220.0" fitWidth="220.0" layoutX="1343.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island3" fitHeight="220.0" fitWidth="220.0" layoutX="1125.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island3.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island6" fitHeight="220.0" fitWidth="220.0" layoutX="1687.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island3.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island9" fitHeight="220.0" fitWidth="220.0" layoutX="1559.0" layoutY="797.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island3.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island12" fitHeight="220.0" fitWidth="220.0" layoutX="1003.0" layoutY="630.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island3.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island11" fitHeight="220.0" fitWidth="220.0" layoutX="1148.0" layoutY="783.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="island7" fitHeight="220.0" fitWidth="220.0" layoutX="1700.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/island2.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="myName" layoutX="24.0" layoutY="375.0" prefHeight="35.0" prefWidth="500.0" text="MY USERNAME">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <ImageView fx:id="bridge09" fitHeight="78.0" fitWidth="33.0" layoutX="1553.0" layoutY="890.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="69.4">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge10" fitHeight="100.0" fitWidth="25.0" layoutX="1344.0" layoutY="896.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-72.9">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge04" fitHeight="81.0" fitWidth="33.0" layoutX="1553.0" layoutY="101.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-71.6">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge03" fitHeight="86.0" fitWidth="33.0" layoutX="1332.0" layoutY="105.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="67.6">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge08" fitHeight="86.0" fitWidth="25.0" layoutX="1713.0" layoutY="783.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge07" fitHeight="100.0" fitWidth="25.0" layoutX="1786.0" layoutY="597.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge06" fitHeight="81.0" fitWidth="25.0" layoutX="1792.0" layoutY="397.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-7.1">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge05" fitHeight="98.0" fitWidth="28.0" layoutX="1730.0" layoutY="212.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="154.1">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge12" fitHeight="76.0" fitWidth="31.0" layoutX="1051.0" layoutY="603.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-29.1">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge01" fitHeight="80.0" fitWidth="38.0" layoutX="1040.0" layoutY="401.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="18.4">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bridge02" fitHeight="86.0" fitWidth="25.0" layoutX="1151.0" layoutY="227.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="41.8">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <GridPane fx:id="myHall" layoutX="152.0" layoutY="441.0" prefHeight="249.0" prefWidth="339.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="myTowers" layoutX="593.0" layoutY="475.0" prefHeight="188.0" prefWidth="103.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="myEntrance" layoutX="43.0" layoutY="449.0" prefHeight="240.0" prefWidth="85.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="10.0" prefWidth="29.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="34.0" minWidth="10.0" prefWidth="27.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students1" layoutX="960.0" layoutY="481.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <ImageView fx:id="mn4" fitHeight="50.0" fitWidth="50.0" layoutX="1433.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn10" fitHeight="50.0" fitWidth="50.0" layoutX="1433.0" layoutY="834.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn9" fitHeight="50.0" fitWidth="50.0" layoutX="1577.0" layoutY="801.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn8" fitHeight="50.0" fitWidth="50.0" layoutX="1649.0" layoutY="708.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn7" fitHeight="50.0" fitWidth="50.0" layoutX="1687.0" layoutY="535.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn5" fitHeight="50.0" fitWidth="50.0" layoutX="1563.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn11" fitHeight="50.0" fitWidth="50.0" layoutX="1303.0" layoutY="781.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn1" fitHeight="50.0" fitWidth="50.0" layoutX="1104.0" layoutY="515.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn12" fitHeight="50.0" fitWidth="50.0" layoutX="1193.0" layoutY="673.0" pickOnBounds="true" preserveRatio="true" />
+      <GridPane fx:id="students2" layoutX="1044.0" layoutY="275.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students3" layoutX="1172.0" layoutY="126.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students4" layoutX="1396.0" layoutY="57.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students5" layoutX="1602.0" layoutY="125.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students6" layoutX="1736.0" layoutY="261.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students7" layoutX="1744.0" layoutY="473.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students8" layoutX="1712.0" layoutY="665.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students9" layoutX="1609.0" layoutY="840.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students10" layoutX="1390.0" layoutY="898.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students11" layoutX="1192.0" layoutY="826.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="students12" layoutX="1055.0" layoutY="673.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="cloud2" layoutX="1530.0" layoutY="393.0" prefHeight="165.0" prefWidth="115.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <ImageView fx:id="bridge11" fitHeight="100.0" fitWidth="28.0" layoutX="1168.0" layoutY="779.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-51.3">
+         <image>
+            <Image url="@../images/board/bridge.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="opponentName" layoutX="24.0" layoutY="14.0" prefHeight="31.0" prefWidth="439.0" text="Opponent Username">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="OpponentDashboard" fitHeight="350.0" fitWidth="700.0" layoutX="27.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/dashboard.png" />
+         </image>
+      </ImageView>
+      <GridPane fx:id="myHall1" layoutX="152.0" layoutY="85.0" prefHeight="249.0" prefWidth="339.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="opponentTowers" layoutX="593.0" layoutY="116.0" prefHeight="188.0" prefWidth="103.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="opponentEntrance" layoutX="43.0" layoutY="90.0" prefHeight="240.0" prefWidth="85.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <ImageView fx:id="opponentLAC" fitHeight="300.0" fitWidth="172.0" layoutX="735.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn3" fitHeight="50.0" fitWidth="50.0" layoutX="1297.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower12" fitHeight="50.0" fitWidth="50.0" layoutX="1132.0" layoutY="712.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower1" fitHeight="50.0" fitWidth="50.0" layoutX="1041.0" layoutY="515.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower2" fitHeight="50.0" fitWidth="50.0" layoutX="1132.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower3" fitHeight="50.0" fitWidth="50.0" layoutX="1261.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower5" fitHeight="50.0" fitWidth="50.0" layoutX="1692.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower4" fitHeight="50.0" fitWidth="50.0" layoutX="1482.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower6" fitHeight="50.0" fitWidth="50.0" layoutX="1823.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower7" fitHeight="50.0" fitWidth="50.0" layoutX="1830.0" layoutY="510.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower8" fitHeight="50.0" fitWidth="50.0" layoutX="1805.0" layoutY="707.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower9" fitHeight="50.0" fitWidth="50.0" layoutX="1692.0" layoutY="879.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower10" fitHeight="50.0" fitWidth="50.0" layoutX="1482.0" layoutY="940.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="tower11" fitHeight="50.0" fitWidth="50.0" layoutX="1286.0" layoutY="868.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mn2" fitHeight="50.0" fitWidth="50.0" layoutX="1178.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Cloud1" fitHeight="220.0" fitWidth="220.0" layoutX="1218.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/cloud.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="myLAC" fitHeight="300.0" fitWidth="172.0" layoutX="735.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true" />
+      <ScrollPane fx:id="ACPane" layoutX="27.0" layoutY="740.0" prefHeight="330.0" prefWidth="980.0">
+         <content>
+            <HBox fx:id="ACBox" prefHeight="315.0" prefWidth="970.0" />
+         </content>
+      </ScrollPane>
+      <GridPane fx:id="cloud1" layoutX="1264.0" layoutY="486.0" prefHeight="165.0" prefWidth="115.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <ImageView fx:id="mn6" fitHeight="50.0" fitWidth="50.0" layoutX="1675.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+
+   <fx:define>
+      <ArrayList fx:id="cloudList">
+         <fx:reference source="cloud1" />
+         <fx:reference source="cloud2" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="studentPanes">
+         <fx:reference source="students1" />
+         <fx:reference source="students2" />
+         <fx:reference source="students3" />
+         <fx:reference source="students4" />
+         <fx:reference source="students5" />
+         <fx:reference source="students6" />
+         <fx:reference source="students7" />
+         <fx:reference source="students8" />
+         <fx:reference source="students9" />
+         <fx:reference source="students10" />
+         <fx:reference source="students11" />
+         <fx:reference source="students12" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="bridgeImages">
+         <fx:reference source="bridge01" />
+         <fx:reference source="bridge02" />
+         <fx:reference source="bridge03" />
+         <fx:reference source="bridge04" />
+         <fx:reference source="bridge05" />
+         <fx:reference source="bridge06" />
+         <fx:reference source="bridge07" />
+         <fx:reference source="bridge08" />
+         <fx:reference source="bridge09" />
+         <fx:reference source="bridge10" />
+         <fx:reference source="bridge11" />
+         <fx:reference source="bridge12" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="motherNatureImages">
+         <fx:reference source="mn1" />
+         <fx:reference source="mn2" />
+         <fx:reference source="mn3" />
+         <fx:reference source="mn4" />
+         <fx:reference source="mn5" />
+         <fx:reference source="mn6" />
+         <fx:reference source="mn7" />
+         <fx:reference source="mn8" />
+         <fx:reference source="mn9" />
+         <fx:reference source="mn10" />
+         <fx:reference source="mn11" />
+         <fx:reference source="mn12" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="towersImages">
+         <fx:reference source="tower1" />
+         <fx:reference source="tower2" />
+         <fx:reference source="tower3" />
+         <fx:reference source="tower4" />
+         <fx:reference source="tower5" />
+         <fx:reference source="tower6" />
+         <fx:reference source="tower7" />
+         <fx:reference source="tower8" />
+         <fx:reference source="tower9" />
+         <fx:reference source="tower10" />
+         <fx:reference source="tower11" />
+         <fx:reference source="tower12" />
+      </ArrayList>
+   </fx:define>
+
+</Pane>
