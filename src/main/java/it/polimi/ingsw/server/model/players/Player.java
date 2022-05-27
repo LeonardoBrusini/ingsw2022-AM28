@@ -38,8 +38,8 @@ public class Player {
         lastPlayedCard = null;
         ccActivatedThisTurn = false;
         cards = new ArrayList<>();
-        for (AssistantCardInfo i: AssistantCardInfo.values()){
-            cards.add(new AssistantCard(i));
+        for (int i=0; i<AssistantCardInfo.values().length;i++){
+            cards.add(new AssistantCard(AssistantCardInfo.values()[i]));
         }
         coinPositions = new boolean[Colour.values().length][3];
         connected = true;
