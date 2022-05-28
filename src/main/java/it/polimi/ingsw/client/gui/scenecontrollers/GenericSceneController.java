@@ -5,45 +5,37 @@ import it.polimi.ingsw.client.gui.CommandHandler;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class PlanningSceneController {
+public class GenericSceneController {
     @FXML
     GridPane myEntrance,opponentEntrance,myHall,opponentHall,myTowers,opponentTowers;
     @FXML
     ImageView myLAC,opponentLAC;
     @FXML
-    HBox ACBox;
-    @FXML
-    ScrollPane ACPane;
-    @FXML
-    Label opponentName,myName;
-    @FXML
     ArrayList<GridPane> cloudList,studentPanes;
     @FXML
     ArrayList<ImageView> towersImages,motherNatureImages,bridgeImages;
+    @FXML
+    Label opponentName,myName;
 
     @FXML
-    private void initialize(){
+    public void initialize() {
         CurrentStatus cs = StatusUpdater.instance().getCurrentStatus();
         //Players
         ArrayList<PlayerStatus> players = cs.getGame().getPlayers();
-        if(players.get(0).getIndex()==cs.getPlayerID()) myStatus(players.get(0));
-        else opponentStatus(players.get(0));
-        if(players.get(1).getIndex()==cs.getPlayerID()) myStatus(players.get(1));
-        else opponentStatus(players.get(1));
-        //Board
+        if(players.get(0).getIndex()==cs.getPlayerID()) {
+            playerStatus(players.get(0), myName, myLAC, myTowers, myEntrance, myHall);
+            playerStatus(players.get(1), opponentName, opponentLAC, opponentTowers, opponentEntrance, opponentHall);
+        } else playerStatus(players.get(0), opponentName, opponentLAC, opponentTowers, opponentEntrance, opponentHall);
+        if(players.get(1).getIndex()==cs.getPlayerID()) playerStatus(players.get(1), myName, myLAC, myTowers, myEntrance, myHall);
+        //else opponentStatus(players.get(1));
         fillClouds(cs.getGame().getClouds());
         fillIslands(cs.getGame().getArchipelagos());
         motherNatureImages.get(cs.getGame().getMotherNatureIndex()-1).setImage(new Image(getClass().getClassLoader().getResource("images/wooden_pieces/mother_nature.png").toString(),45,45,true,true));
@@ -90,38 +82,7 @@ public class PlanningSceneController {
         }
     }
 
-    private void myStatus(PlayerStatus ps) {
-        playerStatus(ps, myName, myLAC, myTowers, myEntrance, myHall);
-        String path;
-        if(StatusUpdater.instance().getCurrentStatus().getTurn().getPlayer().equals(StatusUpdater.instance().getCurrentStatus().getPlayerID())) {
-            for(int i=0;i<ps.getAssistantCards().length;i++) {
-                if(!ps.getAssistantCards()[i]) {
-                    path = "images/assistantCards/A";
-                    if(i<9) path+="0";
-                    path+=(i+1)+".png";
-                    Image image = new Image(getClass().getClassLoader().getResource(path).toString(),250,243,true,true);
-                    ImageView iView = new ImageView(image);
-                    iView.setOnMousePressed(new CommandHandler("PLAYASSISTANTCARD",StatusUpdater.instance().getCurrentStatus().getPlayerID(),i) {
-                        @Override
-                        public void handle(Event event) {
-                            sendAssistantCardCommand();
-                        }
-                    });
-                    ACBox.getChildren().add(iView);
-                }
-            }
-        } else {
-            ACBox.setOpacity(0);
-            ACPane.setOpacity(0);
-        }
-
-    }
-
-    private void opponentStatus(PlayerStatus ps){
-        playerStatus(ps, opponentName, opponentLAC, opponentTowers, opponentEntrance, opponentHall);
-    }
-
-    private void playerStatus(PlayerStatus ps, Label name, ImageView LAC, GridPane towers, GridPane entrance, GridPane hall) {
+    protected void playerStatus(PlayerStatus ps, Label name, ImageView LAC, GridPane towers, GridPane entrance, GridPane hall) {
         ClassLoader classLoader = getClass().getClassLoader();
         name.setText(ps.getNickName());
         String path;
@@ -153,7 +114,4 @@ public class PlanningSceneController {
             }
         }
     }
-
-
-
 }
