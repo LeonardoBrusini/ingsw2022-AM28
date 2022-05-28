@@ -41,29 +41,34 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void manageCSAction(String line) {
+        changePhaseScene(line);
+    }
+
+    private void changePhaseScene(String line) {
         CurrentStatus cs = parser.fromJson(line, CurrentStatus.class);
         StatusUpdater.instance().updateStatus(cs);
         currentStatus = StatusUpdater.instance().getCurrentStatus();
-        if(currentStatus.getGameMode().equals("expert")) {
-            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.ACTION_2_EXPERT));
-            else Platform.runLater(() -> toNextScene(GUIScene.ACTION_3_EXPERT));
+        if(currentStatus.getTurn().getPhase().equalsIgnoreCase("action")) {
+            if(currentStatus.getGameMode().equals("expert")) {
+                if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.ACTION_2_EXPERT));
+                else Platform.runLater(() -> toNextScene(GUIScene.ACTION_3_EXPERT));
+            } else {
+                if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.ACTION_2_SIMPLE));
+                else Platform.runLater(() -> toNextScene(GUIScene.ACTION_3_SIMPLE));
+            }
         } else {
-            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.ACTION_2_SIMPLE));
-            else Platform.runLater(() -> toNextScene(GUIScene.ACTION_3_SIMPLE));
+            if(currentStatus.getGameMode().equals("expert")) {
+                if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_EXPERT));
+                else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_EXPERT));
+            } else {
+                if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_SIMPLE));
+                else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_SIMPLE));
+            }
         }
     }
 
     private void manageCSPlanning(String line) {
-        CurrentStatus cs = parser.fromJson(line,CurrentStatus.class);
-        StatusUpdater.instance().updateStatus(cs);
-        currentStatus = StatusUpdater.instance().getCurrentStatus();
-        if(currentStatus.getGameMode().equals("expert")) {
-            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_EXPERT));
-            else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_EXPERT));
-        } else {
-            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_SIMPLE));
-            else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_SIMPLE));
-        }
+        changePhaseScene(line);
     }
 
     private void manageGPR(String line) {
@@ -86,7 +91,7 @@ public class GUIMenu implements ClientObserver {
                 });
                 return;
             }
-            manageFirstCS(cs);
+            manageFirstCS(line);
         } catch (JsonSyntaxException e) {
             Platform.runLater(() -> {
                 parametersErrorLabel.setText("ERROR: received unreadable message");
@@ -101,8 +106,7 @@ public class GUIMenu implements ClientObserver {
         try {
             addPlayerResponse = parser.fromJson(line,AddPlayerResponse.class);
             if(addPlayerResponse.isFirst()==null && addPlayerResponse.getErrorMessage()==null) {
-                CurrentStatus cs = parser.fromJson(line,CurrentStatus.class);
-                manageFirstCS(cs);
+                manageFirstCS(line);
                 return;
             }
             if(addPlayerResponse.getStatus()!=0) {
@@ -129,16 +133,8 @@ public class GUIMenu implements ClientObserver {
         }
     }
 
-    private void manageFirstCS(CurrentStatus cs) {
-        StatusUpdater.instance().updateStatus(cs);
-        currentStatus = StatusUpdater.instance().getCurrentStatus();
-        if(currentStatus.getGameMode().equals("expert")) {
-            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_EXPERT));
-            else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_EXPERT));
-        } else {
-            if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.PLANNING_2_SIMPLE));
-            else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_SIMPLE));
-        }
+    private void manageFirstCS(String line) {
+        changePhaseScene(line);
     }
     private void manageCS(String line) {
 
@@ -150,13 +146,6 @@ public class GUIMenu implements ClientObserver {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/"+sceneType.getFileName()));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            /*stage.setRenderScaleX(1);
-            stage.setRenderScaleY(1);
-            stage.setForceIntegerRenderScale(false);
-            stage.setMinHeight(1080);
-            stage.setMinWidth(1920);
-            stage.setMaxWidth(1920);
-            stage.setMaxHeight(1080);*/
             stage.setMaximized(true);
             stage.show();
             if(sceneType==GUIScene.TITLE_SCREEN) currentScene = GUIScene.USERNAME;

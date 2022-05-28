@@ -101,8 +101,8 @@ public class GenericSceneController {
         int studentIndex=0;
         for(int i=0;i<ps.getStudentsOnEntrance().length;i++) {
             String col = Colour.values()[i].toString().toLowerCase();
-            Image sImageH = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),21,30,true,true);
-            Image sImageE = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),25,30,true,false);
+            Image sImageH = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),30,30,true,true);
+            Image sImageE = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),33,33,true,false);
             for (int j=0;j<ps.getStudentsOnEntrance()[i];j++) {
                 ImageView sE = new ImageView(sImageE);
                 entrance.add(sE,studentIndex%2,studentIndex/2);
@@ -110,7 +110,7 @@ public class GenericSceneController {
             }
             for (int j=0;j<ps.getStudentsOnHall()[i];j++) {
                 ImageView sH = new ImageView(sImageH);
-                hall.add(sH,i,j);
+                hall.add(sH,j,i);
             }
         }
     }

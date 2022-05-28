@@ -57,7 +57,9 @@ public class TakeFromCloudCommand implements CommandStrategy{
         gs.setClouds(gameManager.getBoard().getCloudsStatus());
         cs.setGame(gs);
         if(EndOfGameChecker.instance().isEndOfGame()) {
-            cs.setWinner(gameManager.getPlayers().get(EndOfGameChecker.instance().getWinner()).getNickname());
+            int winner = EndOfGameChecker.instance().getWinner();
+            if(winner==-1) cs.setWinner("");
+            else cs.setWinner(gameManager.getPlayers().get(EndOfGameChecker.instance().getWinner()).getNickname());
         }
         return g.toJson(cs, CurrentStatus.class);
     }

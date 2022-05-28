@@ -21,13 +21,13 @@ public class CLIMenu implements ClientObserver {
 
     public CLIMenu() {
         characterCardDescriptions = new HashMap<>();
-        fillDescriprions(characterCardDescriptions);
+        fillDescriptions(characterCardDescriptions);
         phases = new ArrayList<>();
         phases.add(CLIPhases.USERNAME);
         parser = new Gson();
     }
 
-    private void fillDescriprions(HashMap<String, String> characterCardDescriptions) {
+    private void fillDescriptions(HashMap<String, String> characterCardDescriptions) {
         characterCardDescriptions.put("P01.jpg","Take 1 Student from this card and place it on an Island of your choice. Then draw a new Student from the Bag and place it on this card.");
         characterCardDescriptions.put("P02.jpg","During this turn, you take control of any number of Professor even if you have the same number of Students as the player who currently controls them.");
         characterCardDescriptions.put("P03.jpg","Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.");
@@ -55,7 +55,7 @@ public class CLIMenu implements ClientObserver {
         for(PlayerStatus ps : currentStatus.getGame().getPlayers()) {
             String s = ps.getNickName()+": "+ps.getTowerColour()+" towers";
             if(currentStatus.getGameMode().equals("expert")) s+=", "+ps.getCoins()+" coins";
-            s+=", Assistant Cards left: "+printAssistantCards(ps);
+            s+=", Assistant Cards left [weight, (max mother nature shifts)]: "+printAssistantCards(ps);
             System.out.println(s);
             CLIPrinter.printDashboard(ps.getStudentsOnEntrance(),ps.getStudentsOnHall(),ps.getNumTowers());
         }
@@ -74,19 +74,22 @@ public class CLIMenu implements ClientObserver {
         CLIPrinter.printProfessors(currentStatus.getGame().getProfessors());
         System.out.println("Current Player: "+currentStatus.getTurn().getPlayer()+", Phase: "+currentStatus.getTurn().getPhase());
         if(currentStatus.getWinner()!=null) {
-            System.out.println("\uD83C\uDF89PLAYER "+currentStatus.getWinner()+" WON!\uD83C\uDF89");
+            if(!currentStatus.getWinner().equals("")) System.out.println(CLIPhases.DRAW.getMenuPrompt());
+            else System.out.println("\uD83C\uDF89PLAYER "+currentStatus.getWinner()+" WON!\uD83C\uDF89");
+            System.exit(0);
         }
     }
 
     private String printAssistantCards(PlayerStatus ps) {
         String s="[";
-        for(int i=0;i<ps.getAssistantCards().length-1;i++) {
+        int i;
+        for(i=0;i<ps.getAssistantCards().length-1;i++) {
             if(!ps.getAssistantCards()[i]) {
-                s+=((i+1)+",");
+                s+=((i+1)+" ("+(i/2+1)+"),");
             }
         }
-        if(!ps.getAssistantCards()[ps.getAssistantCards().length-1]) s+=ps.getAssistantCards().length;
-        s+="]";
+        if(!ps.getAssistantCards()[i]) s+=ps.getAssistantCards().length;
+        s+=" ("+(i/2+1)+")]";
         return s;
     }
 

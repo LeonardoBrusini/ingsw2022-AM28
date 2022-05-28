@@ -1,31 +1,25 @@
 package it.polimi.ingsw.client.gui.scenecontrollers;
 
 import it.polimi.ingsw.client.StatusUpdater;
-import it.polimi.ingsw.client.gui.CommandHandler;
-import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.server.enumerations.Colour;
-import javafx.event.Event;
+import it.polimi.ingsw.network.CurrentStatus;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 
-public class ActionSceneController {
+public class Action2SimpleController extends GenericSceneController{
     @FXML
-    GridPane myEntrance,opponentEntrance,myHall,opponentHall,myTowers,opponentTowers;
+    Label turnMessage;
+
     @FXML
-    ImageView myLAC,opponentLAC;
-    @FXML
-    Label opponentName,myName;
-    @FXML
-    ArrayList<GridPane> cloudList,studentPanes;
-    @FXML
-    ArrayList<ImageView> towersImages,motherNatureImages,bridgeImages;
+    public void initialize() {
+        super.initialize();
+        CurrentStatus cs = StatusUpdater.instance().getCurrentStatus();
+        if(!cs.getTurn().getPlayer().equals(cs.getPlayerID())) turnMessage.setOpacity(0);
+        //add listeners for commands
+    }
 
     /*@FXML
     private void initialize(){
