@@ -387,7 +387,7 @@
             <Image url="@../images/board/dashboard.png" />
          </image>
       </ImageView>
-      <GridPane fx:id="myHall1" layoutX="152.0" layoutY="85.0" prefHeight="249.0" prefWidth="339.0">
+      <GridPane fx:id="opponentHall" layoutX="152.0" layoutY="85.0" prefHeight="249.0" prefWidth="339.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

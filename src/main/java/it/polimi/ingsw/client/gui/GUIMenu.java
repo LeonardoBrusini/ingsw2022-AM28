@@ -3,20 +3,23 @@ package it.polimi.ingsw.client.gui;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.client.ClientObserver;
+import it.polimi.ingsw.client.GamePhases;
 import it.polimi.ingsw.client.StatusUpdater;
-import it.polimi.ingsw.client.cli.CLIPhases;
+import it.polimi.ingsw.client.network.NetworkManager;
 import it.polimi.ingsw.network.AddPlayerResponse;
 import it.polimi.ingsw.network.CurrentStatus;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class GUIMenu implements ClientObserver {
     private GUIScene currentScene;
@@ -45,9 +48,19 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void changePhaseScene(String line) {
+        if (currentStatus!=null && checkWinner()) return;
         CurrentStatus cs = parser.fromJson(line, CurrentStatus.class);
+        if(cs.getStatus()!=0) {
+            Platform.runLater(() -> {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText(cs.getErrorMessage());
+                a.show();
+            });
+            return;
+        }
         StatusUpdater.instance().updateStatus(cs);
         currentStatus = StatusUpdater.instance().getCurrentStatus();
+
         if(currentStatus.getTurn().getPhase().equalsIgnoreCase("action")) {
             if(currentStatus.getGameMode().equals("expert")) {
                 if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.ACTION_2_EXPERT));
@@ -65,9 +78,45 @@ public class GUIMenu implements ClientObserver {
                 else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_SIMPLE));
             }
         }
+        checkWinner();
+    }
+
+    private boolean checkWinner() {
+        if(currentStatus.getWinner()!=null) {
+            if(currentStatus.getWinner().equals("")) {
+                Platform.runLater(() -> {
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setContentText(GamePhases.DRAW.getGUIPrompt());
+                    Optional<ButtonType> result = a.showAndWait();
+                    if(result.isPresent()) {
+                        if(result.get() == ButtonType.OK) {
+                            StatusUpdater.reset();
+                            NetworkManager.instance().close();
+                            toNextScene(GUIScene.TITLE_SCREEN);
+                        }
+                    }
+                });
+            } else {
+                Platform.runLater(() -> {
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setContentText("Player "+currentStatus.getWinner()+" just WON THE GAME!");
+                    Optional<ButtonType> result = a.showAndWait();
+                    if(result.isPresent()) {
+                        if(result.get() == ButtonType.OK) {
+                            StatusUpdater.reset();
+                            NetworkManager.instance().close();
+                            toNextScene(GUIScene.TITLE_SCREEN);
+                        }
+                    }
+                });
+            }
+            return true;
+        }
+        return false;
     }
 
     private void manageCSPlanning(String line) {
+
         changePhaseScene(line);
     }
 

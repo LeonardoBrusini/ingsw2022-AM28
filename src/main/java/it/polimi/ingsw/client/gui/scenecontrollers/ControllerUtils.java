@@ -1,11 +1,15 @@
 package it.polimi.ingsw.client.gui.scenecontrollers;
 
+import com.sun.source.tree.LambdaExpressionTree;
+import it.polimi.ingsw.client.GamePhases;
 import it.polimi.ingsw.client.StatusUpdater;
-import it.polimi.ingsw.client.gui.CommandHandler;
+import it.polimi.ingsw.client.gui.handlers.CommandHandler;
+import it.polimi.ingsw.client.gui.handlers.CommandSingleton;
 import it.polimi.ingsw.network.CharacterCardStatus;
 import it.polimi.ingsw.network.PlayerStatus;
 import it.polimi.ingsw.server.enumerations.Colour;
 import javafx.event.Event;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -62,4 +66,37 @@ public class ControllerUtils {
             }
         }
     }
+
+    public static void moveToIsland(Label textMessage) {
+        CommandSingleton.instance().newCommand("MOVETOISLAND");
+        CommandSingleton.instance().getPhases().add(GamePhases.P_STUDENT_COLOUR);
+        CommandSingleton.instance().getPhases().add(GamePhases.P_ISLAND_INDEX);
+        CommandSingleton.instance().getPhases().add(GamePhases.SENDCOMMAND);
+        System.out.println(CommandSingleton.instance().getPhases().get(0).getGUIPrompt());
+        textMessage.setText(CommandSingleton.instance().getPhases().get(0).getGUIPrompt());
+    }
+
+    public static void moveToHall(Label textMessage) {
+        CommandSingleton.instance().newCommand("MOVETOHALL");
+        CommandSingleton.instance().getPhases().add(GamePhases.P_STUDENT_COLOUR);
+        CommandSingleton.instance().getPhases().add(GamePhases.SENDCOMMAND);
+        System.out.println(CommandSingleton.instance().getPhases().get(0).getGUIPrompt());
+        textMessage.setText(CommandSingleton.instance().getPhases().get(0).getGUIPrompt());
+    }
+
+    public static void moveMotherNature(Label textMessage) {
+        CommandSingleton.instance().newCommand("MOVEMOTHERNATURE");
+        CommandSingleton.instance().getPhases().add(GamePhases.P_MNSHIFTS);
+        CommandSingleton.instance().getPhases().add(GamePhases.SENDCOMMAND);
+        textMessage.setText(CommandSingleton.instance().getPhases().get(0).getGUIPrompt());
+    }
+
+    public static void takeFromCloud(Label textMessage) {
+        CommandSingleton.instance().newCommand("TAKEFROMCLOUD");
+        CommandSingleton.instance().getPhases().add(GamePhases.P_CLOUD_INDEX);
+        CommandSingleton.instance().getPhases().add(GamePhases.SENDCOMMAND);
+        textMessage.setText(CommandSingleton.instance().getPhases().get(0).getGUIPrompt());
+    }
+
+
 }

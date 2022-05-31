@@ -16,6 +16,10 @@ public class StatusUpdater {
         return instance;
     }
 
+    public static void reset() {
+        instance=new StatusUpdater();
+    }
+
     public CurrentStatus getCurrentStatus() {
         return currentStatus;
     }

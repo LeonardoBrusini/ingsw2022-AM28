@@ -65,4 +65,12 @@ public class NetworkManager {
     public void setObserver(ClientObserver menu) {
         this.menu = menu;
     }
+
+    public void close() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

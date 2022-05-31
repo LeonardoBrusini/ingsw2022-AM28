@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -458,11 +459,6 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="turnMessage" layoutX="27.0" layoutY="766.0" prefHeight="240.0" prefWidth="700.0" text="It's YOUR TURN!&#10;During this phase, you must:&#10;1) Move 3 students to your hall or on an island&#10;2) Move Mother Nature to an island&#10;3) Take the students from a cloud&#10;">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
       <Label layoutX="27.0" layoutY="14.0" prefHeight="35.0" prefWidth="142.0" text="(OPPONENT)">
          <font>
             <Font size="24.0" />
@@ -481,12 +477,41 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
+      <Label fx:id="textMessage" layoutX="86.0" layoutY="762.0" prefHeight="43.0" prefWidth="641.0" text="Select one of the following moves:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="moveToIslandButton" layoutX="86.0" layoutY="814.0" mnemonicParsing="false" onMouseClicked="#moveToIslandClicked" prefHeight="43.0" prefWidth="365.0" text="Move a student to an island">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button fx:id="moveToHallButton" layoutX="86.0" layoutY="872.0" mnemonicParsing="false" onMouseClicked="#moveToHallClicked" prefHeight="43.0" prefWidth="365.0" text="Move a student to your hall">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button fx:id="moveMotherNatureButton" layoutX="86.0" layoutY="929.0" mnemonicParsing="false" onMouseClicked="#moveMotherNatureClicked" prefHeight="43.0" prefWidth="365.0" text="Move mother nature">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button fx:id="takeFromCloudButton" layoutX="86.0" layoutY="982.0" mnemonicParsing="false" onMouseClicked="#takeFromCloudClicked" prefHeight="43.0" prefWidth="365.0" text="Take the students from a cloud">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 
    <fx:define>
       <ArrayList fx:id="cloudList">
          <fx:reference source="cloud1" />
          <fx:reference source="cloud2" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="cloudImages">
+         <fx:reference source="Cloud1" />
+         <fx:reference source="Cloud2" />
       </ArrayList>
    </fx:define>
 
@@ -558,4 +583,20 @@
       </ArrayList>
    </fx:define>
 
+   <fx:define>
+      <ArrayList fx:id="islandImages">
+         <fx:reference source="island1" />
+         <fx:reference source="island2" />
+         <fx:reference source="island3" />
+         <fx:reference source="island4" />
+         <fx:reference source="island5" />
+         <fx:reference source="island6" />
+         <fx:reference source="island7" />
+         <fx:reference source="island8" />
+         <fx:reference source="island9" />
+         <fx:reference source="island10" />
+         <fx:reference source="island11" />
+         <fx:reference source="island12" />
+      </ArrayList>
+   </fx:define>
 </Pane>
