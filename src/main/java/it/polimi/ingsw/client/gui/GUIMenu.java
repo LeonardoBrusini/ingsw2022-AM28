@@ -195,7 +195,7 @@ public class GUIMenu implements ClientObserver {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/"+sceneType.getFileName()));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setMaximized(true);
+
             stage.show();
             if(sceneType==GUIScene.TITLE_SCREEN) currentScene = GUIScene.USERNAME;
             else {
