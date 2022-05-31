@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.gui;
+package it.polimi.ingsw.client.gui.handlers;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.network.NetworkManager;
@@ -25,4 +25,5 @@ public abstract class CommandHandler implements EventHandler<Event> {
         c.setIndex(index);
         NetworkManager.instance().sendJSON(c);
     }
+
 }

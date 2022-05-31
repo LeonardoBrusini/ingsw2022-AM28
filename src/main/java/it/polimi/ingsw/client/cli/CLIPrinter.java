@@ -9,7 +9,7 @@ import org.fusesource.jansi.AnsiConsole;
 import java.util.ArrayList;
 
 public class CLIPrinter {
-    public static String[] colourList = {"🟡","🟢","🔵","🟣","🔴"};
+    public static String[] colourList = {"🟢","🔴","🟡","🟣","🔵"};
     public static void printDashboard(int[] entrance, int[] hall, int numTowers) {
         /*System.out.println("Entrance: "+colourList()+", Hall: "+colourList()+", "+numTowers+" towers.");
         System.out.print("          ");
@@ -110,13 +110,16 @@ public class CLIPrinter {
         if(students) System.out.println("\t\t  "+vectToString(card.getStudents()));*/
         System.out.println("Card "+(card.getIndex()+1)+": "+description);
         String s = "";
+        boolean otherComponents = false;
         if(!vectEmpty(card.getStudents())) {
+            otherComponents = true;
             s+="Students: "+vectToString(card.getStudents())+"\t";
         }
         if(card.getNoEntryTiles()!=0) {
+            otherComponents = true;
             s+=card.getNoEntryTiles()+" NoEntryTiles";
         }
-        System.out.println(s);
+        if(otherComponents) System.out.println(s);
     }
 
     private static boolean vectEmpty(int[] students) {

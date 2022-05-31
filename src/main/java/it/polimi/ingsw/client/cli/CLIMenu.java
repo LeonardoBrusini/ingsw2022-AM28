@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.cli;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.client.ClientObserver;
+import it.polimi.ingsw.client.GamePhases;
 import it.polimi.ingsw.client.StatusUpdater;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CLIMenu implements ClientObserver {
-    private final ArrayList<CLIPhases> phases;
+    private final ArrayList<GamePhases> phases;
     private CurrentStatus currentStatus;
     private GameParameters parameters;
     private Command command;
@@ -21,13 +22,13 @@ public class CLIMenu implements ClientObserver {
 
     public CLIMenu() {
         characterCardDescriptions = new HashMap<>();
-        fillDescriprions(characterCardDescriptions);
+        fillDescriptions(characterCardDescriptions);
         phases = new ArrayList<>();
-        phases.add(CLIPhases.USERNAME);
+        phases.add(GamePhases.USERNAME);
         parser = new Gson();
     }
 
-    private void fillDescriprions(HashMap<String, String> characterCardDescriptions) {
+    private void fillDescriptions(HashMap<String, String> characterCardDescriptions) {
         characterCardDescriptions.put("P01.jpg","Take 1 Student from this card and place it on an Island of your choice. Then draw a new Student from the Bag and place it on this card.");
         characterCardDescriptions.put("P02.jpg","During this turn, you take control of any number of Professor even if you have the same number of Students as the player who currently controls them.");
         characterCardDescriptions.put("P03.jpg","Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.");
@@ -43,7 +44,7 @@ public class CLIMenu implements ClientObserver {
     }
 
     public void printMenu() {
-        if(phases.get(0)==CLIPhases.SENDCOMMAND) return;
+        if(phases.get(0)== GamePhases.SENDCOMMAND) return;
         switch (phases.get(0)) {
             case WAIT,ACTION_COMMAND,PLANNING_COMMAND,WIN,DRAW -> {if(currentStatus!=null) printStatus();}
         }
@@ -55,7 +56,7 @@ public class CLIMenu implements ClientObserver {
         for(PlayerStatus ps : currentStatus.getGame().getPlayers()) {
             String s = ps.getNickName()+": "+ps.getTowerColour()+" towers";
             if(currentStatus.getGameMode().equals("expert")) s+=", "+ps.getCoins()+" coins";
-            s+=", Assistant Cards left: "+printAssistantCards(ps);
+            s+=", Assistant Cards left [weight, (max mother nature shifts)]: "+printAssistantCards(ps);
             System.out.println(s);
             CLIPrinter.printDashboard(ps.getStudentsOnEntrance(),ps.getStudentsOnHall(),ps.getNumTowers());
         }
@@ -74,19 +75,22 @@ public class CLIMenu implements ClientObserver {
         CLIPrinter.printProfessors(currentStatus.getGame().getProfessors());
         System.out.println("Current Player: "+currentStatus.getTurn().getPlayer()+", Phase: "+currentStatus.getTurn().getPhase());
         if(currentStatus.getWinner()!=null) {
-            System.out.println("\uD83C\uDF89PLAYER "+currentStatus.getWinner()+" WON!\uD83C\uDF89");
+            if(!currentStatus.getWinner().equals("")) System.out.println(GamePhases.DRAW.getMenuPrompt());
+            else System.out.println("\uD83C\uDF89PLAYER "+currentStatus.getWinner()+" WON!\uD83C\uDF89");
+            System.exit(0);
         }
     }
 
     private String printAssistantCards(PlayerStatus ps) {
         String s="[";
-        for(int i=0;i<ps.getAssistantCards().length-1;i++) {
+        int i;
+        for(i=0;i<ps.getAssistantCards().length-1;i++) {
             if(!ps.getAssistantCards()[i]) {
-                s+=((i+1)+",");
+                s+=((i+1)+" ("+(i/2+1)+"),");
             }
         }
-        if(!ps.getAssistantCards()[ps.getAssistantCards().length-1]) s+=ps.getAssistantCards().length;
-        s+="]";
+        if(!ps.getAssistantCards()[i]) s+=ps.getAssistantCards().length;
+        s+=" ("+(i/2+1)+")]";
         return s;
     }
 
@@ -98,12 +102,12 @@ public class CLIMenu implements ClientObserver {
                     AddPlayerResponse apr = parser.fromJson(line,AddPlayerResponse.class);
                     if(apr.isFirst()==null && apr.getErrorMessage()==null) {
                         manageCS(line);
-                        if(currentStatus.getGameMode().equals("expert")) CLIPhases.ACTION_COMMAND.setMenuPrompt(CLIPhases.ACTION_COMMAND.getMenuPrompt()+"\n5) Play a Character Card");
+                        if(currentStatus.getGameMode().equals("expert")) GamePhases.ACTION_COMMAND.setMenuPrompt(GamePhases.ACTION_COMMAND.getMenuPrompt()+"\n5) Play a Character Card");
                         return;
                     }
                     System.out.println("UPDATE APR");
                     if(apr.getStatus()==105) {
-                        phases.add(CLIPhases.PRE_WAIT);
+                        phases.add(GamePhases.PRE_WAIT);
                         nextPhase();
                         printMenu();
                         return;
@@ -113,12 +117,12 @@ public class CLIMenu implements ClientObserver {
                         printMenu();
                         return;
                     }
-                    if(phases.get(0)!=CLIPhases.NUM_PLAYERS && phases.get(0)!=CLIPhases.GAME_MODE) {
+                    if(phases.get(0)!= GamePhases.NUM_PLAYERS && phases.get(0)!= GamePhases.GAME_MODE) {
                         if(apr.isFirst()) {
-                            phases.add(CLIPhases.NUM_PLAYERS);
-                            phases.add(CLIPhases.GAME_MODE);
+                            phases.add(GamePhases.NUM_PLAYERS);
+                            phases.add(GamePhases.GAME_MODE);
                         } else {
-                            phases.add(CLIPhases.PRE_WAIT);
+                            phases.add(GamePhases.PRE_WAIT);
                         }
                         nextPhase();
                         printMenu();
@@ -149,17 +153,17 @@ public class CLIMenu implements ClientObserver {
             currentStatus = StatusUpdater.updateStatus(currentStatus,cs);
             if(currentStatus.getWinner()!=null) {
                 if(currentStatus.getWinner().equals("")) {
-                    phases.add(CLIPhases.DRAW);
+                    phases.add(GamePhases.DRAW);
                 } else {
-                    phases.add(CLIPhases.WIN);
+                    phases.add(GamePhases.WIN);
                 }
             } else {
                 if(!currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID())) {
-                    phases.add(CLIPhases.WAIT);
+                    phases.add(GamePhases.WAIT);
                 } else if(currentStatus.getTurn().getPhase().equals("PLANNING")) {
-                    phases.add(CLIPhases.PLANNING_COMMAND);
+                    phases.add(GamePhases.PLANNING_COMMAND);
                 } else {
-                    phases.add(CLIPhases.ACTION_COMMAND);
+                    phases.add(GamePhases.ACTION_COMMAND);
                 }
             }
             nextPhase();
@@ -199,7 +203,7 @@ public class CLIMenu implements ClientObserver {
                         command.setPlayerIndex(currentStatus.getPlayerID());
                         command.setCmd("PLAYASSISTANTCARD");
                         command.setIndex(i-1);
-                        phases.add(CLIPhases.SENDCOMMAND);
+                        phases.add(GamePhases.SENDCOMMAND);
                         nextPhase();
                         System.out.println("Sending: "+parser.toJson(command)+" in phase: "+phases.get(0).toString());
                         return parser.toJson(command);
@@ -311,15 +315,15 @@ public class CLIMenu implements ClientObserver {
                     if(i>=1 && i<=3) {
                         if(i>sumE) {
                             System.out.println("NOT ENOUGH STUDENTS IN YOUR ENTRANCE");
-                            phases.add(CLIPhases.ACTION_COMMAND);
+                            phases.add(GamePhases.ACTION_COMMAND);
                         } else {
                             temporaryGroup=new int[5];
-                            for (int j = 0; j < i; j++) phases.add(CLIPhases.PCC_STUDENT_ON_CARD);
-                            phases.add(CLIPhases.PCC_SUBMIT_GROUP_FROM);
-                            phases.add(CLIPhases.PCC_GROUP_ON_ENTRANCE);
-                            for (int j = 0; j < i; j++) phases.add(CLIPhases.PCC_STUDENT_ON_ENTRANCE);
-                            phases.add(CLIPhases.PCC_SUBMIT_GROUP_TO);
-                            phases.add(CLIPhases.SENDCOMMAND);
+                            for (int j = 0; j < i; j++) phases.add(GamePhases.PCC_STUDENT_ON_CARD);
+                            phases.add(GamePhases.PCC_SUBMIT_GROUP_FROM);
+                            phases.add(GamePhases.PCC_GROUP_ON_ENTRANCE);
+                            for (int j = 0; j < i; j++) phases.add(GamePhases.PCC_STUDENT_ON_ENTRANCE);
+                            phases.add(GamePhases.PCC_SUBMIT_GROUP_TO);
+                            phases.add(GamePhases.SENDCOMMAND);
                         }
                         nextPhase();
                     }
@@ -339,15 +343,15 @@ public class CLIMenu implements ClientObserver {
                     if(i>=1 && i<=2) {
                         if(i>sumH || i>sumE) {
                             System.out.println("NOT ENOUGH STUDENTS IN YOUR HALL OR ENTRANCE");
-                            phases.add(CLIPhases.ACTION_COMMAND);
+                            phases.add(GamePhases.ACTION_COMMAND);
                         } else {
                             temporaryGroup=new int[5];
-                            for(int j=0;j<i;j++) phases.add(CLIPhases.PCC_STUDENT_ON_HALL);
-                            phases.add(CLIPhases.PCC_SUBMIT_GROUP_TO);
-                            phases.add(CLIPhases.PCC_GROUP_ON_ENTRANCE);
-                            for(int j=0;j<i;j++) phases.add(CLIPhases.PCC_STUDENT_ON_ENTRANCE);
-                            phases.add(CLIPhases.PCC_SUBMIT_GROUP_FROM);
-                            phases.add(CLIPhases.SENDCOMMAND);
+                            for(int j=0;j<i;j++) phases.add(GamePhases.PCC_STUDENT_ON_HALL);
+                            phases.add(GamePhases.PCC_SUBMIT_GROUP_TO);
+                            phases.add(GamePhases.PCC_GROUP_ON_ENTRANCE);
+                            for(int j=0;j<i;j++) phases.add(GamePhases.PCC_STUDENT_ON_ENTRANCE);
+                            phases.add(GamePhases.PCC_SUBMIT_GROUP_FROM);
+                            phases.add(GamePhases.SENDCOMMAND);
                         }
                         nextPhase();
                     }
@@ -381,12 +385,12 @@ public class CLIMenu implements ClientObserver {
                 printMenu();
             }
         }
-        if(phases.get(0)==CLIPhases.PCC_GROUP_ON_ENTRANCE) {
+        if(phases.get(0)== GamePhases.PCC_GROUP_ON_ENTRANCE) {
             temporaryGroup = new int[5];
             nextPhase();
             printMenu();
         }
-        if(phases.get(0)==CLIPhases.SENDCOMMAND) {
+        if(phases.get(0)== GamePhases.SENDCOMMAND) {
             System.out.println("SENDCOMMAND: returning the command json");
             System.out.println(parser.toJson(command));
             return parser.toJson(command);
@@ -398,19 +402,19 @@ public class CLIMenu implements ClientObserver {
         CharacterCardStatus ccs = currentStatus.getGame().getCharacterCards().get(i);
         switch (ccs.getFileName()) {
             case "P01.jpg" -> {
-                phases.add(CLIPhases.PCC_STUDENT_COLOUR);
-                phases.add(CLIPhases.PCC_ISLAND_INDEX);
-                phases.add(CLIPhases.SENDCOMMAND);
+                phases.add(GamePhases.PCC_STUDENT_COLOUR);
+                phases.add(GamePhases.PCC_ISLAND_INDEX);
+                phases.add(GamePhases.SENDCOMMAND);
             }
             case "P03.jpg","P05.jpg" -> {
-                phases.add(CLIPhases.PCC_ISLAND_INDEX);
-                phases.add(CLIPhases.SENDCOMMAND);
+                phases.add(GamePhases.PCC_ISLAND_INDEX);
+                phases.add(GamePhases.SENDCOMMAND);
             }
-            case "P07.jpg" -> phases.add(CLIPhases.PCC_GROUP_ON_CARD);
-            case "P10.jpg" -> phases.add(CLIPhases.PCC_GROUP_ON_HALL);
+            case "P07.jpg" -> phases.add(GamePhases.PCC_GROUP_ON_CARD);
+            case "P10.jpg" -> phases.add(GamePhases.PCC_GROUP_ON_HALL);
             case "P09.jpg","P11.jpg","P12.jpg" -> {
-                phases.add(CLIPhases.PCC_STUDENT_COLOUR);
-                phases.add(CLIPhases.SENDCOMMAND);
+                phases.add(GamePhases.PCC_STUDENT_COLOUR);
+                phases.add(GamePhases.SENDCOMMAND);
             }
         }
     }
@@ -422,37 +426,37 @@ public class CLIMenu implements ClientObserver {
         switch (i) {
             case 1 -> {
                 command.setCmd("MOVETOISLAND");
-                phases.add(CLIPhases.P_STUDENT_COLOUR);
-                phases.add(CLIPhases.P_ISLAND_INDEX);
-                phases.add(CLIPhases.SENDCOMMAND);
+                phases.add(GamePhases.P_STUDENT_COLOUR);
+                phases.add(GamePhases.P_ISLAND_INDEX);
+                phases.add(GamePhases.SENDCOMMAND);
                 nextPhase();
                 printMenu();
             }
             case 2 -> {
                 command.setCmd("MOVETOHALL");
-                phases.add(CLIPhases.P_STUDENT_COLOUR);
-                phases.add(CLIPhases.SENDCOMMAND);
+                phases.add(GamePhases.P_STUDENT_COLOUR);
+                phases.add(GamePhases.SENDCOMMAND);
                 nextPhase();
                 printMenu();
             }
             case 3 -> {
                 command.setCmd("MOVEMOTHERNATURE");
-                phases.add(CLIPhases.P_MNSHIFTS);
-                phases.add(CLIPhases.SENDCOMMAND);
+                phases.add(GamePhases.P_MNSHIFTS);
+                phases.add(GamePhases.SENDCOMMAND);
                 nextPhase();
                 printMenu();
             }
             case 4 -> {
                 command.setCmd("TAKEFROMCLOUD");
-                phases.add(CLIPhases.P_CLOUD_INDEX);
-                phases.add(CLIPhases.SENDCOMMAND);
+                phases.add(GamePhases.P_CLOUD_INDEX);
+                phases.add(GamePhases.SENDCOMMAND);
                 nextPhase();
                 printMenu();
             }
             case 5 -> {
                 if(currentStatus.getGameMode().equals("expert")) {
                     command.setCmd("PLAYCHARACTERCARD");
-                    phases.add(CLIPhases.P_CCARD_INDEX);
+                    phases.add(GamePhases.P_CCARD_INDEX);
                     nextPhase();
                 }
                 printMenu();

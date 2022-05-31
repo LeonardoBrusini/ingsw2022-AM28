@@ -1,10 +1,8 @@
 package it.polimi.ingsw.client.gui.scenecontrollers;
 
 import it.polimi.ingsw.client.StatusUpdater;
-import it.polimi.ingsw.client.gui.CommandHandler;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,6 +12,8 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 
 public class GenericSceneController {
+    protected ArrayList<ImageView> myEntranceView,myHallView;
+    protected ArrayList<String> myEntranceCol, myHallCol;
     @FXML
     GridPane myEntrance,opponentEntrance,myHall,opponentHall,myTowers,opponentTowers;
     @FXML
@@ -21,12 +21,16 @@ public class GenericSceneController {
     @FXML
     ArrayList<GridPane> cloudList,studentPanes;
     @FXML
-    ArrayList<ImageView> towersImages,motherNatureImages,bridgeImages;
+    ArrayList<ImageView> towersImages,motherNatureImages,bridgeImages,islandImages,cloudImages;
     @FXML
     Label opponentName,myName;
 
     @FXML
     public void initialize() {
+        myEntranceView = new ArrayList<>();
+        myHallView = new ArrayList<>();
+        myEntranceCol = new ArrayList<>();
+        myHallCol = new ArrayList<>();
         CurrentStatus cs = StatusUpdater.instance().getCurrentStatus();
         //Players
         ArrayList<PlayerStatus> players = cs.getGame().getPlayers();
@@ -100,17 +104,21 @@ public class GenericSceneController {
         }
         int studentIndex=0;
         for(int i=0;i<ps.getStudentsOnEntrance().length;i++) {
-            String col = Colour.values()[i].toString().toLowerCase();
-            Image sImageH = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),21,30,true,true);
-            Image sImageE = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),25,30,true,false);
+            String col = Colour.values()[i].toString();
+            Image sImageH = new Image(classLoader.getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),30,30,true,true);
+            Image sImageE = new Image(classLoader.getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),33,33,true,false);
             for (int j=0;j<ps.getStudentsOnEntrance()[i];j++) {
                 ImageView sE = new ImageView(sImageE);
+                myEntranceView.add(sE);
+                myEntranceCol.add(col);
                 entrance.add(sE,studentIndex%2,studentIndex/2);
                 studentIndex++;
             }
             for (int j=0;j<ps.getStudentsOnHall()[i];j++) {
                 ImageView sH = new ImageView(sImageH);
-                hall.add(sH,i,j);
+                myHallView.add(sH);
+                myHallCol.add(col);
+                hall.add(sH,j,i);
             }
         }
     }

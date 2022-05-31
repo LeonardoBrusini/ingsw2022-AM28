@@ -67,7 +67,9 @@ public class PlayCharacterCardCommand implements CommandStrategy{
         CharacterCard card = gameManager.getBoard().getCharacterCards().get(command.getIndex());
         CurrentStatus cs = card.getCardInfo().getEffect().getUpdatedStatus(card,gameManager);
         if(EndOfGameChecker.instance().isEndOfGame()){
-            cs.setWinner(gameManager.getPlayers().get(EndOfGameChecker.instance().getWinner()).getNickname());
+            int winner = EndOfGameChecker.instance().getWinner();
+            if(winner==-1) cs.setWinner("");
+            else cs.setWinner(gameManager.getPlayers().get(EndOfGameChecker.instance().getWinner()).getNickname());
         }
         return new Gson().toJson(cs);
     }
