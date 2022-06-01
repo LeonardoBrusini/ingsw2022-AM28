@@ -44,6 +44,7 @@ public class MoveMotherNatureCommand implements CommandStrategy{
         Gson g = new Gson();
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();
+        cs.setLastCommand("MOVEMOTHERNATURE");
         gs.setMotherNatureIndex(gameManager.getBoard().getMotherNature().getIslandIndex());
         gs.setArchipelagos(gameManager.getBoard().getIslandManager().getFullArchipelagosStatus());
         ArrayList<Player> players = gameManager.getPlayers();

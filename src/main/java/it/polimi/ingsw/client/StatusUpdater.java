@@ -29,6 +29,7 @@ public class StatusUpdater {
             currentStatus = c;
             return;
         }
+        if(c.getLastCommand()!=null) currentStatus.setLastCommand(c.getLastCommand());
         if(c.getGameMode()!=null) currentStatus.setGameMode(c.getGameMode());
         if(c.getPlayerID()!=null) currentStatus.setPlayerID(c.getPlayerID());
         if(c.getWinner()!=null) currentStatus.setWinner(c.getWinner());
@@ -45,6 +46,7 @@ public class StatusUpdater {
             currentStatus = c;
             return currentStatus;
         }
+        if(c.getLastCommand()!=null) currentStatus.setLastCommand(c.getLastCommand());
         if(c.getGameMode()!=null) currentStatus.setGameMode(c.getGameMode());
         if(c.getPlayerID()!=null) currentStatus.setPlayerID(c.getPlayerID());
         if(c.getWinner()!=null) currentStatus.setWinner(c.getWinner());

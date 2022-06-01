@@ -70,9 +70,9 @@ class MotherNatureTest {
         im.getArchipelagos().get(2).merge(im.getArchipelagoByIslandIndex(3));
         assertEquals(players.get(0), mn.playerWithMostInfluence(players, im, pg,cards));
 
-        Player p3 = new Player(Tower.GRAY);
+        Player p3 = new Player(Tower.GREY);
         players.add(p3);
-        en.put(Colour.BLUE, Tower.GRAY);
+        en.put(Colour.BLUE, Tower.GREY);
         pg.setProfessors(en);
         assertEquals(p3, mn.playerWithMostInfluence(players, im, pg,cards));
 

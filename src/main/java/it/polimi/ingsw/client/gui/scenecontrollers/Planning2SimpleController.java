@@ -27,26 +27,26 @@ public class Planning2SimpleController extends GenericSceneController {
             }
         }
         String path;
-        if(StatusUpdater.instance().getCurrentStatus().getTurn().getPlayer().equals(StatusUpdater.instance().getCurrentStatus().getPlayerID())) {
-            for(int i=0;i<ps.getAssistantCards().length;i++) {
-                if(!ps.getAssistantCards()[i]) {
-                    path = "images/assistantCards/A";
-                    if(i<9) path+="0";
-                    path+=(i+1)+".png";
-                    Image image = new Image(getClass().getClassLoader().getResource(path).toString(),250,243,true,true);
-                    ImageView iView = new ImageView(image);
-                    iView.setOnMousePressed(new CommandHandler("PLAYASSISTANTCARD",StatusUpdater.instance().getCurrentStatus().getPlayerID(),i) {
-                        @Override
-                        public void handle(Event event) {
-                            sendAssistantCardCommand();
-                        }
-                    });
-                    ACBox.getChildren().add(iView);
-                }
+        for(int i=0;i<ps.getAssistantCards().length;i++) {
+            if(!ps.getAssistantCards()[i]) {
+                path = "images/assistantCards/A";
+                if(i<9) path+="0";
+                path+=(i+1)+".png";
+                Image image = new Image(getClass().getClassLoader().getResource(path).toString(),310,310,true,true);
+                ImageView iView = new ImageView(image);
+                iView.setOnMousePressed(new CommandHandler("PLAYASSISTANTCARD",StatusUpdater.instance().getCurrentStatus().getPlayerID(),i) {
+                    @Override
+                    public void handle(Event event) {
+                        sendAssistantCardCommand();
+                    }
+                });
+                ACBox.getChildren().add(iView);
             }
-        } else {
-            ACBox.setOpacity(0);
+        }
+        if(!StatusUpdater.instance().getCurrentStatus().getTurn().getPlayer().equals(StatusUpdater.instance().getCurrentStatus().getPlayerID())) {
+           // ACBox.setOpacity(0);
             ACPane.setOpacity(0);
+            ACPane.setDisable(true);
         }
     }
 }

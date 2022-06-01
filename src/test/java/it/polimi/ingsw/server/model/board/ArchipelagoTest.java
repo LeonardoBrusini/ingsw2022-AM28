@@ -40,7 +40,7 @@ class ArchipelagoTest {
         assertEquals(0, a.playerInfluence(Tower.BLACK,p, cards));
         p.setTower(Colour.YELLOW, Tower.BLACK);
         p.setTower(Colour.RED,Tower.WHITE);
-        p.setTower(Colour.BLUE,Tower.GRAY);
+        p.setTower(Colour.BLUE,Tower.GREY);
         p.setTower(Colour.GREEN,Tower.BLACK);
         p.setTower(Colour.PINK,Tower.WHITE);
         a.getIslands().get(0).getStudents().setNumStudents(17,Colour.GREEN);

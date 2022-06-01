@@ -47,6 +47,7 @@ public class TakeFromCloudCommand implements CommandStrategy{
         Gson g = new Gson();
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();
+        cs.setLastCommand("TAKEFROMCLOUD");
         cs.setTurn(gameManager.getTurnManager().getTurnStatus());
         ArrayList<PlayerStatus> ps = new ArrayList<>();
         PlayerStatus ps0 = new PlayerStatus();

@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.scenecontrollers;
 import it.polimi.ingsw.client.StatusUpdater;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
+import it.polimi.ingsw.server.enumerations.Tower;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,7 +16,7 @@ public class GenericSceneController {
     protected ArrayList<ImageView> myEntranceView,myHallView;
     protected ArrayList<String> myEntranceCol, myHallCol;
     @FXML
-    GridPane myEntrance,opponentEntrance,myHall,opponentHall,myTowers,opponentTowers;
+    GridPane myEntrance,opponentEntrance,myHall,myProfessors,opponentHall,myTowers,opponentTowers,opponentProfessors;
     @FXML
     ImageView myLAC,opponentLAC;
     @FXML
@@ -35,17 +36,17 @@ public class GenericSceneController {
         //Players
         ArrayList<PlayerStatus> players = cs.getGame().getPlayers();
         if(players.get(0).getIndex()==cs.getPlayerID()) {
-            playerStatus(players.get(0), myName, myLAC, myTowers, myEntrance, myHall);
-            playerStatus(players.get(1), opponentName, opponentLAC, opponentTowers, opponentEntrance, opponentHall);
-        } else playerStatus(players.get(0), opponentName, opponentLAC, opponentTowers, opponentEntrance, opponentHall);
-        if(players.get(1).getIndex()==cs.getPlayerID()) playerStatus(players.get(1), myName, myLAC, myTowers, myEntrance, myHall);
+            playerStatus(players.get(0),cs.getGame().getProfessors(), myName, myLAC, myTowers, myEntrance, myHall, myProfessors);
+            playerStatus(players.get(1), cs.getGame().getProfessors(), opponentName, opponentLAC, opponentTowers, opponentEntrance, opponentHall, opponentProfessors);
+        } else playerStatus(players.get(0), cs.getGame().getProfessors(), opponentName, opponentLAC, opponentTowers, opponentEntrance, opponentHall, opponentProfessors);
+        if(players.get(1).getIndex()==cs.getPlayerID()) playerStatus(players.get(1), cs.getGame().getProfessors(), myName, myLAC, myTowers, myEntrance, myHall, myProfessors);
         //else opponentStatus(players.get(1));
-        fillClouds(cs.getGame().getClouds());
-        fillIslands(cs.getGame().getArchipelagos());
+        ControllerUtils.fillClouds(cs.getGame().getClouds(),cloudList,getClass().getClassLoader());
+        ControllerUtils.fillIslands(cs.getGame().getArchipelagos(), bridgeImages, studentPanes, towersImages, getClass().getClassLoader());
         motherNatureImages.get(cs.getGame().getMotherNatureIndex()-1).setImage(new Image(getClass().getClassLoader().getResource("images/wooden_pieces/mother_nature.png").toString(),45,45,true,true));
     }
 
-    private void fillIslands(ArrayList<ArchipelagoStatus> archipelagos) {
+    /*private void fillIslands(ArrayList<ArchipelagoStatus> archipelagos) {
         for (ArchipelagoStatus as: archipelagos) {
             for(int i=0;i<as.getIslands().size();i++) {
                 fillIsland(as.getIslands().get(i));
@@ -54,9 +55,9 @@ public class GenericSceneController {
                 }
             }
         }
-    }
+    }*/
 
-    private void fillIsland(IslandStatus islandStatus) {
+    /*private void fillIsland(IslandStatus islandStatus) {
         GridPane studentPane = studentPanes.get(islandStatus.getIslandIndex()-1);
         for (int i=0;i<islandStatus.getStudents().length;i++) {
             String col = Colour.values()[i].toString().toLowerCase();
@@ -70,9 +71,9 @@ public class GenericSceneController {
                 towersImages.get(islandStatus.getIslandIndex()-1).setImage(tower);
             }
         }
-    }
+    }*/
 
-    private void fillClouds(ArrayList<CloudStatus> clouds) {
+    /*private void fillClouds(ArrayList<CloudStatus> clouds) {
         for (CloudStatus c: clouds) {
             GridPane cloudPane = cloudList.get(c.getIndex());
             for (int i=0;i<c.getStudents().length;i++) {
@@ -84,9 +85,9 @@ public class GenericSceneController {
                 cloudPane.add(sLabel,1,i);
             }
         }
-    }
+    }*/
 
-    protected void playerStatus(PlayerStatus ps, Label name, ImageView LAC, GridPane towers, GridPane entrance, GridPane hall) {
+    protected void playerStatus(PlayerStatus ps, int[] professorStatus, Label name, ImageView LAC, GridPane towers, GridPane entrance, GridPane hall, GridPane professors) {
         ClassLoader classLoader = getClass().getClassLoader();
         name.setText(ps.getNickName());
         String path;
@@ -102,6 +103,7 @@ public class GenericSceneController {
             ImageView tower = new ImageView(towerImage);
             towers.add(tower,i%2,i/2);
         }
+
         int studentIndex=0;
         for(int i=0;i<ps.getStudentsOnEntrance().length;i++) {
             String col = Colour.values()[i].toString();
@@ -121,5 +123,16 @@ public class GenericSceneController {
                 hall.add(sH,j,i);
             }
         }
+        ControllerUtils.instance().setMyComponents(myEntranceView,myHallView,myEntranceCol,myHallCol);
+        for(int i=0;i<professorStatus.length;i++) {
+            String col = Colour.values()[i].toString().toLowerCase();
+            path = "images/wooden_pieces/teacher_"+col+".png";
+            if(professorStatus[i]>=0 && ps.getTowerColour().equals(Tower.values()[professorStatus[i]].toString())) {
+                Image profImage = new Image(classLoader.getResource(path).toString(),44,44,true,true);
+                ImageView profView = new ImageView(profImage);
+                professors.add(profView,0,i);
+            }
+        }
+        //ControllerUtils.setHall(hall, ps.getStudentsOnEntrance());
     }
 }

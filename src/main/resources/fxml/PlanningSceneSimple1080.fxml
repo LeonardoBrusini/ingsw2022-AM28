@@ -93,7 +93,7 @@
          <font>
             <Font size="24.0" />
          </font></Label>
-      <ImageView fx:id="bridge09" fitHeight="78.0" fitWidth="33.0" layoutX="1553.0" layoutY="890.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="69.4">
+      <ImageView fx:id="bridge9" fitHeight="78.0" fitWidth="33.0" layoutX="1553.0" layoutY="890.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="69.4">
          <image>
             <Image url="@../images/board/bridge.png" />
          </image>
@@ -103,32 +103,32 @@
             <Image url="@../images/board/bridge.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="bridge04" fitHeight="81.0" fitWidth="33.0" layoutX="1553.0" layoutY="101.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-71.6">
+      <ImageView fx:id="bridge4" fitHeight="81.0" fitWidth="33.0" layoutX="1553.0" layoutY="101.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-71.6">
          <image>
             <Image url="@../images/board/bridge.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="bridge03" fitHeight="86.0" fitWidth="33.0" layoutX="1332.0" layoutY="105.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="67.6">
+      <ImageView fx:id="bridge3" fitHeight="86.0" fitWidth="33.0" layoutX="1332.0" layoutY="105.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="67.6">
          <image>
             <Image url="@../images/board/bridge.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="bridge08" fitHeight="86.0" fitWidth="25.0" layoutX="1713.0" layoutY="783.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
+      <ImageView fx:id="bridge8" fitHeight="86.0" fitWidth="25.0" layoutX="1713.0" layoutY="783.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
          <image>
             <Image url="@../images/board/bridge.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="bridge07" fitHeight="100.0" fitWidth="25.0" layoutX="1786.0" layoutY="597.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="bridge7" fitHeight="100.0" fitWidth="25.0" layoutX="1786.0" layoutY="597.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/bridge.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="bridge06" fitHeight="81.0" fitWidth="25.0" layoutX="1792.0" layoutY="397.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-7.1">
+      <ImageView fx:id="bridge6" fitHeight="81.0" fitWidth="25.0" layoutX="1792.0" layoutY="397.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-7.1">
          <image>
             <Image url="@../images/board/bridge.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="bridge05" fitHeight="98.0" fitWidth="28.0" layoutX="1730.0" layoutY="212.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="154.1">
+      <ImageView fx:id="bridge5" fitHeight="98.0" fitWidth="28.0" layoutX="1730.0" layoutY="212.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="154.1">
          <image>
             <Image url="@../images/board/bridge.png" />
          </image>
@@ -138,12 +138,12 @@
             <Image url="@../images/board/bridge.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="bridge01" fitHeight="80.0" fitWidth="38.0" layoutX="1040.0" layoutY="401.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="18.4">
+      <ImageView fx:id="bridge1" fitHeight="80.0" fitWidth="38.0" layoutX="1040.0" layoutY="401.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="18.4">
          <image>
             <Image url="@../images/board/bridge.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="bridge02" fitHeight="86.0" fitWidth="25.0" layoutX="1151.0" layoutY="227.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="41.8">
+      <ImageView fx:id="bridge2" fitHeight="86.0" fitWidth="25.0" layoutX="1151.0" layoutY="227.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="41.8">
          <image>
             <Image url="@../images/board/bridge.png" />
          </image>
@@ -175,19 +175,6 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
-      <GridPane fx:id="myEntrance" layoutX="43.0" layoutY="449.0" prefHeight="240.0" prefWidth="85.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="10.0" prefWidth="29.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="34.0" minWidth="10.0" prefWidth="27.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -483,6 +470,43 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <GridPane fx:id="myProfessors" layoutX="509.0" layoutY="87.0" prefHeight="241.0" prefWidth="57.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="opponentProfessors" layoutX="509.0" layoutY="445.0" prefHeight="241.0" prefWidth="57.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="myEntrance" layoutX="43.0" layoutY="449.0" prefHeight="240.0" prefWidth="85.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
    </children>
 
    <fx:define>
@@ -511,15 +535,15 @@
 
    <fx:define>
       <ArrayList fx:id="bridgeImages">
-         <fx:reference source="bridge01" />
-         <fx:reference source="bridge02" />
-         <fx:reference source="bridge03" />
-         <fx:reference source="bridge04" />
-         <fx:reference source="bridge05" />
-         <fx:reference source="bridge06" />
-         <fx:reference source="bridge07" />
-         <fx:reference source="bridge08" />
-         <fx:reference source="bridge09" />
+         <fx:reference source="bridge1" />
+         <fx:reference source="bridge2" />
+         <fx:reference source="bridge3" />
+         <fx:reference source="bridge4" />
+         <fx:reference source="bridge5" />
+         <fx:reference source="bridge6" />
+         <fx:reference source="bridge7" />
+         <fx:reference source="bridge8" />
+         <fx:reference source="bridge9" />
          <fx:reference source="bridge10" />
          <fx:reference source="bridge11" />
          <fx:reference source="bridge12" />

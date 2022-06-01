@@ -7,11 +7,11 @@ public enum GUIScene {
     PLANNING_2_EXPERT("planning2ExpertScene.fxml"),
     PLANNING_3_EXPERT("planning3ExpertScene.fxml"),
     PLANNING_2_SIMPLE("PlanningSceneSimple1080.fxml"),
-    PLANNING_3_SIMPLE("planning3SimpleScene.fxml"),
+    PLANNING_3_SIMPLE("PlanningSceneSimpleThreePlayers1080.fxml"),
     ACTION_2_EXPERT("action2ExpertScene.fxml"),
     ACTION_3_EXPERT("action3ExpertScene.fxml"),
     ACTION_2_SIMPLE("actionSceneSimple1080.fxml"),
-    ACTION_3_SIMPLE("action3SimpleScene.fxml");
+    ACTION_3_SIMPLE("ActionScene3Simple1080.fxml");
 
     private String fileName;
     GUIScene(String s) {

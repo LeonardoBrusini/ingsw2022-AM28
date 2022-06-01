@@ -43,7 +43,7 @@ class GameManagerTest {
         assertEquals(2, gm.getPlayers().size());
         assertEquals(1, gm.getPlayers().get(1).getCoins());
         gm.addPlayer();
-        assertEquals(Tower.GRAY, gm.getPlayers().get(2).getTower());
+        assertEquals(Tower.GREY, gm.getPlayers().get(2).getTower());
         assertEquals(3, gm.getPlayers().size());
         assertEquals(1, gm.getPlayers().get(2).getCoins());
     }

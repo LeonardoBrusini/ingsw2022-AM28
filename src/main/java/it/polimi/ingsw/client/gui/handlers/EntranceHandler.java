@@ -36,4 +36,20 @@ public class EntranceHandler implements EventHandler<Event> {
             }
         }
     }
+
+    public String getCol() {
+        return col;
+    }
+
+    public void setCol(String col) {
+        this.col = col;
+    }
+
+    public Label getTextLabel() {
+        return textLabel;
+    }
+
+    public void setTextLabel(Label textLabel) {
+        this.textLabel = textLabel;
+    }
 }

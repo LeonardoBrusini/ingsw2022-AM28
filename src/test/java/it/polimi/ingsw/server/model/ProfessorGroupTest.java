@@ -33,7 +33,7 @@ class ProfessorGroupTest {
             assertEquals(pg.getTower(c),pg.getProfessors().get(c));
             pg.setTower(c,Tower.BLACK);
             assertEquals(pg.getTower(c),pg.getProfessors().get(c));
-            pg.setTower(c,Tower.GRAY);
+            pg.setTower(c,Tower.GREY);
             assertEquals(pg.getTower(c),pg.getProfessors().get(c));
         }
         ProfessorGroup pg2 = new ProfessorGroup();
@@ -57,7 +57,7 @@ class ProfessorGroupTest {
             for (Colour c1 : Colour.values()) {
                 if(c!=c1) assertEquals(pg2.getTower(c1),pg.getTower(c1));
             }
-            pg.setTower(c,Tower.GRAY);
+            pg.setTower(c,Tower.GREY);
             assertEquals(pg.getTower(c),pg.getProfessors().get(c));
             for (Colour c1 : Colour.values()) {
                 if(c!=c1) assertEquals(pg2.getTower(c1),pg.getTower(c1));
@@ -77,8 +77,8 @@ class ProfessorGroupTest {
             assertEquals(Tower.WHITE,pg.getProfessors().get(c));
             pg.setTower(c,Tower.BLACK);
             assertEquals(Tower.BLACK,pg.getProfessors().get(c));
-            pg.setTower(c,Tower.GRAY);
-            assertEquals(Tower.GRAY,pg.getProfessors().get(c));
+            pg.setTower(c,Tower.GREY);
+            assertEquals(Tower.GREY,pg.getProfessors().get(c));
         }
         ProfessorGroup pg2 = new ProfessorGroup();
         for (Colour c : Colour.values()) {
@@ -101,8 +101,8 @@ class ProfessorGroupTest {
             for (Colour c1 : Colour.values()) {
                 if(c!=c1) assertEquals(pg2.getProfessors().get(c1),pg.getProfessors().get(c1));
             }
-            pg.setTower(c,Tower.GRAY);
-            assertEquals(Tower.GRAY,pg.getProfessors().get(c));
+            pg.setTower(c,Tower.GREY);
+            assertEquals(Tower.GREY,pg.getProfessors().get(c));
             for (Colour c1 : Colour.values()) {
                 if(c!=c1) assertEquals(pg2.getProfessors().get(c1),pg.getProfessors().get(c1));
             }
@@ -123,7 +123,7 @@ class ProfessorGroupTest {
         pg.setTower(Colour.YELLOW,Tower.BLACK);
         pg.setTower(Colour.GREEN,Tower.BLACK);
         ArrayList<Colour> listBlack = pg.getColours(Tower.BLACK);
-        ArrayList<Colour> listGrey = pg.getColours(Tower.GRAY);
+        ArrayList<Colour> listGrey = pg.getColours(Tower.GREY);
         ArrayList<Colour> listWhite = pg.getColours(Tower.WHITE);
         assertEquals(2,listBlack.size());
         assertEquals(0,listWhite.size());
@@ -133,12 +133,12 @@ class ProfessorGroupTest {
 
         //pg full
         pg.setTower(Colour.YELLOW,Tower.BLACK);
-        pg.setTower(Colour.GREEN,Tower.GRAY);
+        pg.setTower(Colour.GREEN,Tower.GREY);
         pg.setTower(Colour.BLUE,Tower.WHITE);
-        pg.setTower(Colour.PINK,Tower.GRAY);
-        pg.setTower(Colour.RED,Tower.GRAY);
+        pg.setTower(Colour.PINK,Tower.GREY);
+        pg.setTower(Colour.RED,Tower.GREY);
         listBlack = pg.getColours(Tower.BLACK);
-        listGrey = pg.getColours(Tower.GRAY);
+        listGrey = pg.getColours(Tower.GREY);
         listWhite = pg.getColours(Tower.WHITE);
         assertEquals(1,listBlack.size());
         assertEquals(1,listWhite.size());

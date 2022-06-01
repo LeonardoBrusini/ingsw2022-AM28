@@ -47,6 +47,7 @@ public class PlayAssistantCardCommand implements CommandStrategy{
     public String getUpdatedStatus(GameManager gameManager, Command command){
         Gson g = new Gson();
         CurrentStatus cs = new CurrentStatus();
+        cs.setLastCommand("PLAYASSISTANTCARD");
         GameStatus gs = new GameStatus();
         TurnStatus ts = new TurnStatus();
         ts.setPlayer(gameManager.getTurnManager().getCurrentPlayer());

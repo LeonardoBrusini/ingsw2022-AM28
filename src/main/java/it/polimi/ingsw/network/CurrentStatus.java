@@ -4,6 +4,7 @@ package it.polimi.ingsw.network;
  * It represents the current status of the turns and winner
  */
 public class CurrentStatus {
+    private String lastCommand;
     private int statusCode;
     private Integer playerID;
     private String errorMessage;
@@ -66,5 +67,13 @@ public class CurrentStatus {
 
     public Integer getPlayerID() {
         return playerID;
+    }
+
+    public String getLastCommand() {
+        return lastCommand;
+    }
+
+    public void setLastCommand(String lastCommand) {
+        this.lastCommand = lastCommand;
     }
 }

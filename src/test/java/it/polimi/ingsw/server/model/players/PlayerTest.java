@@ -65,7 +65,7 @@ class PlayerTest {
     @Test
     void moveToIsland() {
 
-        Player p = new Player(Tower.GRAY);
+        Player p = new Player(Tower.GREY);
         StudentGroup st = new StudentGroup(1);
         st.addStudent(Colour.GREEN);
         st.addStudent(Colour.BLUE);
@@ -101,7 +101,7 @@ class PlayerTest {
      */
     @Test
     void moveToHall() {
-        Player p = new Player(Tower.GRAY);
+        Player p = new Player(Tower.GREY);
         StudentGroup st = new StudentGroup(1);
         st.addStudent(Colour.GREEN);
         st.addStudent(Colour.BLUE);
@@ -167,7 +167,7 @@ class PlayerTest {
      */
     @Test
     void spendCoins() {
-        Player p = new Player(Tower.GRAY);
+        Player p = new Player(Tower.GREY);
         assertEquals(1, p.getCoins());
         try {
             p.spendCoins(1);

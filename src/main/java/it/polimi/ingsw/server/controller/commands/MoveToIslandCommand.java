@@ -47,6 +47,7 @@ public class MoveToIslandCommand implements CommandStrategy{
         System.out.println("generazione risposta");
         Gson g = new Gson();
         CurrentStatus cs = new CurrentStatus();
+        cs.setLastCommand("MOVETOISLAND");
         GameStatus gs = new GameStatus();
         ArrayList<ArchipelagoStatus> ac = new ArrayList<>();
         ArrayList<IslandStatus> is = new ArrayList<>();

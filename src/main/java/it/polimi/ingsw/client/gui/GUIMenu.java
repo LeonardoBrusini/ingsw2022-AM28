@@ -5,20 +5,26 @@ import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.client.ClientObserver;
 import it.polimi.ingsw.client.GamePhases;
 import it.polimi.ingsw.client.StatusUpdater;
+import it.polimi.ingsw.client.gui.handlers.IslandHandler;
+import it.polimi.ingsw.client.gui.scenecontrollers.ControllerUtils;
 import it.polimi.ingsw.client.network.NetworkManager;
 import it.polimi.ingsw.network.AddPlayerResponse;
 import it.polimi.ingsw.network.CurrentStatus;
+import it.polimi.ingsw.network.PlayerStatus;
+import it.polimi.ingsw.server.enumerations.Colour;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class GUIMenu implements ClientObserver {
@@ -31,24 +37,25 @@ public class GUIMenu implements ClientObserver {
     public GUIMenu(Stage stage) {
         this.stage = stage;
         parser = new Gson();
+        currentStatus = null;
     }
 
     @Override
     public void manageMessage(String line) {
+        if (currentStatus!=null && checkWinner()) return;
         switch (currentScene) {
             case USERNAME -> manageAPR(line);
             case GAME_PARAMETERS -> manageGPR(line);
             case PLANNING_2_SIMPLE,PLANNING_2_EXPERT,PLANNING_3_EXPERT,PLANNING_3_SIMPLE -> manageCSPlanning(line);
-            case ACTION_2_EXPERT,ACTION_3_EXPERT,ACTION_2_SIMPLE,ACTION_3_SIMPLE -> manageCSAction(line);
+            case ACTION_2_EXPERT,ACTION_3_EXPERT,ACTION_2_SIMPLE,ACTION_3_SIMPLE -> {
+                Label textMessage = (Label) stage.getScene().lookup("#textMessage");
+                manageCSAction(textMessage,line);
+            }
         }
+
     }
 
-    private void manageCSAction(String line) {
-        changePhaseScene(line);
-    }
-
-    private void changePhaseScene(String line) {
-        if (currentStatus!=null && checkWinner()) return;
+    private void manageCSAction(Label textMessage, String line) {
         CurrentStatus cs = parser.fromJson(line, CurrentStatus.class);
         if(cs.getStatus()!=0) {
             Platform.runLater(() -> {
@@ -60,7 +67,303 @@ public class GUIMenu implements ClientObserver {
         }
         StatusUpdater.instance().updateStatus(cs);
         currentStatus = StatusUpdater.instance().getCurrentStatus();
+        if(currentStatus.getTurn().getPhase().equals("PLANNING")) {
+            changePhaseScene();
+        } else {
+            if(cs.getLastCommand()==null) disconnectionUpdate(cs);
+            else {
+                switch (cs.getLastCommand()) {
+                    case "MOVETOISLAND" -> updateMoveToIsland(cs);
+                    case "MOVETOHALL" -> updateMoveToHall(cs);
+                    case "MOVEMOTHERNATURE" -> updateMoveMotherNature(cs);
+                    case "TAKEFROMCLOUD" -> updateTakeFromCloud(cs);
+                    //PLAY CHARACTER CARD
+                }
+            }
+        }
+        checkWinner();
+        Platform.runLater(() -> {
+            if(currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID())) textMessage.setText("Select one of the following moves:");
+            else textMessage.setText(GamePhases.WAIT.getGUIPrompt());
+        });
+    }
 
+    private void disconnectionUpdate(CurrentStatus cs) {
+        if(currentStatus.getTurn().getPhase().equalsIgnoreCase("PLANNING")) {
+            Platform.runLater(() -> changePhaseScene());
+        } else {
+            actionButtonsDebilitation();
+        }
+    }
+
+    private void actionButtonsDebilitation() {
+        boolean notMyTurn = !currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID());
+        stage.getScene().lookup("#moveToIslandButton").setDisable(notMyTurn);
+        stage.getScene().lookup("#moveToHallButton").setDisable(notMyTurn);
+        stage.getScene().lookup("#moveMotherNatureButton").setDisable(notMyTurn);
+        stage.getScene().lookup("#takeFromCloudButton").setDisable(notMyTurn);
+        if(currentStatus.getGameMode().equals("expert")) stage.getScene().lookup("#playCharacterCardButton").setDisable(notMyTurn);
+    }
+
+    private void updateTakeFromCloud(CurrentStatus cs) {
+        ArrayList<GridPane> cloudPanes = new ArrayList<>();
+        for(int i=0;i<cs.getGame().getClouds().size();i++) {
+            cloudPanes.add((GridPane) stage.getScene().lookup("#cloud"+(i+1)));
+        }
+        Platform.runLater(() -> {
+            ControllerUtils.fillClouds(cs.getGame().getClouds(),cloudPanes,getClass().getClassLoader());
+        });
+        int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
+        int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
+        updateEntrance(playerIndex, statusEntrance);
+        actionButtonsDebilitation();
+    }
+
+    private void updateEntrance(int playerIndex, int[] statusEntrance) {
+        GridPane entrance;
+        if(currentStatus.getPlayerID().equals(playerIndex)) {
+            entrance = (GridPane) stage.getScene().lookup("#myEntrance");
+            Label textMessage = (Label) stage.getScene().lookup("#textMessage");
+            Platform.runLater(() -> ControllerUtils.instance().setMyEntrance(entrance,statusEntrance,textMessage,getClass().getClassLoader()));
+        } else {
+            if(currentStatus.getPlayerID()>0) {
+                if(playerIndex==0) entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
+                else entrance = (GridPane) stage.getScene().lookup("#opponent2Entrance");
+            } else {
+                if(playerIndex==1) entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
+                else entrance = (GridPane) stage.getScene().lookup("#opponent2Entrance");
+            }
+            updateOpponentEntrance(entrance, statusEntrance);
+        }
+    }
+
+    private void updateMoveMotherNature(CurrentStatus cs) {
+        ArrayList<ImageView> towersImages = new ArrayList<>();
+        ArrayList<ImageView> motherNatureImages = new ArrayList<>();
+        ArrayList<ImageView> bridgeImages = new ArrayList<>();
+        ArrayList<GridPane> studentPanes = new ArrayList<>();
+        Label textMessage = (Label) stage.getScene().lookup("#textMessage");
+        for(int i=1;i<=12;i++) {
+            towersImages.add((ImageView) stage.getScene().lookup("#tower"+i));
+            motherNatureImages.add((ImageView) stage.getScene().lookup("#mn"+i));
+            bridgeImages.add((ImageView) stage.getScene().lookup("#bridge"+i));
+            studentPanes.add((GridPane) stage.getScene().lookup("#students"+i));
+        }
+        Platform.runLater(() -> {
+            ControllerUtils.fillIslands(cs.getGame().getArchipelagos(),bridgeImages,studentPanes,towersImages,getClass().getClassLoader());
+            for(int i=0;i<12;i++) {
+                studentPanes.get(i).setOnMouseClicked(new IslandHandler(i+1,textMessage));
+                motherNatureImages.get(i).setImage(null);
+            }
+            motherNatureImages.get(cs.getGame().getMotherNatureIndex()-1).setImage(new Image(getClass().getClassLoader().getResource("images/wooden_pieces/mother_nature.png").toString(),45,45,true,true));
+        });
+        boolean opp2 = false;
+        for(int i=0;i<cs.getGame().getPlayers().size();i++) {
+            GridPane towerPane;
+            PlayerStatus ps = cs.getGame().getPlayers().get(i);
+            if(currentStatus.getPlayerID().equals(ps.getIndex())) towerPane = (GridPane) stage.getScene().lookup("#myTowers");
+            else if (!opp2) {
+                towerPane = (GridPane) stage.getScene().lookup("#opponentTowers");
+                opp2 = true;
+            } else {
+                towerPane = (GridPane) stage.getScene().lookup("#opponent2Towers");
+            }
+            int finalI = i;
+            Platform.runLater(() -> {
+                while (!towerPane.getChildren().isEmpty()) towerPane.getChildren().remove(0);
+                String path = "images/wooden_pieces/"+currentStatus.getGame().getPlayers().get(cs.getGame().getPlayers().get(finalI).getIndex()).getTowerColour().toLowerCase()+"_tower.png";
+                Image towerImage = new Image(getClass().getClassLoader().getResource(path).toString(),34,31,true,true);
+                for(int j=0;j<ps.getNumTowers();j++) {
+                    ImageView tower = new ImageView(towerImage);
+                    towerPane.add(tower,j%2,j/2);
+                }
+            });
+        }
+    }
+
+    private void updateMoveToHall(CurrentStatus cs) {
+        //MUST BE UPDATED ON EXPERT MODE
+        GridPane entrance,hall,professors;
+        PlayerStatus ps = null;
+        for(int i=0;i<currentStatus.getGame().getPlayers().size();i++) {
+            if(cs.getGame().getPlayers().get(0).getIndex()==currentStatus.getGame().getPlayers().get(i).getIndex()) {
+                ps = currentStatus.getGame().getPlayers().get(i);
+                break;
+            }
+        }
+        Platform.runLater(() -> ControllerUtils.fillProfessors(currentStatus.getGame().getPlayers(),currentStatus.getGame().getProfessors(),currentStatus.getPlayerID(),stage.getScene(),getClass().getClassLoader()));
+        Label coins = null;
+        int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
+        int[] statusHall = cs.getGame().getPlayers().get(0).getStudentsOnHall();
+        int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
+        if(currentStatus.getPlayerID().equals(playerIndex)) {
+            entrance = (GridPane) stage.getScene().lookup("#myEntrance");
+            hall = (GridPane) stage.getScene().lookup("#myHall");
+            professors = (GridPane) stage.getScene().lookup("#myProfessors");
+            if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("#myCoins");
+            Label textMessage = (Label) stage.getScene().lookup("#textMessage");
+            PlayerStatus finalPs1 = ps;
+            Platform.runLater(() -> {
+                ControllerUtils.instance().setMyEntrance(entrance, statusEntrance, textMessage, getClass().getClassLoader());
+                ControllerUtils.instance().setMyHall(hall, statusHall,getClass().getClassLoader());
+            });
+            return;
+        } else {
+            if(currentStatus.getPlayerID()>0) {
+                if(playerIndex==0) {
+                    entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
+                    hall = (GridPane) stage.getScene().lookup("#opponentHall");
+                    professors = (GridPane) stage.getScene().lookup("#opponentProfessors");
+                    if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponentCoins");
+                } else {
+                    entrance = (GridPane) stage.getScene().lookup("#opponent2Entrance");
+                    hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
+                    professors = (GridPane) stage.getScene().lookup("#opponent2Professors");
+                    if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponent2Coins");
+                }
+            } else {
+                if(playerIndex==1) {
+                    entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
+                    hall = (GridPane) stage.getScene().lookup("#opponentHall");
+                    professors = (GridPane) stage.getScene().lookup("#opponentProfessors");
+                    if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponentCoins");
+                } else {
+                    entrance = (GridPane) stage.getScene().lookup("#opponent2Entrance");
+                    hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
+                    professors = (GridPane) stage.getScene().lookup("#opponent2Professors");
+                    if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponent2Coins");
+                }
+            }
+            updateOpponentEntrance(entrance, statusEntrance);
+            updateOpponentHall(hall, statusHall);
+        }
+        Label finalCoins = coins;
+        PlayerStatus finalPs = ps;
+        Platform.runLater(() -> {
+            if(currentStatus.getGameMode().equals("expert")) finalCoins.setText(""+cs.getGame().getPlayers().get(0).getCoins());
+        });
+    }
+
+    private void updateOpponentHall(GridPane hall, int[] statusHall) {
+        Platform.runLater(() ->{
+            while (!hall.getChildren().isEmpty()) hall.getChildren().remove(0);
+            for(int i=0;i<statusHall.length;i++) {
+                String col = Colour.values()[i].toString();
+                Image sImageH = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),30,30,true,true);
+                for (int j=0;j<statusHall[i];j++) {
+                    ImageView sH = new ImageView(sImageH);
+                    hall.add(sH,j,i);
+                }
+            }
+        });
+    }
+    private void updateOpponentEntrance(GridPane entrance, int[] statusEntrance) {
+        Platform.runLater(() ->{
+            int childrenIndex = 0;
+            boolean addedStudent = false;
+            for(int i=0;i<statusEntrance.length;i++) {
+                String col = Colour.values()[i].toString();
+                Image sImageE = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),33,33,true,false);
+                for (int j=0;j<statusEntrance[i];j++) {
+                    ImageView sE;
+                    if(childrenIndex<entrance.getChildren().size()) {
+                        sE = (ImageView) entrance.getChildren().get(childrenIndex);
+                        sE.setImage(sImageE);
+                    } else {
+                        addedStudent = true;
+                        sE = new ImageView();
+                        sE.setImage(sImageE);
+                        entrance.add(sE,childrenIndex%2,childrenIndex/2);
+                    }
+                    childrenIndex++;
+                }
+            }
+            if(!addedStudent) entrance.getChildren().remove(childrenIndex);
+        });
+    }
+    private void updateMoveToIsland(CurrentStatus cs) {
+        int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
+        int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
+        int islandIndex = cs.getGame().getArchipelagos().get(0).getIslands().get(0).getIslandIndex();
+        int[] islandStudents = cs.getGame().getArchipelagos().get(0).getIslands().get(0).getStudents();
+        updateEntrance(playerIndex, statusEntrance);
+        GridPane studentPane = (GridPane) stage.getScene().lookup("#students"+islandIndex);
+        Platform.runLater(() ->{
+            int childrenIndex = 0;
+            for(int i=0;i<islandStudents.length;i++) {
+                String col = Colour.values()[i].toString();
+                Image sImage = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),33,33,true,false);
+                ImageView s = (ImageView) studentPane.getChildren().get(childrenIndex++);
+                s.setImage(sImage);
+                Label l = (Label) studentPane.getChildren().get(childrenIndex++);
+                l.setText(""+islandStudents[i]);
+            }
+        });
+    }
+    private void manageCSPlanning(String line)  {
+        CurrentStatus cs = parser.fromJson(line, CurrentStatus.class);
+        if(cs.getStatus()!=0) {
+            Platform.runLater(() -> {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText(cs.getErrorMessage());
+                a.show();
+            });
+            return;
+        }
+        StatusUpdater.instance().updateStatus(cs);
+        currentStatus = StatusUpdater.instance().getCurrentStatus();
+        if(currentStatus.getTurn().getPhase().equals("PLANNING")) {
+            ImageView LAC;
+            ScrollPane ACPane = (ScrollPane) stage.getScene().lookup("#ACPane");
+            if(currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID())) {
+                Platform.runLater(() -> {
+                    ACPane.setOpacity(1);
+                    //for (Node x : ACPane.getChildrenUnmodifiable()) x.setOpacity(1);
+                    ACPane.setDisable(false);
+                });
+            } else {
+                Platform.runLater(() -> {
+                    ACPane.setOpacity(0);
+                    ACPane.setDisable(true);
+                });
+            }
+            int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
+            if(currentStatus.getPlayerID().equals(playerIndex)) LAC = (ImageView) stage.getScene().lookup("#myLAC");
+            else {
+                if(currentStatus.getPlayerID()>0) {
+                    if(playerIndex==0) LAC = (ImageView) stage.getScene().lookup("#opponentLAC");
+                    else LAC = (ImageView) stage.getScene().lookup("#opponent2LAC");
+                } else {
+                    if(playerIndex==1) LAC = (ImageView) stage.getScene().lookup("#opponentLAC");
+                    else LAC = (ImageView) stage.getScene().lookup("#opponent2LAC");
+                }
+            }
+            int LACIndex = cs.getGame().getPlayers().get(0).getLastAssistantCardPlayed();
+            String LACPath ="images/assistantCards/A";
+            if(LACIndex<9) LACPath += "0";
+            LACPath+=(LACIndex+1)+".png";
+            String finalLACPath = LACPath;
+            Platform.runLater(() -> LAC.setImage(new Image(getClass().getClassLoader().getResource(finalLACPath).toString(),150,200,true,true)));
+        } else {
+            changePhaseScene();
+        }
+        checkWinner();
+    }
+    private boolean checkForErrors(String line) {
+        CurrentStatus cs = parser.fromJson(line, CurrentStatus.class);
+        if(cs.getStatus()!=0) {
+            Platform.runLater(() -> {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText(cs.getErrorMessage());
+                a.show();
+            });
+            return true;
+        }
+        StatusUpdater.instance().updateStatus(cs);
+        currentStatus = StatusUpdater.instance().getCurrentStatus();
+        return false;
+    }
+    private void changePhaseScene() {
         if(currentStatus.getTurn().getPhase().equalsIgnoreCase("action")) {
             if(currentStatus.getGameMode().equals("expert")) {
                 if (currentStatus.getGame().getPlayers().size()==2) Platform.runLater(() -> toNextScene(GUIScene.ACTION_2_EXPERT));
@@ -78,9 +381,7 @@ public class GUIMenu implements ClientObserver {
                 else Platform.runLater(() -> toNextScene(GUIScene.PLANNING_3_SIMPLE));
             }
         }
-        checkWinner();
     }
-
     private boolean checkWinner() {
         if(currentStatus.getWinner()!=null) {
             if(currentStatus.getWinner().equals("")) {
@@ -114,12 +415,6 @@ public class GUIMenu implements ClientObserver {
         }
         return false;
     }
-
-    private void manageCSPlanning(String line) {
-
-        changePhaseScene(line);
-    }
-
     private void manageGPR(String line) {
         Label parametersErrorLabel = (Label) stage.getScene().lookup("#parametersErrorLabel");
         Button parametersButton = (Button) stage.getScene().lookup("#parametersButton");
@@ -148,7 +443,6 @@ public class GUIMenu implements ClientObserver {
             });
         }
     }
-
     private void manageAPR(String line) {
         Label usernameErrorLabel = (Label) stage.getScene().lookup("#usernameErrorLabel");
         Button usernameButton = (Button) stage.getScene().lookup("#usernameButton");
@@ -181,21 +475,15 @@ public class GUIMenu implements ClientObserver {
             });
         }
     }
-
     private void manageFirstCS(String line) {
-        changePhaseScene(line);
+        if(checkForErrors(line)) return;
+        changePhaseScene();
     }
-    private void manageCS(String line) {
-
-
-    }
-
     public void toNextScene(GUIScene sceneType) {
         try {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/"+sceneType.getFileName()));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-
             stage.show();
             if(sceneType==GUIScene.TITLE_SCREEN) currentScene = GUIScene.USERNAME;
             else {

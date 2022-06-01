@@ -48,6 +48,7 @@ public class MoveToHallCommand implements CommandStrategy{
     public String getUpdatedStatus(GameManager gameManager, Command command){
         GameStatus gs = new GameStatus();
         CurrentStatus cs = new CurrentStatus();
+        cs.setLastCommand("MOVETOHALL");
         ArrayList<PlayerStatus> ps = new ArrayList<>();
         PlayerStatus ps0 = new PlayerStatus();
         ps0.setIndex(command.getPlayerIndex());
