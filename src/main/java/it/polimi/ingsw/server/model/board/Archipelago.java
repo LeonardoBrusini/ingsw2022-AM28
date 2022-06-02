@@ -40,6 +40,7 @@ public class Archipelago {
         for(Island i : islands) {
             influence += i.playerInfluence(t,professors,cards);
         }
+        System.out.println("influence tower "+t+" on archipelago = "+influence);
         return influence;
     }
 

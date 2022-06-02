@@ -163,7 +163,7 @@ public class GameManager {
     public synchronized void moveMotherNature(int moves) throws WrongPhaseException, IllegalArgumentException{
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMotherNaturePhase()) throw new WrongPhaseException();
         if(moves<1 || moves>players.get(turnManager.getCurrentPlayer()).getLastPlayedCard().getInfo().getMotherNatureShifts()) throw new IllegalArgumentException();
-        board.moveMotherNature(moves);
+        board.moveMotherNature(moves); //sets mother nature to new position
         checkInfluence(); //check if this method works properly
         turnManager.nextPhase(board,players);
     }
@@ -178,20 +178,24 @@ public class GameManager {
                 if (c.getCardInfo() == CharacterCardInfo.CARD5) c.setNoEntryTiles(c.getNoEntryTiles()+1);
             }
             a.setNoEntryTiles(a.getNoEntryTiles()-1);
+            return;
         }
         Player p = board.getMotherNature().playerWithMostInfluence(players,board.getIslandManager(),board.getProfessorGroup(),board.getCharacterCards());
         if(p!=null) {
+            System.out.println("PLAYER WITH MOST INFLUENCE: "+p.getNickname());
+            Tower towerBefore = a.getIslands().get(0).getTower();
+            board.getIslandManager().setTowersOnArchipelago(p.getTower(),a);
             for(Island i: a.getIslands()) {
-                if(i.getTower()==null){
+                System.out.println("island "+i.getIslandIndex()+" tower "+i.getTower());
+                if(i.getTower()!=null && towerBefore!=i.getTower()) {
                     p.getDashboard().buildTower();
-                    board.getIslandManager().setTowerOnIsland(p.getTower(),i.getIslandIndex());
-                } else if(i.getTower()!=p.getTower()) {
-                    Player opponent = findPlayerByTower(i.getTower());
-                    opponent.getDashboard().addTower(); //may produce NullPointerException
-                    p.getDashboard().buildTower();
-                    board.getIslandManager().setTowerOnIsland(p.getTower(),i.getIslandIndex());
+                    if(towerBefore!=null) {
+                        Player opponent = findPlayerByTower(towerBefore);
+                        opponent.getDashboard().addTower(); //may produce NullPointerException
+                    }
                 }
             }
+            board.getIslandManager().checkAggregation(a.getFirstIslandIndex());
         }
     }
 

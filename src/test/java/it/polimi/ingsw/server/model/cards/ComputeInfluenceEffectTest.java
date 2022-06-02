@@ -23,19 +23,29 @@ class ComputeInfluenceEffectTest {
     void initialise(){
         GameManager gm = new GameManager();
         c.setGameManager(gm);
-        c.getGameManager().addPlayer();
-        c.getGameManager().addPlayer();
+        gm.addPlayer();
+        gm.addPlayer();
         gm.newGame(true, 2);
+        gm.getPlayers().get(0).setNickname("p1");
+        gm.getPlayers().get(1).setNickname("p2");
         c.setSelectedIsland(gm.getBoard().getIslandManager().getIslandByIndex(7));
         c.setBoard(gm.getBoard());
         gm.getBoard().getIslandManager().getIslandByIndex(gm.getBoard().getMotherNature().getIslandIndex()).setStudents(new StudentGroup(2));
         c.setPlayerThisTurn(c.getGameManager().getPlayers().get(0));
         EnumMap<Colour, Tower> en = new EnumMap<>(Colour.class);
-        for(Colour color: Colour.values()) //this for is to be sure that the tests didn't depend on the bag variability on extraction of students
+        for(Colour color: Colour.values()) {
+            //this for is to be sure that the tests didn't depend on the bag variability on extraction of students
             en.put(color,c.getGameManager().getPlayers().get(0).getTower());
+            System.out.print(en.get(color)+" ");
+        }
+        System.out.println();
         ProfessorGroup pg = new ProfessorGroup();
         pg.setProfessors(en);
+        for(int p: pg.getStatus()) System.out.print(p+" ");
+       System.out.println();
         c.getBoard().setProfessorGroup(pg);
+        for(int p: c.getBoard().getProfessorGroup().getStatus()) System.out.print(p+" ");
+        System.out.println();
     }
 
     /**

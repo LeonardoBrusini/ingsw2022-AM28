@@ -10,7 +10,7 @@ public enum GUIScene {
     PLANNING_3_SIMPLE("PlanningSceneSimpleThreePlayers1080.fxml"),
     ACTION_2_EXPERT("action2ExpertScene.fxml"),
     ACTION_3_EXPERT("action3ExpertScene.fxml"),
-    ACTION_2_SIMPLE("actionSceneSimple1080.fxml"),
+    ACTION_2_SIMPLE("ActionSceneSimple1080.fxml"),
     ACTION_3_SIMPLE("ActionScene3Simple1080.fxml");
 
     private String fileName;

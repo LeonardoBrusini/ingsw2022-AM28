@@ -62,8 +62,14 @@ public class Board {
      */
     public void moveMotherNature(int shifts){
         Archipelago old = islandManager.getArchipelagoByIslandIndex(motherNature.getIslandIndex());
+
+        int oldAIndex = islandManager.getArchipelagoIndexByIslandIndex(motherNature.getIslandIndex());
+        int aSize = islandManager.getArchipelagos().size();
         old.setPresenceMotherNature(false);
-        motherNature.setIsland((motherNature.getIslandIndex()+shifts>12 ? (motherNature.getIslandIndex()+shifts)%12 : motherNature.getIslandIndex()+shifts));
+        int newAIndex = oldAIndex+shifts > aSize ? (oldAIndex+shifts)%aSize : oldAIndex+shifts;
+        motherNature.setIsland(islandManager.getArchipelagos().get(newAIndex).getFirstIslandIndex());
+
+        //motherNature.setIsland((motherNature.getIslandIndex()+shifts>12 ? (motherNature.getIslandIndex()+shifts)%12 : motherNature.getIslandIndex()+shifts));
         Archipelago nw = islandManager.getArchipelagoByIslandIndex(motherNature.getIslandIndex());
         nw.setPresenceMotherNature(true);
         //game manager must check the player with most influence and build tower if needed (in upper method)

@@ -39,7 +39,8 @@ public class IslandManager {
      * checks if an archipelago is next to another one with same towers, if so, merges them
      * @param islandIndex has to be one of the firstIslandIndex of one of the archipelagos
      */
-    private void checkAggregation(int islandIndex) throws IllegalArgumentException{
+    public void checkAggregation(int islandIndex) throws IllegalArgumentException{
+        System.out.println("CHECKING ISLAND AGGREGATION");
         if(islandIndex<1 || islandIndex>12) throw new IllegalArgumentException();
         int archipelagoIndex=0;
         for(int i=0;i<archipelagos.size(); i++) {
@@ -116,11 +117,10 @@ public class IslandManager {
      * @param tower colour of the tower
      * @param islandIndex the index of the island we want to build the tower
      */
-    public void setTowerOnIsland(Tower tower, int islandIndex) throws IllegalArgumentException{
-        if(islandIndex<1 || islandIndex>12 || tower==null) throw new IllegalArgumentException();
-        Island i = getIslandByIndex(islandIndex);
-        i.setTower(tower);
-        checkAggregation(islandIndex);
+    public void setTowersOnArchipelago(Tower tower, Archipelago archipelago) throws IllegalArgumentException{
+        for (Island i: archipelago.getIslands()) {
+            i.setTower(tower);
+        }
     }
 
     public ArrayList<ArchipelagoStatus> getFullArchipelagosStatus() {

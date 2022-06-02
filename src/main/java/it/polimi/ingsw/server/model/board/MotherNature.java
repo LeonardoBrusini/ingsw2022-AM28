@@ -28,12 +28,13 @@ public class MotherNature {
         Player winningPlayer = null;
         int influence;
         for(Player p: players) {
-            influence = a.playerInfluence(p.getTower(),professors, cards);
+            influence = a.playerInfluence(p.getTower(),professors,cards);
             if(influence == maxInfluence) {
                 winningPlayer = null;
             } else if (influence>maxInfluence) {
                 maxInfluence = influence;
                 winningPlayer = p;
+                System.out.println("winningPlayer = "+winningPlayer.getNickname());
             }
         }
         return winningPlayer;

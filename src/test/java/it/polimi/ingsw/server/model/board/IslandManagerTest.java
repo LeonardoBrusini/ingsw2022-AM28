@@ -27,25 +27,31 @@ class IslandManagerTest {
      */
     @Test
     void setTowerOnIsland() {
-        im.setTowerOnIsland(Tower.WHITE,1);
+        im.setTowersOnArchipelago(Tower.WHITE,im.getArchipelagoByIslandIndex(1));
         assertEquals(12,im.getArchipelagos().size());
-        im.setTowerOnIsland(Tower.BLACK,2);
+        im.setTowersOnArchipelago(Tower.BLACK,im.getArchipelagoByIslandIndex(2));
         assertEquals(12,im.getArchipelagos().size());
-        im.setTowerOnIsland(Tower.BLACK,4);
+        im.setTowersOnArchipelago(Tower.BLACK,im.getArchipelagoByIslandIndex(4));
         assertEquals(12,im.getArchipelagos().size());
-        im.setTowerOnIsland(Tower.WHITE,5);
+        im.setTowersOnArchipelago(Tower.WHITE,im.getArchipelagoByIslandIndex(5));
         assertEquals(12,im.getArchipelagos().size());
-        im.setTowerOnIsland(Tower.WHITE,6);
+        im.setTowersOnArchipelago(Tower.WHITE,im.getArchipelagoByIslandIndex(6));
+        im.checkAggregation(5);
         assertEquals(11,im.getArchipelagos().size());
-        im.setTowerOnIsland(Tower.WHITE,7);
+        im.setTowersOnArchipelago(Tower.WHITE,im.getArchipelagoByIslandIndex(7));
+        im.checkAggregation(7);
         assertEquals(10,im.getArchipelagos().size());
-        im.setTowerOnIsland(Tower.BLACK,8);
+        im.setTowersOnArchipelago(Tower.BLACK,im.getArchipelagoByIslandIndex(8));
+        im.checkAggregation(8);
         assertEquals(10,im.getArchipelagos().size());
-        im.setTowerOnIsland(Tower.BLACK,9);
+        im.setTowersOnArchipelago(Tower.BLACK,im.getArchipelagoByIslandIndex(9));
+        im.checkAggregation(9);
         assertEquals(9,im.getArchipelagos().size());
-        im.setTowerOnIsland(Tower.WHITE,11);
+        im.setTowersOnArchipelago(Tower.WHITE,im.getArchipelagoByIslandIndex(11));
+        im.checkAggregation(11);
         assertEquals(9,im.getArchipelagos().size());
-        im.setTowerOnIsland(Tower.BLACK,12);
+        im.setTowersOnArchipelago(Tower.BLACK,im.getArchipelagoByIslandIndex(12));
+        im.checkAggregation(12);
         assertEquals(9,im.getArchipelagos().size());
 
         assertEquals(1,im.getArchipelagos().get(0).getIslands().size());
@@ -76,7 +82,8 @@ class IslandManagerTest {
         assertEquals(12,im.getArchipelagos().get(8).getFirstIslandIndex());
         assertEquals(Tower.BLACK,im.getArchipelagos().get(8).getIslands().get(0).getTower());
 
-        im.setTowerOnIsland(Tower.BLACK,1);
+        im.setTowersOnArchipelago(Tower.BLACK,im.getArchipelagoByIslandIndex(1));
+        im.checkAggregation(1);
         assertEquals(7,im.getArchipelagos().size());
 
         assertEquals(1,im.getArchipelagos().get(1).getIslands().size());
@@ -101,7 +108,8 @@ class IslandManagerTest {
         assertEquals(12,im.getArchipelagos().get(0).getFirstIslandIndex());
         assertEquals(Tower.BLACK,im.getArchipelagos().get(0).getIslands().get(0).getTower());
 
-        im.setTowerOnIsland(Tower.BLACK,3);
+        im.setTowersOnArchipelago(Tower.BLACK,im.getArchipelagoByIslandIndex(3));
+        im.checkAggregation(3);
         assertEquals(5,im.getArchipelagos().size());
 
         assertEquals(5,im.getArchipelagos().get(0).getIslands().size());

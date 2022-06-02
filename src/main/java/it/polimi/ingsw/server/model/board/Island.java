@@ -64,6 +64,7 @@ public class Island {
             if(ca.getCardInfo()==CharacterCardInfo.CARD8) card = ca;
         }
         if(card!=null && card.isActivated() && card.getPlayerThisTurn().getTower()==t) return influence+2;
+        System.out.println("influence tower "+t+" = "+influence);
         return influence;
     }
 
