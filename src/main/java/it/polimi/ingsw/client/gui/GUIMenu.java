@@ -52,7 +52,6 @@ public class GUIMenu implements ClientObserver {
                 manageCSAction(textMessage,line);
             }
         }
-
     }
 
     private void manageCSAction(Label textMessage, String line) {
@@ -475,16 +474,20 @@ public class GUIMenu implements ClientObserver {
             });
         }
     }
+
     private void manageFirstCS(String line) {
         if(checkForErrors(line)) return;
         changePhaseScene();
     }
+
     public void toNextScene(GUIScene sceneType) {
         try {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/"+sceneType.getFileName()));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            if(stage.getScene()!=null) stage.getScene().setRoot(root);
+            else {
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+            }
             if(sceneType==GUIScene.TITLE_SCREEN) currentScene = GUIScene.USERNAME;
             else {
                 currentScene = sceneType;

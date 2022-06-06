@@ -46,47 +46,6 @@ public class GenericSceneController {
         motherNatureImages.get(cs.getGame().getMotherNatureIndex()-1).setImage(new Image(getClass().getClassLoader().getResource("images/wooden_pieces/mother_nature.png").toString(),45,45,true,true));
     }
 
-    /*private void fillIslands(ArrayList<ArchipelagoStatus> archipelagos) {
-        for (ArchipelagoStatus as: archipelagos) {
-            for(int i=0;i<as.getIslands().size();i++) {
-                fillIsland(as.getIslands().get(i));
-                if(i<as.getIslands().size()-1) {
-                    bridgeImages.get(as.getIslands().get(i).getIslandIndex()-1).setOpacity(1);
-                }
-            }
-        }
-    }*/
-
-    /*private void fillIsland(IslandStatus islandStatus) {
-        GridPane studentPane = studentPanes.get(islandStatus.getIslandIndex()-1);
-        for (int i=0;i<islandStatus.getStudents().length;i++) {
-            String col = Colour.values()[i].toString().toLowerCase();
-            Image sImage = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col+".png").toString(),25,25,true,true);
-            ImageView imageView = new ImageView(sImage);
-            Label sLabel = new Label(""+islandStatus.getStudents()[i]);
-            studentPane.add(imageView,0,i);
-            studentPane.add(sLabel,1,i);
-            if(islandStatus.getTowerColour()!=null) {
-                Image tower = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/"+islandStatus.getTowerColour().toLowerCase()+"_tower.png").toString(),40,50,true,true);
-                towersImages.get(islandStatus.getIslandIndex()-1).setImage(tower);
-            }
-        }
-    }*/
-
-    /*private void fillClouds(ArrayList<CloudStatus> clouds) {
-        for (CloudStatus c: clouds) {
-            GridPane cloudPane = cloudList.get(c.getIndex());
-            for (int i=0;i<c.getStudents().length;i++) {
-                String col = Colour.values()[i].toString().toLowerCase();
-                Image sImage = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col+".png").toString(),25,25,true,true);
-                ImageView imageView = new ImageView(sImage);
-                Label sLabel = new Label(""+c.getStudents()[i]);
-                cloudPane.add(imageView,0,i);
-                cloudPane.add(sLabel,1,i);
-            }
-        }
-    }*/
-
     protected void playerStatus(PlayerStatus ps, int[] professorStatus, Label name, ImageView LAC, GridPane towers, GridPane entrance, GridPane hall, GridPane professors) {
         ClassLoader classLoader = getClass().getClassLoader();
         name.setText(ps.getNickName());

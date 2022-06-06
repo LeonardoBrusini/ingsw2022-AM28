@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.gui.scenecontrollers;
 
-import com.sun.source.tree.LambdaExpressionTree;
 import it.polimi.ingsw.client.GamePhases;
 import it.polimi.ingsw.client.StatusUpdater;
 import it.polimi.ingsw.client.gui.handlers.CommandHandler;
@@ -11,7 +10,6 @@ import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
 import javafx.event.Event;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -84,6 +82,7 @@ public class ControllerUtils {
             }
         }
     }
+
     public void setMyHall(GridPane hall, int[] statusHall, ClassLoader classLoader) {
         myHallCol = new ArrayList<>();
         myHallView = new ArrayList<>();

@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.StatusUpdater;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -69,7 +70,7 @@ public class CLIMenu implements ClientObserver {
             for(CharacterCardStatus cs : currentStatus.getGame().getCharacterCards()) {
                 CLIPrinter.printCCards(cs,characterCardDescriptions.get(cs.getFileName()));
             }
-        }
+        } 
         System.out.println("Clouds");
         CLIPrinter.printClouds(currentStatus.getGame().getClouds());
         CLIPrinter.printProfessors(currentStatus.getGame().getProfessors());

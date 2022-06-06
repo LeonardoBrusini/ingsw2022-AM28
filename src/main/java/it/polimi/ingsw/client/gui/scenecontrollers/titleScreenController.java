@@ -33,9 +33,7 @@ public class titleScreenController {
             try {
                 Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/usernameScene.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                stage.getScene().setRoot(root);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

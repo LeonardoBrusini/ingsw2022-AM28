@@ -51,5 +51,4 @@ public class Action2SimpleController extends GenericSceneController{
     public void takeFromCloudClicked() {
         ControllerUtils.takeFromCloud(textMessage);
     }
-
 }

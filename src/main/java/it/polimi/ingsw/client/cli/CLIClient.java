@@ -8,6 +8,13 @@ import java.io.InputStreamReader;
 
 public class CLIClient {
     public static void start(String ip, int port){
+        if(System.getProperty("os.name").contains("Windows")) {
+            try {
+                new ProcessBuilder("cmd", "/c", "chcp 65001").inheritIO().start().waitFor();
+            } catch (InterruptedException | IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         CLIMenu menu = new CLIMenu();
         NetworkManager.instance().setObserver(menu);
         if(NetworkManager.instance().startServer(ip,port)) {

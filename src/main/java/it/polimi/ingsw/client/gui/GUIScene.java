@@ -17,11 +17,9 @@ public enum GUIScene {
     GUIScene(String s) {
         fileName = s;
     }
-
     public String getFileName() {
         return fileName;
     }
-
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
