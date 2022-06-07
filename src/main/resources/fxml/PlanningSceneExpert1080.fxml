@@ -607,5 +607,4 @@
          <fx:reference source="tower12" />
       </ArrayList>
    </fx:define>
-
 </Pane>
