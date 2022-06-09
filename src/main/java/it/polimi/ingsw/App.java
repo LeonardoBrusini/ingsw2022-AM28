@@ -13,6 +13,7 @@ public class App
     public static void main( String[] args )
     {
         if(args.length==0) {
+            System.setProperty("prism.allowhidpi", "false");
             GUIClient.main(args);
         } else if(args[0].equals("-s")) {
             if(args.length>1) {

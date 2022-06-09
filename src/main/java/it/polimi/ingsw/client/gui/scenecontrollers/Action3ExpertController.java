@@ -3,12 +3,12 @@ package it.polimi.ingsw.client.gui.scenecontrollers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
-
-public class Planning2ExpertController extends Planning2SimpleController{
+public class Action3ExpertController extends Action3SimpleController{
     @FXML
     ArrayList<ImageView> characterCardsImages;
     @FXML
@@ -18,12 +18,10 @@ public class Planning2ExpertController extends Planning2SimpleController{
     @FXML
     ArrayList<Label> noEntryTileLabels;
     @FXML
-    Label myCoins, opponentCoins;
+    Label myCoins, opponentCoins, opponent2Coins;
 
-    @FXML
-    public void initialize() {
-        super.initialize();
-        ControllerUtils.addPlanningCharacterCards(characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,getClass().getClassLoader());
-        ControllerUtils.addCoins(myCoins,opponentCoins);
+
+    public void playCharacterCardClicked(MouseEvent mouseEvent) {
+
     }
 }

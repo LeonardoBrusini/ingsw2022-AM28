@@ -4,12 +4,12 @@ public enum GUIScene {
     TITLE_SCREEN("titleScreen2.fxml"),
     USERNAME("usernameScene.fxml"),
     GAME_PARAMETERS("gameParametersScene.fxml"),
-    PLANNING_2_EXPERT("planning2ExpertScene.fxml"),
-    PLANNING_3_EXPERT("planning3ExpertScene.fxml"),
+    PLANNING_2_EXPERT("PlanningSceneExpert1080.fxml"),
+    PLANNING_3_EXPERT("PlanningSceneExpertThreePlayers1080.fxml"),
     PLANNING_2_SIMPLE("PlanningSceneSimple1080.fxml"),
     PLANNING_3_SIMPLE("PlanningSceneSimpleThreePlayers1080.fxml"),
-    ACTION_2_EXPERT("action2ExpertScene.fxml"),
-    ACTION_3_EXPERT("action3ExpertScene.fxml"),
+    ACTION_2_EXPERT("ActionSceneExpert1080.fxml"),
+    ACTION_3_EXPERT("ActionSceneExpertThreePlayers.fxml"),
     ACTION_2_SIMPLE("ActionSceneSimple1080.fxml"),
     ACTION_3_SIMPLE("ActionScene3Simple1080.fxml");
 

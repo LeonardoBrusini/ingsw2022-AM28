@@ -29,6 +29,32 @@ public class ControllerUtils {
         return instance;
     }
 
+    public static void addCoins(Label myCoins, Label opponentCoins) {
+        ArrayList<PlayerStatus> ps = StatusUpdater.instance().getCurrentStatus().getGame().getPlayers();
+        int myID = StatusUpdater.instance().getCurrentStatus().getPlayerID();
+        if(myID==ps.get(0).getIndex()) {
+            myCoins.setText(ps.get(0).getCoins()+"");
+            opponentCoins.setText(ps.get(1).getCoins()+"");
+        } else {
+            if(myID==ps.get(1).getIndex()) {
+                myCoins.setText(ps.get(1).getCoins()+"");
+            }
+            opponentCoins.setText(ps.get(0).getCoins()+"");
+        }
+    }
+
+    public static void addCoins(Label myCoins, Label opponentCoins, Label opponent2Coins) {
+        addCoins(myCoins, opponentCoins);
+        ArrayList<PlayerStatus> ps = StatusUpdater.instance().getCurrentStatus().getGame().getPlayers();
+        int myID = StatusUpdater.instance().getCurrentStatus().getPlayerID();
+        if(myID==ps.get(2).getIndex()) {
+            opponent2Coins.setText(ps.get(1).getCoins()+"");
+            myCoins.setText(ps.get(2).getCoins()+"");
+        } else {
+            opponent2Coins.setText(ps.get(2).getCoins()+"");
+        }
+    }
+
     public void setMyComponents(ArrayList<ImageView> myEntranceView, ArrayList<ImageView> myHallView, ArrayList<String> myEntranceCol, ArrayList<String> myHallCol) {
         this.myEntranceView = myEntranceView;
         this.myHallView = myHallView;
@@ -68,17 +94,35 @@ public class ControllerUtils {
         }
     }
 
-    public static void addPlanningCharacterCards(ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ClassLoader classLoader) {
+    public static void addPlanningCharacterCards(ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ArrayList<Label> noEntryTileLabels, ArrayList<ImageView> coinOnCards, ClassLoader classLoader) {
+        addCommonCharacterCards(25,30,characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,classLoader);
+    }
+
+    public static void addActionCharacterCards(ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ArrayList<Label> noEntryTileLabels, ArrayList<ImageView> coinOnCards, ClassLoader classLoader) {
+        addCommonCharacterCards(40,40,characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,classLoader);
+    }
+
+    public static void addCommonCharacterCards(int sWidth, int sHeight, ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ArrayList<Label> noEntryTileLabels, ArrayList<ImageView> coinOnCards, ClassLoader classLoader) {
         ArrayList<CharacterCardStatus> cards = StatusUpdater.instance().getCurrentStatus().getGame().getCharacterCards();
         for(int i=0;i<cards.size();i++) {
-            characterCardsImages.get(i).setImage(new Image(classLoader.getResource("images/characterCards/"+cards.get(i).getFileName()).toString(),100,100,true,true));
-            if (cards.get(i).getNoEntryTiles()!=null) noEntryTileImages.get(i).setImage(new Image(classLoader.getResource("images/board/noEntryTile.png").toString(),100,100,true,true));
-            for(int j=0;j<cards.get(i).getStudents().length;i++) {
+            coinOnCards.get(i).setOpacity(cards.get(i).isCoinOnIt() ? 1 : 0);
+            characterCardsImages.get(i).setImage(new Image(classLoader.getResource("images/characterCards/"+cards.get(i).getFileName()).toString(),characterCardsImages.get(i).getFitWidth(),characterCardsImages.get(i).getFitHeight(),true,true));
+            if (cards.get(i).getFileName()=="P05.png") {
+                noEntryTileImages.get(i).setImage(new Image(classLoader.getResource("images/board/noEntryTile.png").toString(),noEntryTileImages.get(i).getFitWidth(),noEntryTileImages.get(i).getFitHeight(),true,true));
+                noEntryTileLabels.get(i).setText(""+cards.get(i).getNoEntryTiles());
+                noEntryTileLabels.get(i).setOpacity(1);
+            } else {
+                noEntryTileLabels.get(i).setOpacity(0);
+            }
+            int numStudents=0;
+            for(int j=0;j<cards.get(i).getStudents().length;j++) {
                 String col = Colour.values()[j].toString().toLowerCase();
-                Image sImage = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),25,30,true,false);
-                ImageView iView = new ImageView(sImage);
-                studentsOnCardPanes.get(i).add(iView,0,i);
-                studentsOnCardPanes.get(i).add(new Label(""+cards.get(i).getStudents()[j]),1,i);
+                for(int k=0;k<cards.get(i).getStudents()[j];k++) {
+                    Image sImage = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),sWidth,sHeight,true,true);
+                    ImageView iView = new ImageView(sImage);
+                    studentsOnCardPanes.get(i).add(iView,numStudents%2,numStudents/2);
+                    numStudents++;
+                }
             }
         }
     }

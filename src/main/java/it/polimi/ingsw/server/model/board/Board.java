@@ -66,7 +66,7 @@ public class Board {
         int oldAIndex = islandManager.getArchipelagoIndexByIslandIndex(motherNature.getIslandIndex());
         int aSize = islandManager.getArchipelagos().size();
         old.setPresenceMotherNature(false);
-        int newAIndex = oldAIndex+shifts > aSize ? (oldAIndex+shifts)%aSize : oldAIndex+shifts;
+        int newAIndex = oldAIndex+shifts >= aSize ? (oldAIndex+shifts)%aSize : oldAIndex+shifts;
         motherNature.setIsland(islandManager.getArchipelagos().get(newAIndex).getFirstIslandIndex());
 
         //motherNature.setIsland((motherNature.getIslandIndex()+shifts>12 ? (motherNature.getIslandIndex()+shifts)%12 : motherNature.getIslandIndex()+shifts));

@@ -13,14 +13,14 @@
 <?import javafx.scene.text.Font?>
 
 <?import java.util.ArrayList?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.Planning3SimpleController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.Planning3ExpertController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
          <image>
             <Image url="@../images/standardbackground.jpg" />
          </image>
       </ImageView>
-      <ScrollPane layoutX="24.0" layoutY="14.0" prefHeight="709.0" prefWidth="911.0">
+      <ScrollPane layoutX="14.0" layoutY="12.0" prefHeight="714.0" prefWidth="911.0">
          <content>
             <VBox>
                <children>
@@ -82,7 +82,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <ImageView fx:id="myLAC" fitHeight="300.0" fitWidth="172.0" layoutX="711.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="myLAC" fitHeight="242.0" fitWidth="172.0" layoutX="711.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
                         <GridPane fx:id="myProfessors" layoutX="485.0" layoutY="70.0" prefHeight="241.0" prefWidth="57.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -99,6 +99,16 @@
                            <font>
                               <Font size="24.0" />
                            </font></Label>
+                        <ImageView fitHeight="50.0" fitWidth="57.0" layoutX="711.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/wooden_pieces/coin.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="myCoins" layoutX="772.0" layoutY="286.0" prefHeight="50.0" prefWidth="50.0" text="0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                   <Pane prefHeight="354.0" prefWidth="881.0">
@@ -164,7 +174,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <ImageView fx:id="opponentLAC" fitHeight="300.0" fitWidth="172.0" layoutX="711.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="opponentLAC" fitHeight="249.0" fitWidth="172.0" layoutX="711.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
                         <GridPane fx:id="opponentProfessors" layoutX="487.0" layoutY="73.0" prefHeight="241.0" prefWidth="57.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -177,6 +187,16 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
+                        <ImageView fitHeight="50.0" fitWidth="57.0" layoutX="711.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/wooden_pieces/coin.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="opponentCoins" layoutX="772.0" layoutY="295.0" prefHeight="50.0" prefWidth="50.0" text="0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                   <Pane>
@@ -237,7 +257,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <ImageView fx:id="opponent2LAC" fitHeight="300.0" fitWidth="172.0" layoutX="711.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="opponent2LAC" fitHeight="242.0" fitWidth="172.0" layoutX="711.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
                         <GridPane fx:id="opponent2Professors" layoutX="486.0" layoutY="69.0" prefHeight="241.0" prefWidth="57.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -255,17 +275,96 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
+                        <ImageView fitHeight="50.0" fitWidth="57.0" layoutX="711.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/wooden_pieces/coin.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="opponent2Coins" layoutX="772.0" layoutY="285.0" prefHeight="50.0" prefWidth="50.0" text="0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                </children>
             </VBox>
          </content>
       </ScrollPane>
-      <ImageView fx:id="Cloud2" fitHeight="220.0" fitWidth="220.0" layoutX="1427.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/board/cloud.png" />
-         </image>
-      </ImageView>
+      <ScrollPane layoutX="1249.0" layoutY="309.0" prefHeight="242.0" prefWidth="419.0">
+         <content>
+            <HBox>
+               <children>
+                  <Pane>
+                     <children>
+                        <ImageView fx:id="Cloud1" fitHeight="220.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/board/cloud.png" />
+                           </image>
+                        </ImageView>
+                        <GridPane fx:id="cloud1" layoutX="46.0" layoutY="28.0" prefHeight="165.0" prefWidth="115.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </Pane>
+                  <Pane>
+                     <children>
+                        <ImageView fx:id="Cloud3" fitHeight="220.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/board/cloud.png" />
+                           </image>
+                        </ImageView>
+                        <GridPane fx:id="cloud3" layoutX="51.0" layoutY="35.0" prefHeight="165.0" prefWidth="115.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </Pane>
+                  <Pane>
+                     <children>
+                        <ImageView fx:id="Cloud2" fitHeight="220.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/board/cloud.png" />
+                           </image>
+                        </ImageView>
+                        <GridPane fx:id="cloud2" layoutX="51.0" layoutY="35.0" prefHeight="165.0" prefWidth="115.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+         </content>
+      </ScrollPane>
       <ImageView fx:id="island2" fitHeight="220.0" fitWidth="220.0" layoutX="996.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/island1.png" />
@@ -533,19 +632,6 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <GridPane fx:id="cloud2" layoutX="1478.0" layoutY="294.0" prefHeight="165.0" prefWidth="115.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
       <ImageView fx:id="bridge11" fitHeight="100.0" fitWidth="28.0" layoutX="1168.0" layoutY="779.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-51.3">
          <image>
             <Image url="@../images/board/bridge.png" />
@@ -565,43 +651,7 @@
       <ImageView fx:id="tower10" fitHeight="50.0" fitWidth="50.0" layoutX="1482.0" layoutY="940.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="tower11" fitHeight="50.0" fitWidth="50.0" layoutX="1286.0" layoutY="868.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="mn2" fitHeight="50.0" fitWidth="50.0" layoutX="1178.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Cloud1" fitHeight="220.0" fitWidth="220.0" layoutX="1167.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/board/cloud.png" />
-         </image>
-      </ImageView>
-      <GridPane fx:id="cloud1" layoutX="1213.0" layoutY="457.0" prefHeight="165.0" prefWidth="115.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
       <ImageView fx:id="mn6" fitHeight="50.0" fitWidth="50.0" layoutX="1675.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Cloud3" fitHeight="220.0" fitWidth="220.0" layoutX="1398.0" layoutY="573.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/board/cloud.png" />
-         </image>
-      </ImageView>
-      <GridPane fx:id="cloud3" layoutX="1449.0" layoutY="608.0" prefHeight="165.0" prefWidth="115.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
       <GridPane fx:id="students1" layoutX="968.0" layoutY="481.0" prefHeight="135.0" prefWidth="86.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -615,76 +665,121 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
+      <ImageView fx:id="characterCard1" fitHeight="171.0" fitWidth="115.0" layoutX="1294.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true" />
+      <GridPane fx:id="ccStudents1" layoutX="1319.0" layoutY="641.0" prefHeight="108.0" prefWidth="70.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="35.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="35.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="40.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <ImageView fx:id="netImage1" fitHeight="39.0" fitWidth="39.0" layoutX="1320.0" layoutY="756.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="numNET1" layoutX="1369.0" layoutY="758.0" prefHeight="35.0" prefWidth="33.0" text="0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="characterCard2" fitHeight="171.0" fitWidth="115.0" layoutX="1420.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true" />
+      <GridPane fx:id="ccStudents2" layoutX="1445.0" layoutY="641.0" prefHeight="108.0" prefWidth="70.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="35.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="35.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="40.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <ImageView fx:id="netImage2" fitHeight="39.0" fitWidth="39.0" layoutX="1446.0" layoutY="756.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="numNET2" layoutX="1494.0" layoutY="762.0" prefHeight="1.0" prefWidth="17.0" text="0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="characterCard3" fitHeight="171.0" fitWidth="115.0" layoutX="1540.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true" />
+      <GridPane fx:id="ccStudents3" layoutX="1565.0" layoutY="641.0" prefHeight="108.0" prefWidth="70.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="35.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="35.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="40.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <ImageView fx:id="netImage3" fitHeight="39.0" fitWidth="39.0" layoutX="1566.0" layoutY="756.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="numNET3" layoutX="1607.0" layoutY="762.0" prefHeight="1.0" prefWidth="17.0" text="0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="coc1" fitHeight="50.0" fitWidth="57.0" layoutX="1360.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/wooden_pieces/coin.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="coc2" fitHeight="50.0" fitWidth="57.0" layoutX="1486.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/wooden_pieces/coin.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="coc3" fitHeight="50.0" fitWidth="57.0" layoutX="1610.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/wooden_pieces/coin.png" />
+         </image>
+      </ImageView>
       <ScrollPane fx:id="ACPane" layoutX="27.0" layoutY="740.0" prefHeight="330.0" prefWidth="980.0">
          <content>
             <HBox fx:id="ACBox" prefHeight="315.0" prefWidth="970.0" />
          </content>
       </ScrollPane>
-      <ImageView fx:id="CharacterCard1" fitHeight="67.0" fitWidth="40.0" layoutX="1331.0" layoutY="769.0" pickOnBounds="true" preserveRatio="true" />
-      <GridPane fx:id="studentsOnCharacterCard1" layoutX="1324.0" layoutY="770.0" prefHeight="61.0" prefWidth="40.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="26.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
-      <ImageView fx:id="noEntryTiles1" fitHeight="30.0" fitWidth="31.0" layoutX="1328.0" layoutY="821.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="numNoEntryTiles1" layoutX="1360.0" layoutY="826.0" prefHeight="1.0" prefWidth="17.0" text="0" />
-      <ImageView fx:id="CharacterCard11" fitHeight="67.0" fitWidth="40.0" layoutX="1407.0" layoutY="792.0" pickOnBounds="true" preserveRatio="true" />
-      <GridPane fx:id="studentsOnCharacterCard11" layoutX="1400.0" layoutY="793.0" prefHeight="61.0" prefWidth="40.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="26.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
-      <ImageView fx:id="noEntryTiles11" fitHeight="30.0" fitWidth="31.0" layoutX="1404.0" layoutY="844.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="numNoEntryTiles11" layoutX="1436.0" layoutY="849.0" prefHeight="1.0" prefWidth="17.0" text="0" />
-      <ImageView fx:id="CharacterCard12" fitHeight="67.0" fitWidth="40.0" layoutX="1477.0" layoutY="802.0" pickOnBounds="true" preserveRatio="true" />
-      <GridPane fx:id="studentsOnCharacterCard12" layoutX="1470.0" layoutY="803.0" prefHeight="61.0" prefWidth="40.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="26.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
-      <ImageView fx:id="noEntryTiles12" fitHeight="30.0" fitWidth="31.0" layoutX="1474.0" layoutY="854.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="numNoEntryTiles12" layoutX="1506.0" layoutY="859.0" prefHeight="1.0" prefWidth="17.0" text="0" />
-      <ImageView fx:id="CharacterCard121" fitHeight="67.0" fitWidth="40.0" layoutX="1302.0" layoutY="705.0" pickOnBounds="true" preserveRatio="true" />
-      <GridPane fx:id="studentsOnCharacterCard121" layoutX="1295.0" layoutY="706.0" prefHeight="61.0" prefWidth="40.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="26.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
-      <ImageView fx:id="noEntryTiles121" fitHeight="30.0" fitWidth="31.0" layoutX="1299.0" layoutY="757.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="numNoEntryTiles121" layoutX="1331.0" layoutY="762.0" prefHeight="1.0" prefWidth="17.0" text="0" />
    </children>
+
+   <fx:define>
+      <ArrayList fx:id="characterCardsImages">
+         <fx:reference source="characterCard1" />
+         <fx:reference source="characterCard2" />
+         <fx:reference source="characterCard3" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="studentsOnCardPanes">
+         <fx:reference source="ccStudents1" />
+         <fx:reference source="ccStudents2" />
+         <fx:reference source="ccStudents3" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="noEntryTileImages">
+         <fx:reference source="netImage1" />
+         <fx:reference source="netImage2" />
+         <fx:reference source="netImage3" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="noEntryTileLabels">
+         <fx:reference source="numNET1" />
+         <fx:reference source="numNET2" />
+         <fx:reference source="numNET3" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="coinOnCards">
+         <fx:reference source="coc1" />
+         <fx:reference source="coc2" />
+         <fx:reference source="coc3" />
+      </ArrayList>
+   </fx:define>
 
    <fx:define>
       <ArrayList fx:id="cloudList">
