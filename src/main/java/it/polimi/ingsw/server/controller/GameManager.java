@@ -104,7 +104,7 @@ public class GameManager {
         if (p<0 || p>=players.size() || c==null) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.ACTION || !turnManager.isMoveStudentsPhase()) throw new WrongPhaseException();
         if(turnManager.getCurrentPlayer()!=p) throw new WrongTurnException();
-        players.get(p).moveToHall(c);
+        players.get(p).moveToHall(board, c);
         checkProfessors(c);
         turnManager.nextPhase(board,players);
     }
@@ -268,6 +268,10 @@ public class GameManager {
             card.setBoard(board);
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
+            if(!card.isCoinOnIt()) {
+                board.setCoins(board.getCoins()-1);
+                card.setCoinOnIt(true);
+            }
         } catch (NotEnoughCoinsException exception) {
             throw new NotEnoughCoinsException();
             //error, player does not have enough coins
@@ -299,6 +303,10 @@ public class GameManager {
             card.setSelectedColour(colour);
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
+            if(!card.isCoinOnIt()) {
+                board.setCoins(board.getCoins()-1);
+                card.setCoinOnIt(true);
+            }
         } catch (NotEnoughCoinsException exception) {
             throw new NotEnoughCoinsException();
             //error, player does not have enough coins
@@ -332,6 +340,10 @@ public class GameManager {
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
+            if(!card.isCoinOnIt()) {
+                board.setCoins(board.getCoins()-1);
+                card.setCoinOnIt(true);
+            }
         } catch (NotEnoughCoinsException exception) {
             throw new NotEnoughCoinsException();
             //error, player does not have enough coins
@@ -364,6 +376,10 @@ public class GameManager {
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
             card.getCardInfo().getEffect().resolveEffect(card);
             p.setCcActivatedThisTurn(true);
+            if(!card.isCoinOnIt()) {
+                board.setCoins(board.getCoins()-1);
+                card.setCoinOnIt(true);
+            }
         } catch (NotEnoughCoinsException exception) {
             throw new NotEnoughCoinsException();
             //error, player does not have enough coins
@@ -395,6 +411,10 @@ public class GameManager {
         card.setSelectedStudentsTo(studentGroupTo);
         card.getCardInfo().getEffect().resolveEffect(card);
         p.setCcActivatedThisTurn(true);
+        if(!card.isCoinOnIt()) {
+            board.setCoins(board.getCoins()-1);
+            card.setCoinOnIt(true);
+        }
     }
 
     /**

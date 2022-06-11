@@ -72,7 +72,7 @@ public class CardToEntranceSwitchEffect implements EffectStrategy{
         for(int i=0;i<gameManager.getBoard().getCharacterCards().size();i++) {
             if(c==gameManager.getBoard().getCharacterCards().get(i)) {
                 ccs0.setIndex(i);
-                ccs0.setCoinOnIt(true);
+                ccs0.setCoinOnIt(c.isCoinOnIt());
                 ccs0.setStudents(c.getStudentsOnCard().getStatus());
                 ccs.add(ccs0);
                 break;

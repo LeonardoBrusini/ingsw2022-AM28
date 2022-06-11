@@ -62,6 +62,7 @@ class CharacterCardTest {
         for (CharacterCard c: cards) {
             assertFalse(c.isCoinOnIt());
             assertEquals(c.getCardInfo().getPrice(),c.getPrice());
+            c.setCoinOnIt(true);
             assertTrue(c.isCoinOnIt());
             assertEquals(c.getCardInfo().getPrice()+1,c.getPrice());
             assertTrue(c.isCoinOnIt());

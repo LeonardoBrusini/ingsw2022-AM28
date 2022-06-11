@@ -49,7 +49,7 @@ public class EntranceToHallSwitchEffect implements EffectStrategy{
         }
 
         try {
-            c.getPlayerThisTurn().fillHall(c.getSelectedStudentsFrom());
+            c.getPlayerThisTurn().fillHall(c.getBoard(),c.getSelectedStudentsFrom());
         } catch (FullHallException e) {
             e.printStackTrace();
         }
@@ -85,7 +85,7 @@ public class EntranceToHallSwitchEffect implements EffectStrategy{
         for(int i=0;i<gameManager.getBoard().getCharacterCards().size();i++) {
             if(c==gameManager.getBoard().getCharacterCards().get(i)) {
                 ccs0.setIndex(i);
-                ccs0.setCoinOnIt(true);
+                ccs0.setCoinOnIt(c.isCoinOnIt());
                 ccs.add(ccs0);
                 break;
             }

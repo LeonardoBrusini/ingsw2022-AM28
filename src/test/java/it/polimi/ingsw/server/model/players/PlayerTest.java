@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.players;
 
 import it.polimi.ingsw.server.controller.EndOfGameChecker;
+import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
 import it.polimi.ingsw.server.exceptions.AlreadyPlayedException;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.server.exceptions.FullHallException;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.exceptions.NotEnoughCoinsException;
 import it.polimi.ingsw.server.model.StudentGroup;
+import it.polimi.ingsw.server.model.board.Board;
 import it.polimi.ingsw.server.model.board.Island;
 import it.polimi.ingsw.server.model.board.Bag;
 import org.junit.jupiter.api.Assertions;
@@ -103,6 +105,10 @@ class PlayerTest {
     void moveToHall() {
         Player p = new Player(Tower.GREY);
         StudentGroup st = new StudentGroup(1);
+        GameManager gm = new GameManager();
+        gm.addPlayer();
+        gm.addPlayer();
+        gm.newGame(false,2);
         st.addStudent(Colour.GREEN);
         st.addStudent(Colour.BLUE);
         p.fillDashboardEntrance(st);
@@ -113,7 +119,7 @@ class PlayerTest {
             beforeOnEntrance = st.getQuantityColour(c);
             beforeOnHall = p.getDashboard().getNumStudentsHall(c);
             try {
-                p.moveToHall(c);
+                p.moveToHall(gm.getBoard(), c);
                 assertEquals(++beforeOnHall, p.getDashboard().getNumStudentsHall(c));
                 Assertions.assertEquals(--beforeOnEntrance, p.getDashboard().getEntrance().getQuantityColour(c));
             } catch (NoStudentsException | FullHallException e) {
@@ -122,7 +128,7 @@ class PlayerTest {
             }
 
             try {
-                p.moveToHall(c);
+                p.moveToHall(gm.getBoard(), c);
                 assertEquals(++beforeOnHall, p.getDashboard().getNumStudentsHall(c));
                 Assertions.assertEquals(--beforeOnEntrance, p.getDashboard().getEntrance().getQuantityColour(c));
             } catch (NoStudentsException | FullHallException e) {
@@ -133,16 +139,16 @@ class PlayerTest {
         assertEquals(1, p.getCoins());
         p.fillDashboardEntrance(st);
         try {
-            p.moveToHall(Colour.BLUE);
+            p.moveToHall(gm.getBoard(), Colour.BLUE);
             assertEquals(2, p.getCoins());
-            p.moveToHall(Colour.GREEN);
+            p.moveToHall(gm.getBoard(), Colour.GREEN);
             assertEquals(3, p.getCoins());
         } catch (NoStudentsException | FullHallException e) {
             throw new RuntimeException(e);
         }
         p.getDashboard().getHall().removeStudent(Colour.BLUE);
         try {
-            p.moveToHall(Colour.BLUE);
+            p.moveToHall(gm.getBoard(), Colour.BLUE);
             assertEquals(3, p.getCoins());
         } catch (NoStudentsException | FullHallException e) {
             throw new RuntimeException(e);
@@ -222,7 +228,7 @@ class PlayerTest {
         StudentGroup sg = new StudentGroup(3);
         Player p = new Player(Tower.BLACK);
         try {
-            p.fillHall(sg);
+            p.fillHall(new Board(2),sg);
             for (Colour c: Colour.values()) {
                 Assertions.assertEquals(3,p.getDashboard().getHall().getQuantityColour(c));
             }
@@ -233,7 +239,7 @@ class PlayerTest {
         sg = new StudentGroup();
         sg.setNumStudents(8,Colour.BLUE);
         try{
-            p.fillHall(sg);
+            p.fillHall(new Board(2), sg);
         } catch (FullHallException e) {
             Assertions.assertEquals(3,p.getDashboard().getHall().getQuantityColour(Colour.BLUE));
         }

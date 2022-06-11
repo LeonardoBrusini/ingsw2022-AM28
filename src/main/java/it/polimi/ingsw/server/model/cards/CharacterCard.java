@@ -56,7 +56,6 @@ public class CharacterCard {
      */
     public int getPrice() {
         int price = cardInfo.getPrice() + (coinOnIt ? 1 : 0);
-        coinOnIt = true;
         return price;
     }
 
@@ -127,5 +126,9 @@ public class CharacterCard {
     }
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
+    }
+
+    public void setCoinOnIt(boolean coin) {
+        coinOnIt=coin;
     }
 }

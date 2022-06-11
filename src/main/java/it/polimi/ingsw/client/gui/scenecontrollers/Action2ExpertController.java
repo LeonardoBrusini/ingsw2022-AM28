@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.scenecontrollers;
 
+import it.polimi.ingsw.client.GamePhases;
 import it.polimi.ingsw.client.StatusUpdater;
 import it.polimi.ingsw.client.gui.handlers.CommandSingleton;
 import it.polimi.ingsw.client.network.NetworkManager;
@@ -47,18 +48,24 @@ public class Action2ExpertController extends Action2SimpleController {
     }
 
     public void playCC1(MouseEvent mouseEvent) {
-        CommandSingleton.instance().getCommand().setIndex(0);
-        ControllerUtils.setCardEffect(characterCardsImages.get(0),textMessage, confirmCCParams, getClass().getClassLoader());
+        if(CommandSingleton.instance().getPhases().get(0)== GamePhases.P_CCARD_INDEX) {
+            CommandSingleton.instance().getCommand().setIndex(0);
+            ControllerUtils.setCardEffect(characterCardsImages.get(0), textMessage, confirmCCParams, getClass().getClassLoader());
+        }
     }
 
     public void playCC2(MouseEvent mouseEvent) {
-        CommandSingleton.instance().getCommand().setIndex(1);
-        ControllerUtils.setCardEffect(characterCardsImages.get(1),textMessage, confirmCCParams, getClass().getClassLoader());
+        if(CommandSingleton.instance().getPhases().get(0)== GamePhases.P_CCARD_INDEX) {
+            CommandSingleton.instance().getCommand().setIndex(1);
+            ControllerUtils.setCardEffect(characterCardsImages.get(1), textMessage, confirmCCParams, getClass().getClassLoader());
+        }
     }
 
     public void playCC3(MouseEvent mouseEvent) {
-        CommandSingleton.instance().getCommand().setIndex(2);
-        ControllerUtils.setCardEffect(characterCardsImages.get(2),textMessage, confirmCCParams, getClass().getClassLoader());
+        if(CommandSingleton.instance().getPhases().get(0)== GamePhases.P_CCARD_INDEX){
+            CommandSingleton.instance().getCommand().setIndex(2);
+            ControllerUtils.setCardEffect(characterCardsImages.get(2),textMessage, confirmCCParams, getClass().getClassLoader());
+        }
     }
 
     public void sendCCCommand(MouseEvent mouseEvent) {

@@ -233,12 +233,13 @@ public class EffectsStatusTest {
         c.setPlayerThisTurn(gameManager.getPlayers().get(0));
         gameManager.getPlayers().get(0).fillDashboardEntrance(sh);
         try {
-            gameManager.getPlayers().get(0).fillHall(sh);
+            gameManager.getPlayers().get(0).fillHall(gameManager.getBoard(),sh);
         }catch (FullHallException e){
             throw new RuntimeException();
         }
         c.setSelectedStudentsTo(st);
         c.setGameManager(gameManager);
+        c.setBoard(gameManager.getBoard());
         assertEquals(6, gameManager.getPlayers().get(0).getCoins()); //The player gets coins when it adds students to the Hall
         c.getCardInfo().getEffect().resolveEffect(c);
 
@@ -322,7 +323,7 @@ public class EffectsStatusTest {
         sh.addStudent(Colour.YELLOW);
         for(Player p: gameManager.getPlayers()) {
             try{
-                p.fillHall(sh);
+                p.fillHall(gameManager.getBoard(),sh);
             }catch (FullHallException e){
                 throw new RuntimeException(e);
             }

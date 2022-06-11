@@ -280,7 +280,7 @@ class GameManagerTest {
         StudentGroup sh = new StudentGroup(3);
         StudentGroup se = new StudentGroup(7);
         try {
-            gm.getPlayers().get(0).fillHall(sh);
+            gm.getPlayers().get(0).fillHall(gm.getBoard(),sh);
             gm.getPlayers().get(0).fillDashboardEntrance(se);
         }catch (FullHallException e){
             e.printStackTrace();
@@ -305,7 +305,7 @@ class GameManagerTest {
         gm4.newGame(true, 2);
         StudentGroup sh2 = new StudentGroup(10);
         try {
-            gm4.getPlayers().get(0).fillHall(sh2);
+            gm4.getPlayers().get(0).fillHall(gm.getBoard(),sh2);
             gm4.getPlayers().get(0).fillDashboardEntrance(se);
         }catch (FullHallException e){
             e.printStackTrace();
@@ -326,7 +326,7 @@ class GameManagerTest {
         gm1.newGame(true, 2);
         StudentGroup se2 = new StudentGroup();
         try {
-            gm1.getPlayers().get(0).fillHall(sh);
+            gm1.getPlayers().get(0).fillHall(gm.getBoard(),sh);
             gm1.getPlayers().get(0).fillDashboardEntrance(se2);
         }catch (FullHallException e){
             e.printStackTrace();

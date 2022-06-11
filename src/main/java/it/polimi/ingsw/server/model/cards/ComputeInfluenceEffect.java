@@ -48,7 +48,7 @@ public class ComputeInfluenceEffect implements EffectStrategy{
         for(int i=0;i<gameManager.getBoard().getCharacterCards().size();i++) {
             if(c==gameManager.getBoard().getCharacterCards().get(i)) {
                 ccs0.setIndex(i);
-                ccs0.setCoinOnIt(true);
+                ccs0.setCoinOnIt(c.isCoinOnIt());
                 ccs.add(ccs0);
                 break;
             }

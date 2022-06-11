@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.exceptions.FullHallException;
 import it.polimi.ingsw.server.exceptions.NoStudentsException;
 import it.polimi.ingsw.server.exceptions.NotEnoughCoinsException;
 import it.polimi.ingsw.server.model.StudentGroup;
+import it.polimi.ingsw.server.model.board.Board;
 import it.polimi.ingsw.server.model.board.Island;
 import it.polimi.ingsw.server.enumerations.Tower;
 
@@ -64,24 +65,31 @@ public class Player {
 
     /**
      * It moves a student from the Dashboard's Entrance to the Dashboard's Hall
-     * @param c the colour of the selected student
+     *
+     * @param board
+     * @param c     the colour of the selected student
      */
-    public void moveToHall(Colour c) throws NoStudentsException, FullHallException {
+    public void moveToHall(Board board, Colour c) throws NoStudentsException, FullHallException {
         dashboard.removeFromEntrance(c);
         dashboard.addToHall(c);
-        checkCoins(c);
+        checkCoins(board, c);
     }
 
     /**
      * every 3rd student of the selected colour added to the hall, gives the player a coin
-     * @param c colour of the students
+     *
+     * @param board
+     * @param c     colour of the students
      */
-    private void checkCoins(Colour c) {
+    private void checkCoins(Board board, Colour c) {
         int lastCoinIndex = dashboard.getHall().getQuantityColour(c)/3;
         if (lastCoinIndex>0) {
             if(!coinPositions[c.ordinal()][lastCoinIndex-1]) {
                 coinPositions[c.ordinal()][lastCoinIndex-1] = true;
-                addCoin();
+                if(board.getCoins()>0) {
+                    addCoin();
+                    board.setCoins(board.getCoins()-1);
+                }
             }
         }
     }
@@ -121,7 +129,7 @@ public class Player {
      * @param selectedStudentsFrom StudentGroup to add to the Hall
      * @throws FullHallException if the Hall is already full
      */
-    public void fillHall(StudentGroup selectedStudentsFrom) throws FullHallException{
+    public void fillHall(Board board, StudentGroup selectedStudentsFrom) throws FullHallException{
         for (Colour c: Colour.values()) {
             if(dashboard.getHall().getQuantityColour(c)+selectedStudentsFrom.getQuantityColour(c)>10) throw new FullHallException();
         }
@@ -129,7 +137,7 @@ public class Player {
         for (Colour c: Colour.values()) {
             for(int i=0; i<selectedStudentsFrom.getQuantityColour(c); i++) {
                 try {
-                    addToHall(c);
+                    addToHall(board, c);
                 } catch (FullHallException e) {
                     e.printStackTrace();
                 }
@@ -139,12 +147,14 @@ public class Player {
 
     /**
      * adds a single student to the dashboard's hall
+     *
+     * @param board
      * @param selectedColour colour of the student
      * @throws FullHallException if there are already 10 students of the selected colour in the hall
      */
-    public void addToHall(Colour selectedColour) throws FullHallException{
+    public void addToHall(Board board, Colour selectedColour) throws FullHallException{
         dashboard.addToHall(selectedColour);
-        checkCoins(selectedColour);
+        checkCoins(board, selectedColour);
     }
     public void setNumTowers(int num) {
         dashboard.setNumTowers(num);
