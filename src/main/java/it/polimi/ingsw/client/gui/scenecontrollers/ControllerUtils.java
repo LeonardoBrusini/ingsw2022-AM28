@@ -2,21 +2,29 @@ package it.polimi.ingsw.client.gui.scenecontrollers;
 
 import it.polimi.ingsw.client.GamePhases;
 import it.polimi.ingsw.client.StatusUpdater;
-import it.polimi.ingsw.client.gui.handlers.CommandHandler;
-import it.polimi.ingsw.client.gui.handlers.CommandSingleton;
-import it.polimi.ingsw.client.gui.handlers.EntranceHandler;
+import it.polimi.ingsw.client.gui.handlers.*;
+import it.polimi.ingsw.client.network.NetworkManager;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ControllerUtils {
@@ -52,6 +60,91 @@ public class ControllerUtils {
             myCoins.setText(ps.get(2).getCoins()+"");
         } else {
             opponent2Coins.setText(ps.get(2).getCoins()+"");
+        }
+    }
+
+    public static void setCardEffect(ImageView cardIV, Label textMessage, Button confirm, ClassLoader classLoader) {
+        String cardName = cardIV.getImage().getUrl().substring(cardIV.getImage().getUrl().length()-7);
+        ArrayList<GamePhases> phases = CommandSingleton.instance().getPhases();
+        switch (cardName) {
+            case "P01.jpg" -> {
+                phases.add(GamePhases.GUI_STUDENT_ON_CARD);
+                phases.add(GamePhases.PCC_ISLAND_INDEX);
+                phases.add(GamePhases.SENDCOMMAND);
+            }
+            case "P03.jpg","P05.jpg" -> {
+                phases.add(GamePhases.PCC_ISLAND_INDEX);
+                phases.add(GamePhases.SENDCOMMAND);
+            }
+            case "P07.jpg" -> {
+                phases.add(GamePhases.GUI_GROUPS_CARD_ENTRANCE);
+                confirm.setOpacity(1);
+                confirm.setDisable(false);
+            }
+            case "P10.jpg" -> {
+                phases.add(GamePhases.GUI_GROUPS_ENTRANCE_HALL);
+                confirm.setOpacity(1);
+                confirm.setDisable(false);
+            }
+            case "P11.jpg" -> {
+                phases.add(GamePhases.GUI_STUDENT_ON_CARD);
+                phases.add(GamePhases.SENDCOMMAND);
+            }
+            case "P09.jpg","P12.jpg" -> {
+                    phases.add(GamePhases.PCC_STUDENT_COLOUR);
+                    Stage stage = new Stage();
+                Parent root;
+                try {
+                    root = FXMLLoader.load(classLoader.getResource("fxml/ColourChoiceScene.fxml"));
+                    stage.setScene(new Scene(root));
+                    stage.initOwner(confirm.getScene().getWindow());
+                    ChoiceBox colourBox = (ChoiceBox) stage.getScene().lookup("#colourChoice");
+                    ObservableList<String> colours = FXCollections.observableArrayList("YELLOW","GREEN","BLUE","PINK","RED");
+                    colourBox.setItems(colours);
+                    colourBox.setValue("YELLOW");
+                    Button colourConfirm = (Button) stage.getScene().lookup("#colourConfirm");
+                    colourConfirm.setOnMouseClicked(new ColourConfirmHandler(colourBox));
+                    stage.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            default -> phases.add(GamePhases.SENDCOMMAND);
+        }
+        CommandSingleton.instance().nextPhase();
+        textMessage.setText(CommandSingleton.instance().getPhases().get(0).getGUIPrompt());
+        if(CommandSingleton.instance().getPhases().get(0) == GamePhases.SENDCOMMAND) NetworkManager.instance().sendJSON(CommandSingleton.instance().getCommand());
+    }
+
+    public static void setNETOnIsland(ArrayList<ImageView> netIslandImages, ArrayList<Label> netIslandLabels) {
+        for (ImageView netIslandImage : netIslandImages) netIslandImage.setOpacity(0);
+        for (Label netIslandLabel : netIslandLabels){
+            netIslandLabel.setText("0");
+            netIslandLabel.setOpacity(0);
+        }
+        ArrayList<ArchipelagoStatus> archipelagos = StatusUpdater.instance().getCurrentStatus().getGame().getArchipelagos();
+        for (ArchipelagoStatus archipelago : archipelagos) {
+            ArrayList<IslandStatus> islands = archipelago.getIslands();
+            if (archipelago.getNoEntryTiles() != null && archipelago.getNoEntryTiles() > 0) {
+                int islandIndex = islands.get(0).getIslandIndex();
+                netIslandImages.get(islandIndex - 1).setOpacity(1);
+                netIslandLabels.get(islandIndex - 1).setText(""+archipelago.getNoEntryTiles());
+                netIslandLabels.get(islandIndex - 1).setOpacity(1);
+            }
+        }
+    }
+
+    public static void resetOpacity(GridPane myEntrance, GridPane myHall, ArrayList<GridPane> studentsOnCardPanes) {
+        for (Node child: myEntrance.getChildren()) {
+            child.setOpacity(1);
+        }
+        for (Node child: myHall.getChildren()) {
+            child.setOpacity(1);
+        }
+        for(GridPane gp: studentsOnCardPanes) {
+            for (Node child: gp.getChildren()) {
+                child.setOpacity(1);
+            }
         }
     }
 
@@ -94,25 +187,26 @@ public class ControllerUtils {
         }
     }
 
-    public static void addPlanningCharacterCards(ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ArrayList<Label> noEntryTileLabels, ArrayList<ImageView> coinOnCards, ClassLoader classLoader) {
-        addCommonCharacterCards(25,30,characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,classLoader);
+    public static void addPlanningCharacterCards(ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ArrayList<Label> noEntryTileLabels, ArrayList<ImageView> coinOnCards, Label textLabel,ClassLoader classLoader) {
+        addCommonCharacterCards(25,30,characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,textLabel,classLoader);
     }
 
-    public static void addActionCharacterCards(ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ArrayList<Label> noEntryTileLabels, ArrayList<ImageView> coinOnCards, ClassLoader classLoader) {
-        addCommonCharacterCards(40,40,characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,classLoader);
+    public static void addActionCharacterCards(ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ArrayList<Label> noEntryTileLabels, ArrayList<ImageView> coinOnCards,Label textLabel, ClassLoader classLoader) {
+        addCommonCharacterCards(40,40,characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,textLabel,classLoader);
     }
 
-    public static void addCommonCharacterCards(int sWidth, int sHeight, ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ArrayList<Label> noEntryTileLabels, ArrayList<ImageView> coinOnCards, ClassLoader classLoader) {
+    public static void addCommonCharacterCards(int sWidth, int sHeight, ArrayList<ImageView> characterCardsImages, ArrayList<GridPane> studentsOnCardPanes, ArrayList<ImageView> noEntryTileImages, ArrayList<Label> noEntryTileLabels, ArrayList<ImageView> coinOnCards, Label textLabel, ClassLoader classLoader) {
         ArrayList<CharacterCardStatus> cards = StatusUpdater.instance().getCurrentStatus().getGame().getCharacterCards();
         for(int i=0;i<cards.size();i++) {
             coinOnCards.get(i).setOpacity(cards.get(i).isCoinOnIt() ? 1 : 0);
             characterCardsImages.get(i).setImage(new Image(classLoader.getResource("images/characterCards/"+cards.get(i).getFileName()).toString(),characterCardsImages.get(i).getFitWidth(),characterCardsImages.get(i).getFitHeight(),true,true));
-            if (cards.get(i).getFileName()=="P05.png") {
-                noEntryTileImages.get(i).setImage(new Image(classLoader.getResource("images/board/noEntryTile.png").toString(),noEntryTileImages.get(i).getFitWidth(),noEntryTileImages.get(i).getFitHeight(),true,true));
+            if (cards.get(i).getFileName().equals("P05.jpg")) {
                 noEntryTileLabels.get(i).setText(""+cards.get(i).getNoEntryTiles());
                 noEntryTileLabels.get(i).setOpacity(1);
+                noEntryTileImages.get(i).setOpacity(1);
             } else {
                 noEntryTileLabels.get(i).setOpacity(0);
+                noEntryTileImages.get(i).setOpacity(0);
             }
             int numStudents=0;
             for(int j=0;j<cards.get(i).getStudents().length;j++) {
@@ -120,6 +214,7 @@ public class ControllerUtils {
                 for(int k=0;k<cards.get(i).getStudents()[j];k++) {
                     Image sImage = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),sWidth,sHeight,true,true);
                     ImageView iView = new ImageView(sImage);
+                    if(StatusUpdater.instance().getCurrentStatus().getTurn().getPhase().equals("ACTION")) iView.setOnMouseClicked(new CCardHandler(i,col,textLabel));
                     studentsOnCardPanes.get(i).add(iView,numStudents%2,numStudents/2);
                     numStudents++;
                 }
@@ -136,6 +231,7 @@ public class ControllerUtils {
             Image sImageH = new Image(classLoader.getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),30,30,true,true);
             for (int j=0;j<statusHall[i];j++) {
                 ImageView sH = new ImageView(sImageH);
+                sH.setOnMouseClicked(new HallHandler(col));
                 myHallView.add(sH);
                 myHallCol.add(col);
                 hall.add(sH,j,i);
@@ -229,6 +325,14 @@ public class ControllerUtils {
             }
         }
     }
+
+    public static void playCharacterCard(Label textMessage) {
+        CommandSingleton.instance().newCommand("PLAYCHARACTERCARD");
+        CommandSingleton.instance().getPhases().add(GamePhases.P_CCARD_INDEX);
+        System.out.println(CommandSingleton.instance().getPhases().get(0).getGUIPrompt());
+        textMessage.setText(CommandSingleton.instance().getPhases().get(0).getGUIPrompt());
+    }
+
     public static void moveToIsland(Label textMessage) {
         CommandSingleton.instance().newCommand("MOVETOISLAND");
         CommandSingleton.instance().getPhases().add(GamePhases.P_STUDENT_COLOUR);

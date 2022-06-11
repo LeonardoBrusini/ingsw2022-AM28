@@ -434,13 +434,13 @@
       <ImageView fx:id="tower10" fitHeight="50.0" fitWidth="50.0" layoutX="1482.0" layoutY="940.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="tower11" fitHeight="50.0" fitWidth="50.0" layoutX="1286.0" layoutY="868.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="mn2" fitHeight="50.0" fitWidth="50.0" layoutX="1178.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Cloud1" fitHeight="220.0" fitWidth="220.0" layoutX="1218.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="Cloud1" fitHeight="220.0" fitWidth="220.0" layoutX="1218.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/cloud.png" />
          </image>
       </ImageView>
       <ImageView fx:id="myLAC" fitHeight="240.0" fitWidth="172.0" layoutX="735.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true" />
-      <GridPane fx:id="cloud1" layoutX="1264.0" layoutY="486.0" prefHeight="165.0" prefWidth="115.0">
+      <GridPane fx:id="cloud1" layoutX="1264.0" layoutY="359.0" prefHeight="165.0" prefWidth="115.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -504,8 +504,11 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ImageView fx:id="characterCard2" fitHeight="220.0" fitWidth="142.0" layoutX="714.0" layoutY="768.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="netImage2" fitHeight="50.0" fitWidth="50.0" layoutX="742.0" layoutY="988.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="characterCard2" fitHeight="220.0" fitWidth="142.0" layoutX="714.0" layoutY="768.0" onMouseClicked="#playCC2" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="netImage2" fitHeight="50.0" fitWidth="50.0" layoutX="742.0" layoutY="988.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
       <Label fx:id="numNET2" layoutX="803.0" layoutY="996.0" prefHeight="1.0" prefWidth="25.0" text="0">
          <font>
             <Font size="24.0" />
@@ -527,8 +530,11 @@
             <Image url="@../images/wooden_pieces/coin.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="characterCard1" fitHeight="220.0" fitWidth="142.0" layoutX="533.0" layoutY="768.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="netImage1" fitHeight="50.0" fitWidth="50.0" layoutX="561.0" layoutY="988.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="characterCard1" fitHeight="220.0" fitWidth="142.0" layoutX="533.0" layoutY="768.0" onMouseClicked="#playCC1" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="netImage1" fitHeight="50.0" fitWidth="50.0" layoutX="561.0" layoutY="988.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
       <Label fx:id="numNET1" layoutX="622.0" layoutY="996.0" prefHeight="1.0" prefWidth="25.0" text="0">
          <font>
             <Font size="24.0" />
@@ -550,8 +556,11 @@
             <Image url="@../images/wooden_pieces/coin.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="characterCard3" fitHeight="220.0" fitWidth="142.0" layoutX="889.0" layoutY="770.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="netImage3" fitHeight="50.0" fitWidth="50.0" layoutX="917.0" layoutY="990.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="characterCard3" fitHeight="220.0" fitWidth="142.0" layoutX="889.0" layoutY="770.0" onMouseClicked="#playCC3" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="netImage3" fitHeight="50.0" fitWidth="50.0" layoutX="917.0" layoutY="990.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
       <Label fx:id="numNET3" layoutX="978.0" layoutY="998.0" prefHeight="1.0" prefWidth="25.0" text="0">
          <font>
             <Font size="24.0" />
@@ -583,12 +592,12 @@
             <Image url="@../images/wooden_pieces/coin.png" />
          </image>
       </ImageView>
-      <Label fx:id="myCoins" layoutX="797.0" layoutY="318.0" prefHeight="35.0" prefWidth="40.0" text="0">
+      <Label fx:id="opponentCoins" layoutX="797.0" layoutY="318.0" prefHeight="35.0" prefWidth="40.0" text="0">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="opponentCoins" layoutX="796.0" layoutY="674.0" prefHeight="35.0" prefWidth="40.0" text="0">
+      <Label fx:id="myCoins" layoutX="796.0" layoutY="674.0" prefHeight="35.0" prefWidth="40.0" text="0">
          <font>
             <Font size="24.0" />
          </font>
@@ -598,6 +607,153 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Button fx:id="confirmCCParams" layoutX="1063.0" layoutY="934.0" mnemonicParsing="false" onMouseClicked="#sendCCCommand" prefHeight="43.0" prefWidth="87.0" text="Confirm">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <ImageView fx:id="netIslandImage1" fitHeight="50.0" fitWidth="50.0" layoutX="917.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
+      <Label fx:id="netIslandLabel1" layoutX="978.0" layoutY="432.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage2" fitHeight="50.0" fitWidth="50.0" layoutX="967.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel2" layoutX="1028.0" layoutY="243.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage3" fitHeight="50.0" fitWidth="50.0" layoutX="1105.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel3" layoutX="1166.0" layoutY="81.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage4" fitHeight="50.0" fitWidth="50.0" layoutX="1305.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel4" layoutX="1366.0" layoutY="29.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage5" fitHeight="50.0" fitWidth="50.0" layoutX="1584.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel5" layoutX="1645.0" layoutY="70.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage6" fitHeight="50.0" fitWidth="50.0" layoutX="1805.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel6" layoutX="1866.0" layoutY="203.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage7" fitHeight="50.0" fitWidth="50.0" layoutX="1714.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel7" layoutX="1775.0" layoutY="429.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage8" fitHeight="50.0" fitWidth="50.0" layoutX="1805.0" layoutY="806.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel8" layoutX="1866.0" layoutY="811.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage9" fitHeight="50.0" fitWidth="50.0" layoutX="1736.0" layoutY="936.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel9" layoutX="1797.0" layoutY="941.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage10" fitHeight="50.0" fitWidth="50.0" layoutX="1520.0" layoutY="989.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel10" layoutX="1581.0" layoutY="994.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage11" fitHeight="50.0" fitWidth="50.0" layoutX="1221.0" layoutY="969.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel11" layoutX="1282.0" layoutY="974.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="netIslandImage12" fitHeight="50.0" fitWidth="50.0" layoutX="953.0" layoutY="673.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="netIslandLabel12" layoutX="1014.0" layoutY="678.0" prefHeight="1.0" prefWidth="25.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <GridPane fx:id="myProfessors" layoutX="514.0" layoutY="444.0" prefHeight="241.0" prefWidth="57.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="opponentProfessors" layoutX="514.0" layoutY="90.0" prefHeight="241.0" prefWidth="57.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
    </children>
 
    <fx:define>
@@ -651,6 +807,40 @@
       <ArrayList fx:id="cloudImages">
          <fx:reference source="Cloud1" />
          <fx:reference source="Cloud2" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="netIslandImages">
+         <fx:reference source="netIslandImage1" />
+         <fx:reference source="netIslandImage2" />
+         <fx:reference source="netIslandImage3" />
+         <fx:reference source="netIslandImage4" />
+         <fx:reference source="netIslandImage5" />
+         <fx:reference source="netIslandImage6" />
+         <fx:reference source="netIslandImage7" />
+         <fx:reference source="netIslandImage8" />
+         <fx:reference source="netIslandImage9" />
+         <fx:reference source="netIslandImage10" />
+         <fx:reference source="netIslandImage11" />
+         <fx:reference source="netIslandImage12" />
+      </ArrayList>
+   </fx:define>
+
+   <fx:define>
+      <ArrayList fx:id="netIslandLabels">
+         <fx:reference source="netIslandLabel1" />
+         <fx:reference source="netIslandLabel2" />
+         <fx:reference source="netIslandLabel3" />
+         <fx:reference source="netIslandLabel4" />
+         <fx:reference source="netIslandLabel5" />
+         <fx:reference source="netIslandLabel6" />
+         <fx:reference source="netIslandLabel7" />
+         <fx:reference source="netIslandLabel8" />
+         <fx:reference source="netIslandLabel9" />
+         <fx:reference source="netIslandLabel10" />
+         <fx:reference source="netIslandLabel11" />
+         <fx:reference source="netIslandLabel12" />
       </ArrayList>
    </fx:define>
 

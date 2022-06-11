@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.GamePhases;
 import it.polimi.ingsw.client.StatusUpdater;
 import it.polimi.ingsw.client.gui.handlers.CloudHandler;
 import it.polimi.ingsw.client.gui.handlers.EntranceHandler;
+import it.polimi.ingsw.client.gui.handlers.HallHandler;
 import it.polimi.ingsw.client.gui.handlers.IslandHandler;
 import it.polimi.ingsw.network.CurrentStatus;
 import javafx.fxml.FXML;
@@ -36,6 +37,9 @@ public class Action3SimpleController extends GenericScene3Controller{
         }
         for(int i=0;i<cloudList.size();i++) {
             cloudList.get(i).setOnMouseClicked(new CloudHandler(i,textMessage));
+        }
+        for(int i=0;i<myHallView.size();i++) {
+            myHallView.get(i).setOnMouseClicked(new HallHandler(myHallCol.get(i)));
         }
     }
 

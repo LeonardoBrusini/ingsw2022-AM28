@@ -70,19 +70,25 @@ public class GenericSceneController {
             Image sImageE = new Image(classLoader.getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),33,33,true,false);
             for (int j=0;j<ps.getStudentsOnEntrance()[i];j++) {
                 ImageView sE = new ImageView(sImageE);
-                myEntranceView.add(sE);
-                myEntranceCol.add(col);
+                if(ps.getIndex()==StatusUpdater.instance().getCurrentStatus().getPlayerID()) {
+                    myEntranceView.add(sE);
+                    myEntranceCol.add(col);
+                }
                 entrance.add(sE,studentIndex%2,studentIndex/2);
                 studentIndex++;
             }
             for (int j=0;j<ps.getStudentsOnHall()[i];j++) {
                 ImageView sH = new ImageView(sImageH);
-                myHallView.add(sH);
-                myHallCol.add(col);
+                if(ps.getIndex()==StatusUpdater.instance().getCurrentStatus().getPlayerID()) {
+                    myHallView.add(sH);
+                    myHallCol.add(col);
+                }
                 hall.add(sH,j,i);
             }
         }
-        ControllerUtils.instance().setMyComponents(myEntranceView,myHallView,myEntranceCol,myHallCol);
+        if(ps.getIndex()==StatusUpdater.instance().getCurrentStatus().getPlayerID()) {
+            ControllerUtils.instance().setMyComponents(myEntranceView,myHallView,myEntranceCol,myHallCol);
+        }
         for(int i=0;i<professorStatus.length;i++) {
             String col = Colour.values()[i].toString().toLowerCase();
             path = "images/wooden_pieces/teacher_"+col+".png";
@@ -92,6 +98,5 @@ public class GenericSceneController {
                 professors.add(profView,0,i);
             }
         }
-        //ControllerUtils.setHall(hall, ps.getStudentsOnEntrance());
     }
 }

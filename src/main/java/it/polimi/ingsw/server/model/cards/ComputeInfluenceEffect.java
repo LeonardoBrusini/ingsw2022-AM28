@@ -13,7 +13,6 @@ public class ComputeInfluenceEffect implements EffectStrategy{
      * then puts mother nature back where it was
      * @param c the card which is being activated
      */
-    //NOW IT SHOULD WORK BUT NOT IN A GOOD WAY
     @Override
     public void resolveEffect(CharacterCard c) {
         MotherNature mn = c.getBoard().getMotherNature();

@@ -9,20 +9,21 @@ import java.util.ArrayList;
 
 public class Planning3ExpertController extends Planning3SimpleController{
     @FXML
-    ArrayList<ImageView> characterCardsImages;
+    ArrayList<ImageView> characterCardsImages,netIslandImages;
     @FXML
     ArrayList<GridPane> studentsOnCardPanes;
     @FXML
     ArrayList<ImageView> noEntryTileImages, coinOnCards;
     @FXML
-    ArrayList<Label> noEntryTileLabels;
+    ArrayList<Label> noEntryTileLabels,netIslandLabels;
     @FXML
     Label myCoins, opponentCoins, opponent2Coins;
 
     @FXML
     public void initialize() {
         super.initialize();
-        ControllerUtils.addPlanningCharacterCards(characterCardsImages,studentsOnCardPanes,noEntryTileImages, noEntryTileLabels, coinOnCards, getClass().getClassLoader());
+        ControllerUtils.addPlanningCharacterCards(characterCardsImages,studentsOnCardPanes,noEntryTileImages, noEntryTileLabels, coinOnCards, null,getClass().getClassLoader());
         ControllerUtils.addCoins(myCoins,opponentCoins,opponent2Coins);
+        ControllerUtils.setNETOnIsland(netIslandImages,netIslandLabels);
     }
 }

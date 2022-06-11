@@ -5,16 +5,14 @@ import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.client.ClientObserver;
 import it.polimi.ingsw.client.GamePhases;
 import it.polimi.ingsw.client.StatusUpdater;
+import it.polimi.ingsw.client.gui.handlers.CCardHandler;
 import it.polimi.ingsw.client.gui.handlers.IslandHandler;
 import it.polimi.ingsw.client.gui.scenecontrollers.ControllerUtils;
 import it.polimi.ingsw.client.network.NetworkManager;
-import it.polimi.ingsw.network.AddPlayerResponse;
-import it.polimi.ingsw.network.CurrentStatus;
-import it.polimi.ingsw.network.PlayerStatus;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -60,6 +58,7 @@ public class GUIMenu implements ClientObserver {
             Platform.runLater(() -> {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setContentText(cs.getErrorMessage());
+                a.initOwner(stage);
                 a.show();
             });
             return;
@@ -76,7 +75,7 @@ public class GUIMenu implements ClientObserver {
                     case "MOVETOHALL" -> updateMoveToHall(cs);
                     case "MOVEMOTHERNATURE" -> updateMoveMotherNature(cs);
                     case "TAKEFROMCLOUD" -> updateTakeFromCloud(cs);
-                    //PLAY CHARACTER CARD
+                    case "PLAYCHARACTERCARD" -> updatePlayCharacterCard(cs, textMessage);
                 }
             }
         }
@@ -85,6 +84,117 @@ public class GUIMenu implements ClientObserver {
             if(currentStatus.getTurn().getPlayer().equals(currentStatus.getPlayerID())) textMessage.setText("Select one of the following moves:");
             else textMessage.setText(GamePhases.WAIT.getGUIPrompt());
         });
+    }
+
+    private void updatePlayCharacterCard(CurrentStatus cs, Label textMessage) {
+        CharacterCardStatus ccs = cs.getGame().getCharacterCards().get(0);
+        ImageView cardActivated = (ImageView) stage.getScene().lookup("#characterCard"+(ccs.getIndex()+1));
+        GridPane studentsOnCard = (GridPane) stage.getScene().lookup("#ccStudents"+(ccs.getIndex()+1));
+        ImageView coinOnCard = (ImageView) stage.getScene().lookup("#coc"+(ccs.getIndex()+1));
+        ImageView net = (ImageView) stage.getScene().lookup("#netImage"+(ccs.getIndex()+1));
+        Label numNET = (Label) stage.getScene().lookup("#numNET"+(ccs.getIndex()+1));
+        updateCard(ccs,studentsOnCard,coinOnCard,net,numNET,textMessage);
+
+        String fileName = cardActivated.getImage().getUrl().substring(cardActivated.getImage().getUrl().length()-7);
+        System.out.println(fileName);
+        switch (fileName) {
+            case "P01.jpg" -> updateIsland(cs);
+            case "P03.jpg" -> updateMoveMotherNature(cs);
+            case "P05.jpg" -> updateNETOnIsland(cs);
+            case "P07.jpg" -> {
+                PlayerStatus ps = cs.getGame().getPlayers().get(0);
+                updateEntrance(ps.getIndex(),ps.getStudentsOnEntrance());
+            }
+            case "P10.jpg" -> updateMoveToHall(cs);
+            case "P11.jpg" -> {
+                PlayerStatus ps = cs.getGame().getPlayers().get(0);
+                updateHall(ps.getIndex(),ps.getStudentsOnHall());
+            }
+            case "P12.jpg" -> updateAllHalls(cs);
+        }
+
+        updateAllPlayersCoins(cs.getGame().getPlayers());
+        Platform.runLater(() -> {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("CARD "+(ccs.getIndex()+1)+" HAD BEEN ACTIVATED!");
+            a.initOwner(stage);
+            a.show();
+        });
+    }
+
+    private void updateAllPlayersCoins(ArrayList<PlayerStatus> players) {
+        for(PlayerStatus p: players) {
+            updatePlayerCoins(p.getIndex());
+        }
+    }
+
+    private void updatePlayerCoins(int playerIndex) {
+        Label coins = null;
+        if(currentStatus.getPlayerID().equals(playerIndex)) {
+            coins = (Label) stage.getScene().lookup("#myCoins");
+        } else {
+            if(currentStatus.getPlayerID()>0) {
+                if(playerIndex==0) {
+                    coins = (Label) stage.getScene().lookup("#opponentCoins");
+                } else {
+                    coins = (Label) stage.getScene().lookup("#opponent2Coins");
+                }
+            } else {
+                if(playerIndex==1) {
+                    coins = (Label) stage.getScene().lookup("#opponentCoins");
+                } else {
+                    coins = (Label) stage.getScene().lookup("#opponent2Coins");
+                }
+            }
+        }
+        Label finalCoins = coins;
+        Platform.runLater(() -> {
+            if(currentStatus.getGameMode().equals("expert")) finalCoins.setText(""+currentStatus.getGame().getPlayers().get(playerIndex).getCoins());
+        });
+    }
+
+    private void updateAllHalls(CurrentStatus cs) {
+        Platform.runLater(() -> ControllerUtils.fillProfessors(currentStatus.getGame().getPlayers(),currentStatus.getGame().getProfessors(),currentStatus.getPlayerID(),stage.getScene(),getClass().getClassLoader()));
+        for(PlayerStatus ps: cs.getGame().getPlayers()) {
+            updateHall(ps.getIndex(),ps.getStudentsOnHall());
+        }
+    }
+
+    private void updateHall(int playerIndex, int[] studentsOnHall) {
+        GridPane hall;
+        if(currentStatus.getPlayerID().equals(playerIndex)) {
+            hall = (GridPane) stage.getScene().lookup("#myHall");
+            Label textMessage = (Label) stage.getScene().lookup("#textMessage");
+            Platform.runLater(() -> {
+                ControllerUtils.instance().setMyHall(hall, studentsOnHall,getClass().getClassLoader());
+            });
+        } else {
+            if(currentStatus.getPlayerID()>0) {
+                if(playerIndex==0) {
+                    hall = (GridPane) stage.getScene().lookup("#opponentHall");
+                } else {
+                    hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
+                }
+            } else {
+                if(playerIndex==1) {
+                    hall = (GridPane) stage.getScene().lookup("#opponentHall");
+                } else {
+                    hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
+                }
+            }
+            updateOpponentHall(hall, studentsOnHall);
+        }
+    }
+
+    private void updateNETOnIsland(CurrentStatus cs) {
+        ArchipelagoStatus archipelago = currentStatus.getGame().getArchipelagos().get(cs.getGame().getArchipelagos().get(0).getIndex());
+        int islandIndex = archipelago.getIslands().get(0).getIslandIndex();
+        ImageView netImage = (ImageView) stage.getScene().lookup("#netIslandImage"+islandIndex);
+        Label netLabel = (Label) stage.getScene().lookup("#netIslandLabel"+islandIndex);
+        int oldValue = Integer.parseInt(netLabel.getText());
+        netLabel.setText(""+(oldValue+1));
+        netImage.setOpacity(1);
+        netLabel.setOpacity(1);
     }
 
     private void disconnectionUpdate(CurrentStatus cs) {
@@ -116,6 +226,35 @@ public class GUIMenu implements ClientObserver {
         int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
         updateEntrance(playerIndex, statusEntrance);
         actionButtonsDebilitation();
+    }
+
+    private void updateCard(CharacterCardStatus ccs, GridPane studentsOnCard, ImageView coin, ImageView net, Label netLabel, Label textMessage) {
+        Platform.runLater(() -> {
+            coin.setOpacity(ccs.isCoinOnIt() ? 1 : 0);
+            if(ccs.getNoEntryTiles()!=null && ccs.getNoEntryTiles()>0) {
+                net.setOpacity(1);
+                netLabel.setText(""+ccs.getNoEntryTiles());
+                netLabel.setOpacity(1);
+            }
+            int childrenIndex = 0;
+            for(int i=0;i<ccs.getStudents().length;i++) {
+                String col = Colour.values()[i].toString();
+                Image sImageE = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),40,40,true,false);
+                for (int j=0;j<ccs.getStudents()[i];j++) {
+                    ImageView sE;
+                    if(childrenIndex<studentsOnCard.getChildren().size()) {
+                        sE = (ImageView) studentsOnCard.getChildren().get(childrenIndex);
+                        sE.setImage(sImageE);
+                    } else {
+                        sE = new ImageView();
+                        sE.setImage(sImageE);
+                        studentsOnCard.add(sE,childrenIndex%2,childrenIndex/2);
+                    }
+                    sE.setOnMouseClicked(new CCardHandler(ccs.getIndex(),col,textMessage));
+                    childrenIndex++;
+                }
+            }
+        });
     }
 
     private void updateEntrance(int playerIndex, int[] statusEntrance) {
@@ -178,11 +317,37 @@ public class GUIMenu implements ClientObserver {
                 }
             });
         }
+        if(currentStatus.getGameMode().equals("expert")) updateNETOnAllIslands();
+    }
+
+    private void updateNETOnAllIslands() {
+        ArrayList<ArchipelagoStatus> archipelagos = currentStatus.getGame().getArchipelagos();
+        for(ArchipelagoStatus a: archipelagos) {
+            int firstIslandIndex = a.getIslands().get(0).getIslandIndex();
+            ImageView netImage = (ImageView) stage.getScene().lookup("#netIslandImage"+firstIslandIndex);
+            Label netLabel = (Label) stage.getScene().lookup("#netIslandLabel"+firstIslandIndex);
+            if(a.getNoEntryTiles()!=null && a.getNoEntryTiles()>0) {
+                netImage.setOpacity(1);
+                netLabel.setText(a.getNoEntryTiles()+"");
+                netLabel.setOpacity(1);
+            } else {
+                netImage.setOpacity(0);
+                netLabel.setText("0");
+                netLabel.setOpacity(0);
+            }
+            for (int i=1;i<a.getIslands().size();i++) {
+                netImage = (ImageView) stage.getScene().lookup("#netIslandImage"+a.getIslands().get(i).getIslandIndex());
+                netLabel = (Label) stage.getScene().lookup("#netIslandLabel"+a.getIslands().get(i).getIslandIndex());
+                netImage.setOpacity(0);
+                netLabel.setText("0");
+                netLabel.setOpacity(0);
+            }
+        }
     }
 
     private void updateMoveToHall(CurrentStatus cs) {
         //MUST BE UPDATED ON EXPERT MODE
-        GridPane entrance,hall,professors;
+        //GridPane entrance,hall,professors;
         PlayerStatus ps = null;
         for(int i=0;i<currentStatus.getGame().getPlayers().size();i++) {
             if(cs.getGame().getPlayers().get(0).getIndex()==currentStatus.getGame().getPlayers().get(i).getIndex()) {
@@ -191,14 +356,17 @@ public class GUIMenu implements ClientObserver {
             }
         }
         Platform.runLater(() -> ControllerUtils.fillProfessors(currentStatus.getGame().getPlayers(),currentStatus.getGame().getProfessors(),currentStatus.getPlayerID(),stage.getScene(),getClass().getClassLoader()));
-        Label coins = null;
+        updateHall(ps.getIndex(), ps.getStudentsOnHall());
+        updateEntrance(ps.getIndex(),ps.getStudentsOnEntrance());
+        if(currentStatus.getGameMode().equals("expert")) updatePlayerCoins(ps.getIndex());
+        /*Label coins = null;
         int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
         int[] statusHall = cs.getGame().getPlayers().get(0).getStudentsOnHall();
         int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
         if(currentStatus.getPlayerID().equals(playerIndex)) {
             entrance = (GridPane) stage.getScene().lookup("#myEntrance");
             hall = (GridPane) stage.getScene().lookup("#myHall");
-            professors = (GridPane) stage.getScene().lookup("#myProfessors");
+            //professors = (GridPane) stage.getScene().lookup("#myProfessors");
             if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("#myCoins");
             Label textMessage = (Label) stage.getScene().lookup("#textMessage");
             PlayerStatus finalPs1 = ps;
@@ -206,30 +374,29 @@ public class GUIMenu implements ClientObserver {
                 ControllerUtils.instance().setMyEntrance(entrance, statusEntrance, textMessage, getClass().getClassLoader());
                 ControllerUtils.instance().setMyHall(hall, statusHall,getClass().getClassLoader());
             });
-            return;
         } else {
             if(currentStatus.getPlayerID()>0) {
                 if(playerIndex==0) {
                     entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
                     hall = (GridPane) stage.getScene().lookup("#opponentHall");
-                    professors = (GridPane) stage.getScene().lookup("#opponentProfessors");
+                    //professors = (GridPane) stage.getScene().lookup("#opponentProfessors");
                     if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponentCoins");
                 } else {
                     entrance = (GridPane) stage.getScene().lookup("#opponent2Entrance");
                     hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
-                    professors = (GridPane) stage.getScene().lookup("#opponent2Professors");
+                    //professors = (GridPane) stage.getScene().lookup("#opponent2Professors");
                     if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponent2Coins");
                 }
             } else {
                 if(playerIndex==1) {
                     entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
                     hall = (GridPane) stage.getScene().lookup("#opponentHall");
-                    professors = (GridPane) stage.getScene().lookup("#opponentProfessors");
+                    //professors = (GridPane) stage.getScene().lookup("#opponentProfessors");
                     if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponentCoins");
                 } else {
                     entrance = (GridPane) stage.getScene().lookup("#opponent2Entrance");
                     hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
-                    professors = (GridPane) stage.getScene().lookup("#opponent2Professors");
+                    //professors = (GridPane) stage.getScene().lookup("#opponent2Professors");
                     if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponent2Coins");
                 }
             }
@@ -237,10 +404,10 @@ public class GUIMenu implements ClientObserver {
             updateOpponentHall(hall, statusHall);
         }
         Label finalCoins = coins;
-        PlayerStatus finalPs = ps;
+        //PlayerStatus finalPs = ps;
         Platform.runLater(() -> {
             if(currentStatus.getGameMode().equals("expert")) finalCoins.setText(""+cs.getGame().getPlayers().get(0).getCoins());
-        });
+        });*/
     }
 
     private void updateOpponentHall(GridPane hall, int[] statusHall) {
@@ -283,9 +450,13 @@ public class GUIMenu implements ClientObserver {
     private void updateMoveToIsland(CurrentStatus cs) {
         int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
         int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
+        updateEntrance(playerIndex, statusEntrance);
+        updateIsland(cs);
+    }
+
+    private void updateIsland(CurrentStatus cs) {
         int islandIndex = cs.getGame().getArchipelagos().get(0).getIslands().get(0).getIslandIndex();
         int[] islandStudents = cs.getGame().getArchipelagos().get(0).getIslands().get(0).getStudents();
-        updateEntrance(playerIndex, statusEntrance);
         GridPane studentPane = (GridPane) stage.getScene().lookup("#students"+islandIndex);
         Platform.runLater(() ->{
             int childrenIndex = 0;
@@ -299,12 +470,14 @@ public class GUIMenu implements ClientObserver {
             }
         });
     }
+
     private void manageCSPlanning(String line)  {
         CurrentStatus cs = parser.fromJson(line, CurrentStatus.class);
         if(cs.getStatus()!=0) {
             Platform.runLater(() -> {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setContentText(cs.getErrorMessage());
+                a.initOwner(stage);
                 a.show();
             });
             return;
@@ -354,6 +527,7 @@ public class GUIMenu implements ClientObserver {
             Platform.runLater(() -> {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setContentText(cs.getErrorMessage());
+                a.initOwner(stage);
                 a.show();
             });
             return true;
@@ -387,6 +561,7 @@ public class GUIMenu implements ClientObserver {
                 Platform.runLater(() -> {
                     Alert a = new Alert(Alert.AlertType.INFORMATION);
                     a.setContentText(GamePhases.DRAW.getGUIPrompt());
+                    a.initOwner(stage);
                     Optional<ButtonType> result = a.showAndWait();
                     if(result.isPresent()) {
                         if(result.get() == ButtonType.OK) {
@@ -400,6 +575,7 @@ public class GUIMenu implements ClientObserver {
                 Platform.runLater(() -> {
                     Alert a = new Alert(Alert.AlertType.INFORMATION);
                     a.setContentText("Player "+currentStatus.getWinner()+" just WON THE GAME!");
+                    a.initOwner(stage);
                     Optional<ButtonType> result = a.showAndWait();
                     if(result.isPresent()) {
                         if(result.get() == ButtonType.OK) {

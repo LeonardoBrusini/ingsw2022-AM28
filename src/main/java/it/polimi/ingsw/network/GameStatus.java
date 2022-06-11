@@ -82,4 +82,5 @@ public class GameStatus {
     public void setProfessors(int[] professors) {
         this.professors = professors;
     }
+
 }

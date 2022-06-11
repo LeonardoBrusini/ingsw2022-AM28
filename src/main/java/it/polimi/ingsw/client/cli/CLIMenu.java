@@ -417,6 +417,7 @@ public class CLIMenu implements ClientObserver {
                 phases.add(GamePhases.PCC_STUDENT_COLOUR);
                 phases.add(GamePhases.SENDCOMMAND);
             }
+            default -> phases.add(GamePhases.SENDCOMMAND);
         }
     }
 

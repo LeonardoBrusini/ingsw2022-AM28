@@ -10,14 +10,16 @@ import java.util.ArrayList;
 public class CommandSingleton {
     private ArrayList<GamePhases> phases;
     private Command command;
-    private int[] studentGroup;
+    private int[] sgFrom;
+    private int[] sgTo;
     private static CommandSingleton instance;
 
     private CommandSingleton() {
         command = new Command();
         phases = new ArrayList<>();
         phases.add(GamePhases.WAIT);
-        studentGroup = new int[Colour.values().length];
+        sgFrom = new int[Colour.values().length];
+        sgTo = new int[Colour.values().length];
     }
 
     public static CommandSingleton instance() {
@@ -33,13 +35,10 @@ public class CommandSingleton {
         return phases;
     }
 
-    public int[] getStudentGroup() {
-        return studentGroup;
-    }
-
     public void newCommand(String cmd) {
         phases = new ArrayList<>();
-        studentGroup = new int[5];
+        sgFrom = new int[Colour.values().length];
+        sgTo = new int[Colour.values().length];
         command = new Command();
         command.setPlayerIndex(StatusUpdater.instance().getCurrentStatus().getPlayerID());
         command.setCmd(cmd);
@@ -47,5 +46,21 @@ public class CommandSingleton {
 
     public void nextPhase() {
         phases.remove(0);
+    }
+
+    public int[] getSgFrom() {
+        return sgFrom;
+    }
+
+    public void setSgFrom(int[] sgFrom) {
+        this.sgFrom = sgFrom;
+    }
+
+    public int[] getSgTo() {
+        return sgTo;
+    }
+
+    public void setSgTo(int[] sgTo) {
+        this.sgTo = sgTo;
     }
 }

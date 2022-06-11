@@ -56,8 +56,6 @@ public class IslandHandler implements EventHandler<Event> {
                 System.out.println("shifts = "+shifts);
                 CommandSingleton.instance().getCommand().setMotherNatureShifts(shifts);
 
-                /*if(islandIndex>=mnIndex) CommandSingleton.instance().getCommand().setMotherNatureShifts(islandIndex-mnIndex);
-                else CommandSingleton.instance().getCommand().setMotherNatureShifts(12-mnIndex+islandIndex);*/
                 CommandSingleton.instance().nextPhase();
                 if(CommandSingleton.instance().getPhases().get(0)==GamePhases.SENDCOMMAND)
                     NetworkManager.instance().sendJSON(CommandSingleton.instance().getCommand());

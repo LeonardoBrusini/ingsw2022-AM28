@@ -10,20 +10,21 @@ import java.util.ArrayList;
 
 public class Planning2ExpertController extends Planning2SimpleController{
     @FXML
-    ArrayList<ImageView> characterCardsImages;
+    ArrayList<ImageView> characterCardsImages,netIslandImages;
     @FXML
     ArrayList<GridPane> studentsOnCardPanes;
     @FXML
     ArrayList<ImageView> noEntryTileImages,coinOnCards;
     @FXML
-    ArrayList<Label> noEntryTileLabels;
+    ArrayList<Label> noEntryTileLabels,netIslandLabels;
     @FXML
     Label myCoins, opponentCoins;
 
     @FXML
     public void initialize() {
         super.initialize();
-        ControllerUtils.addPlanningCharacterCards(characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,getClass().getClassLoader());
+        ControllerUtils.addPlanningCharacterCards(characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,null,getClass().getClassLoader());
         ControllerUtils.addCoins(myCoins,opponentCoins);
+        ControllerUtils.setNETOnIsland(netIslandImages,netIslandLabels);
     }
 }
