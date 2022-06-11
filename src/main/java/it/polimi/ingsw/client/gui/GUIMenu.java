@@ -116,7 +116,7 @@ public class GUIMenu implements ClientObserver {
         updateAllPlayersCoins(cs.getGame().getPlayers());
         Platform.runLater(() -> {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("CARD "+(ccs.getIndex()+1)+" HAD BEEN ACTIVATED!");
+            a.setContentText("CARD "+(ccs.getIndex()+1)+" HAS BEEN ACTIVATED!");
             a.initOwner(stage);
             a.show();
         });
