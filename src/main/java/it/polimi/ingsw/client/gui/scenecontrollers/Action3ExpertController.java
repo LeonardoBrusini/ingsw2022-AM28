@@ -30,7 +30,7 @@ public class Action3ExpertController extends Action3SimpleController{
     @FXML
     public void initialize() {
         super.initialize();
-        ControllerUtils.addCoins(myCoins,opponentCoins);
+        ControllerUtils.addCoins(myCoins,opponentCoins,opponent2Coins);
         ControllerUtils.addActionCharacterCards(characterCardsImages,studentsOnCardPanes,noEntryTileImages,noEntryTileLabels,coinOnCards,textMessage,getClass().getClassLoader());
         ControllerUtils.setNETOnIsland(netIslandImages,netIslandLabels);
         CurrentStatus cs = StatusUpdater.instance().getCurrentStatus();

@@ -20,7 +20,7 @@
             <Image url="@../images/standardbackground.jpg" />
          </image>
       </ImageView>
-      <ScrollPane layoutX="27.0" layoutY="16.0" prefHeight="713.0" prefWidth="910.0">
+      <ScrollPane layoutX="27.0" layoutY="16.0" prefHeight="715.0" prefWidth="910.0">
          <content>
             <VBox prefHeight="1017.0" prefWidth="908.0">
                <children>
@@ -279,6 +279,18 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
+                        <GridPane fx:id="opponent2Professors" layoutX="483.0" layoutY="67.0" prefHeight="241.0" prefWidth="57.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
                      </children>
                   </Pane>
                </children>
@@ -621,7 +633,7 @@
          </rowConstraints>
       </GridPane>
       <ImageView fx:id="mn6" fitHeight="50.0" fitWidth="50.0" layoutX="1675.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="textMessage" layoutX="86.0" layoutY="730.0" prefHeight="43.0" prefWidth="641.0" text="Select one of the following moves:">
+      <Label fx:id="textMessage" layoutX="86.0" layoutY="730.0" prefHeight="43.0" prefWidth="910.0" text="Select one of the following moves:">
          <font>
             <Font size="24.0" />
          </font>
@@ -651,18 +663,6 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <GridPane fx:id="opponent2Professors" layoutX="510.0" layoutY="764.0" prefHeight="241.0" prefWidth="57.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
       <ImageView fx:id="Cloud3" fitHeight="220.0" fitWidth="220.0" layoutX="1350.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/cloud.png" />
@@ -687,7 +687,10 @@
          </font>
       </Button>
       <ImageView fx:id="characterCard2" fitHeight="220.0" fitWidth="142.0" layoutX="714.0" layoutY="768.0" onMouseClicked="#playCC2" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="netImage2" fitHeight="50.0" fitWidth="50.0" layoutX="742.0" layoutY="988.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="netImage2" fitHeight="50.0" fitWidth="50.0" layoutX="742.0" layoutY="988.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
       <Label fx:id="numNET2" layoutX="803.0" layoutY="996.0" prefHeight="1.0" prefWidth="25.0" text="0">
          <font>
             <Font size="24.0" />
@@ -710,7 +713,10 @@
          </image>
       </ImageView>
       <ImageView fx:id="characterCard1" fitHeight="220.0" fitWidth="142.0" layoutX="533.0" layoutY="768.0" onMouseClicked="#playCC1" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="netImage1" fitHeight="50.0" fitWidth="50.0" layoutX="561.0" layoutY="988.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="netImage1" fitHeight="50.0" fitWidth="50.0" layoutX="561.0" layoutY="988.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
       <Label fx:id="numNET1" layoutX="622.0" layoutY="996.0" prefHeight="1.0" prefWidth="25.0" text="0">
          <font>
             <Font size="24.0" />
@@ -733,7 +739,10 @@
          </image>
       </ImageView>
       <ImageView fx:id="characterCard3" fitHeight="220.0" fitWidth="142.0" layoutX="889.0" layoutY="768.0" onMouseClicked="#playCC3" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="netImage3" fitHeight="50.0" fitWidth="50.0" layoutX="917.0" layoutY="990.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="netImage3" fitHeight="50.0" fitWidth="50.0" layoutX="917.0" layoutY="990.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
       <Label fx:id="numNET3" layoutX="978.0" layoutY="998.0" prefHeight="1.0" prefWidth="25.0" text="0">
          <font>
             <Font size="24.0" />

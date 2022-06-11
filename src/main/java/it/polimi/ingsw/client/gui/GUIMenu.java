@@ -87,7 +87,7 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void updatePlayCharacterCard(CurrentStatus cs, Label textMessage) {
-        CharacterCardStatus ccs = cs.getGame().getCharacterCards().get(0);
+        CharacterCardStatus ccs = currentStatus.getGame().getCharacterCards().get(0);
         ImageView cardActivated = (ImageView) stage.getScene().lookup("#characterCard"+(ccs.getIndex()+1));
         GridPane studentsOnCard = (GridPane) stage.getScene().lookup("#ccStudents"+(ccs.getIndex()+1));
         ImageView coinOnCard = (ImageView) stage.getScene().lookup("#coc"+(ccs.getIndex()+1));
@@ -192,9 +192,11 @@ public class GUIMenu implements ClientObserver {
         ImageView netImage = (ImageView) stage.getScene().lookup("#netIslandImage"+islandIndex);
         Label netLabel = (Label) stage.getScene().lookup("#netIslandLabel"+islandIndex);
         int oldValue = Integer.parseInt(netLabel.getText());
-        netLabel.setText(""+(oldValue+1));
-        netImage.setOpacity(1);
-        netLabel.setOpacity(1);
+        Platform.runLater(() -> {
+            netLabel.setText(""+(oldValue+1));
+            netImage.setOpacity(1);
+            netLabel.setOpacity(1);
+        });
     }
 
     private void disconnectionUpdate(CurrentStatus cs) {

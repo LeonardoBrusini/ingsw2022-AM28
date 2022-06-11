@@ -477,7 +477,10 @@
             <RowConstraints maxHeight="40.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fx:id="netImage1" fitHeight="39.0" fitWidth="39.0" layoutX="1325.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="netImage1" fitHeight="39.0" fitWidth="39.0" layoutX="1325.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
       <Label fx:id="numNET1" layoutX="1374.0" layoutY="749.0" prefHeight="35.0" prefWidth="33.0" text="0">
          <font>
             <Font size="18.0" />
@@ -494,7 +497,10 @@
             <RowConstraints maxHeight="40.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fx:id="netImage2" fitHeight="39.0" fitWidth="39.0" layoutX="1451.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="netImage2" fitHeight="39.0" fitWidth="39.0" layoutX="1451.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
       <Label fx:id="numNET2" layoutX="1499.0" layoutY="753.0" prefHeight="1.0" prefWidth="17.0" text="0">
          <font>
             <Font size="18.0" />
@@ -511,7 +517,10 @@
             <RowConstraints maxHeight="40.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fx:id="netImage3" fitHeight="39.0" fitWidth="39.0" layoutX="1571.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="netImage3" fitHeight="39.0" fitWidth="39.0" layoutX="1571.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/board/noEntryTile.png" />
+         </image></ImageView>
       <Label fx:id="numNET3" layoutX="1612.0" layoutY="753.0" prefHeight="1.0" prefWidth="17.0" text="0">
          <font>
             <Font size="18.0" />
