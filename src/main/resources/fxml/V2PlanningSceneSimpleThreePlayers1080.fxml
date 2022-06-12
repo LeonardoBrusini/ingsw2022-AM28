@@ -1,261 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <?import java.util.ArrayList?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.Action3SimpleController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.Planning3SimpleController">
    <children>
-      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+      <ImageView fitHeight="1346.0" fitWidth="1920.0" pickOnBounds="true">
          <image>
             <Image url="@../images/standardbackground.jpg" />
          </image>
       </ImageView>
-      <ScrollPane layoutX="27.0" layoutY="16.0" prefHeight="736.0" prefWidth="910.0">
-         <content>
-            <VBox prefHeight="1017.0" prefWidth="908.0">
-               <children>
-                  <Pane prefHeight="342.0" prefWidth="908.0">
-                     <children>
-                        <ImageView fitHeight="1315.0" fitWidth="940.0" layoutX="-28.0" layoutY="-17.0" pickOnBounds="true">
-                           <image>
-                              <Image url="@../images/standardbackground.jpg" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="myName" layoutX="76.0" prefHeight="31.0" prefWidth="439.0" text="MY USERNAME">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="35.0" prefWidth="142.0" text="(YOU)">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="myLAC" fitHeight="300.0" fitWidth="172.0" layoutX="709.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="myDashboard" fitHeight="350.0" fitWidth="700.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/board/dashboard.png" />
-                           </image>
-                        </ImageView>
-                        <GridPane fx:id="myHall" layoutX="125.0" layoutY="62.0" prefHeight="250.0" prefWidth="340.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="myEntrance" layoutX="18.0" layoutY="72.0" prefHeight="240.0" prefWidth="85.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="myTowers" layoutX="561.0" layoutY="93.0" prefHeight="188.0" prefWidth="103.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="myProfessors" layoutX="484.0" layoutY="67.0" prefHeight="241.0" prefWidth="57.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                     </children>
-                  </Pane>
-                  <Pane>
-                     <children>
-                        <Label fx:id="opponentName" layoutX="154.0" prefHeight="35.0" prefWidth="500.0" text="OPPONENT USERNAME">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="8.0" prefHeight="35.0" prefWidth="146.0" text="(OPPONENT)">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="opponentDashboard" fitHeight="350.0" fitWidth="700.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/board/dashboard.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="opponentLAC" fitHeight="300.0" fitWidth="172.0" layoutX="706.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
-                        <GridPane fx:id="opponentHall" layoutX="125.0" layoutY="62.0" prefHeight="250.0" prefWidth="340.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opponentEntrance" layoutX="14.0" layoutY="72.0" prefHeight="240.0" prefWidth="85.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opponentTowers" layoutX="565.0" layoutY="93.0" prefHeight="188.0" prefWidth="103.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opponentProfessors" layoutX="482.0" layoutY="67.0" prefHeight="241.0" prefWidth="57.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                     </children>
-                  </Pane>
-                  <Pane>
-                     <children>
-                        <Label fx:id="opponent2Name" layoutX="160.0" prefHeight="35.0" prefWidth="500.0" text="OPPONENT2 USERNAME">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="8.0" prefHeight="35.0" prefWidth="160.0" text="(OPPONENT2)">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="opponent2Dashboard" fitHeight="350.0" fitWidth="700.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/board/dashboard.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="opponent2LAC" fitHeight="300.0" fitWidth="172.0" layoutX="706.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
-                        <GridPane fx:id="opponent2Hall" layoutX="125.0" layoutY="62.0" prefHeight="250.0" prefWidth="340.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opponent2Entrance" layoutX="14.0" layoutY="72.0" prefHeight="240.0" prefWidth="85.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opponent2Towers" layoutX="565.0" layoutY="93.0" prefHeight="188.0" prefWidth="103.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                     </children>
-                  </Pane>
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
-      <ImageView fx:id="Cloud2" fitHeight="220.0" fitWidth="220.0" layoutX="1479.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="Cloud2" fitHeight="220.0" fitWidth="220.0" layoutX="1478.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/cloud.png" />
          </image>
@@ -375,19 +140,6 @@
             <Image url="@../images/board/bridge.png" />
          </image>
       </ImageView>
-      <GridPane fx:id="students1" layoutX="960.0" layoutY="481.0" prefHeight="135.0" prefWidth="86.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
       <ImageView fx:id="mn4" fitHeight="50.0" fitWidth="50.0" layoutX="1433.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="mn10" fitHeight="50.0" fitWidth="50.0" layoutX="1433.0" layoutY="834.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="mn9" fitHeight="50.0" fitWidth="50.0" layoutX="1577.0" layoutY="801.0" pickOnBounds="true" preserveRatio="true" />
@@ -540,7 +292,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <GridPane fx:id="cloud2" layoutX="1530.0" layoutY="393.0" prefHeight="165.0" prefWidth="115.0">
+      <GridPane fx:id="cloud2" layoutX="1529.0" layoutY="323.0" prefHeight="165.0" prefWidth="115.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -572,12 +324,12 @@
       <ImageView fx:id="tower10" fitHeight="50.0" fitWidth="50.0" layoutX="1482.0" layoutY="940.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="tower11" fitHeight="50.0" fitWidth="50.0" layoutX="1286.0" layoutY="868.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="mn2" fitHeight="50.0" fitWidth="50.0" layoutX="1178.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Cloud1" fitHeight="220.0" fitWidth="220.0" layoutX="1200.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="Cloud1" fitHeight="220.0" fitWidth="220.0" layoutX="1218.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/cloud.png" />
          </image>
       </ImageView>
-      <GridPane fx:id="cloud1" layoutX="1256.0" layoutY="350.0" prefHeight="165.0" prefWidth="115.0">
+      <GridPane fx:id="cloud1" layoutX="1264.0" layoutY="486.0" prefHeight="165.0" prefWidth="115.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -591,51 +343,12 @@
          </rowConstraints>
       </GridPane>
       <ImageView fx:id="mn6" fitHeight="50.0" fitWidth="50.0" layoutX="1675.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="textMessage" layoutX="86.0" layoutY="762.0" prefHeight="43.0" prefWidth="641.0" text="Select one of the following moves:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Button fx:id="moveToIslandButton" layoutX="86.0" layoutY="814.0" mnemonicParsing="false" onMouseClicked="#moveToIslandClicked" prefHeight="43.0" prefWidth="365.0" text="Move a student to an island">
-         <font>
-            <Font size="18.0" />
-         </font></Button>
-      <Button fx:id="moveToHallButton" layoutX="86.0" layoutY="872.0" mnemonicParsing="false" onMouseClicked="#moveToHallClicked" prefHeight="43.0" prefWidth="365.0" text="Move a student to your hall">
-         <font>
-            <Font size="18.0" />
-         </font></Button>
-      <Button fx:id="moveMotherNatureButton" layoutX="86.0" layoutY="929.0" mnemonicParsing="false" onMouseClicked="#moveMotherNatureClicked" prefHeight="43.0" prefWidth="365.0" text="Move mother nature">
-         <font>
-            <Font size="18.0" />
-         </font></Button>
-      <Button fx:id="takeFromCloudButton" layoutX="86.0" layoutY="982.0" mnemonicParsing="false" onMouseClicked="#takeFromCloudClicked" prefHeight="43.0" prefWidth="365.0" text="Take the students from a cloud">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Label layoutX="460.0" layoutY="845.0" prefHeight="43.0" text="You have to move 4 students!">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <GridPane fx:id="opponent2Professors" layoutX="510.0" layoutY="764.0" prefHeight="241.0" prefWidth="57.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
-      <ImageView fx:id="Cloud3" fitHeight="220.0" fitWidth="220.0" layoutX="1350.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="Cloud3" fitHeight="220.0" fitWidth="220.0" layoutX="1449.0" layoutY="602.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/board/cloud.png" />
          </image>
       </ImageView>
-      <GridPane fx:id="cloud3" layoutX="1400.0" layoutY="600.0" prefHeight="165.0" prefWidth="115.0">
+      <GridPane fx:id="cloud3" layoutX="1500.0" layoutY="637.0" prefHeight="165.0" prefWidth="115.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -648,6 +361,259 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
+      <GridPane fx:id="students1" layoutX="968.0" layoutY="481.0" prefHeight="135.0" prefWidth="86.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <ScrollPane fx:id="ACPane" layoutX="27.0" layoutY="740.0" prefHeight="330.0" prefWidth="980.0">
+         <content>
+            <HBox fx:id="ACBox" prefHeight="315.0" prefWidth="970.0" />
+         </content>
+      </ScrollPane>
+      <ScrollPane layoutX="27.0" layoutY="16.0" prefHeight="718.0" prefWidth="910.0">
+         <content>
+            <VBox prefHeight="1017.0" prefWidth="908.0">
+               <children>
+                  <Pane prefHeight="342.0" prefWidth="908.0">
+                     <children>
+                        <ImageView fitHeight="1315.0" fitWidth="940.0" layoutX="-28.0" layoutY="-17.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../images/standardbackground.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="myName" layoutX="76.0" prefHeight="31.0" prefWidth="439.0" text="MY USERNAME">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="35.0" prefWidth="142.0" text="(YOU)">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="myLAC" fitHeight="300.0" fitWidth="172.0" layoutX="709.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="myDashboard" fitHeight="350.0" fitWidth="700.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/board/dashboard.png" />
+                           </image>
+                        </ImageView>
+                        <GridPane fx:id="myHall" layoutX="125.0" layoutY="62.0" prefHeight="250.0" prefWidth="340.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane fx:id="myEntrance" layoutX="18.0" layoutY="72.0" prefHeight="240.0" prefWidth="85.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane fx:id="myTowers" layoutX="561.0" layoutY="93.0" prefHeight="188.0" prefWidth="103.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane fx:id="myProfessors" layoutX="484.0" layoutY="67.0" prefHeight="241.0" prefWidth="57.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </Pane>
+                  <Pane>
+                     <children>
+                        <Label fx:id="opponentName" layoutX="154.0" prefHeight="35.0" prefWidth="500.0" text="OPPONENT USERNAME">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="8.0" prefHeight="35.0" prefWidth="146.0" text="(OPPONENT)">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="opponentDashboard" fitHeight="350.0" fitWidth="700.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/board/dashboard.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="opponentLAC" fitHeight="300.0" fitWidth="172.0" layoutX="706.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
+                        <GridPane fx:id="opponentHall" layoutX="125.0" layoutY="62.0" prefHeight="250.0" prefWidth="340.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane fx:id="opponentEntrance" layoutX="14.0" layoutY="72.0" prefHeight="240.0" prefWidth="85.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane fx:id="opponentTowers" layoutX="565.0" layoutY="93.0" prefHeight="188.0" prefWidth="103.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane fx:id="opponentProfessors" layoutX="482.0" layoutY="67.0" prefHeight="241.0" prefWidth="57.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </Pane>
+                  <Pane>
+                     <children>
+                        <Label fx:id="opponent2Name" layoutX="160.0" prefHeight="35.0" prefWidth="500.0" text="OPPONENT2 USERNAME">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="8.0" prefHeight="35.0" prefWidth="160.0" text="(OPPONENT2)">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="opponent2Dashboard" fitHeight="350.0" fitWidth="700.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/board/dashboard.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="opponent2LAC" fitHeight="300.0" fitWidth="172.0" layoutX="706.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
+                        <GridPane fx:id="opponent2Hall" layoutX="125.0" layoutY="62.0" prefHeight="250.0" prefWidth="340.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane fx:id="opponent2Entrance" layoutX="14.0" layoutY="72.0" prefHeight="240.0" prefWidth="85.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane fx:id="opponent2Towers" layoutX="565.0" layoutY="93.0" prefHeight="188.0" prefWidth="103.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
    </children>
 
    <fx:define>
@@ -655,13 +621,6 @@
          <fx:reference source="cloud1" />
          <fx:reference source="cloud2" />
          <fx:reference source="cloud3" />
-      </ArrayList>
-   </fx:define>
-
-   <fx:define>
-      <ArrayList fx:id="cloudImages">
-         <fx:reference source="Cloud1" />
-         <fx:reference source="Cloud2" />
       </ArrayList>
    </fx:define>
 
@@ -733,20 +692,4 @@
       </ArrayList>
    </fx:define>
 
-   <fx:define>
-      <ArrayList fx:id="islandImages">
-         <fx:reference source="island1" />
-         <fx:reference source="island2" />
-         <fx:reference source="island3" />
-         <fx:reference source="island4" />
-         <fx:reference source="island5" />
-         <fx:reference source="island6" />
-         <fx:reference source="island7" />
-         <fx:reference source="island8" />
-         <fx:reference source="island9" />
-         <fx:reference source="island10" />
-         <fx:reference source="island11" />
-         <fx:reference source="island12" />
-      </ArrayList>
-   </fx:define>
 </Pane>
