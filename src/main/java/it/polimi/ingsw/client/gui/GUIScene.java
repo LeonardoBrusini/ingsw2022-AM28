@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.gui;
 
 public enum GUIScene {
-    TITLE_SCREEN("titleScreen2.fxml"),
+    TITLE_SCREEN("titleScreen.fxml"),
     USERNAME("usernameScene.fxml"),
     GAME_PARAMETERS("gameParametersScene.fxml"),
     PLANNING_2_EXPERT("PlanningSceneExpert1080.fxml"),

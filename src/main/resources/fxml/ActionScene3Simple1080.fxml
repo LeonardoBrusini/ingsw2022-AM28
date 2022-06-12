@@ -26,7 +26,7 @@
                <children>
                   <Pane prefHeight="342.0" prefWidth="908.0">
                      <children>
-                        <ImageView fitHeight="1080.0" fitWidth="1920.0" layoutX="-28.0" layoutY="-17.0" pickOnBounds="true">
+                        <ImageView fitHeight="1315.0" fitWidth="1920.0" layoutX="-28.0" layoutY="-17.0" pickOnBounds="true">
                            <image>
                               <Image url="@../images/standardbackground.jpg" />
                            </image>

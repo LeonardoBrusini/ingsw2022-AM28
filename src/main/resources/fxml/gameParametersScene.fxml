@@ -10,7 +10,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.gameParametersController">
    <children>
-      <ImageView fitHeight="2864.0" fitWidth="1944.0" layoutX="-1.0" layoutY="-389.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="2864.0" fitWidth="1931.0" layoutX="-11.0" layoutY="-399.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/MADRENATURA_1.jpg" />
          </image>
@@ -26,8 +26,8 @@
       <ChoiceBox fx:id="numPlayersMenu" layoutX="294.0" layoutY="175.0" prefHeight="58.0" prefWidth="207.0" />
       <ChoiceBox fx:id="gameModeMenu" layoutX="295.0" layoutY="269.0" prefHeight="53.0" prefWidth="204.0" />
       <Button fx:id="parametersButton" layoutX="276.0" layoutY="363.0" mnemonicParsing="false" onAction="#sendGameParameters" prefHeight="44.0" prefWidth="98.0" text="Confirm" />
-      <Label fx:id="parametersErrorLabel" layoutX="235.0" layoutY="224.0" opacity="0.0" text="Error: xxx, error message" />
-      <ImageView fitHeight="99.0" fitWidth="64.0" layoutX="1837.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+      <Label fx:id="parametersErrorLabel" layoutX="176.0" layoutY="110.0" opacity="0.0" prefHeight="53.0" prefWidth="418.0" text="Error: xxx, error message" />
+      <ImageView fitHeight="166.0" fitWidth="130.0" layoutX="1726.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/1487161053_LOGO_CRANIO_CREATIONS-02.jpg" />
          </image>
