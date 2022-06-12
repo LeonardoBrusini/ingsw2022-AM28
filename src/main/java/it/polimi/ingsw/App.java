@@ -17,7 +17,7 @@ public class App
             GUIClient.main(args);
         } else if(args[0].equals("-s")) {
             if(args.length>1) {
-                new MultiEchoServer(Integer.parseInt(args[1]));
+                new MultiEchoServer(Integer.parseInt(args[1])).startServer();
             } else {
                 new MultiEchoServer(1234).startServer();
             }

@@ -28,7 +28,7 @@
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="313.0" layoutY="480.0" mnemonicParsing="false" onAction="#connectToServer" prefHeight="33.0" prefWidth="91.0" text="PLAY" />
+      <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="313.0" layoutY="567.0" mnemonicParsing="false" onAction="#connectToServer" prefHeight="33.0" prefWidth="91.0" text="PLAY" />
       <Label fx:id="connectionErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="308.0" opacity="0.0" prefHeight="64.0" prefWidth="313.0" text="Error message" textFill="#f8f7f7">
          <font>
             <Font size="26.0" />
@@ -38,5 +38,15 @@
             <Image url="@../images/1487161053_LOGO_CRANIO_CREATIONS-02.jpg" />
          </image>
       </ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="340.0" layoutY="463.0" text="Port" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="serverPort" layoutX="254.0" layoutY="499.0" prefHeight="45.0" prefWidth="217.0" text="1234">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </TextField>
    </children>
 </Pane>

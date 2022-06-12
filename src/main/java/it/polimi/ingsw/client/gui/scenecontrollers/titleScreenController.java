@@ -18,27 +18,33 @@ import java.util.regex.Pattern;
 
 public class titleScreenController {
     @FXML
-    TextField serverIP;
+    TextField serverIP, serverPort;
     @FXML
     Label connectionErrorLabel;
     public void connectToServer(ActionEvent actionEvent) {
         String ip = serverIP.getCharacters().toString();
         if(!isValidIPAddress(ip)) {
-            connectionErrorLabel.setText("INVALID IP");
+            connectionErrorLabel.setText("INVALID IP, try again");
             connectionErrorLabel.setOpacity(1);
             return;
         }
 
-        if(NetworkManager.instance().startServer(ip,1234)) {
-            try {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/usernameScene.fxml"));
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.getScene().setRoot(root);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        try {
+            int port = Integer.parseInt(serverPort.getCharacters().toString());
+            if(NetworkManager.instance().startServer(ip,port)) {
+                try {
+                    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/usernameScene.fxml"));
+                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    stage.getScene().setRoot(root);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                connectionErrorLabel.setText("ERROR CONNECTING TO SERVER");
+                connectionErrorLabel.setOpacity(1);
             }
-        } else {
-            connectionErrorLabel.setText("ERROR CONNECTING TO SERVER");
+        } catch (NumberFormatException e) {
+            connectionErrorLabel.setText("INVALID PORT NUMBER, try again");
             connectionErrorLabel.setOpacity(1);
         }
     }
