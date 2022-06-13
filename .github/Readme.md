@@ -1,4 +1,4 @@
-ingsw2022-AM28
+# ingsw2022-AM28
 
 PROVA FINALE (INGEGNERIA DEL SOFTWARE) Group members:
 
