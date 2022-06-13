@@ -84,11 +84,40 @@ test coverage as reported by the IntelliJ tool
 Ways to launch servers and clients from the command line:
 ---------
 --------------------------------------------
+FROM Terminal
+---------
+-TERMINAL CONFIGURATION
+1. Download Windows Terminal (unlike the classic cmd, it supports all unicode characters
+   necessary)
+   https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701
+2. From WINDOWS 10/11, go to SETTINGS -> Date / time and language -> LANGUAGE -> Settings
+   language administration -> Administration options -> Change system locale.
+   Add the check to "use UTF-8 unicode for high level language support"
+   To verify that you have done all correctly, open Windows terminal, and type the
+   chcp command, the response should be as follows: 
 
-you need at least 1 server and 2 clients are required to start the client
-if you want to start a client on another pc:
-- if the pc is on another network than the server -> you need a port forwarding and the IP of the server network
-- if the pc is on the same network as the server -> the local IP of the server is required
+    ![img.png](img.png)
+
+- GAME OPENING (WHEN I CAN ENABLE THE SERVER FROM MY PC)
+1. Go to the folder that contains the “Eriantys.jar” file.
+2. Open Windows terminal and type:
+
+![img_1.png](img_1.png)
+
+Where instead of "C: \ Users ..." there must be the path to your file (just drag and drop the file
+with the mouse from the explorer to the terminal) and instead of "111.111 ..." there must be the ip address
+that I will send you.
+
+
+OTHERWISE YOU CAN START THE SERVER AND PLAY IN THIS WAY:
+1. The game can be played by multiple players on the same PC, just open the terminal several times
+2. If all players play on the same PC, you can start the server directly on your PC
+   instead of accessing mine, opening the terminal and typing the same command but without ip address and
+   with "-s" instead of "-c". At this point, start the game by opening a terminal for each player and
+   typing in each of them the previous command but with ip address 127.0.0.1
+3. Otherwise you can start the server and play from multiple PCs using the local network IP of the PC it is on
+   the server is active, or via the public IP (but port forwarding to the
+   your pc and 1234 as the port number, not a walk).
 
 
 
