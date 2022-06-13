@@ -1,5 +1,11 @@
-Eriantys
---------
+ingsw2022-AM28
+
+PROVA FINALE (INGEGNERIA DEL SOFTWARE) Group members:
+
+- Lorenzo Biasiolo (lorenzo.biasiolo@mail.polimi.it)
+- Isaia Belardinelli (isaia.belardinelli@mail.polimi.it)
+- Leonardo Brusini (leonardo.brusini@mail.polimi.it)
+
 --------------------------------------------
 Eriantys is the final test of "Software Engineering", course of "Computer Science Engineering" held at Politecnico di Milano (2021/2022).
 
