@@ -1,17 +1,21 @@
-Eriantys
---------
+# ingsw2022-AM28
+
+PROVA FINALE (INGEGNERIA DEL SOFTWARE) Group members:
+
+- Lorenzo Biasiolo (lorenzo.biasiolo@mail.polimi.it)
+- Isaia Belardinelli (isaia.belardinelli@mail.polimi.it)
+- Leonardo Brusini (leonardo.brusini@mail.polimi.it)
+
 --------------------------------------------
 Eriantys is the final test of "Software Engineering", course of "Computer Science Engineering" held at Politecnico di Milano (2021/2022).
 
 Teacher Alessandro Margara
 
-Final Score: 30/30 cum laude
-
 What has been implemented:
 Complete rules + communication + CLI + GUI + 2 FA
 
 FA 1: Character Cards
-FA2: Resilience to disconnections
+FA 2: Resilience to client disconnections
 
 
 Project specification
