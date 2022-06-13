@@ -5,13 +5,11 @@ Eriantys is the final test of "Software Engineering", course of "Computer Scienc
 
 Teacher Alessandro Margara
 
-Final Score: 30/30 cum laude
-
 What has been implemented:
 Complete rules + communication + CLI + GUI + 2 FA
 
 FA 1: Character Cards
-FA2: Resilience to disconnections
+FA 2: Resilience to client disconnections
 
 
 Project specification
