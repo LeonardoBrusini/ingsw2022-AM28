@@ -29,7 +29,7 @@
             <Font size="20.0" />
          </font></Label>
       <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="313.0" layoutY="567.0" mnemonicParsing="false" onAction="#connectToServer" prefHeight="33.0" prefWidth="91.0" text="PLAY" />
-      <Label fx:id="connectionErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="308.0" opacity="0.0" prefHeight="64.0" prefWidth="313.0" text="Error message" textFill="#f8f7f7">
+      <Label fx:id="connectionErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="87.0" layoutY="308.0" opacity="0.0" prefHeight="64.0" prefWidth="562.0" text="Error message" textFill="#f8f7f7">
          <font>
             <Font size="26.0" />
          </font></Label>
@@ -48,5 +48,10 @@
             <Font size="19.0" />
          </font>
       </TextField>
+      <ImageView fx:id="exitImageView" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#closeGame" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/x.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

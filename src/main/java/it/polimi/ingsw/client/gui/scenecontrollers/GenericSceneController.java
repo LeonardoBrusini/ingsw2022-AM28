@@ -1,20 +1,35 @@
 package it.polimi.ingsw.client.gui.scenecontrollers;
 
 import it.polimi.ingsw.client.StatusUpdater;
+import it.polimi.ingsw.client.gui.handlers.ColourConfirmHandler;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.enumerations.Colour;
 import it.polimi.ingsw.server.enumerations.Tower;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GenericSceneController {
     protected ArrayList<ImageView> myEntranceView,myHallView;
     protected ArrayList<String> myEntranceCol, myHallCol;
+    @FXML
+    Pane pane;
     @FXML
     GridPane myEntrance,opponentEntrance,myHall,myProfessors,opponentHall,myTowers,opponentTowers,opponentProfessors;
     @FXML
@@ -28,6 +43,25 @@ public class GenericSceneController {
 
     @FXML
     public void initialize() {
+        ImageView settings = new ImageView(new Image(getClass().getClassLoader().getResource("images/settings.png").toString(),80,80,true,true));
+        settings.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Stage stage = new Stage();
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/settingsScene.fxml"));
+                    stage.setScene(new Scene(root));
+                    stage.initOwner(myName.getScene().getWindow());
+                    stage.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        settings.setOpacity(0.5);
+        settings.relocate(1840,0);
+        pane.getChildren().add(settings);
         myEntranceView = new ArrayList<>();
         myHallView = new ArrayList<>();
         myEntranceCol = new ArrayList<>();

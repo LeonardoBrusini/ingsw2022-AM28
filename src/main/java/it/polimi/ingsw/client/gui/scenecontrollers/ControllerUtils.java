@@ -91,8 +91,8 @@ public class ControllerUtils {
                 phases.add(GamePhases.SENDCOMMAND);
             }
             case "P09.jpg","P12.jpg" -> {
-                    phases.add(GamePhases.PCC_STUDENT_COLOUR);
-                    Stage stage = new Stage();
+                phases.add(GamePhases.PCC_STUDENT_COLOUR);
+                Stage stage = new Stage();
                 Parent root;
                 try {
                     root = FXMLLoader.load(classLoader.getResource("fxml/ColourChoiceScene.fxml"));

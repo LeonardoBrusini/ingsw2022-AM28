@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane fx:controller="it.polimi.ingsw.client.gui.scenecontrollers.settingsController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="81.0" layoutY="57.0" prefHeight="36.0" prefWidth="138.0" text="SETTINGS">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="titleScreenButton" layoutX="59.0" layoutY="138.0" mnemonicParsing="false" onAction="#goToTitleScreen" prefHeight="51.0" prefWidth="182.0" text="TITLE SCREEN">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="quitButton" layoutX="59.0" layoutY="214.0" mnemonicParsing="false" onAction="#closeGame" prefHeight="51.0" prefWidth="182.0" text="QUIT">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="backToGameButton" layoutX="81.0" layoutY="397.0" mnemonicParsing="false" onAction="#backToGame" prefHeight="43.0" prefWidth="138.0" text="Back to Game">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

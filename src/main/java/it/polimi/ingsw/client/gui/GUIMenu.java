@@ -87,7 +87,7 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void updatePlayCharacterCard(CurrentStatus cs, Label textMessage) {
-        CharacterCardStatus ccs = currentStatus.getGame().getCharacterCards().get(0);
+        CharacterCardStatus ccs = cs.getGame().getCharacterCards().get(0);
         ImageView cardActivated = (ImageView) stage.getScene().lookup("#characterCard"+(ccs.getIndex()+1));
         GridPane studentsOnCard = (GridPane) stage.getScene().lookup("#ccStudents"+(ccs.getIndex()+1));
         ImageView coinOnCard = (ImageView) stage.getScene().lookup("#coc"+(ccs.getIndex()+1));

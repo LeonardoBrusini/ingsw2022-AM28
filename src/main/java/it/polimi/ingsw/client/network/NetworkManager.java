@@ -66,6 +66,10 @@ public class NetworkManager {
         this.menu = menu;
     }
 
+    public ClientObserver getObserver() {
+        return menu;
+    }
+
     public void close() {
         try {
             socket.close();

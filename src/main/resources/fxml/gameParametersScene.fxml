@@ -26,10 +26,18 @@
       <ChoiceBox fx:id="numPlayersMenu" layoutX="294.0" layoutY="175.0" prefHeight="58.0" prefWidth="207.0" />
       <ChoiceBox fx:id="gameModeMenu" layoutX="295.0" layoutY="269.0" prefHeight="53.0" prefWidth="204.0" />
       <Button fx:id="parametersButton" layoutX="276.0" layoutY="363.0" mnemonicParsing="false" onAction="#sendGameParameters" prefHeight="44.0" prefWidth="98.0" text="Confirm" />
-      <Label fx:id="parametersErrorLabel" layoutX="176.0" layoutY="110.0" opacity="0.0" prefHeight="53.0" prefWidth="418.0" text="Error: xxx, error message" />
+      <Label fx:id="parametersErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="62.0" layoutY="110.0" opacity="0.0" prefHeight="53.0" prefWidth="500.0" text="Error: xxx, error message">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
       <ImageView fitHeight="166.0" fitWidth="130.0" layoutX="1726.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/1487161053_LOGO_CRANIO_CREATIONS-02.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="backImage" fitHeight="80.0" fitWidth="80.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#backToTitle" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/back.png" />
          </image>
       </ImageView>
    </children>
