@@ -58,11 +58,15 @@ public class NetworkManager {
     public void send(String line) {
         out.println(line);
         out.flush();
+
+        if(out.checkError()) menu.manageDisconnection();
     }
 
     public void sendJSON(Command c) {
         out.println(parser.toJson(c));
         out.flush();
+
+        if(out.checkError()) menu.manageDisconnection();
     }
 
     public void setObserver(ClientObserver menu) {
