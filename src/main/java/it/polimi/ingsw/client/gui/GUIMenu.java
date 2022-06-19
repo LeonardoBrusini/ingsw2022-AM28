@@ -217,11 +217,13 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void disconnectionUpdate(CurrentStatus cs) {
-        if(currentStatus.getTurn().getPhase().equalsIgnoreCase("PLANNING")) {
-            Platform.runLater(() -> changePhaseScene());
-        } else {
-            actionButtonsDebilitation();
-        }
+        Platform.runLater(() -> {
+            if (currentStatus.getTurn().getPhase().equalsIgnoreCase("PLANNING")) {
+                changePhaseScene();
+            } else {
+                actionButtonsDebilitation();
+            }
+        });
     }
 
     private void actionButtonsDebilitation() {
@@ -234,17 +236,17 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void updateTakeFromCloud(CurrentStatus cs) {
-        ArrayList<GridPane> cloudPanes = new ArrayList<>();
-        for(int i=0;i<cs.getGame().getClouds().size();i++) {
-            cloudPanes.add((GridPane) stage.getScene().lookup("#cloud"+(i+1)));
-        }
         Platform.runLater(() -> {
-            ControllerUtils.fillClouds(cs.getGame().getClouds(),cloudPanes,getClass().getClassLoader());
+            ArrayList<GridPane> cloudPanes = new ArrayList<>();
+            for(int i=0;i<cs.getGame().getClouds().size();i++) {
+                cloudPanes.add((GridPane) stage.getScene().lookup("#cloud"+(i+1)));
+            }
+                ControllerUtils.fillClouds(cs.getGame().getClouds(),cloudPanes,getClass().getClassLoader());
+            int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
+            int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
+            updateEntrance(playerIndex, statusEntrance);
+            actionButtonsDebilitation();
         });
-        int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
-        int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
-        updateEntrance(playerIndex, statusEntrance);
-        actionButtonsDebilitation();
     }
 
     private void updateCard(CharacterCardStatus ccs, GridPane studentsOnCard, ImageView coin, ImageView net, Label netLabel, Label textMessage) {

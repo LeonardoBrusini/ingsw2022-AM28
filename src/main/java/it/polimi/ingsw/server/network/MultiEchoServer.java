@@ -20,7 +20,6 @@ public class MultiEchoServer {
         ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(port);
-            serverSocket.setSoTimeout(1000);
         } catch (IOException e) {
             System.err.println(e.getMessage());
             return;
