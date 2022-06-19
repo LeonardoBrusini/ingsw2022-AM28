@@ -20,7 +20,7 @@ public class EntranceToHallSwitchEffect implements EffectStrategy{
      */
     @Override
     public void resolveEffect(CharacterCard c) throws IllegalArgumentException {
-        if(c.getSelectedStudentsFrom().getTotalStudents() > 2 || c.getSelectedStudentsTo().getTotalStudents() > 2)
+        if(c.getSelectedStudentsFrom().getTotalStudents() > 2 || c.getSelectedStudentsTo().getTotalStudents() > 2 || c.getSelectedStudentsTo().getTotalStudents()<=0  || c.getSelectedStudentsFrom().getTotalStudents()<=0)
             throw new IllegalArgumentException();
         if(c.getSelectedStudentsFrom().getTotalStudents()!=c.getSelectedStudentsTo().getTotalStudents()) throw new IllegalArgumentException();
         Dashboard d = c.getPlayerThisTurn().getDashboard();

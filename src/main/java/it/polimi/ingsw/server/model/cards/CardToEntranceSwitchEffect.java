@@ -20,7 +20,7 @@ public class CardToEntranceSwitchEffect implements EffectStrategy{
     @Override
     public void resolveEffect(CharacterCard c) throws IllegalArgumentException {
         Dashboard d = c.getPlayerThisTurn().getDashboard();
-        if(c.getSelectedStudentsTo().getTotalStudents() > 3 || c.getSelectedStudentsFrom().getTotalStudents() > 3)
+        if(c.getSelectedStudentsTo().getTotalStudents() > 3 || c.getSelectedStudentsFrom().getTotalStudents() > 3 || c.getSelectedStudentsTo().getTotalStudents()<=0  || c.getSelectedStudentsFrom().getTotalStudents()<=0)
             throw new IllegalArgumentException();
         if(c.getSelectedStudentsTo().getTotalStudents()!=c.getSelectedStudentsFrom().getTotalStudents()) throw new IllegalArgumentException();
         for (Colour colour: Colour.values()) {
