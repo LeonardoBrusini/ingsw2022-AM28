@@ -92,7 +92,7 @@ public class GUIMenu implements ClientObserver {
                     case "MOVETOHALL" -> updateMoveToHall(cs);
                     case "MOVEMOTHERNATURE" -> updateMoveMotherNature(cs);
                     case "TAKEFROMCLOUD" -> updateTakeFromCloud(cs);
-                    case "PLAYCHARACTERCARD" -> updatePlayCharacterCard(cs, textMessage);
+                    case "PLAYCHARACTERCARD" -> Platform.runLater(() -> updatePlayCharacterCard(cs, textMessage));
                 }
             }
         }
@@ -131,12 +131,12 @@ public class GUIMenu implements ClientObserver {
         }
 
         updateAllPlayersCoins(cs.getGame().getPlayers());
-        Platform.runLater(() -> {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("CARD "+(ccs.getIndex()+1)+" HAS BEEN ACTIVATED!");
-            a.initOwner(stage);
-            a.show();
-        });
+
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setContentText("CARD "+(ccs.getIndex()+1)+" HAS BEEN ACTIVATED!");
+        a.initOwner(stage);
+        a.show();
+
     }
 
     private void updateAllPlayersCoins(ArrayList<PlayerStatus> players) {
@@ -164,10 +164,7 @@ public class GUIMenu implements ClientObserver {
                 }
             }
         }
-        Label finalCoins = coins;
-        Platform.runLater(() -> {
-            if(currentStatus.getGameMode().equals("expert")) finalCoins.setText(""+currentStatus.getGame().getPlayers().get(playerIndex).getCoins());
-        });
+        if(currentStatus.getGameMode().equals("expert")) coins.setText(""+currentStatus.getGame().getPlayers().get(playerIndex).getCoins());
     }
 
     private void updateAllHalls(CurrentStatus cs) {
@@ -258,21 +255,23 @@ public class GUIMenu implements ClientObserver {
                 netLabel.setOpacity(1);
             }
             int childrenIndex = 0;
-            for(int i=0;i<ccs.getStudents().length;i++) {
-                String col = Colour.values()[i].toString();
-                Image sImageE = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),40,40,true,false);
-                for (int j=0;j<ccs.getStudents()[i];j++) {
-                    ImageView sE;
-                    if(childrenIndex<studentsOnCard.getChildren().size()) {
-                        sE = (ImageView) studentsOnCard.getChildren().get(childrenIndex);
-                        sE.setImage(sImageE);
-                    } else {
-                        sE = new ImageView();
-                        sE.setImage(sImageE);
-                        studentsOnCard.add(sE,childrenIndex%2,childrenIndex/2);
+            if(ccs.getStudents()!=null) {
+                for(int i=0;i<ccs.getStudents().length;i++) {
+                    String col = Colour.values()[i].toString();
+                    Image sImageE = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),40,40,true,false);
+                    for (int j=0;j<ccs.getStudents()[i];j++) {
+                        ImageView sE;
+                        if(childrenIndex<studentsOnCard.getChildren().size()) {
+                            sE = (ImageView) studentsOnCard.getChildren().get(childrenIndex);
+                            sE.setImage(sImageE);
+                        } else {
+                            sE = new ImageView();
+                            sE.setImage(sImageE);
+                            studentsOnCard.add(sE,childrenIndex%2,childrenIndex/2);
+                        }
+                        sE.setOnMouseClicked(new CCardHandler(ccs.getIndex(),col,textMessage));
+                        childrenIndex++;
                     }
-                    sE.setOnMouseClicked(new CCardHandler(ccs.getIndex(),col,textMessage));
-                    childrenIndex++;
                 }
             }
         });
@@ -284,7 +283,7 @@ public class GUIMenu implements ClientObserver {
         if(currentStatus.getPlayerID().equals(playerIndex)) {
             entrance = (GridPane) stage.getScene().lookup("#myEntrance");
             Label textMessage = (Label) stage.getScene().lookup("#textMessage");
-             ControllerUtils.instance().setMyEntrance(entrance,statusEntrance,textMessage,getClass().getClassLoader());
+            ControllerUtils.instance().setMyEntrance(entrance,statusEntrance,textMessage,getClass().getClassLoader());
         } else {
             if(currentStatus.getPlayerID()>0) {
                 if(playerIndex==0) entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
