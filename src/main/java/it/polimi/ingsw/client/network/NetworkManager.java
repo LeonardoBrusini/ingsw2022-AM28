@@ -37,16 +37,13 @@ public class NetworkManager {
                 try {
                     String line;
                     while ((line = in.readLine())!=null) {
-                        if(line.equals("ping")) {
-                            out.println("pong");
-                            if(out.checkError()) menu.manageDisconnection();
-                        }
+                        if(line.equals("ping")) out.println("pong");
                         else {
                             if (menu!=null) menu.manageMessage(line);
                         }
                     }
                 }catch (IOException e) {
-                    throw new RuntimeException(e);
+                    menu.manageDisconnection();
                 }
             }).start();
             return true;
@@ -58,15 +55,11 @@ public class NetworkManager {
     public void send(String line) {
         out.println(line);
         out.flush();
-
-        if(out.checkError()) menu.manageDisconnection();
     }
 
     public void sendJSON(Command c) {
         out.println(parser.toJson(c));
         out.flush();
-
-        if(out.checkError()) menu.manageDisconnection();
     }
 
     public void setObserver(ClientObserver menu) {
