@@ -88,10 +88,10 @@ public class GUIMenu implements ClientObserver {
             if(cs.getLastCommand()==null) disconnectionUpdate(cs);
             else {
                 switch (cs.getLastCommand()) {
-                    case "MOVETOISLAND" -> updateMoveToIsland(cs);
-                    case "MOVETOHALL" -> updateMoveToHall(cs);
-                    case "MOVEMOTHERNATURE" -> updateMoveMotherNature(cs);
-                    case "TAKEFROMCLOUD" -> updateTakeFromCloud(cs);
+                    case "MOVETOISLAND" -> Platform.runLater(() -> updateMoveToIsland(cs));
+                    case "MOVETOHALL" -> Platform.runLater(() -> updateMoveToHall(cs));
+                    case "MOVEMOTHERNATURE" -> Platform.runLater(() -> updateMoveMotherNature(cs));
+                    case "TAKEFROMCLOUD" -> Platform.runLater(() -> updateTakeFromCloud(cs));
                     case "PLAYCHARACTERCARD" -> Platform.runLater(() -> updatePlayCharacterCard(cs, textMessage));
                 }
             }
