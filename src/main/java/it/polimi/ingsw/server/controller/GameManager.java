@@ -265,7 +265,7 @@ public class GameManager {
             card.setPlayerThisTurn(p);
             card.setGameManager(this);
             card.setBoard(board);
-            if(p.getCoins()>card.getPrice()) {
+            if(p.getCoins()>=card.getPrice()) {
                 card.getCardInfo().getEffect().resolveEffect(card);
                 p.spendCoins(card.getPrice());
             } else {
@@ -304,7 +304,7 @@ public class GameManager {
             card.setGameManager(this);
             card.setBoard(board);
             card.setSelectedColour(colour);
-            if(p.getCoins()>card.getPrice()) {
+            if(p.getCoins()>=card.getPrice()) {
                 card.getCardInfo().getEffect().resolveEffect(card);
                 p.spendCoins(card.getPrice());
             } else {
@@ -345,7 +345,7 @@ public class GameManager {
             card.setGameManager(this);
             card.setSelectedColour(colour);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
-            if(p.getCoins()>card.getPrice()) {
+            if(p.getCoins()>=card.getPrice()) {
                 card.getCardInfo().getEffect().resolveEffect(card);
                 p.spendCoins(card.getPrice());
             } else {
@@ -385,7 +385,7 @@ public class GameManager {
             card.setPlayerThisTurn(p);
             card.setBoard(board);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
-            if(p.getCoins()>card.getPrice()) {
+            if(p.getCoins()>=card.getPrice()) {
                 card.getCardInfo().getEffect().resolveEffect(card);
                 p.spendCoins(card.getPrice());
             } else {
@@ -424,7 +424,7 @@ public class GameManager {
         card.setBoard(board);
         card.setSelectedStudentsFrom(studentGroupFrom);
         card.setSelectedStudentsTo(studentGroupTo);
-        if(p.getCoins()>card.getPrice()) {
+        if(p.getCoins()>=card.getPrice()) {
             card.getCardInfo().getEffect().resolveEffect(card);
             p.spendCoins(card.getPrice());
         } else {

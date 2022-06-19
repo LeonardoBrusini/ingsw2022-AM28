@@ -227,9 +227,11 @@ class CommandTests {
         while (!t.isMotherNaturePhase() && !t.isMoveStudentsPhase()) t.nextPhase(gm.getBoard(),gm.getPlayers());
         gm.getBoard().getCharacterCards().set(0,new CharacterCard(CharacterCardInfo.CARD4));
         CharacterCard card = gm.getBoard().getCharacterCards().get(0);
+        assertEquals(card.getCardInfo().getPrice(),card.getPrice());
         gm.getPlayers().get(0).setLastPlayedCard(gm.getPlayers().get(0).getAssistantCard(0));
         gm.getPlayers().get(1).setLastPlayedCard(gm.getPlayers().get(1).getAssistantCard(0));
-
+        gm.getPlayers().get(0).setCoins(CharacterCardInfo.CARD4.getPrice());
+        gm.getPlayers().get(1).setCoins(CharacterCardInfo.CARD4.getPrice());
         command.setPlayerIndex(t.getCurrentPlayer()==0 ? 1 : 0);
         assertEquals(StatusCode.WRONGTURN,strategy.getCmd().resolveCommand(gm,command));
         command.setPlayerIndex(t.getCurrentPlayer());
@@ -246,7 +248,10 @@ class CommandTests {
         command.setIndex(3);
         assertEquals(StatusCode.ILLEGALARGUMENT,strategy.getCmd().resolveCommand(gm,command));
         command.setIndex(0);
+        assertEquals(card.getCardInfo().getPrice(),card.getPrice());
+        assertEquals(gm.getPlayers().get(t.getCurrentPlayer()).getCoins(),card.getPrice());
         assertNull(strategy.getCmd().resolveCommand(gm,command));
+        assertEquals(card.getCardInfo().getPrice()+1,card.getPrice());
         strategy.getCmd().getUpdatedStatus(gm,command);
         assertEquals(StatusCode.ALREADYPLAYEDCC,strategy.getCmd().resolveCommand(gm,command));
 

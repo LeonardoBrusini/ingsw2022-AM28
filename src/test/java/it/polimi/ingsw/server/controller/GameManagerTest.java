@@ -602,13 +602,12 @@ class GameManagerTest {
                 gm.getTurnManager().setCurrentPlayer(0);
                 gm.getPlayers().get(0).setCcActivatedThisTurn(false);
                 gm.playCharacterCard(0, i);
+                assertTrue(cards1.get(i).isActivated());
             } catch (IllegalArgumentException | WrongPhaseException | NotEnoughCoinsException | AlreadyPlayedException | WrongTurnException e) {
                 e.printStackTrace();
+                assertFalse(cards1.get(i).isActivated());
             }
         }
-        assertTrue(card6.isActivated());
-        assertTrue(card8.isActivated());
-
         //To test AlreadyPlayedException
         gm.getPlayers().get(0).setCoins(8);
         CharacterCard card12 = new CharacterCard(CharacterCardInfo.CARD2);

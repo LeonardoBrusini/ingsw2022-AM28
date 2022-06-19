@@ -305,6 +305,7 @@ public class EffectsStatusTest {
         CharacterCardStatus ccs0 = new CharacterCardStatus();
         ccs0.setIndex(0);
         ccs0.setCoinOnIt(true);
+        ccs0.setNoEntryTiles(c.getNoEntryTiles());
         ccs.add(ccs0);
         //creation of the expected current status
         gs.setCharacterCards(ccs);
