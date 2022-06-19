@@ -261,12 +261,16 @@ public class GameManager {
 
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
-            p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard);
             card.setPlayerThisTurn(p);
             card.setGameManager(this);
             card.setBoard(board);
-            card.getCardInfo().getEffect().resolveEffect(card);
+            if(p.getCoins()>card.getPrice()) {
+                card.getCardInfo().getEffect().resolveEffect(card);
+                p.spendCoins(card.getPrice());
+            } else {
+                throw new NotEnoughCoinsException();
+            }
             p.setCcActivatedThisTurn(true);
             if(!card.isCoinOnIt()) {
                 board.setCoins(board.getCoins()-1);
@@ -295,13 +299,17 @@ public class GameManager {
 
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
         try {
-            p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard, colour);
             card.setPlayerThisTurn(p);
             card.setGameManager(this);
             card.setBoard(board);
             card.setSelectedColour(colour);
-            card.getCardInfo().getEffect().resolveEffect(card);
+            if(p.getCoins()>card.getPrice()) {
+                card.getCardInfo().getEffect().resolveEffect(card);
+                p.spendCoins(card.getPrice());
+            } else {
+                throw new NotEnoughCoinsException();
+            }
             p.setCcActivatedThisTurn(true);
             if(!card.isCoinOnIt()) {
                 board.setCoins(board.getCoins()-1);
@@ -331,14 +339,18 @@ public class GameManager {
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
 
         try {
-            p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard,colour,islandIndex);
             card.setPlayerThisTurn(p);
             card.setBoard(board);
             card.setGameManager(this);
             card.setSelectedColour(colour);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
-            card.getCardInfo().getEffect().resolveEffect(card);
+            if(p.getCoins()>card.getPrice()) {
+                card.getCardInfo().getEffect().resolveEffect(card);
+                p.spendCoins(card.getPrice());
+            } else {
+                throw new NotEnoughCoinsException();
+            }
             p.setCcActivatedThisTurn(true);
             if(!card.isCoinOnIt()) {
                 board.setCoins(board.getCoins()-1);
@@ -368,13 +380,17 @@ public class GameManager {
         if(card.getCardInfo()==CharacterCardInfo.CARD5 && card.getNoEntryTiles()==0) throw new IllegalArgumentException();
 
         try {
-            p.spendCoins(card.getPrice());
             //board.playCharacterCard(posCharacterCard,islandIndex);
             card.setGameManager(this);
             card.setPlayerThisTurn(p);
             card.setBoard(board);
             card.setSelectedIsland(board.getIslandManager().getIslandByIndex(islandIndex));
-            card.getCardInfo().getEffect().resolveEffect(card);
+            if(p.getCoins()>card.getPrice()) {
+                card.getCardInfo().getEffect().resolveEffect(card);
+                p.spendCoins(card.getPrice());
+            } else {
+                throw new NotEnoughCoinsException();
+            }
             p.setCcActivatedThisTurn(true);
             if(!card.isCoinOnIt()) {
                 board.setCoins(board.getCoins()-1);
@@ -403,13 +419,17 @@ public class GameManager {
         if(p.isCcActivatedThisTurn()) throw new AlreadyPlayedException();
         CharacterCard card = board.getCharacterCards().get(posCharacterCard);
 
-        p.spendCoins(card.getPrice());
         card.setGameManager(this);
         card.setPlayerThisTurn(p);
         card.setBoard(board);
         card.setSelectedStudentsFrom(studentGroupFrom);
         card.setSelectedStudentsTo(studentGroupTo);
-        card.getCardInfo().getEffect().resolveEffect(card);
+        if(p.getCoins()>card.getPrice()) {
+            card.getCardInfo().getEffect().resolveEffect(card);
+            p.spendCoins(card.getPrice());
+        } else {
+            throw new NotEnoughCoinsException();
+        }
         p.setCcActivatedThisTurn(true);
         if(!card.isCoinOnIt()) {
             board.setCoins(board.getCoins()-1);
