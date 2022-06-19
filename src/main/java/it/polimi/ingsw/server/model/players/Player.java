@@ -26,6 +26,7 @@ public class Player {
     private final Dashboard dashboard;
     private final boolean[][] coinPositions;
     private boolean ccActivatedThisTurn;
+    private boolean acActivatedThisTurn;
     private boolean connected;
 
     /**
@@ -38,6 +39,7 @@ public class Player {
         dashboard = new Dashboard(hisTower);
         lastPlayedCard = null;
         ccActivatedThisTurn = false;
+        acActivatedThisTurn = false;
         cards = new ArrayList<>();
         for (int i=0; i<AssistantCardInfo.values().length;i++){
             cards.add(new AssistantCard(AssistantCardInfo.values()[i]));
@@ -118,6 +120,7 @@ public class Player {
         if(cards.get(x).isPlayed()) throw new AlreadyPlayedException();
         cards.get(x).setPlayed(true);
         lastPlayedCard = cards.get(x);
+        acActivatedThisTurn = true;
         for (AssistantCard c: cards) {
             if(!c.isPlayed()) return;
         }
@@ -203,8 +206,13 @@ public class Player {
     public ArrayList<AssistantCard> getCards() {
         return cards;
     }
-
     public void setLastPlayedCard(AssistantCard lastPlayedCard) {
         this.lastPlayedCard = lastPlayedCard;
+    }
+    public boolean isAcActivatedThisTurn() {
+        return acActivatedThisTurn;
+    }
+    public void setAcActivatedThisTurn(boolean acActivatedThisTurn) {
+        this.acActivatedThisTurn = acActivatedThisTurn;
     }
 }

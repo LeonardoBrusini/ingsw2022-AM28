@@ -475,4 +475,10 @@ public class CLIMenu implements ClientObserver {
     public void manageMessage(String line) {
         manageReceivedLine(line);
     }
+
+    @Override
+    public void manageDisconnection() {
+        System.out.println("Connection error, can't reach server");
+        System.exit(0);
+    }
 }

@@ -118,7 +118,8 @@ public class ConnectionList {
                 return;
             }
         } else {
-            boolean playerErased = false;
+            //boolean playerErased = false;
+            boolean firstPlayerErased = false;
             int i=connected.size()-1;
             while (i>=0) {
                 if(!connected.get(i)) {
@@ -129,21 +130,22 @@ public class ConnectionList {
                     }
                     clients.remove(i);
                     connected.remove(i);
-                    playerErased = true;
+                    if(i==0) firstPlayerErased = true;
+                    //playerErased = true;
                 }
                 i--;
             }
-            if(playerErased) {
-                for (i=0;i<clients.size();i++) {
-                    if(!clients.get(i).getConnectionManager().doesNeedUsername()) {
+            //if(playerErased) {
+                //for (i=0;i<clients.size();i++) {
+                    if(firstPlayerErased && !clients.get(0).getConnectionManager().doesNeedUsername()) {
                         AddPlayerResponse a = new AddPlayerResponse();
                         a.setStatus(0);
                         a.setFirst(true);
                         sendToOne(new Gson().toJson(a),0);
-                        break;
+                        //break;
                     }
-                }
-            }
+                //}
+           // }
         }
         resetIDs();
     }

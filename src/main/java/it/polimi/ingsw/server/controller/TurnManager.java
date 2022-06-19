@@ -103,10 +103,13 @@ public class TurnManager {
         currentPlayer = 0;
         board.fillClouds();
         int playerIndex = actionOrder.get(0);
-        for (int i=playerIndex;i<players.size();i++) planningOrder.add(i);
-        for(int i=0;i<playerIndex;i++) planningOrder.add(i);
+        for (int i=playerIndex;i<players.size();i++) if(players.get(i).isConnected()) planningOrder.add(i);
+        for(int i=0;i<playerIndex;i++) if(players.get(i).isConnected()) planningOrder.add(i);
+        for (int i=playerIndex;i<players.size();i++) if(!players.get(i).isConnected()) planningOrder.add(i);
+        for(int i=0;i<playerIndex;i++) if(!players.get(i).isConnected()) planningOrder.add(i);
         for (Player p: players) {
             p.setCcActivatedThisTurn(false);
+            p.setAcActivatedThisTurn(false);
         }
     }
 
@@ -118,7 +121,7 @@ public class TurnManager {
         actionOrder = new ArrayList<>();
         int actionWeight, i, j;
         for(i=0;i<players.size();i++) {
-            if(players.get(i).getLastPlayedCard()==null) actionWeight = 11;
+            if(!players.get(i).isAcActivatedThisTurn() || players.get(i).getLastPlayedCard()==null) actionWeight = 11;
             else actionWeight = players.get(i).getLastPlayedCard().getInfo().getTurnWeight();
             for(j=0;j<actionOrder.size();j++) {
                 AssistantCard ac = players.get(actionOrder.get(j)).getLastPlayedCard();

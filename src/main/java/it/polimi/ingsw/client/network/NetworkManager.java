@@ -37,7 +37,10 @@ public class NetworkManager {
                 try {
                     String line;
                     while ((line = in.readLine())!=null) {
-                        if(line.equals("ping")) out.println("pong");
+                        if(line.equals("ping")) {
+                            out.println("pong");
+                            if(out.checkError()) menu.manageDisconnection();
+                        }
                         else {
                             if (menu!=null) menu.manageMessage(line);
                         }
