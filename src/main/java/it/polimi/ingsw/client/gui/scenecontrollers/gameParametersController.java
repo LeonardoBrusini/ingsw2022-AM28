@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.gui.scenecontrollers;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.StatusUpdater;
+import it.polimi.ingsw.client.gui.GUIMenu;
+import it.polimi.ingsw.client.gui.GUIScene;
 import it.polimi.ingsw.client.network.NetworkManager;
 import it.polimi.ingsw.network.GameParameters;
 import javafx.collections.FXCollections;
@@ -9,6 +12,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.Locale;
 
@@ -21,6 +26,8 @@ public class gameParametersController {
     ChoiceBox numPlayersMenu;
     @FXML
     ChoiceBox gameModeMenu;
+    @FXML
+    ImageView backImage;
 
     @FXML
     private void initialize() {
@@ -39,5 +46,9 @@ public class gameParametersController {
         NetworkManager.instance().send(command);
     }
 
-
+    public void backToTitle() {
+        StatusUpdater.reset();
+        NetworkManager.instance().close();
+        ((GUIMenu) NetworkManager.instance().getObserver()).toNextScene(GUIScene.TITLE_SCREEN);
+    }
 }

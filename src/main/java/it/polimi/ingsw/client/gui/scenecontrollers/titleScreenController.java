@@ -6,9 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +21,9 @@ public class titleScreenController {
     TextField serverIP, serverPort;
     @FXML
     Label connectionErrorLabel;
+    @FXML
+    ImageView exitImageView;
+
     public void connectToServer(ActionEvent actionEvent) {
         String ip = serverIP.getCharacters().toString();
         if(!isValidIPAddress(ip)) {
@@ -65,5 +68,10 @@ public class titleScreenController {
         }
         Matcher m = p.matcher(ip);
         return m.matches();
+    }
+
+    public void closeGame() {
+        System.out.println("exit");
+        System.exit(0);
     }
 }
