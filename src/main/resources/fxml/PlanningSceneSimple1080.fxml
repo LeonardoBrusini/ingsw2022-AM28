@@ -470,7 +470,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <GridPane fx:id="myProfessors" layoutX="509.0" layoutY="87.0" prefHeight="241.0" prefWidth="57.0">
+      <GridPane fx:id="myProfessors" layoutX="511.0" layoutY="444.0" prefHeight="241.0" prefWidth="57.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
@@ -482,7 +482,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <GridPane fx:id="opponentProfessors" layoutX="509.0" layoutY="445.0" prefHeight="241.0" prefWidth="57.0">
+      <GridPane fx:id="opponentProfessors" layoutX="511.0" layoutY="87.0" prefHeight="241.0" prefWidth="57.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
