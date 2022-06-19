@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -240,7 +241,7 @@ public class GUIMenu implements ClientObserver {
             for(int i=0;i<cs.getGame().getClouds().size();i++) {
                 cloudPanes.add((GridPane) stage.getScene().lookup("#cloud"+(i+1)));
             }
-                ControllerUtils.fillClouds(cs.getGame().getClouds(),cloudPanes,getClass().getClassLoader());
+            ControllerUtils.fillClouds(cs.getGame().getClouds(),cloudPanes,getClass().getClassLoader());
             int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
             int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
             updateEntrance(playerIndex, statusEntrance);
@@ -484,10 +485,11 @@ public class GUIMenu implements ClientObserver {
             int childrenIndex = 0;
             for(int i=0;i<islandStudents.length;i++) {
                 String col = Colour.values()[i].toString();
-                Image sImage = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),33,33,true,false);
+                Image sImage = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),25,25,true,false);
                 ImageView s = (ImageView) studentPane.getChildren().get(childrenIndex++);
                 s.setImage(sImage);
                 Label l = (Label) studentPane.getChildren().get(childrenIndex++);
+                l.setFont(new Font(18));
                 l.setText(""+islandStudents[i]);
             }
         });

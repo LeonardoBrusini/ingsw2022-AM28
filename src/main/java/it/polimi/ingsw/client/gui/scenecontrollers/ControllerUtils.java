@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -278,10 +279,11 @@ public class ControllerUtils {
             Image sImage = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),25,25,true,true);
             ImageView imageView = new ImageView(sImage);
             Label sLabel = new Label(""+islandStatus.getStudents()[i]);
+            sLabel.setFont(new Font(18));
             studentPane.add(imageView,0,i);
             studentPane.add(sLabel,1,i);
             if(islandStatus.getTowerColour()!=null) {
-                Image tower = new Image(classLoader.getResource("images/wooden_pieces/"+islandStatus.getTowerColour().toLowerCase()+"_tower.png").toString(),40,50,true,true);
+                Image tower = new Image(classLoader.getResource("images/wooden_pieces/"+islandStatus.getTowerColour().toLowerCase()+"_tower.png").toString(),50,50,true,true);
                 towersImage.setImage(tower);
             }
         }
@@ -296,6 +298,7 @@ public class ControllerUtils {
                 Image sImage = new Image(classLoader.getResource("images/wooden_pieces/student_"+col+".png").toString(),25,25,true,true);
                 ImageView imageView = new ImageView(sImage);
                 Label sLabel = new Label(""+c.getStudents()[i]);
+                sLabel.setFont(new Font(18));
                 cloudPane.add(imageView,0,i);
                 cloudPane.add(sLabel,1,i);
             }
