@@ -54,19 +54,21 @@ public class GUIMenu implements ClientObserver {
 
     @Override
     public void manageDisconnection() {
-        Platform.runLater(() -> {
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Connection error, can't reach server.");
-            a.initOwner(stage);
-            Optional<ButtonType> result = a.showAndWait();
-            if(result.isPresent()) {
-                if(result.get() == ButtonType.OK) {
-                    StatusUpdater.reset();
-                    NetworkManager.instance().close();
-                    toNextScene(GUIScene.TITLE_SCREEN);
+        if(currentStatus!=null && currentStatus.getWinner()==null) {
+            Platform.runLater(() -> {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Connection error, can't reach server.");
+                a.initOwner(stage);
+                Optional<ButtonType> result = a.showAndWait();
+                if(result.isPresent()) {
+                    if(result.get() == ButtonType.OK) {
+                        StatusUpdater.reset();
+                        NetworkManager.instance().close();
+                        toNextScene(GUIScene.TITLE_SCREEN);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void manageCSAction(Label textMessage, String line) {

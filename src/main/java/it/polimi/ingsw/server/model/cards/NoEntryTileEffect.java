@@ -41,6 +41,7 @@ public class NoEntryTileEffect implements EffectStrategy{
             if(c==gameManager.getBoard().getCharacterCards().get(i)) {
                 ccs0.setIndex(i);
                 ccs0.setCoinOnIt(c.isCoinOnIt());
+                ccs0.setNoEntryTiles(c.getNoEntryTiles());
                 ccs.add(ccs0);
                 break;
             }
