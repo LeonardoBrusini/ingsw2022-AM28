@@ -31,6 +31,7 @@ public class NetworkManager {
     public boolean startServer(String hostName, int portNumber) {
         try {
             socket = new Socket(hostName, portNumber);
+            socket.setSoTimeout(10000);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             new Thread(() -> {
@@ -42,7 +43,7 @@ public class NetworkManager {
                             if (menu!=null) menu.manageMessage(line);
                         }
                     }
-                }catch (IOException e) {
+                } catch (IOException e) {
                     menu.manageDisconnection();
                 }
             }).start();

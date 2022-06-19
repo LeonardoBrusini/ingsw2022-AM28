@@ -1,10 +1,7 @@
 package it.polimi.ingsw.server.network;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.network.AddPlayerResponse;
-import it.polimi.ingsw.network.CurrentStatus;
-import it.polimi.ingsw.network.GameParameters;
-import it.polimi.ingsw.network.StatusCode;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.controller.GameManager;
 import it.polimi.ingsw.server.model.players.Player;
 
@@ -102,6 +99,11 @@ public class ConnectionList {
                         gameManager.getTurnManager().nextPlayer(gameManager.getPlayers(),gameManager.getBoard());
                         CurrentStatus cs = new CurrentStatus();
                         cs.setTurn(gameManager.getTurnManager().getTurnStatus());
+                        if(cs.getTurn().getPhase().equals("PLANNING")){
+                            GameStatus gs = new GameStatus();
+                            gs.setClouds(gameManager.getBoard().getCloudsStatus());
+                            cs.setGame(gs);
+                        }
                         sendToAllLogged(new Gson().toJson(cs));
                     }
                 }

@@ -178,29 +178,29 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void updateHall(int playerIndex, int[] studentsOnHall) {
-        GridPane hall;
-        if(currentStatus.getPlayerID().equals(playerIndex)) {
-            hall = (GridPane) stage.getScene().lookup("#myHall");
-            Label textMessage = (Label) stage.getScene().lookup("#textMessage");
-            Platform.runLater(() -> {
+        Platform.runLater(() -> {
+            GridPane hall;
+            if(currentStatus.getPlayerID().equals(playerIndex)) {
+                hall = (GridPane) stage.getScene().lookup("#myHall");
+                Label textMessage = (Label) stage.getScene().lookup("#textMessage");
                 ControllerUtils.instance().setMyHall(hall, studentsOnHall,getClass().getClassLoader());
-            });
-        } else {
-            if(currentStatus.getPlayerID()>0) {
-                if(playerIndex==0) {
-                    hall = (GridPane) stage.getScene().lookup("#opponentHall");
-                } else {
-                    hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
-                }
             } else {
-                if(playerIndex==1) {
-                    hall = (GridPane) stage.getScene().lookup("#opponentHall");
+                if(currentStatus.getPlayerID()>0) {
+                    if(playerIndex==0) {
+                        hall = (GridPane) stage.getScene().lookup("#opponentHall");
+                    } else {
+                        hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
+                    }
                 } else {
-                    hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
+                    if(playerIndex==1) {
+                        hall = (GridPane) stage.getScene().lookup("#opponentHall");
+                    } else {
+                        hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
+                    }
                 }
+                updateOpponentHall(hall, studentsOnHall);
             }
-            updateOpponentHall(hall, studentsOnHall);
-        }
+        });
     }
 
     private void updateNETOnIsland(CurrentStatus cs) {
@@ -277,11 +277,12 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void updateEntrance(int playerIndex, int[] statusEntrance) {
+        Platform.runLater(() -> {
         GridPane entrance;
         if(currentStatus.getPlayerID().equals(playerIndex)) {
             entrance = (GridPane) stage.getScene().lookup("#myEntrance");
             Label textMessage = (Label) stage.getScene().lookup("#textMessage");
-            Platform.runLater(() -> ControllerUtils.instance().setMyEntrance(entrance,statusEntrance,textMessage,getClass().getClassLoader()));
+             ControllerUtils.instance().setMyEntrance(entrance,statusEntrance,textMessage,getClass().getClassLoader());
         } else {
             if(currentStatus.getPlayerID()>0) {
                 if(playerIndex==0) entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
@@ -292,6 +293,7 @@ public class GUIMenu implements ClientObserver {
             }
             updateOpponentEntrance(entrance, statusEntrance);
         }
+        });
     }
 
     private void updateMoveMotherNature(CurrentStatus cs) {
@@ -430,41 +432,39 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void updateOpponentHall(GridPane hall, int[] statusHall) {
-        Platform.runLater(() ->{
-            while (!hall.getChildren().isEmpty()) hall.getChildren().remove(0);
-            for(int i=0;i<statusHall.length;i++) {
-                String col = Colour.values()[i].toString();
-                Image sImageH = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),30,30,true,true);
-                for (int j=0;j<statusHall[i];j++) {
-                    ImageView sH = new ImageView(sImageH);
-                    hall.add(sH,j,i);
-                }
+
+        while (!hall.getChildren().isEmpty()) hall.getChildren().remove(0);
+        for(int i=0;i<statusHall.length;i++) {
+            String col = Colour.values()[i].toString();
+            Image sImageH = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),30,30,true,true);
+            for (int j=0;j<statusHall[i];j++) {
+                ImageView sH = new ImageView(sImageH);
+                hall.add(sH,j,i);
             }
-        });
+        }
+
     }
     private void updateOpponentEntrance(GridPane entrance, int[] statusEntrance) {
-        Platform.runLater(() ->{
-            int childrenIndex = 0;
-            boolean addedStudent = false;
-            for(int i=0;i<statusEntrance.length;i++) {
-                String col = Colour.values()[i].toString();
-                Image sImageE = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),33,33,true,false);
-                for (int j=0;j<statusEntrance[i];j++) {
-                    ImageView sE;
-                    if(childrenIndex<entrance.getChildren().size()) {
-                        sE = (ImageView) entrance.getChildren().get(childrenIndex);
-                        sE.setImage(sImageE);
-                    } else {
-                        addedStudent = true;
-                        sE = new ImageView();
-                        sE.setImage(sImageE);
-                        entrance.add(sE,childrenIndex%2,childrenIndex/2);
-                    }
-                    childrenIndex++;
+        int childrenIndex = 0;
+        boolean addedStudent = false;
+        for(int i=0;i<statusEntrance.length;i++) {
+            String col = Colour.values()[i].toString();
+            Image sImageE = new Image(getClass().getClassLoader().getResource("images/wooden_pieces/student_"+col.toLowerCase()+".png").toString(),33,33,true,false);
+            for (int j=0;j<statusEntrance[i];j++) {
+                ImageView sE;
+                if(childrenIndex<entrance.getChildren().size()) {
+                    sE = (ImageView) entrance.getChildren().get(childrenIndex);
+                    sE.setImage(sImageE);
+                } else {
+                    addedStudent = true;
+                    sE = new ImageView();
+                    sE.setImage(sImageE);
+                    entrance.add(sE,childrenIndex%2,childrenIndex/2);
                 }
+                childrenIndex++;
             }
-            if(!addedStudent) entrance.getChildren().remove(childrenIndex);
-        });
+        }
+        if(!addedStudent) entrance.getChildren().remove(childrenIndex);
     }
     private void updateMoveToIsland(CurrentStatus cs) {
         int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
