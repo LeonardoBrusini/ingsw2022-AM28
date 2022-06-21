@@ -24,11 +24,12 @@ You can find the full game here: https://www.craniocreations.it/prodotto/erianty
 
 The final version includes:
 
-initial UML diagram;
-final UML diagram, generated from the code by automated tools;
-working game implementation;
-source code of the implementation;
-source code of unity tests.
+- Initial UML diagram;
+- Final UML diagram, generated from the code by automated tools;
+- Communication protocol documentation;
+- Working game implementation;
+- Source code of the implementation;
+- Source code of unity tests.
 
 ## Implemented Functionalities
 ------------------------------------------------------------------------
@@ -47,22 +48,19 @@ source code of unity tests.
 
 ## Tests
 -----------------------------------------------------
-All tests in model and controller has a classes' coverage at 100%.
-
 Coverage criteria: code lines.
 
-Package	Tested Class	Coverage
-
-Controller | Game Manager   | 87% Methods, 91 % lines covered
-
-Controller | Turn Manager   | 90% Methods, 95 % lines covered
-
-Controller |EndOfGameChecker| 100% Methods, 78 % lines covered
-
-Model      | Dash Board     | 100% Methods, 100 % lines covered
-
-Model      | Board          | 100% Methods, 100 % lines covered
-
+| Package | Tested Class | Methods covered | Lines covered
+|:----------------|:----------------|:--------------|:---------------:|
+controller | Game Manager | 87% | 91% |
+controller | Turn Manager   | 90% | 95% |
+controller |EndOfGameChecker| 100% | 78% |
+controller.commands | All | 100% | 92% |
+model.board | All | 100% | 97% |
+model.cards | All | 100% | 96% |
+model.players | All | 100% | 97% |
+model | ProfessorGroup | 100% | 100% |
+model | StudentGroup | 100% | 100% |
 
 test coverage as reported by the IntelliJ tool
 83% classes, 73% line covered
@@ -70,8 +68,8 @@ test coverage as reported by the IntelliJ tool
 # Requirements
 -----------------------------------------------------
 ## Windows
-Download and install JAVA DEVELOPER KIT - https://www.oracle.com/java/technologies/downloads/#jdk18-windows
-Then set JAVA_HOME - <jdk folder path> and Path - <jdk folder path>\bin environment variables.
+Download and install JAVA DEVELOPER KIT - https://www.oracle.com/java/technologies/downloads/#jdk18-windows <br/>
+Then set JAVA_HOME - \<jdk folder path\> and Path - \<jdk folder path\>\bin environment variables.
 
 ## MacOs
 Download and install JDK FX - https://www.azul.com/downloads/?version=java-18-sts&os=macos&architecture=arm-64-bit&package=jdk-fx
@@ -79,18 +77,17 @@ Download and install JDK FX - https://www.azul.com/downloads/?version=java-18-st
 # Launch server and clients using JAR file:
 -----------------------------------------------------
 ## CLI configuration
-1. Download Windows Terminal (unlike the classic cmd, it supports all necessary unicode characters)
+- Download Windows Terminal (unlike the classic cmd, it supports all necessary unicode characters)
    https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701
-2. From WINDOWS 10/11, go to SETTINGS -> Date / time and language -> LANGUAGE -> Settings
+- From WINDOWS 10/11, go to SETTINGS -> Date / time and language -> LANGUAGE -> Settings
    language administration -> Administration options -> Change system locale.
    Add the check to "use UTF-8 unicode for high level language support"
 
-Open server from terminal typing "java -jar <file path> -s [port]".
-   
-Oper CLI client from terminal typing "java -jar <file path> -c [server ip] [server port]".
+Open server from terminal typing "java -jar \<file path\> -s [port]".<br/>
+Oper CLI client from terminal typing "java -jar \<file path\> -c [server ip] [server port]".
 
 ## GUI
-Double click on the jar file. Server ip and port will be asked on title screen.
+- Double click on the jar file. Server ip and port will be asked on title screen.
 --------------------------------------------------------
    
 You need at least 1 server and 2 clients are required to start the client
