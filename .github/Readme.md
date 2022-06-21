@@ -123,5 +123,10 @@ OTHERWISE YOU CAN START THE SERVER AND PLAY IN THIS WAY:
    the server is active, or via the public IP (but port forwarding to the
    your pc and 1234 as the port number, not a walk).
 
+------------------------------------------------------------------------
 
+you need at least 1 server and 2 clients are required to start the client
+if you want to start a client on another pc:
+- if the pc is on another network than the server -> you need a port forwarding and the IP of the server network
+- if the pc is on the same network as the server -> the local IP of the server is required
 
