@@ -74,7 +74,7 @@ Download and install JAVA DEVELOPER KIT - https://www.oracle.com/java/technologi
 Then set JAVA_HOME - \<jdk folder path\> and Path - \<jdk folder path\>\bin environment variables.
 
 ## MacOS
-Download and install JDK FX - https://www.azul.com/downloads/?version=java-18-sts&os=macos&architecture=arm-64-bit&package=jdk-fx
+Download and install JDK FX - https://www.azul.com/downloads/?version=java-18-sts&os=macos&architecture=arm-64-bit&package=jdk-fx <br/>
 In order to display correctly the game screen, go to display settings and change scaling resolution to at least 1920x1080
 
 # Launch server and clients using JAR file:
