@@ -13,8 +13,8 @@ Teacher Alessandro Margara
 
 What has been implemented:
 Complete rules + socket + CLI + GUI + 2 FA
-FA 1: 12 Character Cards
-FA 2: Resilience to client disconnections
+- FA 1: 12 Character Cards
+- FA 2: Resilience to client disconnections
 
 ## Project specification
 ------------------------------------------------------------------------
@@ -45,7 +45,7 @@ source code of unity tests.
 #### Legend
 🔴 Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;🟡 Implementing&nbsp;&nbsp;&nbsp;&nbsp;🟢 Implemented
 
-## Test Case
+## Tests
 -----------------------------------------------------
 All tests in model and controller has a classes' coverage at 100%.
 
@@ -86,6 +86,7 @@ Download and install JDK FX - https://www.azul.com/downloads/?version=java-18-st
    Add the check to "use UTF-8 unicode for high level language support"
 
 Open server from terminal typing "java -jar <file path> -s [port]".
+   
 Oper CLI client from terminal typing "java -jar <file path> -c [server ip] [server port]".
 
 ## GUI
