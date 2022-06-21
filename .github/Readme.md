@@ -67,26 +67,30 @@ test coverage as reported by the IntelliJ tool
 
 # Requirements
 -----------------------------------------------------
+Screen resolution 1920x1080
+
 ## Windows
 Download and install JAVA DEVELOPER KIT - https://www.oracle.com/java/technologies/downloads/#jdk18-windows <br/>
 Then set JAVA_HOME - \<jdk folder path\> and Path - \<jdk folder path\>\bin environment variables.
 
-## MacOs
+## MacOS
 Download and install JDK FX - https://www.azul.com/downloads/?version=java-18-sts&os=macos&architecture=arm-64-bit&package=jdk-fx
+In order to display correctly the game screen, go to display settings and change scaling resolution to at least 1920x1080
 
 # Launch server and clients using JAR file:
 -----------------------------------------------------
-## CLI configuration
+## CLI configuration on Windows
 - Download Windows Terminal (unlike the classic cmd, it supports all necessary unicode characters)
    https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701
 - From WINDOWS 10/11, go to SETTINGS -> Date / time and language -> LANGUAGE -> Settings
    language administration -> Administration options -> Change system locale.
    Add the check to "use UTF-8 unicode for high level language support"
 
+### Open server and CLI client (both Windows and MacOS)
 Open server from terminal typing "java -jar \<file path\> -s [port]".<br/>
 Oper CLI client from terminal typing "java -jar \<file path\> -c [server ip] [server port]".
 
-## GUI
+## GUI (Both Windows and MacOS)
 - Double click on the jar file. Server ip and port will be asked on title screen.
 --------------------------------------------------------
    
