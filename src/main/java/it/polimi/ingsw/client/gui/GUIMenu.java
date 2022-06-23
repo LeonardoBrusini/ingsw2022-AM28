@@ -589,6 +589,7 @@ public class GUIMenu implements ClientObserver {
                     Optional<ButtonType> result = a.showAndWait();
                     if(result.isPresent()) {
                         if(result.get() == ButtonType.OK) {
+                            currentStatus = null;
                             StatusUpdater.reset();
                             NetworkManager.instance().close();
                             toNextScene(GUIScene.TITLE_SCREEN);
@@ -603,6 +604,7 @@ public class GUIMenu implements ClientObserver {
                     Optional<ButtonType> result = a.showAndWait();
                     if(result.isPresent()) {
                         if(result.get() == ButtonType.OK) {
+                            currentStatus = null;
                             StatusUpdater.reset();
                             NetworkManager.instance().close();
                             toNextScene(GUIScene.TITLE_SCREEN);
