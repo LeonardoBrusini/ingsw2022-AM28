@@ -68,7 +68,7 @@ public class GameManager {
      * @param p the player who wants to play a card
      * @param c index of the card the player wants to play
      */
-    public synchronized void playAssistantCard(int p, int c) throws WrongPhaseException, WrongTurnException, IllegalArgumentException, AlreadyPlayedException{
+    public synchronized void playAssistantCard(int p, int c) throws WrongPhaseException, WrongTurnException, IllegalArgumentException, AlreadyPlayedException {
         if(p<0 || p>=players.size() || c<0 || c>=AssistantCardInfo.values().length) throw new IllegalArgumentException();
         if(turnManager.getPhase()!=Phase.PLANNING) throw new WrongPhaseException();
         if(turnManager.getCurrentPlayer()!=p)throw new WrongTurnException();
@@ -84,12 +84,17 @@ public class GameManager {
             }
         }
         if(alreadyPlayed) {
+            boolean notPlayedByOthers;
             for(AssistantCard ac: players.get(p).getCards()) {
-                boolean notPlayedByOthers = true;
-                for(AssistantCardInfo aci: alreadyPlayedCards) {
-                    if(ac.getInfo()==aci && !ac.isPlayed()) notPlayedByOthers = false;
+                if(!ac.isPlayed()) {
+                    notPlayedByOthers = true;
+                    for(AssistantCardInfo aci: alreadyPlayedCards) {
+                        if(aci==ac.getInfo()) {
+                            notPlayedByOthers = false;
+                        }
+                    }
+                    if(notPlayedByOthers) throw new IllegalArgumentException();
                 }
-                if(notPlayedByOthers) throw new IllegalArgumentException();
             }
         }
         players.get(p).playCard(c);
