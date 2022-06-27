@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class ConnectionList {
-    private ArrayList<EchoServerClientHandler> clients;
+    private ArrayList<ServerClientHandler> clients;
     private ArrayList<Boolean> connected;
     private GameManager gameManager;
     private int numOfActualPlayers;
@@ -43,11 +43,11 @@ public class ConnectionList {
         return clients.size();
     }
 
-    public synchronized void addClient(EchoServerClientHandler e) {
+    public synchronized void addClient(ServerClientHandler e) {
         e.setPlayerID(clients.size());
         clients.add(e);
         connected.add(true);
-        notifyAll();
+        //notifyAll();
         System.out.println("player added");
     }
 
@@ -155,7 +155,7 @@ public class ConnectionList {
     private void sendToAllLogged(String msg) {
         System.out.println("sending: "+msg+" to everyone logged");
         for (int i=0;i<clients.size();i++) {
-            EchoServerClientHandler c = clients.get(i);
+            ServerClientHandler c = clients.get(i);
             if(c!=null && !c.getConnectionManager().doesNeedUsername() && (!gameManager.isGameStarted() || i < gameManager.getPlayers().size())) {
                 c.getOut().println(msg);
                 c.getOut().flush();
@@ -187,7 +187,7 @@ public class ConnectionList {
         }
     }
 
-    public synchronized ArrayList<EchoServerClientHandler> getClients() {
+    public synchronized ArrayList<ServerClientHandler> getClients() {
         return clients;
     }
 
@@ -226,9 +226,9 @@ public class ConnectionList {
     }
 
     public synchronized void orderClients() {
-        ArrayList<EchoServerClientHandler> wUsername = new ArrayList<>();
-        ArrayList<EchoServerClientHandler> wOutUsername = new ArrayList<>();
-        for (EchoServerClientHandler e: clients){
+        ArrayList<ServerClientHandler> wUsername = new ArrayList<>();
+        ArrayList<ServerClientHandler> wOutUsername = new ArrayList<>();
+        for (ServerClientHandler e: clients){
             if(e!=null) {
                 if(e.getConnectionManager().doesNeedUsername()) wOutUsername.add(e);
                 else wUsername.add(e);
@@ -245,7 +245,7 @@ public class ConnectionList {
 
     public int getNumOfLoggedPlayers() {
         int i=0;
-        for (EchoServerClientHandler e:clients) {
+        for (ServerClientHandler e:clients) {
             if(e!=null && !e.getConnectionManager().doesNeedUsername()) i++;
         }
         return i;

@@ -40,22 +40,20 @@ public class ConnectionManager {
             try {
                 username = parser.fromJson("\""+message+"\"",String.class);
                 if(ConnectionList.instance().getSavedUsernames().containsKey(username)) {
-                    System.out.println("1");
+                    System.out.println("Player "+username+" is trying to reconnect");
                     CurrentStatus fullStatus = ConnectionList.instance().getGameManager().getFullCurrentStatus();
                     int index = ConnectionList.instance().getSavedUsernames().get(username);
-                    System.out.println("2");
                     fullStatus.setPlayerID(index);
-                    ArrayList<EchoServerClientHandler> clients = ConnectionList.instance().getClients();
+                    ArrayList<ServerClientHandler> clients = ConnectionList.instance().getClients();
                     System.out.println("PlayerID attuale: "+playerID+", ID precedente: "+index);
                     clients.set(index,clients.get(playerID));
                     clients.remove(playerID);
                     clients.get(index).setPlayerID(index);
                     ConnectionList.instance().setStillConnected(index,true);
-                    System.out.println("3");
                     ConnectionList.instance().getGameManager().getPlayers().get(index).setConnected(true);
                     ConnectionList.instance().getSavedUsernames().remove(username);
                     needUsername = false;
-                    System.out.println("4");
+                    System.out.println("Sending status to "+username);
                     return new Gson().toJson(fullStatus);
                 } else {
                     return StatusCode.GAMESTARTED.toJson();
@@ -65,7 +63,7 @@ public class ConnectionManager {
             }
         }
         try {
-            System.out.println("PARSING COMANDO");
+            System.out.println("PARSING COMMAND");
             Command c = parser.fromJson(message,Command.class);
             CommandList command = CommandList.valueOf(c.getCmd());
             System.out.println("read command: "+ command);
@@ -88,7 +86,7 @@ public class ConnectionManager {
                 username = parser.fromJson("\""+message+"\"",String.class);
                 ArrayList<Player> players = ConnectionList.instance().getGameManager().getPlayers();
                 if(players.size()<3){
-                    for (EchoServerClientHandler e: ConnectionList.instance().getClients()){
+                    for (ServerClientHandler e: ConnectionList.instance().getClients()){
                         ConnectionManager c = e.getConnectionManager();
                         if (c!=this && c.getUsername()!=null && c.getUsername().equals(username)) {
                             return StatusCode.ALREADYLOGGED.toJson();

@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.client.cli.CLIClient;
 import it.polimi.ingsw.client.gui.GUIClient;
-import it.polimi.ingsw.server.network.MultiEchoServer;
+import it.polimi.ingsw.server.network.GameServer;
 
 /**
  * Hello world!
@@ -17,9 +17,9 @@ public class App
             GUIClient.main(args);
         } else if(args[0].equals("-s")) {
             if(args.length>1) {
-                new MultiEchoServer(Integer.parseInt(args[1])).startServer();
+                new GameServer(Integer.parseInt(args[1])).startServer();
             } else {
-                new MultiEchoServer(1234).startServer();
+                new GameServer(1234).startServer();
             }
         } else if(args[0].equals("-c")) {
             if(args.length>1) {

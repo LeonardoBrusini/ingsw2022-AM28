@@ -1,0 +1,53 @@
+package it.polimi.ingsw.server.network;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class GameServer {
+    private final ConnectionList connections;
+    private final int port;
+
+    public GameServer(int port) {
+        this.port = port;
+        connections = ConnectionList.instance();
+    }
+
+    public void startServer() {
+        ExecutorService executor = Executors.newCachedThreadPool();
+        ServerSocket serverSocket;
+        try {
+            serverSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+
+        System.out.println("Server ready");
+        new Thread(() -> {
+            try {
+                while (true) {
+                    connections.setAllDisconnected();
+                    connections.sendToAll("ping");
+                    Thread.sleep(5000);
+                    connections.eraseDisconnected();
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+        while (true) {
+            try {
+                Socket socket = serverSocket.accept();
+                ServerClientHandler e = new ServerClientHandler(socket, connections.getNewID());
+                connections.addClient(e);
+                executor.submit(e);
+            } catch(IOException e) {
+                break;
+            }
+        }
+        executor.shutdown();
+    }
+}

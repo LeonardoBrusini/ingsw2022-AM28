@@ -6,7 +6,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Starts command line client connecting to the selected ip/port
+ */
 public class CLIClient {
+
+    /**
+     * starts connection with client and starts reading from the socket
+     * @param ip the server ip
+     * @param port the server port
+     */
     public static void start(String ip, int port){
         if(System.getProperty("os.name").contains("Windows")) {
             try {
@@ -23,7 +32,7 @@ public class CLIClient {
             menu.printMenu();
             try {
                 while ((userInput = stdIn.readLine())!=null) {
-                    System.out.println("input letto");
+                    System.out.println("Input read");
                     String output = menu.manageInputLine(userInput);
                     if(output != null) {
                         System.out.println("SENDING...");
@@ -38,6 +47,10 @@ public class CLIClient {
         }
     }
 
+    /**
+     * launches CLI with default ip/port parameters
+     * @param args
+     */
     public static void main( String[] args ){
         CLIClient.start("127.0.0.1",1234);
     }
