@@ -33,7 +33,7 @@ public class ServerClientHandler implements Runnable {
                 if (line.equals("pong")) {
                     ConnectionList.instance().setStillConnected(playerID,true);
                 } else {
-                    System.out.println(line);
+                    System.out.println("RECIEVED: "+line);
                     outputString = connectionManager.manageMessage(line, playerID);
                     if(!connectionManager.isFirstStatus() && outputString!=null) {
                         if(connectionManager.isToAllResponse()) {
