@@ -45,7 +45,7 @@ public class ConnectionManager {
                     int index = ConnectionList.instance().getSavedUsernames().get(username);
                     fullStatus.setPlayerID(index);
                     ArrayList<ServerClientHandler> clients = ConnectionList.instance().getClients();
-                    System.out.println("PlayerID attuale: "+playerID+", ID precedente: "+index);
+                    System.out.println("Actual PlayerID: "+playerID+", previous ID: "+index);
                     clients.set(index,clients.get(playerID));
                     clients.remove(playerID);
                     clients.get(index).setPlayerID(index);
