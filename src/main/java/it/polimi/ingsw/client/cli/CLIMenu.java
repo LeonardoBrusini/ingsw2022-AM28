@@ -59,6 +59,9 @@ public class CLIMenu implements ClientObserver {
             if(currentStatus.getGameMode().equals("expert")) s+=", "+ps.getCoins()+" coins";
             s+=", Assistant Cards left [weight, (max mother nature shifts)]: "+printAssistantCards(ps);
             System.out.println(s);
+            if(ps.getLastAssistantCardPlayed()!=null) {
+                System.out.println("Last assistant card played: "+(ps.getLastAssistantCardPlayed()+1)+", ("+(ps.getLastAssistantCardPlayed()/2+1)+")");
+            }
             CLIPrinter.printDashboard(ps.getStudentsOnEntrance(),ps.getStudentsOnHall(),ps.getNumTowers());
         }
         System.out.println("BOARD");
@@ -106,7 +109,7 @@ public class CLIMenu implements ClientObserver {
                         if(currentStatus.getGameMode().equals("expert")) GamePhases.ACTION_COMMAND.setMenuPrompt(GamePhases.ACTION_COMMAND.getMenuPrompt()+"\n5) Play a Character Card");
                         return;
                     }
-                    System.out.println("UPDATE APR");
+                    //System.out.println("UPDATE APR");
                     if(apr.getStatus()==105) {
                         phases.add(GamePhases.PRE_WAIT);
                         nextPhase();
@@ -147,7 +150,7 @@ public class CLIMenu implements ClientObserver {
     private void manageCS(String line) throws JsonSyntaxException{
         try {
             CurrentStatus cs = parser.fromJson(line, CurrentStatus.class);
-            System.out.println("UPDATE CS");
+            System.out.println("UPDATED GAME STATUS");
             if(cs.getStatus()!=0) {
                 System.out.println("ERROR: Status code "+cs.getStatus()+", "+cs.getErrorMessage());
             }
