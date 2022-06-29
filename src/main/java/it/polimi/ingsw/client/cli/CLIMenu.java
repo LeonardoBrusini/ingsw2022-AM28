@@ -96,7 +96,7 @@ public class CLIMenu implements ClientObserver {
     }
 
     public synchronized void manageReceivedLine(String line) {
-        System.out.println(line);
+        //System.out.println(line);
         switch (phases.get(0)) {
             case USERNAME,PRE_WAIT,GAME_MODE,NUM_PLAYERS -> {
                 try {
@@ -206,7 +206,7 @@ public class CLIMenu implements ClientObserver {
                         command.setIndex(i-1);
                         phases.add(GamePhases.SENDCOMMAND);
                         nextPhase();
-                        System.out.println("Sending: "+parser.toJson(command)+" in phase: "+phases.get(0).toString());
+                        //System.out.println("Sending: "+parser.toJson(command)+" in phase: "+phases.get(0).toString());
                         return parser.toJson(command);
                         //UPDATE ON PHASES DEPENDS BY SERVER RESPONSE
                     } else {
@@ -392,8 +392,8 @@ public class CLIMenu implements ClientObserver {
             printMenu();
         }
         if(phases.get(0)== GamePhases.SENDCOMMAND) {
-            System.out.println("SENDCOMMAND: returning the command json");
-            System.out.println(parser.toJson(command));
+            //System.out.println("SENDCOMMAND: returning the command json");
+            //System.out.println(parser.toJson(command));
             return parser.toJson(command);
         }
         return null;
