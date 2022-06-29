@@ -139,7 +139,7 @@ public class ConnectionList {
             }
             //if(playerErased) {
                 //for (i=0;i<clients.size();i++) {
-                    if(firstPlayerErased && !clients.get(0).getConnectionManager().doesNeedUsername()) {
+                    if(clients.size()>0 && firstPlayerErased && !clients.get(0).getConnectionManager().doesNeedUsername()) {
                         AddPlayerResponse a = new AddPlayerResponse();
                         a.setStatus(0);
                         a.setFirst(true);
