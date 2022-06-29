@@ -115,7 +115,7 @@ public class IslandManager {
     /**
      * puts the selected tower to the selected island and checks a possible aggregation of archipelagos
      * @param tower colour of the tower
-     * @param islandIndex the index of the island we want to build the tower
+     * @param archipelago the index of the island we want to build the tower
      */
     public void setTowersOnArchipelago(Tower tower, Archipelago archipelago) throws IllegalArgumentException{
         for (Island i: archipelago.getIslands()) {
