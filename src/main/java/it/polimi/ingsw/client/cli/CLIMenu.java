@@ -76,7 +76,7 @@ public class CLIMenu implements ClientObserver {
         CLIPrinter.printProfessors(currentStatus.getGame().getProfessors());
         System.out.println("Current Player: "+currentStatus.getTurn().getPlayer()+", Phase: "+currentStatus.getTurn().getPhase());
         if(currentStatus.getWinner()!=null) {
-            if(!currentStatus.getWinner().equals("")) System.out.println(GamePhases.DRAW.getMenuPrompt());
+            if(currentStatus.getWinner().equals("")) System.out.println(GamePhases.DRAW.getMenuPrompt());
             else System.out.println("\uD83C\uDF89PLAYER "+currentStatus.getWinner()+" WON!\uD83C\uDF89");
             System.exit(0);
         }
