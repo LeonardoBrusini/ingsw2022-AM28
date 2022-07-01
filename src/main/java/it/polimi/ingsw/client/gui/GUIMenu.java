@@ -371,8 +371,6 @@ public class GUIMenu implements ClientObserver {
     }
 
     private void updateMoveToHall(CurrentStatus cs) {
-        //MUST BE UPDATED ON EXPERT MODE
-        //GridPane entrance,hall,professors;
         PlayerStatus ps = null;
         for(int i=0;i<currentStatus.getGame().getPlayers().size();i++) {
             if(cs.getGame().getPlayers().get(0).getIndex()==currentStatus.getGame().getPlayers().get(i).getIndex()) {
@@ -384,55 +382,6 @@ public class GUIMenu implements ClientObserver {
         updateHall(ps.getIndex(), ps.getStudentsOnHall());
         updateEntrance(ps.getIndex(),ps.getStudentsOnEntrance());
         if(currentStatus.getGameMode().equals("expert")) updatePlayerCoins(ps.getIndex());
-        /*Label coins = null;
-        int[] statusEntrance = cs.getGame().getPlayers().get(0).getStudentsOnEntrance();
-        int[] statusHall = cs.getGame().getPlayers().get(0).getStudentsOnHall();
-        int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
-        if(currentStatus.getPlayerID().equals(playerIndex)) {
-            entrance = (GridPane) stage.getScene().lookup("#myEntrance");
-            hall = (GridPane) stage.getScene().lookup("#myHall");
-            //professors = (GridPane) stage.getScene().lookup("#myProfessors");
-            if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("#myCoins");
-            Label textMessage = (Label) stage.getScene().lookup("#textMessage");
-            PlayerStatus finalPs1 = ps;
-            Platform.runLater(() -> {
-                ControllerUtils.instance().setMyEntrance(entrance, statusEntrance, textMessage, getClass().getClassLoader());
-                ControllerUtils.instance().setMyHall(hall, statusHall,getClass().getClassLoader());
-            });
-        } else {
-            if(currentStatus.getPlayerID()>0) {
-                if(playerIndex==0) {
-                    entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
-                    hall = (GridPane) stage.getScene().lookup("#opponentHall");
-                    //professors = (GridPane) stage.getScene().lookup("#opponentProfessors");
-                    if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponentCoins");
-                } else {
-                    entrance = (GridPane) stage.getScene().lookup("#opponent2Entrance");
-                    hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
-                    //professors = (GridPane) stage.getScene().lookup("#opponent2Professors");
-                    if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponent2Coins");
-                }
-            } else {
-                if(playerIndex==1) {
-                    entrance = (GridPane) stage.getScene().lookup("#opponentEntrance");
-                    hall = (GridPane) stage.getScene().lookup("#opponentHall");
-                    //professors = (GridPane) stage.getScene().lookup("#opponentProfessors");
-                    if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponentCoins");
-                } else {
-                    entrance = (GridPane) stage.getScene().lookup("#opponent2Entrance");
-                    hall = (GridPane) stage.getScene().lookup("#opponent2Hall");
-                    //professors = (GridPane) stage.getScene().lookup("#opponent2Professors");
-                    if(currentStatus.getGameMode().equals("expert")) coins = (Label) stage.getScene().lookup("opponent2Coins");
-                }
-            }
-            updateOpponentEntrance(entrance, statusEntrance);
-            updateOpponentHall(hall, statusHall);
-        }
-        Label finalCoins = coins;
-        //PlayerStatus finalPs = ps;
-        Platform.runLater(() -> {
-            if(currentStatus.getGameMode().equals("expert")) finalCoins.setText(""+cs.getGame().getPlayers().get(0).getCoins());
-        });*/
     }
 
     private void updateOpponentHall(GridPane hall, int[] statusHall) {
