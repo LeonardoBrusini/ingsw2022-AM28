@@ -42,6 +42,18 @@
       <version>18.0.1</version>
       <type>pom</type>
     </dependency>
+    <!--
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>18.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>18.0.1</version>
+    </dependency>
+    -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
@@ -90,6 +102,7 @@
       <version>18.0.1</version>
       <classifier>mac-aarch64</classifier>
     </dependency>
+
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics </artifactId>
@@ -98,19 +111,19 @@
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics </artifactId>
+      <artifactId>javafx-graphics</artifactId>
       <version>18.0.1</version>
       <classifier>linux</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics </artifactId>
+      <artifactId>javafx-graphics</artifactId>
       <version>18.0.1</version>
       <classifier>mac</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics </artifactId>
+      <artifactId>javafx-graphics</artifactId>
       <version>18.0.1</version>
       <classifier>mac-aarch64</classifier>
     </dependency>
