@@ -468,7 +468,7 @@ public class GUIMenu implements ClientObserver {
                 childrenIndex++;
             }
         }
-        if(!addedStudent) entrance.getChildren().remove(childrenIndex);
+        if(currentStatus.getLastCommand().equals("MOVETOISLAND") && !addedStudent) entrance.getChildren().remove(childrenIndex);
     }
     private void updateMoveToIsland(CurrentStatus cs) {
         int playerIndex = cs.getGame().getPlayers().get(0).getIndex();
